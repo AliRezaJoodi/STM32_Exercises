@@ -1,2 +1,2 @@
-# STM32_Exercises
- STM32 Exercises 
+# STM32 Programming Exercises
+A repository for my exercises.
