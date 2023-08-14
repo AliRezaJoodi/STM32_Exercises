@@ -4,7 +4,7 @@
 - `uint32_t SystemCoreClock = 16000000;`
 
 ### CMSIS/stm32f1xx.h
-- #define STM32F103xB
+- `#define STM32F103xB`
 
 ### STM32F1xx_HAL/stm32f1xx_ll_utils.c
 - `LL_Init1msTick(8000000);`
