@@ -1,7 +1,7 @@
 ## Configure Input and Output with Bare Metal
               
 MCU:     	STM32F103C8  
-HSI:     	4MHz  
+System Clock:	8MHz with HSI RC  
 
 ### Folder and Files Description
 It has included:
