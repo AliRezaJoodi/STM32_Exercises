@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "STM32F103_RCC_BareMetal.h"
 #include "STM32F103_BUS_BareMetal.h"
 #include "STM32F103_GPIO_BareMetal.h"
 /* USER CODE END Includes */
@@ -68,9 +69,9 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-	EnableClockSourceFromAlternateFunction(1);
+	EnableOrDisableClockSourceForAlternateFunction(1);
   //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-	EnableClockSourceFromPowerInterface(1);
+	EnableOrDisableClockSourceForPowerInterface(1);
 
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
@@ -80,7 +81,8 @@ int main(void)
 
   /** DISABLE: JTAG-DP Disabled and SW-DP Disabled
   */
-  LL_GPIO_AF_DisableRemap_SWJ();
+  //LL_GPIO_AF_DisableRemap_SWJ();
+	ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
 
   /* USER CODE BEGIN Init */
 
@@ -107,16 +109,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	if(IsEnableClockSourceFromPortA==1){GPIO_SetOutputPin(GPIOB,0);}
-			else if(IsEnableClockSourceFromPortA==0){GPIO_ResetOutputPin(GPIOB,0);}
+	//if(IsEnableClockSourceFromPortA==1){GPIO_SetOutputPin(GPIOB,0);}
+			//else if(IsEnableClockSourceFromPortA==0){GPIO_ResetOutputPin(GPIOB,0);}
+	//ResetClockSourceFromPortA;
+			
   while (1){
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
 		GPIO_ToggleOutputPin(GPIOA,0); LL_mDelay(1000);
-
-			
-			//GPIO_WriteOutputPin(GPIOA,0,GPIO_GetInputPin(GPIOA,2));
+		//GPIO_WriteOutputPin(GPIOA,0,GPIO_GetInputPin(GPIOA,2));
+		if(IsClockStableFromHSI==1){GPIO_SetOutputPin(GPIOB,0);}
+			else if(IsClockStableFromHSI==0){GPIO_ResetOutputPin(GPIOB,0);}
   }
   /* USER CODE END 3 */
 }
@@ -125,30 +128,30 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
-{
+void SystemClock_Config(void){
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0)
-  {
-  }
-  LL_RCC_HSI_SetCalibTrimming(16);
-  LL_RCC_HSI_Enable();
-
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
+  //LL_RCC_HSI_SetCalibTrimming(16);
+	SetCalibTrimmingFromHSI(16);
+  //LL_RCC_HSI_Enable();
+	EnableOrDisableClockFromHSI(1);
    /* Wait till HSI is ready */
-  while(LL_RCC_HSI_IsReady() != 1)
-  {
-
-  }
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-
+  //while(LL_RCC_HSI_IsReady() != 1){}
+	WaitTillClockStableFromHSI
+		
+  //LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+	ConfigurePrescalerForAHB(AHB_DIV1);
+  //LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+	ConfigurePrescalerForAPB1(APB1_DIV1);
+  //LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+	ConfigurePrescalerForAPB2(APB2_DIV1);
+  //LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
+	ConfigureSystemClockSource(SYSCLK_HSI);
    /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
-  {
-
-  }
+  //while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI){}
+	//while(GetSystemClockSource != SYSCLK_HSI){}
+	WaitTillRightClockSource(SYSCLK_HSI);
+		
   LL_Init1msTick(8000000);
   LL_SetSystemCoreClock(8000000);
 }
@@ -165,7 +168,10 @@ static void MX_GPIO_Init(void){
 
   /* GPIO Ports Clock Enable */
   //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-	EnableClockSourceFromPortA(1);
+	EnableOrDisableClockSourceFromPortA(1); LL_mDelay(10);
+	//DisableClockSourceFromPortA; LL_mDelay(10);
+	//EnableOrDisableClockSourceFromPortA(0); LL_mDelay(10);
+	//RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPAEN);
 	//while(IsEnableClockSourceForPortA){}
   /**/
   //LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_0);
@@ -216,7 +222,7 @@ static void MX_GPIO_Init(void){
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 */
   //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
-	EnableClockSourceFromPortB(ENABLE);
+	EnableOrDisableClockSourceForPortB(ENABLE);
   GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
