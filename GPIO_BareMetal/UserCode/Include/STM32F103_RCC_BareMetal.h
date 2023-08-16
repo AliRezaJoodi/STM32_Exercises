@@ -9,7 +9,7 @@
 	RCC->CR= (RCC->CR & ~RCC_CR_HSION) | ((STATUS&0b1UL)<<RCC_CR_HSION_Pos);
 #define IsClockStableFromHSI \
 		((RCC->CR & RCC_CR_HSIRDY) >> RCC_CR_HSIRDY_Pos)
-#define WaitTillClockStableFromHSI \
+#define WaitTillStableClockSourceFromHSI \
 	while(!IsClockStableFromHSI){}
 
 // The HSEBYP bit can be written only if the HSE oscillator is disabled.
@@ -21,7 +21,7 @@
 	RCC->CR= (RCC->CR & ~RCC_CR_HSEON) | ((STATUS&0b1UL)<<RCC_CR_HSEON_Pos);
 #define IsClockStableFromHSE \
 		((RCC->CR & RCC_CR_HSERDY) >> RCC_CR_HSERDY_Pos)
-#define WaitTillClockStableFromHSE \
+#define WaitTillStableClockSourceFromHSE \
 	while(!IsClockStableFromHSE){}
 
 // The AHB clock frequency must be at least 25 MHz when the Ethernet is used.

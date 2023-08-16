@@ -25,11 +25,11 @@
 #define IsEnableClockSourceForAlternateFunction \
 	((RCC->APB2ENR & RCC_APB2ENR_AFIOEN) >> RCC_APB2ENR_AFIOEN_Pos)
 	
-#define EnableOrDisableClockSourceFromPortA(STATUS) \
+#define EnableOrDisableClockSourceForPortA(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPAEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPAEN_Pos);
-#define ResetClockSourceFromPortA \
+#define ResetClockSourceForPortA \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPARST;
-#define IsEnableClockSourceFromPortA \
+#define IsEnableClockSourceForPortA \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPAEN) >> RCC_APB2ENR_IOPAEN_Pos)
 	
 #define EnableOrDisableClockSourceForPortB(STATUS) \
