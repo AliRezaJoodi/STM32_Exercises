@@ -221,8 +221,7 @@ void SystemInit (void)
   * @param  None
   * @retval None
   */
-void SystemCoreClockUpdate (void)
-{
+void SystemCoreClockUpdate (void){
   uint32_t tmp = 0U, pllmull = 0U, pllsource = 0U;
 
 #if defined(STM32F105xC) || defined(STM32F107xC)
@@ -236,8 +235,7 @@ void SystemCoreClockUpdate (void)
   /* Get SYSCLK source -------------------------------------------------------*/
   tmp = RCC->CFGR & RCC_CFGR_SWS;
   
-  switch (tmp)
-  {
+  switch (tmp){
     case 0x00U:  /* HSI used as system clock */
       SystemCoreClock = HSI_VALUE;
       break;

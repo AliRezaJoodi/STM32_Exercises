@@ -192,8 +192,7 @@ static ErrorStatus UTILS_PLL_IsBusy(void);
   * @note   HCLK frequency can be calculated thanks to RCC helper macro or function @ref LL_RCC_GetSystemClocksFreq
   * @retval None
   */
-void LL_Init1msTick(uint32_t HCLKFrequency)
-{
+void LL_Init1msTick(uint32_t HCLKFrequency){
   /* Use frequency provided in argument */
   LL_InitTick(HCLKFrequency, 1000U);
 }
@@ -208,24 +207,16 @@ void LL_Init1msTick(uint32_t HCLKFrequency)
   * @param  Delay specifies the delay time length, in milliseconds.
   * @retval None
   */
-void LL_mDelay(uint32_t Delay)
-{
+void LL_mDelay(uint32_t Delay){
   __IO uint32_t  tmp = SysTick->CTRL;  /* Clear the COUNTFLAG first */
   /* Add this code to indicate that local variable is not used */
   ((void)tmp);
 
   /* Add a period to guaranty minimum wait */
-  if (Delay < LL_MAX_DELAY)
-  {
-    Delay++;
-  }
+  if (Delay < LL_MAX_DELAY){Delay++;}
 
-  while (Delay)
-  {
-    if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U)
-    {
-      Delay--;
-    }
+  while (Delay){
+    if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U){Delay--;}
   }
 }
 

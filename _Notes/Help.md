@@ -1,7 +1,7 @@
 ### CMSIS/system_stm32f1xx.c
 - `#define HSE_VALUE 8000000U`
 - `#define HSI_VALUE 8000000U`
-- `uint32_t SystemCoreClock = 16000000;`
+- `uint32_t SystemCoreClock = 8000000;`
 
 ### CMSIS/stm32f1xx.h
 - `#define STM32F103xB`
