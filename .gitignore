@@ -23,6 +23,7 @@ RTE
 *.d
 *.o
 *.dep
+*.scvd
 
 
 

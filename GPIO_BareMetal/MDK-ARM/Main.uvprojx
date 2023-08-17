@@ -435,14 +435,14 @@
           <GroupName>UserCode</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UserCode\Source\main.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UserCode\Source\stm32f1xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserCode\Source\main.c</FilePath>
             </File>
           </Files>
         </Group>
