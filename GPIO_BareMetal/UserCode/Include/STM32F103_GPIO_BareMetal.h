@@ -32,7 +32,7 @@
 #define PULLDOWN	0
 #define PULLUP		1
 #define GPIO_ConfigurePullUpOrPullDown(GPIOx,PIN,MODE) \
-	(GPIOx->ODR) |= ((MODE&0b1UL) << PIN);	
+	GPIOx->ODR= (GPIOx->ODR & ~(0b1UL << PIN)) | ((MODE&0b1UL) << PIN);
 
 // Output Mode Configuration
 #define GENERAL_PURPOSE_OUTPUT_PUSHPULL  		0b00UL
@@ -40,7 +40,8 @@
 #define ALTERNATE_FUNCTION_OUTPUT_PUSHPULL	0b10UL
 #define ALTERNATE_FUNCTION_OUTPUT_OPENDRAIN	0b11UL
 #define GPIO_ConfigureOutputMode(GPIOx,PIN,MODE) \
-	(GPIOx->CRL)= ((GPIOx->CRL) & ~(0b11UL<<((PIN*4)+2))) | ((MODE&0b11UL)<<((PIN*4)+2));
+	if(PIN<=7){(GPIOx->CRL)= ((GPIOx->CRL) & ~(0b11UL<<((PIN*4)+2))) | ((MODE&0b11UL)<<((PIN*4)+2));}\
+		else{(GPIOx->CRH)= ((GPIOx->CRH) & ~(0b11UL<<(((PIN-8)*4)+2))) | ((MODE&0b11UL)<<(((PIN-8)*4)+2));}
 
 // Other Commands																												
 #define GPIO_GetInputPin(GPIOx,PIN) 									(((GPIOx->IDR) & (0b1UL<<PIN)) >> PIN)
@@ -54,10 +55,9 @@
 #define GPIO_ResetOutputPinWithBSRR(GPIOx,PIN) 				(GPIOx->BSRR) = (0b1U<<(PIN+16));
 #define GPIO_ResetOutputPin(GPIOx,PIN)								GPIO_ResetOutputPinWithBRR(GPIOx,PIN)
 #define GPIO_ToggleOutputPin(GPIOx,PIN)								(GPIOx->ODR) ^= ( 0b1UL<<PIN);
-#define GPIO_WriteOutputPin(GPIOx,PIN,STATUS)					(GPIOx->ODR) |= ((STATUS&0b1UL) << PIN);
+#define GPIO_WriteOutputPin(GPIOx,PIN,STATUS)					GPIOx->ODR= (GPIOx->ODR & ~(0b1UL << PIN)) | ((STATUS&0b1UL) << PIN);
 #define GPIO_WriteOutputPort(GPIOx,VALUE)							(GPIOx->ODR) = VALUE;
-#define GPIO_GetOutputPin(GPIOx,PIN) 									(((GPIOx->ODR) & (0b1UL<<PIN)) >> PIN)	
-
+#define GPIO_GetOutputPin(GPIOx,PIN) 									(((GPIOx->ODR) & (0b1UL<<PIN)) >> PIN)
 
 #endif
 

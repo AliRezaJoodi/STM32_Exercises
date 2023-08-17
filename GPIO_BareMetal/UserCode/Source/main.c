@@ -9,10 +9,16 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
-int main(void){
+void ConfigureRelays(void);
+void ConfigureButtons(void);
+void ConfigureBcdInput(void);
+void ConfigureBcdDisplay(void);
 
+int main(void){
+	char status0=0;
+	
   //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-	EnableOrDisableClockSourceForAlternateFunction(1);
+	EnableOrDisableClockSourceForAlternateFunction(0);
   //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 	EnableOrDisableClockSourceForPowerInterface(1);
 
@@ -25,10 +31,14 @@ int main(void){
   /** DISABLE: JTAG-DP Disabled and SW-DP Disabled
   */
   //LL_GPIO_AF_DisableRemap_SWJ();
-	ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
 
   SystemClock_Config();
   MX_GPIO_Init();
+
+	ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
+	ConfigureButtons();
+	ConfigureRelays();
+	
 	//GPIO_ConfigurePinDirection(GPIOA,14,INPUT_MODE);
 	//GPIO_ConfigureInputMode(GPIOA,15,INPUT_WITH_PULLUP_PULLDOWN);
 	//GPIO_ConfigurePullUpOrPullDown(GPIOA,15,PULLDOWN);
@@ -37,13 +47,51 @@ int main(void){
 	//if(IsEnableClockSourceForPortA==1){GPIO_SetOutputPin(GPIOB,0);}
 			//else if(IsEnableClockSourceForPortA==0){GPIO_ResetOutputPin(GPIOB,0);}
 	//ResetClockSourceForPortA;
-			
+	GPIO_ToggleOutputPin(GPIOA,15); //GPIO_ToggleOutputPin(GPIOA,15);		
   while(1){
-		GPIO_ToggleOutputPin(GPIOA,0); LL_mDelay(1000);
+		/*
+		if(GPIO_GetInputPin(GPIOA,5)==0 && status0==1){
+				status0=0;
+				GPIO_ToggleOutputPin(GPIOA,15);
+		}
+		*/
+		if(GPIO_GetInputPin(GPIOA,5)==0){status0=1; GPIO_ResetOutputPin(GPIOA,15);}
+		//GPIO_ToggleOutputPin(GPIOA,0); LL_mDelay(1000);
 		//GPIO_WriteOutputPin(GPIOA,0,GPIO_GetInputPin(GPIOA,2));
-		if(IsClockStableFromHSI==1){GPIO_SetOutputPin(GPIOB,0);}
-			else if(IsClockStableFromHSI==0){GPIO_ResetOutputPin(GPIOB,0);}
+		if(GPIO_GetInputPin(GPIOA,1)==1){GPIO_SetOutputPin(GPIOA,3);}
+		if(GPIO_GetInputPin(GPIOA,2)==0){GPIO_ResetOutputPin(GPIOA,3);}
   }
+}
+
+//**************************************
+void ConfigureButtons(void){
+	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
+	
+	GPIO_ConfigurePinDirection(GPIOA,5,INPUT_MODE);
+	//GPIO_ConfigureInputMode(GPIOA,5,FLOATING_INPUT);
+	GPIO_ConfigureInputMode(GPIOA,5,INPUT_WITH_PULLUP_PULLDOWN);
+	GPIO_ConfigurePullUpOrPullDown(GPIOA,5,PULLUP);
+	
+	GPIO_ConfigurePinDirection(GPIOA,1,INPUT_MODE);
+	GPIO_ConfigureInputMode(GPIOA,1,INPUT_WITH_PULLUP_PULLDOWN);
+	GPIO_ConfigurePullUpOrPullDown(GPIOA,1,PULLDOWN);
+	
+	GPIO_ConfigurePinDirection(GPIOA,2,INPUT_MODE);
+	GPIO_ConfigureInputMode(GPIOA,2,INPUT_WITH_PULLUP_PULLDOWN);
+	GPIO_ConfigurePullUpOrPullDown(GPIOA,2,PULLUP);
+}
+
+//**************************************
+void ConfigureRelays(void){
+	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
+	
+	GPIO_ConfigurePinDirection(GPIOA,15,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputMode(GPIOA,15,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetOutputPin(GPIOA,15);
+	
+	GPIO_ConfigurePinDirection(GPIOA,3,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputMode(GPIOA,3,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetOutputPin(GPIOA,3);
 }
 
 //****************************************************
@@ -96,10 +144,7 @@ static void MX_GPIO_Init(void){
   //LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_0);
 	//GPIOA->BSRR=(0x1UL<<0);
 	//GPIOA->BRR=(0x1UL<<0);
-	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
-	GPIO_ConfigurePinDirection(GPIOA,0,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,0,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_SetOutputPin(GPIOA,0);
+
 	//GPIO_ResetOutputPin(GPIOA, 0);
 	//GPIO_ResetOutputPinWithBSRR(GPIOA,0);
 	//GPIO_SetOutputPinWithODR(GPIOA,0);
@@ -149,9 +194,9 @@ static void MX_GPIO_Init(void){
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	*/
-	EnableOrDisableClockSourceForPortB(1); LL_mDelay(10);
-	GPIO_ConfigurePinDirection(GPIOB,0,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOB,0,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_SetOutputPin(GPIOB,0);
+	//EnableOrDisableClockSourceForPortB(1); LL_mDelay(10);
+	//GPIO_ConfigurePinDirection(GPIOB,0,OUTPUT_MODE_2MHz);
+	//GPIO_ConfigureOutputMode(GPIOB,0,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	//GPIO_SetOutputPin(GPIOB,0);
 }
 
