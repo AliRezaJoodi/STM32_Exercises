@@ -1,4 +1,5 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+#include "Utility.h"
 
 #ifndef _GPIO_INCLUDED
     #define _GPIO_INCLUDED
@@ -47,7 +48,7 @@
 #define GPIO_GetInputPin(GPIOx,PIN) 									(((GPIOx->IDR) & (0b1UL<<PIN)) >> PIN)
 #define GPIO_GetInputPort(GPIOx)											(GPIOx->IDR)
 																												
-#define GPIO_SetOutputPinWithBSRR(GPIOx,PIN) 					(GPIOx->BSRR) = (0b1UL<<PIN);	//Fast
+#define GPIO_SetOutputPinWithBSRR(GPIOx,PIN) 					GPIOx->BSRR = 0b1UL<<PIN;	//Fast
 #define GPIO_SetOutputPinWithODR(GPIOx,PIN) 					(GPIOx->ODR) |= (0b1UL<<PIN);
 #define GPIO_SetOutputPin(GPIOx,PIN) 									GPIO_SetOutputPinWithBSRR(GPIOx,PIN)
 #define GPIO_ResetOutputPinWithBRR(GPIOx,PIN) 				(GPIOx->BRR) = (0b1UL<<PIN);	//Fast
