@@ -96,6 +96,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_0)==1){HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,1);}
+			else{HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,0);}
+		
+		if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1)==1){HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,1);}
+		if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_2)==0){HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,0);}
+		
+		uint32_t value=(GPIOA->IDR)>>7 & (0b1111U);
+		GPIOA->ODR= (GPIOA->ODR) & ~(0b1111<<11)| (value<<11);
   }
   /* USER CODE END 3 */
 }
