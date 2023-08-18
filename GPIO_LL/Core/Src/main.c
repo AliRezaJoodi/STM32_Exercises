@@ -18,10 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Utility.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,8 +101,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t value1=0b101101001U;
-	GPIOB->ODR= value1;
+	uint32_t value2=0b101101001U;
+	//GPIOB->ODR= Get4Bit(value1,5);
+	Write4Bit(value2,11,0b1101U);
+	GPIOB->ODR=value2;
+	
   while (1)
   {
     /* USER CODE END WHILE */
@@ -115,8 +117,8 @@ int main(void)
 		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_3);}
 		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<2))>>2)==0){LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_3);}
 		
-		uint32_t value=(GPIOA->IDR)>>7 & (0b1111U);
-		GPIOA->ODR= (GPIOA->ODR) & ~(0b1111<<11)| (value<<11);
+		uint32_t value= Get4Bit(GPIOA->IDR,7); 
+		Write4Bit(GPIOA->ODR,11,value);
   }
   /* USER CODE END 3 */
 }
