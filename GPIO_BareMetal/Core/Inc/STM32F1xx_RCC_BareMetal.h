@@ -13,10 +13,11 @@
 	while(!IsClockStableFromHSI){}
 
 // The HSEBYP bit can be written only if the HSE oscillator is disabled.
-#define OSCILLATOR_NOT_BYPASSED          				0b0UL
-#define OSCILLATOR_BYPASSED_WITH_EXTERNAL_CLOCK	0b1UL
+#define XTAL          	0b0UL
+#define EXTERNAL_CLOCK	0b1UL
 #define ConfigureSourceForHSE(MODE) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSEBYP) | ((MODE&0b1UL)<<RCC_CR_HSEBYP_Pos);
+	//WriteBit(RCC->CR,RCC_CR_HSEBYP_Pos,MODE);
 #define EnableOrDisableClockFromHSE(STATUS) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSEON) | ((STATUS&0b1UL)<<RCC_CR_HSEON_Pos);
 #define IsClockStableFromHSE \
