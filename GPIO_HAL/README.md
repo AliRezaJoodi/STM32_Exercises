@@ -1,4 +1,4 @@
-## Configure Input and Output with LL Drivers
+## Configure Input and Output with HAL(Hardware Abstraction Layer) Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
