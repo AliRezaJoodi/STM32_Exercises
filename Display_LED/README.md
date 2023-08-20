@@ -1,4 +1,4 @@
-## Blinking LED with LL(Low Layer) Drivers
+## Blinking LED
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
