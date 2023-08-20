@@ -74,7 +74,7 @@
 	(GPIOx->ODR) ^= ( 0b1UL<<PIN);
 
 #define WritePinFromOutput(GPIOx,PIN,STATUS) \
-	GPIOx->ODR= (GPIOx->ODR & ~(0b1UL << PIN)) | ((STATUS&0b1UL) << PIN);
+	GPIOx->ODR= (GPIOx->ODR & ~(0b1UL << PIN)) | (((STATUS)&0b1UL) << PIN);
 #define Write2PinFromOutput(GPIOx,FROM,VALUE) \
 	GPIOx->ODR= ((GPIOx->ODR) & ~(0b11UL << FROM)) | ((VALUE&0b11UL) << FROM);
 #define Write3PinFromOutput(GPIOx,FROM,VALUE) \
