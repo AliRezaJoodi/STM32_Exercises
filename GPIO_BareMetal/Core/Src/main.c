@@ -15,6 +15,11 @@ void ConfigureButtons(void);
 void ConfigureBcdInput(void);
 void ConfigureBcdDisplay(void);
 
+void delay_ms(int i){
+	int j=500*i;
+	for(i=0;i<j;i++){};
+}
+
 int main(void){
 	char status0=0;
 	
@@ -36,82 +41,87 @@ int main(void){
 	ConfigureBcdInput();
 	ConfigureBcdDisplay();
 	
-	//GPIO_SetOutputPin(GPIOA,15);
+	//SetPinFromOutput(GPIOA,15);
   while(1){
-		if(GPIO_GetInputPin(GPIOA,6)){GPIO_SetOutputPin(GPIOA,15);}
-			else{GPIO_ResetOutputPin(GPIOA,15);}
-				
-		if(GPIO_GetInputPin(GPIOA,1)==1){GPIO_SetOutputPin(GPIOA,3);}
-		if(GPIO_GetInputPin(GPIOA,2)==0){GPIO_ResetOutputPin(GPIOA,3);}
+		//if(GetPinFromInput(GPIOA,1)){SetPinFromOutput(GPIOA,15);}
+			//else{ResetPinFromOutput(GPIOA,15);}
+		WritePinFromOutput(GPIOA,15,GetPinFromInput(GPIOA,0));	
 		
-		uint32_t value=(GPIOA->IDR >> 7) & 0b1111U;
-		GPIOA->ODR= (GPIOA->ODR) & ~(0b1111<<11)| (value<<11);
+		if(GetPinFromInput(GPIOA,1)==1){SetPinFromOutput(GPIOA,3);}
+		if(GetPinFromInput(GPIOA,2)==0){ResetPinFromOutput(GPIOA,3);}
+		
+		uint32_t value= Get4PinFromInput(GPIOA,7);
+		Write4PinFromOutput(GPIOA,11,value);
+		
+		//SetPinFromOutput(GPIOA,15); delay_ms(1000);
+		//ResetPinFromOutput(GPIOA,15); delay_ms(1000);
   }
 }
 
 //**************************************
 void ConfigureBcdInput(void){
-	GPIO_ConfigurePinDirection(GPIOA,7,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,7,FLOATING_INPUT);
+	ConfigurePinForDirection(GPIOA,7,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,7,FLOATING_INPUT);
 	
-	GPIO_ConfigurePinDirection(GPIOA,8,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,8,FLOATING_INPUT);
+	ConfigurePinForDirection(GPIOA,8,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,8,FLOATING_INPUT);
 	
-	GPIO_ConfigurePinDirection(GPIOA,9,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,9,FLOATING_INPUT);
+	ConfigurePinForDirection(GPIOA,9,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,9,FLOATING_INPUT);
 	
-	GPIO_ConfigurePinDirection(GPIOA,10,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,10,FLOATING_INPUT);
+	ConfigurePinForDirection(GPIOA,10,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,10,FLOATING_INPUT);
 }
 
 //**************************************
 void ConfigureBcdDisplay(void){
-	GPIO_ConfigurePinDirection(GPIOA,11,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,11,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,11);
+	ConfigurePinForDirection(GPIOA,11,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,11,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,11);
 	
-	GPIO_ConfigurePinDirection(GPIOA,12,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,12,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,12);
+	ConfigurePinForDirection(GPIOA,12,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,12,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,12);
 	
-	GPIO_ConfigurePinDirection(GPIOA,13,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,13,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,13);
+	ConfigurePinForDirection(GPIOA,13,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,13,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,13);
 	
-	GPIO_ConfigurePinDirection(GPIOA,14,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,14,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,14);
+	ConfigurePinForDirection(GPIOA,14,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,14,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,14);
 }
 
 //**************************************
 void ConfigureButtons(void){
 	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
 	
-	GPIO_ConfigurePinDirection(GPIOA,6,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,6,FLOATING_INPUT);
-	//GPIO_ConfigureInputMode(GPIOA,5,INPUT_WITH_PULLUP_PULLDOWN);
-	//GPIO_ConfigurePullUpOrPullDown(GPIOA,5,PULLUP);
+	ResetPinFromOutput(GPIOA,0);
+	ConfigurePinForDirection(GPIOA,0,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,0,FLOATING_INPUT);
+	//ConfigurePinForInputMode(GPIOA,5,INPUT_WITH_PULLUP_PULLDOWN);
+	//ConfigurePinForPullUpOrDown(GPIOA,5,PULLUP);
 	
-	GPIO_ConfigurePinDirection(GPIOA,1,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,1,INPUT_WITH_PULLUP_PULLDOWN);
-	GPIO_ConfigurePullUpOrPullDown(GPIOA,1,PULLDOWN);
+	ConfigurePinForDirection(GPIOA,1,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,1,INPUT_WITH_PULLUP_PULLDOWN);
+	ConfigurePinForPullUpOrDown(GPIOA,1,PULLDOWN);
 	
-	GPIO_ConfigurePinDirection(GPIOA,2,INPUT_MODE);
-	GPIO_ConfigureInputMode(GPIOA,2,INPUT_WITH_PULLUP_PULLDOWN);
-	GPIO_ConfigurePullUpOrPullDown(GPIOA,2,PULLUP);
+	ConfigurePinForDirection(GPIOA,2,INPUT_MODE);
+	ConfigurePinForInputMode(GPIOA,2,INPUT_WITH_PULLUP_PULLDOWN);
+	ConfigurePinForPullUpOrDown(GPIOA,2,PULLUP);
 }
 
 //**************************************
 void ConfigureRelays(void){
 	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
 	
-	GPIO_ConfigurePinDirection(GPIOA,15,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,15,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,15);
+	ConfigurePinForDirection(GPIOA,15,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,15,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,15);
 	
-	GPIO_ConfigurePinDirection(GPIOA,3,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputMode(GPIOA,3,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetOutputPin(GPIOA,3);
+	ConfigurePinForDirection(GPIOA,3,OUTPUT_MODE_2MHz);
+	ConfigurePinForOutputMode(GPIOA,3,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	ResetPinFromOutput(GPIOA,3);
 }
 
 //****************************************************

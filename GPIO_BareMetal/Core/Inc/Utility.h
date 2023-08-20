@@ -18,3 +18,4 @@
 #define Get4Bit(ADDRESS,FROM)           		((ADDRESS >> FROM) & 0b1111UL)
 
 #endif
+
