@@ -41,7 +41,6 @@ int main(void){
 	ConfigureBcdInput();
 	ConfigureBcdDisplay();
 	
-	//SetPinFromOutput(GPIOA,15);
   while(1){
 		//if(GetPinFromInput(GPIOA,1)){SetPinFromOutput(GPIOA,15);}
 			//else{ResetPinFromOutput(GPIOA,15);}
@@ -96,11 +95,9 @@ void ConfigureBcdDisplay(void){
 void ConfigureButtons(void){
 	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
 	
-	ResetPinFromOutput(GPIOA,0);
 	ConfigurePinForDirection(GPIOA,0,INPUT_MODE);
-	ConfigurePinForInputMode(GPIOA,0,FLOATING_INPUT);
-	//ConfigurePinForInputMode(GPIOA,5,INPUT_WITH_PULLUP_PULLDOWN);
-	//ConfigurePinForPullUpOrDown(GPIOA,5,PULLUP);
+	ConfigurePinForInputMode(GPIOA,0,INPUT_WITH_PULLUP_PULLDOWN);
+	ConfigurePinForPullUpOrDown(GPIOA,0,PULLUP);
 	
 	ConfigurePinForDirection(GPIOA,1,INPUT_MODE);
 	ConfigurePinForInputMode(GPIOA,1,INPUT_WITH_PULLUP_PULLDOWN);

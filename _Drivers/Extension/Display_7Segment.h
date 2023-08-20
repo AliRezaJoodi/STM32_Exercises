@@ -55,7 +55,7 @@ unsigned char table_7segment[18]={
 #define _ToggleValue(VALUE)                		VALUE = ~VALUE;
 
 #define _TurnOffDigits \
-	WritePinFromOutput(DIGIT0_GPIO,DIGIT0_PIN,!ACTIVATE_DIGIT);\
+	WritePinFromOutput(DIGIT0_GPIO,DIGIT0_PIN,!ACTIVATE_DIGIT);
  
 #define _TurnOff7Segment \
 	WritePinFromOutput(A_GPIO,A_PIN,!ACTIVATE_SEGMENT);\
@@ -90,7 +90,7 @@ unsigned char table_7segment[18]={
 	ConfigurePinForOutputMode(DP_GPIO,DP_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);\
 	_TurnOff7Segment;
  
-#define _DriveDataOnSegments(data) \
+#define _DriveDataOn7Segment(data) \
 	WritePinFromOutput(A_GPIO,A_PIN,GetBit(value,0));\
 	WritePinFromOutput(B_GPIO,B_PIN,GetBit(value,1));\
 	WritePinFromOutput(C_GPIO,C_PIN,GetBit(value,2));\
