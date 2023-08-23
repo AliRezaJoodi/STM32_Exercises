@@ -31,26 +31,34 @@
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPARST;
 #define IsEnableClockSourceForPortA \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPAEN) >> RCC_APB2ENR_IOPAEN_Pos)
-	
+#define WaitTillEnableClockSourceForPortA \
+	while(IsEnableClockSourceForPortA != 1){}
+		
 #define EnableOrDisableClockSourceForPortB(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPBEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPBEN_Pos);
 #define ResetClockSourceForPortB \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPBRST;	
 #define IsEnableClockSourceForPortB \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPBEN) >> RCC_APB2ENR_IOPBEN_Pos)
-	
+#define WaitTillEnableClockSourceForPortB \
+	while(IsEnableClockSourceForPortB != 1){}
+		
 #define EnableOrDisableClockSourceForPortC(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPCEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPCEN_Pos);
 #define ResetClockSourceForPortC \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPCRST;
 #define IsEnableClockSourceForPortC \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPCEN) >> RCC_APB2ENR_IOPCEN_Pos)
-
+#define WaitTillEnableClockSourceForPortC \
+	while(IsEnableClockSourceForPortC != 1){}
+		
 #define EnableOrDisableClockSourceForPortD(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPDEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPDEN_Pos);
 #define ResetClockSourceForPortD \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPDRST;
 #define IsEnableClockSourceForPortD \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPDEN) >> RCC_APB2ENR_IOPDEN_Pos)
+#define WaitTillEnableClockSourceForPortD \
+	while(IsEnableClockSourceForPortD != 1){}
 		
 #endif
