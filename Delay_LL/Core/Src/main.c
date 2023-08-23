@@ -76,9 +76,9 @@ int main(void)
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** DISABLE: JTAG-DP Disabled and SW-DP Disabled
+  /** Enable the Serial wire JTAG configuration
   */
-  LL_GPIO_AF_DisableRemap_SWJ();
+  LL_GPIO_AF_EnableRemap_SWJ();
 
   /* USER CODE BEGIN Init */
 

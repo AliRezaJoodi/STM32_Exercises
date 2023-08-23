@@ -24,7 +24,7 @@ RTE
 *.o
 *.dep
 *.scvd
-
+*.lst
 
 
 
