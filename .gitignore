@@ -26,6 +26,9 @@ RTE
 *.scvd
 *.lst
 
+# STM32CubeMX
+.mxproject
+
 
 
 
