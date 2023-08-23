@@ -104,6 +104,7 @@ int main(void)
 		
 		uint32_t value=(GPIOA->IDR)>>7 & (0b1111U);
 		GPIOA->ODR= (GPIOA->ODR) & ~(0b1111<<11)| (value<<11);
+	//HAL_Delay(250);
   }
   /* USER CODE END 3 */
 }

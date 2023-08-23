@@ -69,7 +69,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_Pin LL_GPIO_PIN_0
+#define LED_Pin LL_GPIO_PIN_1
 #define LED_GPIO_Port GPIOA
 
 #ifndef NVIC_PRIORITYGROUP_0
