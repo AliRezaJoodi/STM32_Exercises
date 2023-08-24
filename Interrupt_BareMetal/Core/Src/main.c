@@ -1,96 +1,30 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+// GitHub Account: GitHub.com/AliRezaJoodi
+
 #include "main.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
-#include "STM32F1xx_INT_BareMetal.h"
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-/* USER CODE BEGIN PFP */
+void ConfigureExternalInterrupts(void);
 void ConfigureOutputPins(void);
-static void ConfigureOutputPins2(void);
-/* USER CODE END PFP */
+void ConfigureOutputPins2(void);
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
+int main(void){
+	EnableOrDisableClockSourceForAlternateFunction(1); WaitTillEnableClockSourceForAlternateFunction;
+	EnableOrDisableClockSourceForPowerInterface(1); WaitTillEnableClockSourceFromPowerInterface;
+	
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
 	ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
   SystemClock_Config();
-  MX_GPIO_Init();
+	EnableOrDisableClockSourceForPortA(1); WaitTillEnableClockSourceForPortA;
+  ConfigureExternalInterrupts();
 	ConfigureOutputPins();
 	ConfigureOutputPins2();
+	
   while(1){
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-		GPIOB->ODR= AFIO->EXTICR[3];
+		//GPIOB->ODR= AFIO->EXTICR[0];
+		GPIOB->ODR= EXTI->IMR;
   }
-  /* USER CODE END 3 */
 }
 
 //***************************************************
@@ -114,67 +48,34 @@ void SystemClock_Config(void){
 }
 
 //**********************************************************
-static void MX_GPIO_Init(void){
-  LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	/* USER CODE BEGIN MX_GPIO_Init_1 */
-	/* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-	EnableOrDisableClockSourceForPortA(1);
-	WaitTillEnableClockSourceForPortA;
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
-
-  /**/
-  //LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTC, LL_GPIO_AF_EXTI_LINE0);
-	//ConfigurePortForINT0(EXTI_PORTC);
-	ConfigureSourceForExternalInterrupt(EXTI_PORTA,INT0);
-
-  /**/
-  //LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE6);
-	ConfigureSourceForExternalInterrupt(EXTI_PORTA,INT6);
-
-  /**/
-  //LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE11);
-	ConfigureSourceForExternalInterrupt(EXTI_PORTA,INT11);
-	
-  /**/
-  //LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE12);
-	ConfigureSourceForExternalInterrupt(EXTI_PORTA,INT12);
-
-  /**/
-  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_0;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
-  LL_EXTI_Init(&EXTI_InitStruct);
-
-  /**/
-  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_6;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
-  LL_EXTI_Init(&EXTI_InitStruct);
-
-  /**/
-  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_11;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
-  LL_EXTI_Init(&EXTI_InitStruct);
-
-  /**/
-  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_12;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
-  LL_EXTI_Init(&EXTI_InitStruct);
-
+void ConfigureExternalInterrupts(void){
+	ConfigureSourceForEXTI(EXTI_PORTA,INT0);
 	ConfigurePinForInputMode(GPIOA,0,FLOATING_INPUT);
+	EnableOrDisableInterruptModeForEXTI(INT0,1);
+	EnableOrDisableEventModeForEXTI(INT0,0);
+	EnableOrDisableRisingTriggerForEXTI(INT0,1);
+	EnableOrDisableFallingTriggerForEXTI(INT0,0);
+
+	ConfigureSourceForEXTI(EXTI_PORTA,INT6);
 	ConfigurePinForInputMode(GPIOA,6,FLOATING_INPUT);
+	EnableOrDisableInterruptModeForEXTI(INT6,1);
+	EnableOrDisableEventModeForEXTI(INT6,0);
+	EnableOrDisableRisingTriggerForEXTI(INT6,0);
+	EnableOrDisableFallingTriggerForEXTI(INT6,1);
+	
+	ConfigureSourceForEXTI(EXTI_PORTA,INT11);
 	ConfigurePinForInputMode(GPIOA,11,FLOATING_INPUT);
+	EnableOrDisableInterruptModeForEXTI(INT11,1);
+	EnableOrDisableEventModeForEXTI(INT11,0);
+	EnableOrDisableRisingTriggerForEXTI(INT11,1);
+	EnableOrDisableFallingTriggerForEXTI(INT11,1);
+	
+	ConfigureSourceForEXTI(EXTI_PORTA,INT12);
 	ConfigurePinForInputMode(GPIOA,12,FLOATING_INPUT);
+	EnableOrDisableInterruptModeForEXTI(INT12,1);
+	EnableOrDisableEventModeForEXTI(INT12,0);
+	EnableOrDisableRisingTriggerForEXTI(INT12,1);
+	EnableOrDisableFallingTriggerForEXTI(INT12,0);
 	
   /* EXTI interrupt init*/
   NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
@@ -185,7 +86,7 @@ static void MX_GPIO_Init(void){
   NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
-/* USER CODE BEGIN 4 */
+//*************************************************
 void ConfigureOutputPins(void){
 	ConfigurePinForDirection(GPIOA,1,OUTPUT_MODE_2MHz);
 	ConfigurePinForOutputMode(GPIOA,1,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
@@ -204,7 +105,13 @@ void ConfigureOutputPins(void){
 	ResetPinFromOutput(GPIOA,4);
 }
 
-static void ConfigureOutputPins2(void){
+//*************************************************
+void ConfigureOutputPins2(void){
+	EnableOrDisableClockSourceForPortB(1); WaitTillEnableClockSourceForPortB;
+	GPIOB->CRL=0x22222222UL;
+	GPIOB->CRH=0x22222222UL;
+	GPIOB->BRR=0xFFFFUL;
+/*
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
@@ -222,7 +129,7 @@ static void ConfigureOutputPins2(void){
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	
+*/	
 }
 /* USER CODE END 4 */
 

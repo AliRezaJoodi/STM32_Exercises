@@ -43,7 +43,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Utility.h"
+#include "STM32F1xx_BUS_BareMetal.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
+#include "STM32F1xx_INT_BareMetal.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

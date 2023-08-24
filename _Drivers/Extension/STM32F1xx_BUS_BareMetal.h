@@ -1,5 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include "stm32f1xx.h"
+
 #ifndef _BUS_INCLUDED
     #define _BUS_INCLUDED
 		
@@ -17,14 +19,18 @@
 	RCC->APB1RSTR= RCC_APB1RSTR_PWRRST;	
 #define IsEnableClockSourceFromPowerInterface \
 	((RCC->APB1ENR & RCC_APB1ENR_PWREN) >> RCC_APB1ENR_PWREN_Pos)
-	
+#define WaitTillEnableClockSourceFromPowerInterface \
+	while(IsEnableClockSourceFromPowerInterface != 1){}
+		
 #define EnableOrDisableClockSourceForAlternateFunction(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_AFIOEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_AFIOEN_Pos);
 #define ResetClockSourceForAlternateFunction \
 	RCC->APB2RSTR= RCC_APB2RSTR_AFIORST;	
 #define IsEnableClockSourceForAlternateFunction \
 	((RCC->APB2ENR & RCC_APB2ENR_AFIOEN) >> RCC_APB2ENR_AFIOEN_Pos)
-	
+#define WaitTillEnableClockSourceForAlternateFunction \
+	while(IsEnableClockSourceForAlternateFunction != 1){}
+		
 #define EnableOrDisableClockSourceForPortA(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPAEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPAEN_Pos);
 #define ResetClockSourceForPortA \

@@ -1,5 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include "stm32f1xx.h"
+
 #ifndef _GPIO_INCLUDED
     #define _GPIO_INCLUDED
 
