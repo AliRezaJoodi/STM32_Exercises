@@ -21,9 +21,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
-#include "Utility.h"
 #include "Display_7Segment.h"
 /* USER CODE END Includes */
 
@@ -56,7 +53,7 @@ static void MX_GPIO_Init(void);
 //**************************************
 void Display_7Segment(unsigned int value){
 			value=_ConvertNumberTo7SegmentData(value);
-			if(ACTIVATE_SEGMENT==0){value= _ToggleValue(value);}
+			if(ACTIVATE_SEGMENT==0){value= _ToggleData(value);}
 			_DriveDataOn7Segment(value);
 			WritePinFromOutput(DIGIT0_GPIO,DIGIT0_PIN,ACTIVATE_DIGIT);
 }
