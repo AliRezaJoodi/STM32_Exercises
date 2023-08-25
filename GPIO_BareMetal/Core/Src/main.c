@@ -1,12 +1,6 @@
 
 #include "main.h"
 
-#include "STM32F1xx_System_BareMetal.h"
-#include "STM32F1xx_RCC_BareMetal.h"
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
-#include "Utility.h"
-
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
