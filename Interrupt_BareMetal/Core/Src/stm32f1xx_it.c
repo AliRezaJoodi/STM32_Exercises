@@ -197,6 +197,7 @@ void EXTI0_IRQHandler(void){
 	if (IsActiveFlagForEXTI(INT0) != RESET){
 		ClearPendingRegisterForEXTI(INT0);
 		TogglePinFromOutput(GPIOA,1);
+		//while(1){};
   }
 }
 
@@ -205,6 +206,7 @@ void EXTI9_5_IRQHandler(void){
 	if (IsActiveFlagForEXTI(INT6) != RESET){
 		ClearPendingRegisterForEXTI(INT6);
 		TogglePinFromOutput(GPIOA,2);
+		//while(1){};
   }
 }
 
@@ -213,6 +215,7 @@ void EXTI15_10_IRQHandler(void){
 	if (IsActiveFlagForEXTI(INT11) != RESET){
 		ClearPendingRegisterForEXTI(INT11);
 		TogglePinFromOutput(GPIOA,3);
+		//while(1){};
   }
 	
 	if (IsActiveFlagForEXTI(INT12) != RESET){

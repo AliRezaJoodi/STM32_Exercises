@@ -1,8 +1,8 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include "Utility.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
-#include "Utility.h"
 
 #ifndef _7SEGMENT_INCLOUDED
     #define _7SEGMENT_INCLOUDED
@@ -52,7 +52,7 @@ unsigned char table_7segment[18]={
  };
  	
 #define _ConvertNumberTo7SegmentData(VALUE)   (table_7segment[VALUE])
-#define _ToggleValue(VALUE)                		VALUE = ~VALUE;
+#define _ToggleData(VALUE)                		VALUE = ~VALUE;
 
 #define _TurnOffDigits \
 	WritePinFromOutput(DIGIT0_GPIO,DIGIT0_PIN,!ACTIVATE_DIGIT);
@@ -99,5 +99,5 @@ unsigned char table_7segment[18]={
 	WritePinFromOutput(F_GPIO,F_PIN,GetBit(value,5));\
 	WritePinFromOutput(G_GPIO,G_PIN,GetBit(value,6));\
 	WritePinFromOutput(DP_GPIO,DP_PIN,GetBit(value,7));
- 
+
 #endif
