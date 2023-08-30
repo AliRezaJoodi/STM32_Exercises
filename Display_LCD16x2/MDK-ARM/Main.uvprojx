@@ -490,9 +490,9 @@
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
             </File>
             <File>
-              <FileName>lcd.c</FileName>
+              <FileName>Display_LCD.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\lcd.c</FilePath>
+              <FilePath>..\Core\Src\Display_LCD.c</FilePath>
             </File>
           </Files>
         </Group>
