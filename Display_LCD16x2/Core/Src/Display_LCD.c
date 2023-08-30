@@ -1,5 +1,5 @@
 
-#include "lcd.h"
+#include "Display_LCD.h"
 
 //********************************
 void Cmd4bit(uint8_t cmd){
