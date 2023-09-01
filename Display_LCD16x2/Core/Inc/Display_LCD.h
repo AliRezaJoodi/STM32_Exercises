@@ -5,6 +5,7 @@
 
 
 #include "Utility.h"
+#include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "stm32f1xx_hal.h"
 
@@ -17,15 +18,17 @@
 	#define RW_PIN  			1
 	#define EN_PORT  			GPIOB
 	#define EN_PIN  			2
-		
-	#define D4_PORT  			GPIOA
-	#define D4_PIN  			4
-	#define D5_PORT  			GPIOA
-	#define D5_PIN  			5
-	#define D6_PORT  			GPIOA
-	#define D6_PIN  			6
+
 	#define D7_PORT  			GPIOA
 	#define D7_PIN  			7
+	#define D6_PORT  			GPIOA
+	#define D6_PIN  			6
+	#define D5_PORT  			GPIOA
+	#define D5_PIN  			5
+	#define D4_PORT  			GPIOA
+	#define D4_PIN  			4
+
+
 #endif
 
 #define _CLEAR_DISPLAY  0x01 // Clear display command
@@ -55,30 +58,39 @@
 #define _REGISTER_INSTRUCTION		0
 #define _REGISTER_DATA					1
 #define _SelectInstructionOrDataRegisterForLCD(MODE) \
-	WritePinFromOutput(RS_PORT,RS_PIN,MODE&0b1);
+	WritePinFromOutput(RS_PORT,RS_PIN,MODE);
 	
 #define _OPERATION_WRITE	0
 #define _OPERATION_READ		1
 #define _SelectWriteOrReadModeForLCD(MODE) \
-	WritePinFromOutput(RW_PORT,RW_PIN,MODE&0b1);
+	WritePinFromOutput(RW_PORT,RW_PIN,MODE);
 
-void _LCD_Write_4BitMode(unsigned char data);
-void LCD_PutCommand(unsigned char data);
-void ConfigureDisplayStatus(char status);
-void ConfigureCursorStatus(char status);
-void ConfigureBlinkingCursorStatus(char status);
-void ConfigureInterfaceDataLength(char mode);
-void ConfigureLine(char mode);
-void lcd_clear(void);
-void lcd_gotoxy(unsigned char x, unsigned char y);
-void lcd_init(void);
-void lcd_PutChar(char data);
-void lcd_PutString(char *str);
-void lcd_PutStringFromFlash(const char *str);
-
-static char _interface_line_=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
-#define ConfigureLine_(MODE) \
-	WriteBit(_interface_line_,_LINE_POS,(MODE&0b1));\
-	LCD_PutCommand(_interface_line_);
+#define _INSTRUCTION_WRITE	0b00
+#define _INSTRUCTION_READ		0b01
+#define _DATA_WRITE					0b10
+#define _DATA_READ					0b11
+#define _LCD_SelectOperationMode(MODE) \
+	WritePinFromOutput(RS_PORT,RS_PIN,GetBit(MODE,1));\
+	WritePinFromOutput(RW_PORT,RW_PIN,GetBit(MODE,0));
 	
+void LCD_PutCommand(unsigned char data);
+void LCD_ConfigureDisplayStatus(char status);
+void LCD_ConfigureCursorStatus(char status);
+void LCD_ConfigureBlinkingCursorStatus(char status);
+void LCD_ConfigureInterfaceDataLength(char mode);
+void LCD_ConfigureLine(char mode);
+void LCD_ClearDisplay(void);
+void LCD_GoToXY(unsigned char x, unsigned char y);
+void LCD_ConfigureDefaultMode(void);
+void LCD_PutChar(char data);
+void LCD_PutString(char *str);
+void LCD_PutStringFromFlash(const char *str);
+
+#define lcd_init()					LCD_ConfigureDefaultMode()
+#define lcd_clear()				LCD_ClearDisplay()
+#define lcd_gotoxy(x,y)		LCD_GoToXY(x,y)
+#define lcd_putchar(c)   	LCD_PutChar(c)
+#define lcd_puts(str)   	LCD_PutString(str)
+#define lcd_putsf(str)    LCD_PutStringFromFlash(str)
+
 #endif
