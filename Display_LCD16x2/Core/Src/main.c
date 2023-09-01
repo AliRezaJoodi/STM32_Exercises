@@ -82,25 +82,19 @@ int main(void){
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+  //MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 	lcd_init();
-	ConfigureLine_(LINE_DUAL);
-	
-	lcd_gotoxy(0,0); lcd_PutStringFromFlash("012345678901234");
-	//HAL_Delay(250);
-	//ConfigureDisplayStatus(0); HAL_Delay(250);
-	//ConfigureDisplayStatus(1); HAL_Delay(250);
-	lcd_gotoxy(0,1); lcd_PutString(txt);
-	HAL_Delay(250);
-	ConfigureCursorStatus(0); HAL_Delay(250);
-	ConfigureCursorStatus(1); HAL_Delay(250);
+	LCD_GoToXY(0,0); lcd_putsf("0123456789012345"); HAL_Delay(250);
+	LCD_ConfigureDisplayStatus(0); HAL_Delay(250);
+	LCD_ConfigureDisplayStatus(1); HAL_Delay(250);
+	LCD_GoToXY(0,1); lcd_puts(txt); HAL_Delay(250);
+	LCD_ConfigureCursorStatus(1); HAL_Delay(250);
 	lcd_clear();
-	//LCD_PutCommand(0b00001111);
-	ConfigureDisplayStatus(1);
-	lcd_PutChar(65);
-	ConfigureBlinkingCursorStatus(1); HAL_Delay(1000);
-	ConfigureBlinkingCursorStatus(0); HAL_Delay(500);
+	lcd_putchar(65);
+	LCD_ConfigureBlinkingCursorStatus(1); HAL_Delay(2000);
+	LCD_ConfigureBlinkingCursorStatus(0); HAL_Delay(1000);
+	LCD_ConfigureCursorStatus(0); HAL_Delay(250);
   /* USER CODE END 2 */
 
   /* Infinite loop */
