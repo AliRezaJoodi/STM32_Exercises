@@ -61,7 +61,8 @@ static void MX_GPIO_Init(void);
   */
 int main(void){
   /* USER CODE BEGIN 1 */
-	char txt[16]="Test";
+	const char txt1[16]="012345678901234";
+	char txt[16]="012345678901234";
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -84,14 +85,22 @@ int main(void){
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 	lcd_init();
-	lcd_clear();
+	ConfigureLine_(LINE_DUAL);
 	
-	lcd_gotoxy(0,0); 
-	lcd_puts("Line1");
-	//HAL_Delay(500);
-	lcd_gotoxy(0,1); 
-	lcd_puts(txt);
-	//HAL_Delay(500);
+	lcd_gotoxy(0,0); lcd_PutStringFromFlash("012345678901234");
+	//HAL_Delay(250);
+	//ConfigureDisplayStatus(0); HAL_Delay(250);
+	//ConfigureDisplayStatus(1); HAL_Delay(250);
+	lcd_gotoxy(0,1); lcd_PutString(txt);
+	HAL_Delay(250);
+	ConfigureCursorStatus(0); HAL_Delay(250);
+	ConfigureCursorStatus(1); HAL_Delay(250);
+	lcd_clear();
+	//LCD_PutCommand(0b00001111);
+	ConfigureDisplayStatus(1);
+	lcd_PutChar(65);
+	ConfigureBlinkingCursorStatus(1); HAL_Delay(1000);
+	ConfigureBlinkingCursorStatus(0); HAL_Delay(500);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -155,7 +164,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
                           |GPIO_PIN_7, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -163,7 +172,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PA1 PA4 PA5 PA6
                            PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
                           |GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;

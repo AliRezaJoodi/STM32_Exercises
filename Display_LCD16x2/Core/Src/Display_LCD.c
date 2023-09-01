@@ -1,119 +1,127 @@
 
 #include "Display_LCD.h"
 
-//********************************
-void Cmd4bit(uint8_t cmd){
-	/* Set output port */
-	if((cmd & 0x08))
-	HAL_GPIO_WritePin(DATA_PORT, D7_PIN,GPIO_PIN_SET);
-	else
-	HAL_GPIO_WritePin(DATA_PORT, D7_PIN,GPIO_PIN_RESET);
+static char _display_cursor_bink=(0b00001000 | (DISPLAY_ON<<_DISPLAY_POS) | (CURSOR_OFF<<_CURSOR_POS) | (BLINK_OFF<<_BLINK_POS));
+static char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
 
-	if((cmd & 0x04))
-	HAL_GPIO_WritePin(DATA_PORT, D6_PIN,GPIO_PIN_SET);
-	else
-	HAL_GPIO_WritePin(DATA_PORT, D6_PIN,GPIO_PIN_RESET);
+//********************************
+void _LCD_Write_4BitMode(unsigned char data){	
+	WritePinFromOutput(D7_PORT,D7_PIN,GetBit(data,7));
+	WritePinFromOutput(D6_PORT,D6_PIN,GetBit(data,6));
+	WritePinFromOutput(D5_PORT,D5_PIN,GetBit(data,5));
+	WritePinFromOutput(D4_PORT,D4_PIN,GetBit(data,4));
 	
-	if((cmd & 0x02))
-	HAL_GPIO_WritePin(DATA_PORT, D5_PIN,GPIO_PIN_SET);
-	else
-	HAL_GPIO_WritePin(DATA_PORT, D5_PIN,GPIO_PIN_RESET);
+	SetPinFromOutput(EN_PORT,EN_PIN); HAL_Delay(1);
+	ResetPinFromOutput(EN_PORT,EN_PIN); HAL_Delay(1);
 	
-	if((cmd & 0x01))
-	HAL_GPIO_WritePin(DATA_PORT, D4_PIN,GPIO_PIN_SET);
-	else
-	HAL_GPIO_WritePin(DATA_PORT, D4_PIN,GPIO_PIN_RESET);
+	WritePinFromOutput(D7_PORT,D7_PIN,GetBit(data,3));
+	WritePinFromOutput(D6_PORT,D6_PIN,GetBit(data,2));
+	WritePinFromOutput(D5_PORT,D5_PIN,GetBit(data,1));
+	WritePinFromOutput(D4_PORT,D4_PIN,GetBit(data,0));
+	
+	SetPinFromOutput(EN_PORT,EN_PIN); HAL_Delay(1);
+	ResetPinFromOutput(EN_PORT,EN_PIN); HAL_Delay(1);
 }
 
 //********************************
-void send_command(unsigned char data){
-  HAL_Delay(2);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<RS_PIN),GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<RW_PIN),GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(DATA_PORT, (0x0f<<D0_PIN_Start), GPIO_PIN_RESET);
+void LCD_PutCommand(unsigned char data){
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_INSTRUCTION);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
 
-	/* High nibble */
-	
-	Cmd4bit(data >> 4);
-	HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_SET);
-	HAL_Delay(2);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_RESET);
-	HAL_Delay(2);
-	/* Low nibble */
-	Cmd4bit(data & 0x0F);	
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_SET);
-	HAL_Delay(2);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_RESET);
-	HAL_Delay(2);
+	_LCD_Write_4BitMode(data); HAL_Delay(1);
 }
 
 //********************************
-void lcd_putchar(unsigned char data){
-  HAL_Delay(1);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<RS_PIN),GPIO_PIN_SET);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<RW_PIN),GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(DATA_PORT, (0x0f<<D0_PIN_Start), GPIO_PIN_RESET);
-  
-  /* High nibble */
-	Cmd4bit(data >> 4);
-	HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_SET);
-	HAL_Delay(2);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_RESET);
-	HAL_Delay(2);
-	/* Low nibble */
-	Cmd4bit(data & 0x0F);
+void ConfigureDisplayStatus(char status){
+		WriteBit(_display_cursor_bink,2,status&0b1);
+		LCD_PutCommand(_display_cursor_bink);
+}
+
+//********************************
+void ConfigureCursorStatus(char status){
+		WriteBit(_display_cursor_bink,1,status&0b1);
+		LCD_PutCommand(_display_cursor_bink);
+}
+
+//********************************
+void ConfigureBlinkingCursorStatus(char status){
+		WriteBit(_display_cursor_bink,0,status&0b1);
+		LCD_PutCommand(_display_cursor_bink);
+}
+
+//********************************
+void ConfigureInterfaceDataLength(char mode){
+		WriteBit(_interface_line,_INTERFACE_POS,mode&0b1);
+		LCD_PutCommand(_interface_line);
+}
+
+//********************************
+void ConfigureLine(char mode){
+		WriteBit(_interface_line,_LINE_POS,mode&0b1);
+		LCD_PutCommand(_interface_line);
+}
+
+//********************************
+void lcd_gotoxy(unsigned char x, unsigned char y){
+	const unsigned char _base_y[4]={0x80,0xC0,0x94,0xD4};
 	
-	HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_SET);
-  HAL_GPIO_WritePin(CTRL_PORT,(1<<EN_PIN),GPIO_PIN_RESET);
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_INSTRUCTION);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
+	
+	_LCD_Write_4BitMode(_base_y[y]+x); HAL_Delay(1);
+}
+
+//********************************
+void lcd_clear(void){
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_INSTRUCTION);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
+
+	_LCD_Write_4BitMode(_CLEAR_DISPLAY); HAL_Delay(2);
+	_LCD_Write_4BitMode(_RETURN_HOME); HAL_Delay(2);
 }
 
 //********************************
 void lcd_init(void){
-  HAL_Delay(2);
+  HAL_Delay(20);
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_INSTRUCTION);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
 	
-	send_command(0x02);		/* send for 4 bit initialization of LCD  */
-	send_command(0x28);   /* 2 line, 5*7 matrix in 4-bit mode */
-	send_command(0x0c);   /* Display on cursor off*/
-	send_command(0x06);   /* Increment cursor (shift cursor to right)*/
-	send_command(0x01);   /* Clear display screen*/
-	
+	_LCD_Write_4BitMode(_RETURN_HOME); HAL_Delay(2); 
+	_LCD_Write_4BitMode(_interface_line);
+	//ConfigureInterfaceDataLength(INTERFACE_8BIT);
+	//ConfigureLine(LINE_DUAL);
+	_LCD_Write_4BitMode(_display_cursor_bink);
+	_LCD_Write_4BitMode(_CLEAR_DISPLAY); HAL_Delay(2);
+	_LCD_Write_4BitMode(_RETURN_HOME); HAL_Delay(2);	
 }
 
 //********************************
-void lcd_puts(char *str){
-  HAL_Delay(1);
+void lcd_PutChar(char data){
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_DATA);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
+	
+  _LCD_Write_4BitMode(data); //HAL_Delay(1);
+}
+
+//********************************
+void lcd_PutString(char *str){
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_DATA);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
   while(*str != 0){
-    lcd_putchar(*str);
+		_LCD_Write_4BitMode(*str);
     str++;
   }
 }
 
 //********************************
-void lcd_gotoxy(unsigned char x, unsigned char y){
-  HAL_Delay(1);
- 
-  switch(y){
-    case 0:
-      send_command(0x80+x);
-    break;
-    case 1:
-      send_command(0xC0+x);
-      break;
-    case 2:
-      send_command(0x94+x);
-      break;
-    case 3:
-      send_command(0xD4+x);
+void lcd_PutStringFromFlash(const char *str){
+	_SelectInstructionOrDataRegisterForLCD(_REGISTER_DATA);
+	_SelectWriteOrReadModeForLCD(_OPERATION_WRITE);
+  while(*str != 0){
+		_LCD_Write_4BitMode(*str);
+    str++;
   }
 }
-
-//********************************
-void lcd_clear(void){
-  HAL_Delay(1);
-  send_command(0x01); // clear
-  send_command(0x02);	// cursor home
-}
-
 
 
 
