@@ -14,7 +14,7 @@ int main(void){
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-	ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
+	ConfigureSerialWireDebugPort(FULL_SWJ);
   SystemClock_Config();
 	EnableOrDisableClockSourceForPortA(1); WaitTillEnableClockSourceForPortA;
   ConfigureExternalInterrupts();
