@@ -4,6 +4,11 @@
 
 #ifndef _BUS_INCLUDED
     #define _BUS_INCLUDED
+
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
 		
 #ifndef ENABLE
 	#define ENABLE        															1
@@ -66,5 +71,10 @@
 	((RCC->APB2ENR & RCC_APB2ENR_IOPDEN) >> RCC_APB2ENR_IOPDEN_Pos)
 #define WaitTillEnableClockSourceForPortD \
 	while(IsEnableClockSourceForPortD != 1){}
+
+
+#ifdef __cplusplus
+    }
+#endif
 		
 #endif

@@ -7,6 +7,11 @@
 #ifndef _7SEGMENT_INCLOUDED
     #define _7SEGMENT_INCLOUDED
 
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+
 #ifndef _7SEGMENT_PORT
     #define _7SEGMENT_PORT 
     
@@ -99,5 +104,10 @@ unsigned char table_7segment[18]={
 	WritePinFromOutput(F_GPIO,F_PIN,GetBit(value,5));\
 	WritePinFromOutput(G_GPIO,G_PIN,GetBit(value,6));\
 	WritePinFromOutput(DP_GPIO,DP_PIN,GetBit(value,7));
+
+
+#ifdef __cplusplus
+    }
+#endif
 
 #endif

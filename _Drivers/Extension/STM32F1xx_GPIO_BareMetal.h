@@ -5,6 +5,11 @@
 #ifndef _GPIO_INCLUDED
     #define _GPIO_INCLUDED
 
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+
 // Serial Wire JTAG Configuration
 #define FULL_SWJ												0b000U
 #define FULL_SWJ_WITHOUT_NJTRST					0b001U
@@ -88,6 +93,11 @@
 
 #define GetPinFromOutput(GPIOx,PIN) \
 	(((GPIOx->ODR) >> PIN) & 0b1UL)
+
+
+#ifdef __cplusplus
+    }
+#endif
 
 #endif
 

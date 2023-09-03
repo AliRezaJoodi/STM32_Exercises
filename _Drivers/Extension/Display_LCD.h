@@ -3,6 +3,10 @@
 #ifndef _LCD_INCLOUDED
 	#define _LCD_INCLOUDED
 
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
 
 #include "Utility.h"
 #include "STM32F1xx_BUS_BareMetal.h"
@@ -92,5 +96,10 @@ void LCD_PutStringFromFlash(const char *str);
 #define lcd_putchar(c)   	LCD_PutChar(c)
 #define lcd_puts(str)   	LCD_PutString(str)
 #define lcd_putsf(str)    LCD_PutStringFromFlash(str)
+
+
+#ifdef __cplusplus
+    }
+#endif
 
 #endif

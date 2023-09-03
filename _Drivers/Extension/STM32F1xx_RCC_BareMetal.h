@@ -5,6 +5,11 @@
 #ifndef _RCC_INCLUDED
     #define _RCC_INCLUDED
 
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+
 #define RCC_SetCalibTrimmingFromHSI(VALUE) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (VALUE<<RCC_CR_HSITRIM_Pos);
 #define RCC_EnableOrDisableClockFromHSI(STATUS) \
@@ -68,5 +73,10 @@
 	((RCC->CFGR & RCC_CFGR_SWS) >> RCC_CFGR_SWS_Pos)
 #define RCC_WaitTillRightClockSource(MODE) \
 	while(RCC_GetSystemClockSource != MODE){}
+
+
+#ifdef __cplusplus
+    }
+#endif
 		
 #endif
