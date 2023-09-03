@@ -34,25 +34,25 @@ void SystemClock_Config(void){
   //while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
 	WaitTillRightLatency(FLASH_LATENCY0);
   //LL_RCC_HSI_SetCalibTrimming(16);
-	SetCalibTrimmingFromHSI(16);
+	RCC_SetCalibTrimmingFromHSI(16);
   //LL_RCC_HSI_Enable();
-	EnableOrDisableClockFromHSI(1);
+	RCC_EnableOrDisableClockFromHSI(1);
    /* Wait till HSI is ready */
   //while(LL_RCC_HSI_IsReady() != 1){}
-	WaitTillStableClockSourceFromHSI
+	RCC_WaitTillStableClockSourceFromHSI
 		
   //LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-	ConfigurePrescalerForAHB(AHB_DIV1);
+	RCC_ConfigurePrescalerForAHB(AHB_DIV1);
   //LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-	ConfigurePrescalerForAPB1(APB1_DIV1);
+	RCC_ConfigurePrescalerForAPB1(APB1_DIV1);
   //LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	ConfigurePrescalerForAPB2(APB2_DIV1);
+	RCC_ConfigurePrescalerForAPB2(APB2_DIV1);
   //LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-	ConfigureSystemClockSource(SYSCLK_HSI);
+	RCC_ConfigureSystemClockSource(SYSCLK_HSI);
    /* Wait till System clock is ready */
   //while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI){}
-	//while(GetSystemClockSource != SYSCLK_HSI){}
-	WaitTillRightClockSource(SYSCLK_HSI);
+	//while(RCC_GetSystemClockSource != SYSCLK_HSI){}
+	RCC_WaitTillRightClockSource(SYSCLK_HSI);
 	
 	SystemCoreClockUpdate();	
   LL_Init1msTick(8000000);
