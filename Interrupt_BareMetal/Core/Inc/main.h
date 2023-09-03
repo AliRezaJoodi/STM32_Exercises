@@ -48,7 +48,7 @@ extern "C" {
 #include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
-#include "STM32F1xx_INT_BareMetal.h"
+#include "STM32F1xx_EXTI_BareMetal.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
