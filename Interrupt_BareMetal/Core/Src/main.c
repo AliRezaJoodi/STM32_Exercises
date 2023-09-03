@@ -62,33 +62,33 @@ void SystemClock_Config(void){
 
 //**********************************************************
 void ConfigureExternalInterrupts(void){
-	ConfigureSourceForEXTI(EXTI_PORTA,INT0);
+	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT0);
 	ConfigurePinForInputMode(GPIOA,0,FLOATING_INPUT);
-	EnableOrDisableInterruptModeForEXTI(INT0,1);
-	EnableOrDisableEventModeForEXTI(INT0,0);
-	EnableOrDisableRisingTriggerForEXTI(INT0,1);
-	EnableOrDisableFallingTriggerForEXTI(INT0,0);
+	EXTI_EnableOrDisableInterruptMode(EXTI_INT0,1);
+	EXTI_EnableOrDisableEventMode(EXTI_INT0,0);
+	EXTI_EnableOrDisableRisingTrigger(EXTI_INT0,1);
+	EXTI_EnableOrDisableFallingTrigger(EXTI_INT0,0);
 
-	ConfigureSourceForEXTI(EXTI_PORTA,INT6);
+	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT6);
 	ConfigurePinForInputMode(GPIOA,6,FLOATING_INPUT);
-	EnableOrDisableInterruptModeForEXTI(INT6,1);
-	EnableOrDisableEventModeForEXTI(INT6,0);
-	EnableOrDisableRisingTriggerForEXTI(INT6,0);
-	EnableOrDisableFallingTriggerForEXTI(INT6,1);
+	EXTI_EnableOrDisableInterruptMode(EXTI_INT6,1);
+	EXTI_EnableOrDisableEventMode(EXTI_INT6,0);
+	EXTI_EnableOrDisableRisingTrigger(EXTI_INT6,0);
+	EXTI_EnableOrDisableFallingTrigger(EXTI_INT6,1);
 	
-	ConfigureSourceForEXTI(EXTI_PORTA,INT11);
+	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT11);
 	ConfigurePinForInputMode(GPIOA,11,FLOATING_INPUT);
-	EnableOrDisableInterruptModeForEXTI(INT11,1);
-	EnableOrDisableEventModeForEXTI(INT11,0);
-	EnableOrDisableRisingTriggerForEXTI(INT11,1);
-	EnableOrDisableFallingTriggerForEXTI(INT11,1);
+	EXTI_EnableOrDisableInterruptMode(EXTI_INT11,1);
+	EXTI_EnableOrDisableEventMode(EXTI_INT11,0);
+	EXTI_EnableOrDisableRisingTrigger(EXTI_INT11,1);
+	EXTI_EnableOrDisableFallingTrigger(EXTI_INT11,1);
 	
-	ConfigureSourceForEXTI(EXTI_PORTA,INT12);
+	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT12);
 	ConfigurePinForInputMode(GPIOA,12,FLOATING_INPUT);
-	EnableOrDisableInterruptModeForEXTI(INT12,1);
-	EnableOrDisableEventModeForEXTI(INT12,0);
-	EnableOrDisableRisingTriggerForEXTI(INT12,1);
-	EnableOrDisableFallingTriggerForEXTI(INT12,0);
+	EXTI_EnableOrDisableInterruptMode(EXTI_INT12,1);
+	EXTI_EnableOrDisableEventMode(EXTI_INT12,0);
+	EXTI_EnableOrDisableRisingTrigger(EXTI_INT12,1);
+	EXTI_EnableOrDisableFallingTrigger(EXTI_INT12,0);
 	
   /* EXTI interrupt init*/
   NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
