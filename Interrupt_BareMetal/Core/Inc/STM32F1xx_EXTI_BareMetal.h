@@ -3,8 +3,13 @@
 #include "Utility.h"
 #include "stm32f1xx.h"
 
-#ifndef _INT_INCLUDED
-    #define _INT_INCLUDED
+#ifndef _EXTI_INCLUDED
+    #define _EXTI_INCLUDED
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 
 #define EXTI_PORTA	0b0000U
 #define EXTI_PORTB	0b0001U
@@ -102,7 +107,19 @@
 	SetBit_NoLastStatus(EXTI->PR,Get4Bit(LINE,8));
 #define EXTI_IsActiveFlag(LINE) \
 	GetBit(EXTI->PR,Get4Bit(LINE,8))
-	
+
+void EXTI_ConfigureNVIC_EXTI0(void);
+void EXTI_ConfigureNVIC_EXTI1(void);
+void EXTI_ConfigureNVIC_EXTI2(void);
+void EXTI_ConfigureNVIC_EXTI3(void);
+void EXTI_ConfigureNVIC_EXTI4(void);
+void EXTI_ConfigureNVIC_EXTI5_9(void);
+void EXTI_ConfigureNVIC_EXTI10_15(void);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
 
 		

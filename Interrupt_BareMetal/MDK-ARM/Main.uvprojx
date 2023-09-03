@@ -395,26 +395,6 @@
           <GroupName>Drivers/STM32F1xx_HAL_Driver</GroupName>
           <Files>
             <File>
-              <FileName>stm32f1xx_ll_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_pwr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_pwr.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_rcc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c</FilePath>
@@ -440,9 +420,9 @@
               <FilePath>../Core/Src/main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_it.c</FileName>
+              <FileName>STM32F1xx_EXTI_BareMetal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32f1xx_it.c</FilePath>
+              <FilePath>..\Core\Src\STM32F1xx_EXTI_BareMetal.c</FilePath>
             </File>
           </Files>
         </Group>

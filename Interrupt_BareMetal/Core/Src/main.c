@@ -62,6 +62,10 @@ void SystemClock_Config(void){
 
 //**********************************************************
 void ConfigureExternalInterrupts(void){
+	EXTI_ConfigureNVIC_EXTI0();
+	EXTI_ConfigureNVIC_EXTI5_9();
+	EXTI_ConfigureNVIC_EXTI10_15();
+	
 	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT0);
 	ConfigurePinForInputMode(GPIOA,0,FLOATING_INPUT);
 	EXTI_EnableOrDisableInterruptMode(EXTI_INT0,1);
@@ -89,14 +93,6 @@ void ConfigureExternalInterrupts(void){
 	EXTI_EnableOrDisableEventMode(EXTI_INT12,0);
 	EXTI_EnableOrDisableRisingTrigger(EXTI_INT12,1);
 	EXTI_EnableOrDisableFallingTrigger(EXTI_INT12,0);
-	
-  /* EXTI interrupt init*/
-  NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(EXTI0_IRQn);
-  NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1, 0));
-  NVIC_EnableIRQ(EXTI9_5_IRQn);
-  NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),2, 0));
-  NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 //*************************************************
@@ -124,27 +120,7 @@ void ConfigureOutputPins2(void){
 	GPIOB->CRL=0x22222222UL;
 	GPIOB->CRH=0x22222222UL;
 	GPIOB->BRR=0xFFFFUL;
-/*
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
-	
-	  LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_10
-                          |LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14
-                          |LL_GPIO_PIN_15|LL_GPIO_PIN_3|LL_GPIO_PIN_4|LL_GPIO_PIN_5
-                          |LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9);
-
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_10
-                          |LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14
-                          |LL_GPIO_PIN_15|LL_GPIO_PIN_3|LL_GPIO_PIN_4|LL_GPIO_PIN_5
-                          |LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-*/	
 }
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
