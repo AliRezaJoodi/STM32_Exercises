@@ -1,4 +1,4 @@
-## External Interrupts with LL(Low Layer) Drivers
+## External Interrupts with Bare Metal
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
