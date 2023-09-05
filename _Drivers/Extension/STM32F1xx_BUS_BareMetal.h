@@ -6,7 +6,7 @@
     #define _BUS_INCLUDED
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
 		
@@ -18,63 +18,63 @@
 	#define DISABLE        															0
 #endif
 
-#define EnableOrDisableClockSourceForPowerInterface(STATUS) \
+#define BUS_EnableOrDisableClockForPowerInterface(STATUS) \
 	RCC->APB1ENR= (RCC->APB1ENR & ~RCC_APB1ENR_PWREN) | ((STATUS&0b1UL)<<RCC_APB1ENR_PWREN_Pos);	
-#define ResetClockSourceForPowerInterface \
+#define BUS_ResetClockForPowerInterface \
 	RCC->APB1RSTR= RCC_APB1RSTR_PWRRST;	
-#define IsEnableClockSourceFromPowerInterface \
+#define BUS_IsEnableClockFromPowerInterface \
 	((RCC->APB1ENR & RCC_APB1ENR_PWREN) >> RCC_APB1ENR_PWREN_Pos)
-#define WaitTillEnableClockSourceFromPowerInterface \
-	while(IsEnableClockSourceFromPowerInterface != 1){}
+#define BUS_WaitTillEnableClockFromPowerInterface \
+	while(!BUS_IsEnableClockFromPowerInterface){}
 		
-#define EnableOrDisableClockSourceForAlternateFunction(STATUS) \
+#define BUS_EnableOrDisableClockForAlternateFunction(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_AFIOEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_AFIOEN_Pos);
-#define ResetClockSourceForAlternateFunction \
+#define BUS_ResetClockForAlternateFunction \
 	RCC->APB2RSTR= RCC_APB2RSTR_AFIORST;	
-#define IsEnableClockSourceForAlternateFunction \
+#define BUS_IsEnableClockForAlternateFunction \
 	((RCC->APB2ENR & RCC_APB2ENR_AFIOEN) >> RCC_APB2ENR_AFIOEN_Pos)
-#define WaitTillEnableClockSourceForAlternateFunction \
-	while(IsEnableClockSourceForAlternateFunction != 1){}
+#define BUS_WaitTillEnableClockForAlternateFunction \
+	while(!BUS_IsEnableClockForAlternateFunction){}
 		
-#define EnableOrDisableClockSourceForPortA(STATUS) \
+#define BUS_EnableOrDisableClockForPortA(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPAEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPAEN_Pos);
-#define ResetClockSourceForPortA \
+#define BUS_ResetClockForPortA \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPARST;
-#define IsEnableClockSourceForPortA \
+#define BUS_IsEnableClockForPortA \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPAEN) >> RCC_APB2ENR_IOPAEN_Pos)
-#define WaitTillEnableClockSourceForPortA \
-	while(IsEnableClockSourceForPortA != 1){}
+#define BUS_WaitTillEnableClockForPortA \
+	while(!BUS_IsEnableClockForPortA){}
 		
-#define EnableOrDisableClockSourceForPortB(STATUS) \
+#define BUS_EnableOrDisableClockForPortB(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPBEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPBEN_Pos);
-#define ResetClockSourceForPortB \
+#define BUS_ResetClockForPortB \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPBRST;	
-#define IsEnableClockSourceForPortB \
+#define BUS_IsEnableClockForPortB \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPBEN) >> RCC_APB2ENR_IOPBEN_Pos)
-#define WaitTillEnableClockSourceForPortB \
-	while(IsEnableClockSourceForPortB != 1){}
+#define BUS_WaitTillEnableClockForPortB \
+	while(!BUS_IsEnableClockForPortB){}
 		
-#define EnableOrDisableClockSourceForPortC(STATUS) \
+#define BUS_EnableOrDisableClockForPortC(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPCEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPCEN_Pos);
-#define ResetClockSourceForPortC \
+#define BUS_ResetClockForPortC \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPCRST;
-#define IsEnableClockSourceForPortC \
+#define BUS_IsEnableClockForPortC \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPCEN) >> RCC_APB2ENR_IOPCEN_Pos)
-#define WaitTillEnableClockSourceForPortC \
-	while(IsEnableClockSourceForPortC != 1){}
+#define BUS_WaitTillEnableClockForPortC \
+	while(!BUS_IsEnableClockForPortC){}
 		
-#define EnableOrDisableClockSourceForPortD(STATUS) \
+#define BUS_EnableOrDisableClockForPortD(STATUS) \
 	RCC->APB2ENR= (RCC->APB2ENR & ~RCC_APB2ENR_IOPDEN) | ((STATUS&0b1UL)<<RCC_APB2ENR_IOPDEN_Pos);
-#define ResetClockSourceForPortD \
+#define BUS_ResetClockForPortD \
 	RCC->APB2RSTR= RCC_APB2RSTR_IOPDRST;
-#define IsEnableClockSourceForPortD \
+#define BUS_IsEnableClockForPortD \
 	((RCC->APB2ENR & RCC_APB2ENR_IOPDEN) >> RCC_APB2ENR_IOPDEN_Pos)
-#define WaitTillEnableClockSourceForPortD \
-	while(IsEnableClockSourceForPortD != 1){}
+#define BUS_WaitTillEnableClockForPortD \
+	while(!BUS_IsEnableClockForPortD){}
 
 
 #ifdef __cplusplus
-    }
+}
 #endif
 		
 #endif

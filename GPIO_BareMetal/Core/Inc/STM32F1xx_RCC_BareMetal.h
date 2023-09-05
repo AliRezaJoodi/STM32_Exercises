@@ -6,7 +6,7 @@
     #define _RCC_INCLUDED
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
 
@@ -15,7 +15,7 @@
 #define RCC_EnableOrDisableClockFromHSI(STATUS) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSION) | ((STATUS&0b1UL)<<RCC_CR_HSION_Pos);
 #define RCC_IsClockStableFromHSI \
-		((RCC->CR & RCC_CR_HSIRDY) >> RCC_CR_HSIRDY_Pos)
+	((RCC->CR & RCC_CR_HSIRDY) >> RCC_CR_HSIRDY_Pos)
 #define RCC_WaitTillStableClockSourceFromHSI \
 	while(!RCC_IsClockStableFromHSI){}
 
@@ -28,7 +28,7 @@
 #define RCC_EnableOrDisableClockFromHSE(STATUS) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSEON) | ((STATUS&0b1UL)<<RCC_CR_HSEON_Pos);
 #define RCC_IsClockStableFromHSE \
-		((RCC->CR & RCC_CR_HSERDY) >> RCC_CR_HSERDY_Pos)
+	((RCC->CR & RCC_CR_HSERDY) >> RCC_CR_HSERDY_Pos)
 #define RCC_WaitTillStableClockSourceFromHSE \
 	while(!RCC_IsClockStableFromHSE){}
 
@@ -43,7 +43,7 @@
 #define AHB_DIV256   	RCC_CFGR_HPRE_DIV256
 #define AHB_DIV512		RCC_CFGR_HPRE_DIV512		
 #define RCC_ConfigurePrescalerForAHB(MODE) \
-			RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_HPRE) | MODE;
+	RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_HPRE) | MODE;
 		
 // Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
 #define APB1_DIV1			RCC_CFGR_PPRE1_DIV1
@@ -76,7 +76,7 @@
 
 
 #ifdef __cplusplus
-    }
+}
 #endif
 		
 #endif
