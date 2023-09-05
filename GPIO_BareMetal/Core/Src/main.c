@@ -9,18 +9,13 @@ void ConfigureButtons(void);
 void ConfigureBcdInput(void);
 void ConfigureBcdDisplay(void);
 
-void delay_ms(int i){
-	int j=500*i;
-	for(i=0;i<j;i++){};
-}
-
 int main(void){
 	char status0=0;
 	
   //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-	EnableOrDisableClockSourceForAlternateFunction(0);
+	BUS_EnableOrDisableClockForAlternateFunction(0);
   //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-	EnableOrDisableClockSourceForPowerInterface(1);
+	BUS_EnableOrDisableClockForPowerInterface(1);
 
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
@@ -36,8 +31,6 @@ int main(void){
 	ConfigureBcdDisplay();
 	
   while(1){
-		//if(GPIO_GetPin(GPIOA,1)){GPIO_SetPin(GPIOA,15);}
-			//else{GPIO_ResetPin(GPIOA,15);}
 		GPIO_WritePin(GPIOA,15,GPIO_GetPin(GPIOA,0));	
 		
 		if(GPIO_GetPin(GPIOA,1)==1){GPIO_SetPin(GPIOA,3);}
@@ -45,9 +38,6 @@ int main(void){
 		
 		uint32_t value= GPIO_Get4Pin(GPIOA,7);
 		GPIO_Write4Pin(GPIOA,11,value);
-		
-		//GPIO_SetPin(GPIOA,15); delay_ms(1000);
-		//GPIO_ResetPin(GPIOA,15); delay_ms(1000);
   }
 }
 
@@ -87,7 +77,8 @@ void ConfigureBcdDisplay(void){
 
 //**************************************
 void ConfigureButtons(void){
-	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
+	BUS_EnableOrDisableClockForPortA(1); 
+	BUS_WaitTillEnableClockForPortA;
 	
 	GPIO_ConfigurePinDirection(GPIOA,0,INPUT_MODE);
 	GPIO_ConfigureInputTypeForPin(GPIOA,0,INPUT_WITH_PULLUP_PULLDOWN);
@@ -104,7 +95,7 @@ void ConfigureButtons(void){
 
 //**************************************
 void ConfigureRelays(void){
-	EnableOrDisableClockSourceForPortA(1); LL_mDelay(10);
+	BUS_EnableOrDisableClockForPortA(1); LL_mDelay(10);
 	
 	GPIO_ConfigurePinDirection(GPIOA,15,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(GPIOA,15,GENERAL_PURPOSE_OUTPUT_PUSHPULL);

@@ -4,7 +4,7 @@
     #define _UTILITY_INCLUDED
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
 
@@ -22,8 +22,9 @@
 #define Get3Bit(ADDRESS,FROM)           		(((ADDRESS) >> (FROM)) & 0b111UL)
 #define Get4Bit(ADDRESS,FROM)           		(((ADDRESS) >> (FROM)) & 0b1111UL)
 
+
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #endif
