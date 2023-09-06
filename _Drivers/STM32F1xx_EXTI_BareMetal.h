@@ -1,7 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "Utility.h"
 #include "stm32f1xx.h"
+#include "Utility.h"
 
 #ifndef _EXTI_INCLUDED
     #define _EXTI_INCLUDED

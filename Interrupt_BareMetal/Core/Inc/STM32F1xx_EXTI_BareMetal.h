@@ -1,7 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "Utility.h"
 #include "stm32f1xx.h"
+#include "Utility.h"
 
 #ifndef _EXTI_INCLUDED
     #define _EXTI_INCLUDED
@@ -115,6 +115,7 @@ void EXTI_ConfigureNVIC_EXTI3(void);
 void EXTI_ConfigureNVIC_EXTI4(void);
 void EXTI_ConfigureNVIC_EXTI5_9(void);
 void EXTI_ConfigureNVIC_EXTI10_15(void);
+
 
 #ifdef __cplusplus
 }
