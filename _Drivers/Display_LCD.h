@@ -1,17 +1,17 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include "stm32f1xx_hal.h"
+#include "Utility.h"
+#include "STM32F1xx_BUS_BareMetal.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
+
 #ifndef _LCD_INCLOUDED
 	#define _LCD_INCLOUDED
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
-
-#include "Utility.h"
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
-#include "stm32f1xx_hal.h"
 
 #ifndef _LCD_PORT
 	#define _LCD_PORT
@@ -31,8 +31,6 @@
 	#define D5_PIN  			5
 	#define D4_PORT  			GPIOA
 	#define D4_PIN  			4
-
-
 #endif
 
 #define _CLEAR_DISPLAY  0x01 // Clear display command
@@ -62,20 +60,20 @@
 #define _REGISTER_INSTRUCTION		0
 #define _REGISTER_DATA					1
 #define _SelectInstructionOrDataRegisterForLCD(MODE) \
-	WritePinFromOutput(RS_PORT,RS_PIN,MODE);
+	GPIO_WritePin(RS_PORT,RS_PIN,MODE);
 	
 #define _OPERATION_WRITE	0
 #define _OPERATION_READ		1
 #define _SelectWriteOrReadModeForLCD(MODE) \
-	WritePinFromOutput(RW_PORT,RW_PIN,MODE);
+	GPIO_WritePin(RW_PORT,RW_PIN,MODE);
 
 #define _INSTRUCTION_WRITE	0b00
 #define _INSTRUCTION_READ		0b01
 #define _DATA_WRITE					0b10
 #define _DATA_READ					0b11
 #define _LCD_SelectOperationMode(MODE) \
-	WritePinFromOutput(RS_PORT,RS_PIN,GetBit(MODE,1));\
-	WritePinFromOutput(RW_PORT,RW_PIN,GetBit(MODE,0));
+	GPIO_WritePin(RS_PORT,RS_PIN,GetBit(MODE,1));\
+	GPIO_WritePin(RW_PORT,RW_PIN,GetBit(MODE,0));
 	
 void LCD_PutCommand(unsigned char data);
 void LCD_ConfigureDisplayStatus(char status);
@@ -90,16 +88,15 @@ void LCD_PutChar(char data);
 void LCD_PutString(char *str);
 void LCD_PutStringFromFlash(const char *str);
 
-#define lcd_init()					LCD_ConfigureDefaultMode()
 #define lcd_clear()				LCD_ClearDisplay()
 #define lcd_gotoxy(x,y)		LCD_GoToXY(x,y)
 #define lcd_putchar(c)   	LCD_PutChar(c)
 #define lcd_puts(str)   	LCD_PutString(str)
 #define lcd_putsf(str)    LCD_PutStringFromFlash(str)
-
+#define lcd_init()				LCD_ConfigureDefaultMode()
 
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #endif

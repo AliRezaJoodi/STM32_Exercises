@@ -480,11 +480,6 @@
               <FilePath>../Core/Src/main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32f1xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
@@ -493,6 +488,11 @@
               <FileName>Display_LCD.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\Display_LCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\stm32f1xx_it.c</FilePath>
             </File>
           </Files>
         </Group>

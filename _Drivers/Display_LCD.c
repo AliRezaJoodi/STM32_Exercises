@@ -7,57 +7,57 @@ static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_P
 
 //********************************
 void _LCD_EnableBusForGPIO(void){
-	EnableOrDisableClockSourceForPortA(1); WaitTillEnableClockSourceForPortA;
-	EnableOrDisableClockSourceForPortB(1); WaitTillEnableClockSourceForPortB;
+	BUS_EnableOrDisableClockForPortA(1); BUS_WaitTillEnableClockForPortA;
+	BUS_EnableOrDisableClockForPortB(1); BUS_WaitTillEnableClockForPortB;
 }
 
 //********************************
 void _LCD_ConfigurationControlPinsForOutput(void){
-	ConfigurePinForDirection(RS_PORT,RS_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(RS_PORT,RS_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(RS_PORT,RS_PIN);
+	GPIO_ConfigurePinDirection(RS_PORT,RS_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(RS_PORT,RS_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(RS_PORT,RS_PIN);
 	
-	ConfigurePinForDirection(RW_PORT,RW_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(RW_PORT,RW_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(RW_PORT,RW_PIN);
+	GPIO_ConfigurePinDirection(RW_PORT,RW_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(RW_PORT,RW_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(RW_PORT,RW_PIN);
 	
-	ConfigurePinForDirection(EN_PORT,EN_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(EN_PORT,EN_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(EN_PORT,EN_PIN);
+	GPIO_ConfigurePinDirection(EN_PORT,EN_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(EN_PORT,EN_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(EN_PORT,EN_PIN);
 }
 
 //********************************
 void _LCD_ConfigurationDataPinsForOutput(void){
-	ConfigurePinForDirection(D7_PORT,D7_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(D7_PORT,D7_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(D7_PORT,D7_PIN);
+	GPIO_ConfigurePinDirection(D7_PORT,D7_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(D7_PORT,D7_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(D7_PORT,D7_PIN);
 	
-	ConfigurePinForDirection(D6_PORT,D6_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(D6_PORT,D6_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(D6_PORT,D6_PIN);
+	GPIO_ConfigurePinDirection(D6_PORT,D6_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(D6_PORT,D6_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(D6_PORT,D6_PIN);
 	
-	ConfigurePinForDirection(D5_PORT,D5_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(D5_PORT,D5_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(D5_PORT,D5_PIN);
+	GPIO_ConfigurePinDirection(D5_PORT,D5_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(D5_PORT,D5_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(D5_PORT,D5_PIN);
 	
-	ConfigurePinForDirection(D4_PORT,D4_PIN,OUTPUT_MODE_2MHz);
-	ConfigurePinForOutputMode(D4_PORT,D4_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	ResetPinFromOutput(D4_PORT,D4_PIN);	
+	GPIO_ConfigurePinDirection(D4_PORT,D4_PIN,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(D4_PORT,D4_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(D4_PORT,D4_PIN);	
 }
 
 //********************************
 void _LCD_ConfigurationDataPinsForInput(void){
-	ConfigurePinForDirection(D7_PORT,D7_PIN,INPUT_MODE);
-	ConfigurePinForInputMode(D7_PORT,D7_PIN,FLOATING_INPUT);
+	GPIO_ConfigurePinDirection(D7_PORT,D7_PIN,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(D7_PORT,D7_PIN,FLOATING_INPUT);
 	
-	ConfigurePinForDirection(D6_PORT,D6_PIN,INPUT_MODE);
-	ConfigurePinForInputMode(D6_PORT,D6_PIN,FLOATING_INPUT);
+	GPIO_ConfigurePinDirection(D6_PORT,D6_PIN,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(D6_PORT,D6_PIN,FLOATING_INPUT);
 	
-	ConfigurePinForDirection(D5_PORT,D5_PIN,INPUT_MODE);
-	ConfigurePinForInputMode(D5_PORT,D5_PIN,FLOATING_INPUT);
+	GPIO_ConfigurePinDirection(D5_PORT,D5_PIN,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(D5_PORT,D5_PIN,FLOATING_INPUT);
 	
-	ConfigurePinForDirection(D4_PORT,D4_PIN,INPUT_MODE);
-	ConfigurePinForInputMode(D4_PORT,D4_PIN,FLOATING_INPUT);
+	GPIO_ConfigurePinDirection(D4_PORT,D4_PIN,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(D4_PORT,D4_PIN,FLOATING_INPUT);
 }
 
 //********************************
@@ -74,12 +74,12 @@ void _LCD_Ready(void){
 	_LCD_Delay();
 	
 	do{
-		SetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay();
-		busy_flag=GetPinFromInput(D7_PORT,D7_PIN);
-		ResetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay();
+		GPIO_SetPin(EN_PORT,EN_PIN); _LCD_Delay();
+		busy_flag=GPIO_GetPin(D7_PORT,D7_PIN);
+		GPIO_ResetPin(EN_PORT,EN_PIN); _LCD_Delay();
 	
-		SetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay();
-		ResetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay();
+		GPIO_SetPin(EN_PORT,EN_PIN); _LCD_Delay();
+		GPIO_ResetPin(EN_PORT,EN_PIN); _LCD_Delay();
 	} while(busy_flag!=0);
 	
 	_LCD_ConfigurationDataPinsForOutput();
@@ -87,21 +87,21 @@ void _LCD_Ready(void){
 
 //********************************
 void _LCD_Write_4BitMode(unsigned char data){		
-	WritePinFromOutput(D7_PORT,D7_PIN,GetBit(data,7));
-	WritePinFromOutput(D6_PORT,D6_PIN,GetBit(data,6));
-	WritePinFromOutput(D5_PORT,D5_PIN,GetBit(data,5));
-	WritePinFromOutput(D4_PORT,D4_PIN,GetBit(data,4));
+	GPIO_WritePin(D7_PORT,D7_PIN,GetBit(data,7));
+	GPIO_WritePin(D6_PORT,D6_PIN,GetBit(data,6));
+	GPIO_WritePin(D5_PORT,D5_PIN,GetBit(data,5));
+	GPIO_WritePin(D4_PORT,D4_PIN,GetBit(data,4));
 	
-	SetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
-	ResetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
+	GPIO_SetPin(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
+	GPIO_ResetPin(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
 	
-	WritePinFromOutput(D7_PORT,D7_PIN,GetBit(data,3));
-	WritePinFromOutput(D6_PORT,D6_PIN,GetBit(data,2));
-	WritePinFromOutput(D5_PORT,D5_PIN,GetBit(data,1));
-	WritePinFromOutput(D4_PORT,D4_PIN,GetBit(data,0));
+	GPIO_WritePin(D7_PORT,D7_PIN,GetBit(data,3));
+	GPIO_WritePin(D6_PORT,D6_PIN,GetBit(data,2));
+	GPIO_WritePin(D5_PORT,D5_PIN,GetBit(data,1));
+	GPIO_WritePin(D4_PORT,D4_PIN,GetBit(data,0));
 	
-	SetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
-	ResetPinFromOutput(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
+	GPIO_SetPin(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
+	GPIO_ResetPin(EN_PORT,EN_PIN); _LCD_Delay(); //HAL_Delay(1);
 }
 
 //********************************
@@ -154,20 +154,6 @@ void LCD_ClearDisplay(void){
 }
 
 //********************************
-void LCD_ConfigureDefaultMode(void){
-  HAL_Delay(20);
-	_LCD_EnableBusForGPIO();
-	_LCD_ConfigurationControlPinsForOutput();
-	_LCD_ConfigurationDataPinsForOutput();
-	
-	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
-	LCD_PutCommand(_interface_line);
-	LCD_PutCommand(_display_cursor_bink);
-	LCD_PutCommand(_CLEAR_DISPLAY); HAL_Delay(2);
-	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
-}
-
-//********************************
 void LCD_PutChar(char data){
 	_LCD_Ready();
 	_LCD_SelectOperationMode(_DATA_WRITE);
@@ -188,6 +174,20 @@ void LCD_PutStringFromFlash(const char *str){
 		LCD_PutChar(*str);
     str++;
   }
+}
+
+//********************************
+void LCD_ConfigureDefaultMode(void){
+  HAL_Delay(20);
+	_LCD_EnableBusForGPIO();
+	_LCD_ConfigurationControlPinsForOutput();
+	_LCD_ConfigurationDataPinsForOutput();
+	
+	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
+	LCD_PutCommand(_interface_line);
+	LCD_PutCommand(_display_cursor_bink);
+	LCD_PutCommand(_CLEAR_DISPLAY); HAL_Delay(2);
+	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
 }
 
 

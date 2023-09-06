@@ -3,6 +3,11 @@
 #ifndef _UTILITY_INCLUDED
     #define _UTILITY_INCLUDED
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define SetBit(ADDRESS,BIT) 								ADDRESS= (ADDRESS) | (0b1UL<<(BIT));
 #define SetBit_NoLastStatus(ADDRESS,BIT) 		ADDRESS= 0b1UL<<(BIT);
 #define ClearBit(ADDRESS,BIT) 							ADDRESS= (ADDRESS) & (~(0b1UL<<(BIT)));
@@ -16,5 +21,10 @@
 #define Get2Bit(ADDRESS,FROM)           		(((ADDRESS) >> (FROM)) & 0b11UL)
 #define Get3Bit(ADDRESS,FROM)           		(((ADDRESS) >> (FROM)) & 0b111UL)
 #define Get4Bit(ADDRESS,FROM)           		(((ADDRESS) >> (FROM)) & 0b1111UL)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
