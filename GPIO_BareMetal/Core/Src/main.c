@@ -1,6 +1,12 @@
 
 #include "main.h"
 
+#include "Utility.h"
+#include "STM32F1xx_System_BareMetal.h"
+#include "STM32F1xx_RCC_BareMetal.h"
+#include "STM32F1xx_BUS_BareMetal.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
@@ -12,9 +18,7 @@ void ConfigureBcdDisplay(void);
 int main(void){
 	char status0=0;
 	
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
 	BUS_EnableOrDisableClockForAlternateFunction(0);
-  //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 	BUS_EnableOrDisableClockForPowerInterface(1);
 
   /* System interrupt init*/
@@ -24,40 +28,48 @@ int main(void){
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
 
   SystemClock_Config();
-	AFIO_ConfigureSerialWireDebugPort(JTAG_DISABLED_AND_SWD_DISABLED);
+	AFIO_ConfigureSerialWireDebugPort(FULL_SWJ);
 	ConfigureButtons();
 	ConfigureRelays();
 	ConfigureBcdInput();
 	ConfigureBcdDisplay();
 	
   while(1){
-		GPIO_WritePin(GPIOA,15,GPIO_GetPin(GPIOA,0));	
+		GPIO_WritePin(GPIOA,3,GPIO_GetPin(GPIOA,0));	
 		
-		if(GPIO_GetPin(GPIOA,1)==1){GPIO_SetPin(GPIOA,3);}
-		if(GPIO_GetPin(GPIOA,2)==0){GPIO_ResetPin(GPIOA,3);}
+		if(GPIO_GetPin(GPIOA,1)==1){GPIO_SetPin(GPIOA,4);}
+		if(GPIO_GetPin(GPIOA,2)==0){GPIO_ResetPin(GPIOA,4);}
 		
-		uint32_t value= GPIO_Get4Pin(GPIOA,7);
-		GPIO_Write4Pin(GPIOA,11,value);
+		uint32_t value= GPIO_Get4Pin(GPIOA,5);
+		GPIO_Write4Pin(GPIOA,9,value);
   }
 }
 
 //**************************************
 void ConfigureBcdInput(void){
+	GPIO_ConfigurePinDirection(GPIOA,5,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(GPIOA,5,FLOATING_INPUT);
+	
+	GPIO_ConfigurePinDirection(GPIOA,6,INPUT_MODE);
+	GPIO_ConfigureInputTypeForPin(GPIOA,6,FLOATING_INPUT);
+	
 	GPIO_ConfigurePinDirection(GPIOA,7,INPUT_MODE);
 	GPIO_ConfigureInputTypeForPin(GPIOA,7,FLOATING_INPUT);
 	
 	GPIO_ConfigurePinDirection(GPIOA,8,INPUT_MODE);
 	GPIO_ConfigureInputTypeForPin(GPIOA,8,FLOATING_INPUT);
-	
-	GPIO_ConfigurePinDirection(GPIOA,9,INPUT_MODE);
-	GPIO_ConfigureInputTypeForPin(GPIOA,9,FLOATING_INPUT);
-	
-	GPIO_ConfigurePinDirection(GPIOA,10,INPUT_MODE);
-	GPIO_ConfigureInputTypeForPin(GPIOA,10,FLOATING_INPUT);
 }
 
 //**************************************
 void ConfigureBcdDisplay(void){
+	GPIO_ConfigurePinDirection(GPIOA,9,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(GPIOA,9,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(GPIOA,9);
+	
+	GPIO_ConfigurePinDirection(GPIOA,10,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(GPIOA,10,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(GPIOA,10);
+	
 	GPIO_ConfigurePinDirection(GPIOA,11,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(GPIOA,11,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
 	GPIO_ResetPin(GPIOA,11);
@@ -65,14 +77,6 @@ void ConfigureBcdDisplay(void){
 	GPIO_ConfigurePinDirection(GPIOA,12,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(GPIOA,12,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
 	GPIO_ResetPin(GPIOA,12);
-	
-	GPIO_ConfigurePinDirection(GPIOA,13,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputTypeForPin(GPIOA,13,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetPin(GPIOA,13);
-	
-	GPIO_ConfigurePinDirection(GPIOA,14,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputTypeForPin(GPIOA,14,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetPin(GPIOA,14);
 }
 
 //**************************************
@@ -97,45 +101,31 @@ void ConfigureButtons(void){
 void ConfigureRelays(void){
 	BUS_EnableOrDisableClockForPortA(1); LL_mDelay(10);
 	
-	GPIO_ConfigurePinDirection(GPIOA,15,OUTPUT_MODE_2MHz);
-	GPIO_ConfigureOutputTypeForPin(GPIOA,15,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
-	GPIO_ResetPin(GPIOA,15);
-	
 	GPIO_ConfigurePinDirection(GPIOA,3,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(GPIOA,3,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
 	GPIO_ResetPin(GPIOA,3);
+	
+	GPIO_ConfigurePinDirection(GPIOA,4,OUTPUT_MODE_2MHz);
+	GPIO_ConfigureOutputTypeForPin(GPIOA,4,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
+	GPIO_ResetPin(GPIOA,4);
 }
 
 //****************************************************
 void SystemClock_Config(void){
-  //LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-	ConfigureLatencyForFLASH(FLASH_LATENCY0);
-  //while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
-	WaitTillRightLatency(FLASH_LATENCY0);
-  //LL_RCC_HSI_SetCalibTrimming(16);
+	FLASH_ConfigureLatency(FLASH_LATENCY0);
+	FLASH_WaitTillRightLatency(FLASH_LATENCY0);
 	RCC_SetCalibTrimmingFromHSI(16);
-  //LL_RCC_HSI_Enable();
 	RCC_EnableOrDisableClockFromHSI(1);
-   /* Wait till HSI is ready */
-  //while(LL_RCC_HSI_IsReady() != 1){}
 	RCC_WaitTillStableClockSourceFromHSI
 		
-  //LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	RCC_ConfigurePrescalerForAHB(AHB_DIV1);
-  //LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	RCC_ConfigurePrescalerForAPB1(APB1_DIV1);
-  //LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 	RCC_ConfigurePrescalerForAPB2(APB2_DIV1);
-  //LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-	RCC_ConfigureSystemClockSource(SYSCLK_HSI);
-   /* Wait till System clock is ready */
-  //while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI){}
-	//while(GetSystemClockSource != SYSCLK_HSI){}
-	RCC_WaitTillRightClockSource(SYSCLK_HSI);
+	RCC_ConfigureSourceForSYSCLK(SYSCLK_HSI);
+	RCC_WaitTillRightSourceForSYSCLK(SYSCLK_HSI);
 	
 	SystemCoreClockUpdate();	
   LL_Init1msTick(8000000);
-  //LL_SetSystemCoreClock(8000000);
 	SetDirectlySystemCoreClock(8000000);
 }
 
