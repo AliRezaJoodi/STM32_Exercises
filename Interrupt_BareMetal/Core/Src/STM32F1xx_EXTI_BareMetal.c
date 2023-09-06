@@ -1,5 +1,6 @@
+// GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "main.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_EXTI_BareMetal.h"
 
 //*****************************************
@@ -55,7 +56,7 @@ void EXTI_ConfigureNVIC_EXTI10_15(void){
 void EXTI0_IRQHandler(void){
 	if (EXTI_IsActiveFlag(EXTI_INT0) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT0);
-		TogglePinFromOutput(GPIOA,1);
+		GPIO_TogglePin(GPIOA,1);
 		//while(1){};
   }
 }
@@ -96,7 +97,7 @@ void EXTI4_IRQHandler(void){
 void EXTI9_5_IRQHandler(void){
 	if (EXTI_IsActiveFlag(EXTI_INT6) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT6);
-		TogglePinFromOutput(GPIOA,2);
+		GPIO_TogglePin(GPIOA,2);
 		//while(1){};
   }
 }
@@ -105,12 +106,12 @@ void EXTI9_5_IRQHandler(void){
 void EXTI15_10_IRQHandler(void){
 	if (EXTI_IsActiveFlag(EXTI_INT11) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT11);
-		TogglePinFromOutput(GPIOA,3);
+		GPIO_TogglePin(GPIOA,3);
 		//while(1){};
   }
 	
 	if (EXTI_IsActiveFlag(EXTI_INT12) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT12);
-		TogglePinFromOutput(GPIOA,4);
+		GPIO_TogglePin(GPIOA,4);
   }
 }
