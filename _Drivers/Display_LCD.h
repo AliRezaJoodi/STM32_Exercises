@@ -59,19 +59,19 @@ extern "C" {
 
 #define _REGISTER_INSTRUCTION		0
 #define _REGISTER_DATA					1
-#define _SelectInstructionOrDataRegisterForLCD(MODE) \
+#define _SelectInstructionOrDataRegister(MODE) \
 	GPIO_WritePin(RS_PORT,RS_PIN,MODE);
 	
 #define _OPERATION_WRITE	0
 #define _OPERATION_READ		1
-#define _SelectWriteOrReadModeForLCD(MODE) \
+#define _SelectWriteOrReadMode(MODE) \
 	GPIO_WritePin(RW_PORT,RW_PIN,MODE);
 
 #define _INSTRUCTION_WRITE	0b00
 #define _INSTRUCTION_READ		0b01
 #define _DATA_WRITE					0b10
 #define _DATA_READ					0b11
-#define _LCD_SelectOperationMode(MODE) \
+#define _SelectOperationMode(MODE) \
 	GPIO_WritePin(RS_PORT,RS_PIN,GetBit(MODE,1));\
 	GPIO_WritePin(RW_PORT,RW_PIN,GetBit(MODE,0));
 	

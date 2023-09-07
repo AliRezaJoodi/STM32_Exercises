@@ -6,13 +6,30 @@ static unsigned char _display_cursor_bink=(0b00001000 | (DISPLAY_ON<<_DISPLAY_PO
 static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
 
 //********************************
-void _LCD_EnableBusForGPIO(void){
-	BUS_EnableOrDisableClockForPortA(1); BUS_WaitTillEnableClockForPortA;
-	BUS_EnableOrDisableClockForPortB(1); BUS_WaitTillEnableClockForPortB;
+void _EnableBusForPorts(void){
+	if(RS_PORT==GPIOA | RW_PORT==GPIOA  | EN_PORT==GPIOA | D7_PORT==GPIOA | D6_PORT==GPIOA | D5_PORT==GPIOA | D4_PORT==GPIOA){
+		BUS_EnableOrDisableClockForPortA(1);
+		BUS_WaitTillEnableClockForPortA;
+	}
+
+	if(RS_PORT==GPIOB | RW_PORT==GPIOB  | EN_PORT==GPIOB | D7_PORT==GPIOB | D6_PORT==GPIOB | D5_PORT==GPIOB | D4_PORT==GPIOB){
+		BUS_EnableOrDisableClockForPortB(1);
+		BUS_WaitTillEnableClockForPortB;
+	}
+
+	if(RS_PORT==GPIOC | RW_PORT==GPIOC  | EN_PORT==GPIOC | D7_PORT==GPIOC | D6_PORT==GPIOC | D5_PORT==GPIOC | D4_PORT==GPIOC){
+		BUS_EnableOrDisableClockForPortC(1);
+		BUS_WaitTillEnableClockForPortC;
+	}
+
+	if(RS_PORT==GPIOD | RW_PORT==GPIOD  | EN_PORT==GPIOD | D7_PORT==GPIOD | D6_PORT==GPIOD | D5_PORT==GPIOD | D4_PORT==GPIOD){
+		BUS_EnableOrDisableClockForPortD(1);
+		BUS_WaitTillEnableClockForPortD;
+	}	
 }
 
 //********************************
-void _LCD_ConfigurationControlPinsForOutput(void){
+void _ConfigurationControlPinsForOutput(void){
 	GPIO_ConfigurePinDirection(RS_PORT,RS_PIN,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(RS_PORT,RS_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
 	GPIO_ResetPin(RS_PORT,RS_PIN);
@@ -27,7 +44,7 @@ void _LCD_ConfigurationControlPinsForOutput(void){
 }
 
 //********************************
-void _LCD_ConfigurationDataPinsForOutput(void){
+void _ConfigurationDataPinsForOutput(void){
 	GPIO_ConfigurePinDirection(D7_PORT,D7_PIN,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(D7_PORT,D7_PIN,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
 	GPIO_ResetPin(D7_PORT,D7_PIN);
@@ -46,7 +63,7 @@ void _LCD_ConfigurationDataPinsForOutput(void){
 }
 
 //********************************
-void _LCD_ConfigurationDataPinsForInput(void){
+void _ConfigurationDataPinsForInput(void){
 	GPIO_ConfigurePinDirection(D7_PORT,D7_PIN,INPUT_MODE);
 	GPIO_ConfigureInputTypeForPin(D7_PORT,D7_PIN,FLOATING_INPUT);
 	
@@ -62,15 +79,15 @@ void _LCD_ConfigurationDataPinsForInput(void){
 
 //********************************
 void _LCD_Delay(void){
-  volatile unsigned char i=1; //5
+  volatile unsigned char i=3; //5
 	while(i!=0){i--;}
 }
 
 //********************************
 void _LCD_Ready(void){
 	volatile char busy_flag=1;
-	_LCD_ConfigurationDataPinsForInput();
-	_LCD_SelectOperationMode(_INSTRUCTION_READ);
+	_ConfigurationDataPinsForInput();
+	_SelectOperationMode(_INSTRUCTION_READ);
 	_LCD_Delay();
 	
 	do{
@@ -82,7 +99,7 @@ void _LCD_Ready(void){
 		GPIO_ResetPin(EN_PORT,EN_PIN); _LCD_Delay();
 	} while(busy_flag!=0);
 	
-	_LCD_ConfigurationDataPinsForOutput();
+	_ConfigurationDataPinsForOutput();
 }
 
 //********************************
@@ -107,7 +124,7 @@ void _LCD_Write_4BitMode(unsigned char data){
 //********************************
 void LCD_PutCommand(unsigned char data){
 	_LCD_Ready();
-	_LCD_SelectOperationMode(_INSTRUCTION_WRITE);
+	_SelectOperationMode(_INSTRUCTION_WRITE);
 	_LCD_Write_4BitMode(data); //HAL_Delay(1);
 }
 
@@ -156,7 +173,7 @@ void LCD_ClearDisplay(void){
 //********************************
 void LCD_PutChar(char data){
 	_LCD_Ready();
-	_LCD_SelectOperationMode(_DATA_WRITE);
+	_SelectOperationMode(_DATA_WRITE);
   _LCD_Write_4BitMode(data); //HAL_Delay(1);
 }
 
@@ -179,9 +196,9 @@ void LCD_PutStringFromFlash(const char *str){
 //********************************
 void LCD_ConfigureDefaultMode(void){
   HAL_Delay(20);
-	_LCD_EnableBusForGPIO();
-	_LCD_ConfigurationControlPinsForOutput();
-	_LCD_ConfigurationDataPinsForOutput();
+	_EnableBusForPorts();
+	_ConfigurationControlPinsForOutput();
+	_ConfigurationDataPinsForOutput();
 	
 	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
 	LCD_PutCommand(_interface_line);
