@@ -72,8 +72,8 @@ void USART1_PutString(char *str){
 		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }
-	LL_USART_TransmitData8(USART1,13);
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	//LL_USART_TransmitData8(USART1,13);
+	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
 }
 
 //********************************
@@ -83,8 +83,8 @@ void USART1_PutStringFromFlash(const char *str){
 		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }
-	LL_USART_TransmitData8(USART1,13);
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	//LL_USART_TransmitData8(USART1,13);
+	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
 }
 /* USER CODE END 0 */
 
@@ -133,12 +133,12 @@ int main(void){
 	LL_USART_EnableIT_RXNE(USART1);
 	LL_mDelay(500);
 	
-	USART1_PutStringFromFlash("Test1");
+	USART1_PutStringFromFlash("Test1\r\n");
 	
-	const char txt2[]= "Test2";
+	const char txt2[]= "Test2\r\n";
 	USART1_PutStringFromFlash(txt2);
 	
-	char txt3[]= "Test3";
+	char txt3[]= "Test3\r\n";
 	USART1_PutString(txt3);
 	/*
 	while(i2<6){
