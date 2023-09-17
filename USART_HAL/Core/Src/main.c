@@ -106,7 +106,7 @@ int main(void){
 	  HAL_GPIO_TogglePin (GPIOA, GPIO_PIN_1);
 	  HAL_Delay (250);
 
-	  HAL_UART_Transmit(&huart1, message, 4, 4); 		// Attempt to send the received data
+	  //HAL_UART_Transmit(&huart1, message, 4, 4); 		// Attempt to send the received data
 	  //HAL_UART_Transmit(&huart1, "\r\n", 2, 1);			// New Line
   }
   /* USER CODE END 3 */
@@ -212,7 +212,8 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-  HAL_UART_Receive_IT(&huart1, message, 4);
+  HAL_UART_Receive_IT(&huart1, message, 3);
+	HAL_UART_Transmit(&huart1, message, 3, 100);
 }
 /* USER CODE END 4 */
 

@@ -99,7 +99,7 @@ void ConfigureButtons(void){
 
 //**************************************
 void ConfigureRelays(void){
-	BUS_EnableOrDisableClockForPortA(1); LL_mDelay(10);
+	BUS_EnableOrDisableClockForPortA(1); BUS_WaitTillEnableClockForPortA;
 	
 	GPIO_ConfigurePinDirection(GPIOA,3,OUTPUT_MODE_2MHz);
 	GPIO_ConfigureOutputTypeForPin(GPIOA,3,GENERAL_PURPOSE_OUTPUT_PUSHPULL);
