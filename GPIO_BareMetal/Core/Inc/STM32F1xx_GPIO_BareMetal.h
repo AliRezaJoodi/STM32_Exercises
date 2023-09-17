@@ -114,10 +114,28 @@ extern "C" {
 #define GPIO_WritePort(GPIOx,VALUE) \
 	GPIOx->ODR= VALUE;
 
-//#define GetPinFromOutput(GPIOx,PIN) \
+#define GetOutputValueFromPin(GPIOx,PIN) \
+	GetBit(GPIOx->ODR,PIN)
 	//(((GPIOx->ODR) >> PIN) & 0b1UL)
 
-
+#define GPIO_ActiveLockRegister(GPIOx) \
+	SetBit(GPIOx->LCKR,16);
+#define GPIO_DeActivateLockRegister(GPIOx) \
+	ClearBit(GPIOx->LCKR,16);
+#define GPIO_GetFromLCKK(GPIOx) \
+	GetBit(GPIOx->LCKR,16)
+	
+#define GPIO_LockPin(GPIOx,PIN) \
+	SetBit(GPIOx->LCKR,PIN);
+#define GPIO_UnLockPin(GPIOx,PIN) \
+	ClearBit(GPIOx->LCKR,PIN);
+#define GPIO_GetLockStatusFromPin(GPIOx,PIN) \
+	GetBit(GPIOx->LCKR,PIN)		//	Use when LCKK bit is 1
+#define GPIO_WaitTillLockPin(GPIOx,PIN) \
+	while(!GPIO_GetLockStatusFromPin(GPIOx,PIN)){}
+#define GPIO_WaitTillUnLockPin(GPIOx,PIN) \
+	while(GPIO_GetLockStatusFromPin(GPIOx,PIN)){}
+		
 #ifdef __cplusplus
 }
 #endif
