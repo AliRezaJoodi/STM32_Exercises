@@ -26,21 +26,23 @@ extern "C" {
 #define OUTPUT_MODE_2MHz    0b10UL
 #define OUTPUT_MODE_50MHz		0b11UL
 #define OUTPUT_MODE   			OUTPUT_MODE_2MHz
-#define GPIO_ConfigurePinDirection(GPIOx,PIN,MODE) \
+#define GPIO_ConfigureDirectionOfPin(GPIOx,PIN,MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL,PIN*4,MODE);}\
 		else{Write2Bit(GPIOx->CRH,(PIN-8)*4,MODE);}
 	//if(PIN<=7){(GPIOx->CRL)= ((GPIOx->CRL) & ~(0b11UL<<(PIN*4))) | ((MODE&0b11UL)<<(PIN*4));}\
 		//else{(GPIOx->CRH)= ((GPIOx->CRH) & ~(0b11UL<<((PIN-8)*4))) | ((MODE&0b11UL)<<((PIN-8)*4));}
+/*
 #define GPIO_ConfigureInputOrOutputModeForPin(GPIOx,PIN,MODE) \
-	GPIO_ConfigurePinDirection(GPIOx,PIN,MODE);
+	GPIO_ConfigureDirectionOfPin(GPIOx,PIN,MODE);
 #define GPIO_ConfigureInputModeForPin(GPIOx,PIN) \
-	GPIO_ConfigurePinDirection(GPIOx,PIN,INPUT_MODE);
+	GPIO_ConfigureDirectionOfPin(GPIOx,PIN,INPUT_MODE);
 #define GPIO_ConfigureOutputModeForPin(GPIOx,PIN) \
-	GPIO_ConfigurePinDirection(GPIOx,PIN,OUTPUT_MODE);
+	GPIO_ConfigureDirectionOfPin(GPIOx,PIN,OUTPUT_MODE);
 #define GPIO_ConfigureOutputModeWithHighSpeedForPin(GPIOx,PIN) \
-	GPIO_ConfigurePinDirection(GPIOx,PIN,OUTPUT_MODE_50MHz);
+	GPIO_ConfigureDirectionOfPin(GPIOx,PIN,OUTPUT_MODE_50MHz);
 #define GPIO_ConfigureSpeedOfOutputPin(GPIOx,PIN,MODE) \
-	GPIO_ConfigurePinDirection(GPIOx,PIN,MODE);
+	GPIO_ConfigureDirectionOfPin(GPIOx,PIN,MODE);
+*/
 		
 // Input Pin Type Configuration
 #define ANALOG_MODE               	0b00UL
@@ -81,6 +83,7 @@ extern "C" {
 /*		
 #define GENERAL_PURPOSE_OUTPUT 		0b0UL
 #define ALTERNATE_FUNCTION_OUTPUT	0b1UL
+#define GPIO_ConfigureAFIOorGPIOforOutputPin(GPIOx,PIN,MODE) \
 #define GPIO_ConfigureAlternateFunctionOrGeneralForOutputPin(GPIOx,PIN,MODE) \
 	if(PIN<=7){WriteBit(GPIOx->CRL,(PIN*4)+3,MODE);}\
 		else{WriteBit(GPIOx->CRH,((PIN-8)*4)+3,MODE);}
@@ -100,7 +103,11 @@ extern "C" {
 	//((GPIOx->IDR >> FROM) & 0b1111UL)
 #define GPIO_GetPort(GPIOx) \
 	(GPIOx->IDR)
-																												
+
+#define GetOutputValueFromPin(GPIOx,PIN) \
+	GetBit(GPIOx->ODR,PIN)
+	//(((GPIOx->ODR) >> PIN) & 0b1UL)
+	
 #define GPIO_SetPinWithBSRR(GPIOx,PIN) \
 	SetBit_NoLastStatus(GPIOx->BSRR,PIN); //Fast
 	//GPIOx->BSRR= 0b1UL<<PIN;	//Fast
@@ -140,10 +147,6 @@ extern "C" {
 	//GPIOx->ODR= ((GPIOx->ODR) & ~(0b1111UL << FROM)) | ((VALUE&0b1111UL) << FROM);
 #define GPIO_WritePort(GPIOx,VALUE) \
 	GPIOx->ODR= VALUE;
-
-#define GetOutputValueFromPin(GPIOx,PIN) \
-	GetBit(GPIOx->ODR,PIN)
-	//(((GPIOx->ODR) >> PIN) & 0b1UL)
 
 #define GPIO_ActiveLockRegister(GPIOx) \
 	SetBit(GPIOx->LCKR,16);
