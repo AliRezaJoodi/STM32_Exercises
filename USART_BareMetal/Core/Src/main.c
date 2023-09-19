@@ -14,8 +14,7 @@ volatile uint8_t task_usart1=0;
 char txt[16]= "";
 
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_USART1_UART_Init(void);
+static void ConfigureUSART1(void);
 
 
 int main(void){
@@ -38,7 +37,7 @@ int main(void){
 
   /* Configure the system clock */
   SystemClock_Config();
-  MX_USART1_UART_Init();
+  ConfigureUSART1();
 	
 	LL_USART_EnableIT_RXNE(USART1);
 	LL_mDelay(500);
@@ -87,70 +86,40 @@ int main(void){
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
-{
+void SystemClock_Config(void){
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0)
-  {
-  }
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
   LL_RCC_HSI_SetCalibTrimming(16);
   LL_RCC_HSI_Enable();
 
    /* Wait till HSI is ready */
-  while(LL_RCC_HSI_IsReady() != 1)
-  {
-
-  }
+  while(LL_RCC_HSI_IsReady() != 1){}
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
 
    /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
-  {
-
-  }
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI){}
   LL_Init1msTick(8000000);
   LL_SetSystemCoreClock(8000000);
 }
 
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void){
+//****************************************************
+//PA9 -> USART1_TX
+//PA10 -> USART1_RX
+static void ConfigureUSART1(void){
+	BUS_EnableClockForPortA;
+	GPIO_ConfigureDirectionOfPin(GPIOA,9,OUTPUT_MODE_50MHz);
+	GPIO_ConfigureTypeOfOutputPin(GPIOA,9,ALTERNATE_FUNCTION_OUTPUT_PUSHPULL);
+	GPIO_ConfigureDirectionOfPin(GPIOA,10,INPUT_MODE);
+	GPIO_ConfigureTypeOfInputPin(GPIOA,10,FLOATING_INPUT);
+	
 	USART1_ConfigureNVIC();
+	BUS_EnableClockForUSART1;
 	
   LL_USART_InitTypeDef USART_InitStruct = {0};
 
-  //LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* Peripheral clock enable */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-	BUS_EnableOrDisableClockForUSART1(1); BUS_WaitTillEnableClockForUSART1;
-	
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-	BUS_EnableOrDisableClockForPortA(1); BUS_WaitTillEnableClockForPortA;
-  /**USART1 GPIO Configuration
-  PA9   ------> USART1_TX
-  PA10   ------> USART1_RX
-  */
-  //GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
-  //GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-  //GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  //GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  //LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	GPIO_ConfigurePinDirection(GPIOA,9,OUTPUT_MODE_50MHz);
-	GPIO_ConfigureTypeOfOutputPin(GPIOA,9,ALTERNATE_FUNCTION_OUTPUT_PUSHPULL);
-	
-  //GPIO_InitStruct.Pin = LL_GPIO_PIN_10;
-  //GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  //LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	GPIO_ConfigurePinDirection(GPIOA,10,INPUT_MODE);
-	GPIO_ConfigureTypeOfInputPin(GPIOA,10,FLOATING_INPUT);
-	
   USART_InitStruct.BaudRate = 9600;
   USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
   USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
@@ -161,9 +130,5 @@ static void MX_USART1_UART_Init(void){
   LL_USART_Init(USART1, &USART_InitStruct);
   LL_USART_ConfigAsyncMode(USART1);
   LL_USART_Enable(USART1);
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
-
 }
 
