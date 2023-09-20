@@ -4,6 +4,7 @@
 
 //#include <stdio.h>
 #include "Utility.h"
+#include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
@@ -13,30 +14,19 @@ uint8_t j=0;
 volatile uint8_t task_usart1=0;
 char txt[16]= "";
 
-void SystemClock_Config(void);
+void ConfigureSystemClock(void);
 static void ConfigureUSART1(void);
 
 
 int main(void){
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-	//BUS_EnableOrDisableClockForAFIO(1); 
-	//BUS_WaitTillEnableClockForAFIO;
-	BUS_EnableClockForPWR;
-  //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-	//BUS_EnableOrDisableClockForPWR(1); 
-	//BUS_WaitTillEnableClockForPWR;
-	BUS_EnableClockForAFIO;
-
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
-  /** ENABLE: Full SWJ (JTAG-DP + SW-DP): Reset State
-  */
-  //LL_GPIO_AF_EnableRemap_SWJ();
+	
+	BUS_EnableClockForPWR;
+	BUS_EnableClockForAFIO;
 	AFIO_ConfigureSerialWireDebugPort(FULL_SWJ);
 
-  /* Configure the system clock */
-  SystemClock_Config();
+  ConfigureSystemClock();
   ConfigureUSART1();
 	
 	LL_USART_EnableIT_RXNE(USART1);
@@ -60,9 +50,6 @@ int main(void){
 	//while(!LL_USART_IsActiveFlag_TXE(USART1))
 	
   while(1){
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
 		if(task_usart1==1){
 			task_usart1=0;
 			//USART1_PutChar(13);
@@ -79,14 +66,10 @@ int main(void){
 		if(j==5){j=0; x=0;}
 		*/
   }
-  /* USER CODE END 3 */
 }
 
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void){
+//****************************************************
+void ConfigureSystemClock(void){
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
   while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
   LL_RCC_HSI_SetCalibTrimming(16);
@@ -110,10 +93,15 @@ void SystemClock_Config(void){
 //PA10 -> USART1_RX
 static void ConfigureUSART1(void){
 	BUS_EnableClockForPortA;
-	GPIO_ConfigureDirectionOfPin(GPIOA,9,OUTPUT_MODE_50MHz);
-	GPIO_ConfigureTypeOfOutputPin(GPIOA,9,ALTERNATE_FUNCTION_OUTPUT_PUSHPULL);
-	GPIO_ConfigureDirectionOfPin(GPIOA,10,INPUT_MODE);
-	GPIO_ConfigureTypeOfInputPin(GPIOA,10,FLOATING_INPUT);
+	GPIO_ConfigureOutputMode_50MHz(GPIOA,9);
+	GPIO_OutputMode_ConfigureAFIO(GPIOA,9);
+	GPIO_OutputMode_ConfigurePushPull(GPIOA,9);
+	GPIO_ConfigureInputMode(GPIOA,10);
+	GPIO_InputMode_ConfigureFloatingInput(GPIOA,10);
+	//GPIO_ConfigureInputOrOutputMode(GPIOA,9,OUTPUT_MODE_50MHz);
+	//GPIO_ConfigureFeatureOfOutputPin(GPIOA,9,ALTERNATE_FUNCTION_OUTPUT_PUSHPULL);
+	//GPIO_ConfigureInputOrOutputMode(GPIOA,10,INPUT_MODE);
+	//GPIO_ConfigureFeatureOfInputPin(GPIOA,10,FLOATING_INPUT);
 	
 	USART1_ConfigureNVIC();
 	BUS_EnableClockForUSART1;
