@@ -90,11 +90,11 @@ void ConfigureSystemClock(void){
 //PA10 -> USART1_RX
 static void ConfigureUSART1(void){
 	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA, 9, OUTPUT_MODE_50MHz);
-	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOA, 9, OUTPUT_AFIO);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOA, 9, OUTPUT_PUSHPULL);
-	GPIO_SetInputOrOutputMode(GPIOA, 10, INPUT_MODE);
-	GPIO_InputMode_SetInputType(GPIOA, 10, INPUT_FLOATING);
+	GPIO_SetInputOrOutputMode(GPIOA,9, MODE_OUTPUT_50MHz);
+	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOA,9, OUTPUT_AFIO);
+	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOA,9, OUTPUT_PUSHPULL);
+	GPIO_SetInputOrOutputMode(GPIOA,10, MODE_INPUT);
+	GPIO_InputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
 	
 	USART1_ConfigureNVIC();
 	BUS_USART1_EnableOrDisable(1);
