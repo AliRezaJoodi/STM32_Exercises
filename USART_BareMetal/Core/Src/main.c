@@ -89,21 +89,15 @@ void ConfigureSystemClock(void){
 //PA9 -> USART1_TX
 //PA10 -> USART1_RX
 static void ConfigureUSART1(void){
-	//BUS_EnableClockForPortA;
 	BUS_GPIOA_EnableOrDisable(1);
 	GPIO_SetInputOrOutputMode(GPIOA, 9, OUTPUT_MODE_50MHz);
 	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOA, 9, OUTPUT_AFIO);
 	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOA, 9, OUTPUT_PUSHPULL);
 	GPIO_SetInputOrOutputMode(GPIOA, 10, INPUT_MODE);
 	GPIO_InputMode_SetInputType(GPIOA, 10, INPUT_FLOATING);
-	//GPIO_ConfigureInputOrOutputMode(GPIOA,9,OUTPUT_MODE_50MHz);
-	//GPIO_ConfigureFeatureOfOutputPin(GPIOA,9,ALTERNATE_FUNCTION_OUTPUT_PUSHPULL);
-	//GPIO_ConfigureInputOrOutputMode(GPIOA,10,INPUT_MODE);
-	//GPIO_ConfigureFeatureOfInputPin(GPIOA,10,FLOATING_INPUT);
 	
 	USART1_ConfigureNVIC();
 	BUS_USART1_EnableOrDisable(1);
-	//BUS_EnableClockForUSART1;
 	
   LL_USART_InitTypeDef USART_InitStruct = {0};
 

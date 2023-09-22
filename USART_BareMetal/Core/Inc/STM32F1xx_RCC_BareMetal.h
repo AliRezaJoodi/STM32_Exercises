@@ -26,13 +26,6 @@
 #define RCC_HSI_EnableOrDisable(STATUS) \
 	WriteBit(RCC->CR, RCC_CR_HSION_Pos, STATUS);\
 	if(STATUS){while(!_HSI_GetClockReadyFlag){};}
-//#define RCC_HSI_WaitTillStableClockSource \
-	//while(!_HSI_GetClockReadyFlag){}
-//#define RCC_HSI_DisableClock \
-	//ClearBit(RCC->CR, RCC_CR_HSION_Pos);
-//#define RCC_HSI_EnableClock \
-	//SetBit(RCC->CR, RCC_CR_HSION_Pos);\
-	//while(!_HSI_GetClockReadyFlag){};
 
 // The HSEBYP bit can be written only if the HSE oscillator is disabled.
 #define XTAL          	0b0
@@ -47,8 +40,6 @@
 #define RCC_HSE_EnableOrDisable(STATUS) \
 	WriteBit(RCC->CR, RCC_CR_HSEON_Pos, STATUS);\
 	if(STATUS){while(!_HSE_GetClockReadyFlag){};};
-//#define RCC_HSE_WaitTillStableClockSource\
-	//while(!_HSE_GetClockReadyFlag){}
 
 #define SYSCLK_HSI		0b00
 #define SYSCLK_HSE    0b01
@@ -59,8 +50,6 @@
 #define RCC_SYSCLK_SetClockSource(MODE) \
 	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, MODE);\
 	while(_SYSCLK_GetClockSource != MODE){};
-//#define RCC_SYSCLK_WaitTillRightClockSource(MODE) \
-	//while(_SYSCLK_GetClockSource != MODE){};
 
 // The AHB clock frequency must be at least 25 MHz when the Ethernet is used.
 #define AHB_DIV1   		0b0000
