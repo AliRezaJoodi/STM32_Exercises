@@ -15,7 +15,7 @@
     #define _RCC_INCLUDED
 
 #ifdef __cplusplus
-extern "C" {
+	extern "C" {
 #endif
 
 
@@ -39,7 +39,7 @@ extern "C" {
 #define EXTERNAL_CLOCK	0b1
 #define _HSE_GetClockSource \
 	GetBit(RCC->CR, RCC_CR_HSEBYP_Pos)
-#define RCC_HSE_SelectClockSource(MODE) \
+#define RCC_HSE_SetClockSource(MODE) \
 	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, MODE);\
 	while(_HSE_GetClockSource != MODE){};
 #define _HSE_GetClockReadyFlag \
@@ -56,7 +56,7 @@ extern "C" {
 #define NOT_ALLOWED		0b11
 #define _SYSCLK_GetClockSource \
 	Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos)
-#define RCC_SYSCLK_SelectClockSource(MODE) \
+#define RCC_SYSCLK_SetClockSource(MODE) \
 	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, MODE);\
 	while(_SYSCLK_GetClockSource != MODE){};
 //#define RCC_SYSCLK_WaitTillRightClockSource(MODE) \
@@ -72,7 +72,7 @@ extern "C" {
 #define AHB_DIV128		0b1101
 #define AHB_DIV256   	0b1110
 #define AHB_DIV512		0b1111		
-#define RCC_AHB_SelectPrescaler(VALUE) \
+#define RCC_AHB_SetPrescaler(VALUE) \
 	Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, VALUE);
 		
 // Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
@@ -81,7 +81,7 @@ extern "C" {
 #define APB1_DIV4		0b101
 #define APB1_DIV8		0b110
 #define APB1_DIV16	0b111
-#define RCC_APB1_SelectPrescaler(MODE) \
+#define RCC_APB1_SetPrescaler(MODE) \
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, MODE);
 
 // Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
@@ -90,12 +90,12 @@ extern "C" {
 #define APB2_DIV4		0b101
 #define APB2_DIV8		0b110
 #define APB2_DIV16	0b111
-#define RCC_APB2_SelectPrescaler(MODE) \
+#define RCC_APB2_SetPrescaler(MODE) \
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);
 
 
 #ifdef __cplusplus
-}
+	}
 #endif
 		
 #endif
