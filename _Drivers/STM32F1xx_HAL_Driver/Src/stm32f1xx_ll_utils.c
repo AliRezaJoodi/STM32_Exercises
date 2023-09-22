@@ -192,8 +192,7 @@ static ErrorStatus UTILS_PLL_IsBusy(void);
   * @note   HCLK frequency can be calculated thanks to RCC helper macro or function @ref LL_RCC_GetSystemClocksFreq
   * @retval None
   */
-void LL_Init1msTick(uint32_t HCLKFrequency)
-{
+void LL_Init1msTick(uint32_t HCLKFrequency){
   /* Use frequency provided in argument */
   LL_InitTick(HCLKFrequency, 1000U);
 }
