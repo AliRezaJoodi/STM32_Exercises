@@ -195,8 +195,7 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
   *          - SUCCESS: USART registers are initialized according to USART_InitStruct content
   *          - ERROR: Problem occurred during USART Registers initialization
   */
-ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USART_InitStruct)
-{
+ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USART_InitStruct){
   ErrorStatus status = ERROR;
   uint32_t periphclk = LL_RCC_PERIPH_FREQUENCY_NO;
   LL_RCC_ClocksTypeDef rcc_clocks;
@@ -215,8 +214,7 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 
   /* USART needs to be in disabled state, in order to be able to configure some bits in
      CRx registers */
-  if (LL_USART_IsEnabled(USARTx) == 0U)
-  {
+  if(LL_USART_IsEnabled(USARTx) == 0U){
     /*---------------------------- USART CR1 Configuration -----------------------
      * Configure USARTx CR1 (USART Word Length, Parity, Mode and Oversampling bits) with parameters:
      * - DataWidth:          USART_CR1_M bits according to USART_InitStruct->DataWidth value
@@ -255,34 +253,28 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
      * Retrieve Clock frequency used for USART Peripheral
      */
     LL_RCC_GetSystemClocksFreq(&rcc_clocks);
-    if (USARTx == USART1)
-    {
+    if (USARTx == USART1){
       periphclk = rcc_clocks.PCLK2_Frequency;
     }
-    else if (USARTx == USART2)
-    {
+    else if (USARTx == USART2){
       periphclk = rcc_clocks.PCLK1_Frequency;
     }
 #if defined(USART3)
-    else if (USARTx == USART3)
-    {
+    else if (USARTx == USART3){
       periphclk = rcc_clocks.PCLK1_Frequency;
     }
 #endif /* USART3 */
 #if defined(UART4)
-    else if (USARTx == UART4)
-    {
+    else if (USARTx == UART4){
       periphclk = rcc_clocks.PCLK1_Frequency;
     }
 #endif /* UART4 */
 #if defined(UART5)
-    else if (USARTx == UART5)
-    {
+    else if (USARTx == UART5){
       periphclk = rcc_clocks.PCLK1_Frequency;
     }
 #endif /* UART5 */
-    else
-    {
+    else{
       /* Nothing to do, as error code is already assigned to ERROR value */
     }
 
