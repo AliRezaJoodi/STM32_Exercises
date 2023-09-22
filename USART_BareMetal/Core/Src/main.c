@@ -4,6 +4,7 @@
 
 //#include <stdio.h>
 #include "Utility.h"
+#include "STM32F1xx_System_BareMetal.h"
 #include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
@@ -22,8 +23,9 @@ int main(void){
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 	
-	BUS_EnableClockForPWR;
-	BUS_EnableClockForAFIO;
+	//BUS_EnableClockForPWR;
+	BUS_PWR_EnableOrDisable(1);
+	BUS_AFIO_EnableOrDisable(1);
 	AFIO_ConfigureSerialWireDebugPort(FULL_SWJ);
 
   ConfigureSystemClock();
@@ -70,29 +72,25 @@ int main(void){
 
 //****************************************************
 void ConfigureSystemClock(void){
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0){}
-  LL_RCC_HSI_SetCalibTrimming(16);
-  LL_RCC_HSI_Enable();
-
-   /* Wait till HSI is ready */
-  while(LL_RCC_HSI_IsReady() != 1){}
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI){}
+	FLASH_SetLatency(LATENCY0);
+	RCC_HSI_SetCalibTrimming(16);
+	RCC_HSI_EnableOrDisable(1);
+	RCC_SYSCLK_SelectClockSource(SYSCLK_HSI);
+	RCC_AHB_SelectPrescaler(AHB_DIV1);
+	RCC_APB1_SelectPrescaler(APB1_DIV1);
+	RCC_APB2_SelectPrescaler(APB2_DIV1);
+		
+	SystemCoreClockUpdate();	
   LL_Init1msTick(8000000);
-  LL_SetSystemCoreClock(8000000);
+	System_SetCoreClockFrequency(8000000);
 }
 
 //****************************************************
 //PA9 -> USART1_TX
 //PA10 -> USART1_RX
 static void ConfigureUSART1(void){
-	BUS_EnableClockForPortA;
+	//BUS_EnableClockForPortA;
+	BUS_GPIOA_EnableOrDisable(1);
 	GPIO_ConfigureOutputMode_50MHz(GPIOA,9);
 	GPIO_OutputMode_ConfigureAFIO(GPIOA,9);
 	GPIO_OutputMode_ConfigurePushPull(GPIOA,9);
@@ -104,7 +102,8 @@ static void ConfigureUSART1(void){
 	//GPIO_ConfigureFeatureOfInputPin(GPIOA,10,FLOATING_INPUT);
 	
 	USART1_ConfigureNVIC();
-	BUS_EnableClockForUSART1;
+	BUS_USART1_EnableOrDisable(1);
+	//BUS_EnableClockForUSART1;
 	
   LL_USART_InitTypeDef USART_InitStruct = {0};
 

@@ -19,75 +19,79 @@ extern "C" {
 #endif
 
 
-#define RCC_SetCalibTrimmingFromHSI(VALUE) \
+#define RCC_HSI_SetCalibTrimming(VALUE) \
 	RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (VALUE<<RCC_CR_HSITRIM_Pos);
-#define RCC_EnableOrDisableClockFromHSI(STATUS) \
-	WriteBit(RCC->CR,RCC_CR_HSION_Pos,STATUS)
-	//RCC->CR= (RCC->CR & ~RCC_CR_HSION) | ((STATUS&0b1UL)<<RCC_CR_HSION_Pos);
-#define RCC_IsClockStableFromHSI \
-	GetBit(RCC->CR,RCC_CR_HSIRDY_Pos)
-	//((RCC->CR & RCC_CR_HSIRDY) >> RCC_CR_HSIRDY_Pos)
-#define RCC_WaitTillStableClockSourceFromHSI \
-	while(!RCC_IsClockStableFromHSI){}
+#define _HSI_GetClockReadyFlag \
+	GetBit(RCC->CR, RCC_CR_HSIRDY_Pos)
+#define RCC_HSI_EnableOrDisable(STATUS) \
+	WriteBit(RCC->CR, RCC_CR_HSION_Pos, STATUS);\
+	if(STATUS){while(!_HSI_GetClockReadyFlag){};}
+//#define RCC_HSI_WaitTillStableClockSource \
+	//while(!_HSI_GetClockReadyFlag){}
+//#define RCC_HSI_DisableClock \
+	//ClearBit(RCC->CR, RCC_CR_HSION_Pos);
+//#define RCC_HSI_EnableClock \
+	//SetBit(RCC->CR, RCC_CR_HSION_Pos);\
+	//while(!_HSI_GetClockReadyFlag){};
 
 // The HSEBYP bit can be written only if the HSE oscillator is disabled.
-#define XTAL          	0b0UL
-#define EXTERNAL_CLOCK	0b1UL
-#define RCC_ConfigureSourceForHSE(MODE) \
-	WriteBit(RCC->CR,RCC_CR_HSEBYP_Pos,MODE)
-	//RCC->CR= (RCC->CR & ~RCC_CR_HSEBYP) | ((MODE&0b1UL)<<RCC_CR_HSEBYP_Pos);
-#define RCC_EnableOrDisableClockFromHSE(STATUS) \
-	WriteBit(RCC->CR,RCC_CR_HSEON_Pos,STATUS)
-	//RCC->CR= (RCC->CR & ~RCC_CR_HSEON) | ((STATUS&0b1UL)<<RCC_CR_HSEON_Pos);
-#define RCC_IsClockStableFromHSE \
-	GetBit(RCC->CR,RCC_CR_HSERDY_Pos)
-	//((RCC->CR & RCC_CR_HSERDY) >> RCC_CR_HSERDY_Pos)
-#define RCC_WaitTillStableClockSourceFromHSE \
-	while(!RCC_IsClockStableFromHSE){}
+#define XTAL          	0b0
+#define EXTERNAL_CLOCK	0b1
+#define _HSE_GetClockSource \
+	GetBit(RCC->CR, RCC_CR_HSEBYP_Pos)
+#define RCC_HSE_SelectClockSource(MODE) \
+	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, MODE);\
+	while(_HSE_GetClockSource != MODE){};
+#define _HSE_GetClockReadyFlag \
+	GetBit(RCC->CR, RCC_CR_HSERDY_Pos)
+#define RCC_HSE_EnableOrDisable(STATUS) \
+	WriteBit(RCC->CR, RCC_CR_HSEON_Pos, STATUS);\
+	if(STATUS){while(!_HSE_GetClockReadyFlag){};};
+//#define RCC_HSE_WaitTillStableClockSource\
+	//while(!_HSE_GetClockReadyFlag){}
+
+#define SYSCLK_HSI		0b00
+#define SYSCLK_HSE    0b01
+#define SYSCLK_PLL    0b10
+#define NOT_ALLOWED		0b11
+#define _SYSCLK_GetClockSource \
+	Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos)
+#define RCC_SYSCLK_SelectClockSource(MODE) \
+	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, MODE);\
+	while(_SYSCLK_GetClockSource != MODE){};
+//#define RCC_SYSCLK_WaitTillRightClockSource(MODE) \
+	//while(_SYSCLK_GetClockSource != MODE){};
 
 // The AHB clock frequency must be at least 25 MHz when the Ethernet is used.
-#define AHB_DIV1   		RCC_CFGR_HPRE_DIV1
-#define AHB_DIV2     	RCC_CFGR_HPRE_DIV2
-#define AHB_DIV4     	RCC_CFGR_HPRE_DIV4
-#define AHB_DIV8     	RCC_CFGR_HPRE_DIV8
-#define AHB_DIV16    	RCC_CFGR_HPRE_DIV16
-#define AHB_DIV64    	RCC_CFGR_HPRE_DIV64
-#define AHB_DIV128		RCC_CFGR_HPRE_DIV128
-#define AHB_DIV256   	RCC_CFGR_HPRE_DIV256
-#define AHB_DIV512		RCC_CFGR_HPRE_DIV512		
-#define RCC_ConfigurePrescalerForAHB(VALUE) \
-	RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_HPRE) | VALUE;
+#define AHB_DIV1   		0b0000
+#define AHB_DIV2     	0b1000
+#define AHB_DIV4     	0b1001
+#define AHB_DIV8     	0b1010
+#define AHB_DIV16    	0b1011
+#define AHB_DIV64    	0b1100
+#define AHB_DIV128		0b1101
+#define AHB_DIV256   	0b1110
+#define AHB_DIV512		0b1111		
+#define RCC_AHB_SelectPrescaler(VALUE) \
+	Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, VALUE);
 		
 // Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
-#define APB1_DIV1			RCC_CFGR_PPRE1_DIV1
-#define APB1_DIV2			RCC_CFGR_PPRE1_DIV2
-#define APB1_DIV4			RCC_CFGR_PPRE1_DIV4
-#define APB1_DIV8			RCC_CFGR_PPRE1_DIV8
-#define APB1_DIV16		RCC_CFGR_PPRE1_DIV16
-#define RCC_ConfigurePrescalerForAPB1(MODE) \
-	RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_PPRE1) | MODE;
+#define APB1_DIV1		0b000
+#define APB1_DIV2		0b100
+#define APB1_DIV4		0b101
+#define APB1_DIV8		0b110
+#define APB1_DIV16	0b111
+#define RCC_APB1_SelectPrescaler(MODE) \
+	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, MODE);
 
 // Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
-#define APB2_DIV1			RCC_CFGR_PPRE2_DIV1
-#define APB2_DIV2			RCC_CFGR_PPRE2_DIV2
-#define APB2_DIV4			RCC_CFGR_PPRE2_DIV4
-#define APB2_DIV8			RCC_CFGR_PPRE2_DIV8
-#define APB2_DIV16		RCC_CFGR_PPRE2_DIV16
-#define RCC_ConfigurePrescalerForAPB2(MODE) \
-	RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_PPRE2) | MODE;
-
-#define SYSCLK_HSI		0b00U
-#define SYSCLK_HSE    0b01U
-#define SYSCLK_PLL    0b10U
-#define NOT_ALLOWED		0b11U
-#define RCC_ConfigureSourceForSYSCLK(MODE) \
-	Write2Bit(RCC->CFGR,RCC_CFGR_SW_Pos,MODE)
-	//RCC->CFGR= (RCC->CFGR & ~RCC_CFGR_SW) | ((MODE&0b11U) << RCC_CFGR_SW_Pos);
-#define RCC_GetSourceFromSYSCLK \
-	Get2Bit(RCC->CFGR,RCC_CFGR_SWS_Pos)
-	//((RCC->CFGR & RCC_CFGR_SWS) >> RCC_CFGR_SWS_Pos)
-#define RCC_WaitTillRightSourceForSYSCLK(MODE) \
-	while(RCC_GetSourceFromSYSCLK != MODE){}
+#define APB2_DIV1		0b000
+#define APB2_DIV2		0b100
+#define APB2_DIV4		0b101
+#define APB2_DIV8		0b110
+#define APB2_DIV16	0b111
+#define RCC_APB2_SelectPrescaler(MODE) \
+	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);
 
 
 #ifdef __cplusplus
