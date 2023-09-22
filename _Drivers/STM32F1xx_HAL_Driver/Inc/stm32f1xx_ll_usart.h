@@ -409,8 +409,7 @@ typedef struct
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_Enable(USART_TypeDef *USARTx)
-{
+__STATIC_INLINE void LL_USART_Enable(USART_TypeDef *USARTx){
   SET_BIT(USARTx->CR1, USART_CR1_UE);
 }
 
@@ -1524,13 +1523,12 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledLIN(const USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx)
-{
+__STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx){
   /* In Asynchronous mode, the following bits must be kept cleared:
   - LINEN, CLKEN bits in the USART_CR2 register,
   - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
   CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL));
+	CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_HDSEL | USART_CR3_IREN));
 }
 
 /**
@@ -1560,13 +1558,12 @@ __STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigSyncMode(USART_TypeDef *USARTx)
-{
+__STATIC_INLINE void LL_USART_ConfigSyncMode(USART_TypeDef *USARTx){
   /* In Synchronous mode, the following bits must be kept cleared:
   - LINEN bit in the USART_CR2 register,
   - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
   CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL));
+  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_HDSEL | USART_CR3_IREN));
   /* set the UART/USART in Synchronous mode */
   SET_BIT(USARTx->CR2, USART_CR2_CLKEN);
 }

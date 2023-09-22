@@ -109,7 +109,10 @@ static void ConfigureUSART1(void){
   USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
   USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
   LL_USART_Init(USART1, &USART_InitStruct);
-  LL_USART_ConfigAsyncMode(USART1);
-  LL_USART_Enable(USART1);
+  //LL_USART_ConfigAsyncMode(USART1);
+	//USART1_SetAsyncMode;
+	USART1_SetMode(MODE_Asyncron);
+  //LL_USART_Enable(USART1);
+	USART1_EnableOrDisable(1);
 }
 
