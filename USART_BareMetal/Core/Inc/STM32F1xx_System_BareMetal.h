@@ -19,19 +19,6 @@
 #define FLASH_SetLatency(MODE) \
 	Write3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos, MODE);\
 	while(_GetLatency != MODE){};
-/*
-#define FLASH_WaitTillRightLatency(MODE) \
-	while(_GetLatency != MODE){}
-#define FLASH_ConfigureLatency0 \
-	Write3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos, LATENCY0);\
-	while(_GetLatency != LATENCY0){};
-#define FLASH_ConfigureLatency1 \
-	Write3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos, LATENCY1);\
-	while(_GetLatency != LATENCY1){};
-#define FLASH_ConfigureLatency2 \
-	Write3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos, LATENCY2);\
-	while(_GetLatency != LATENCY2){};
-*/
 		
 // HCLK Clock Frequency		
 #define System_SetCoreClockFrequency(HZ) \
