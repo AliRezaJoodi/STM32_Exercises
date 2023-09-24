@@ -31,7 +31,8 @@ int main(void){
   ConfigureSystemClock();
   ConfigureUSART1();
 	
-	LL_USART_EnableIT_RXNE(USART1);
+	//LL_USART_EnableIT_RXNE(USART1);
+
 	LL_mDelay(500);
 	
 	USART1_PutStringFromFlash("Test1\r\n");
@@ -102,16 +103,26 @@ static void ConfigureUSART1(void){
   LL_USART_InitTypeDef USART_InitStruct = {0};
 
   USART_InitStruct.BaudRate = 9600;
-  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
-  USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
-  USART_InitStruct.Parity = LL_USART_PARITY_NONE;
-  USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
-  USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
+  //USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
+  //USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
+  //USART_InitStruct.Parity = LL_USART_PARITY_NONE;
+  //USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
+  //USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
   USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
   LL_USART_Init(USART1, &USART_InitStruct);
   //LL_USART_ConfigAsyncMode(USART1);
-	//USART1_SetAsyncMode;
-	USART1_SetMode(MODE_Asyncron);
+	USART1_SetMode(MODE_ASYNCRON);
+	USART1_SetDataBits(DATABITS_8B);
+	USART1_SetParity(PARITY_NONE);
+	USART1_SetStopBits(STOPBITS_1);
+	USART1_TX_EnableOrDisable(1);
+	USART1_TX_INT_EnableOrDisable(0);
+	USART1_RX_EnableOrDisable(1);
+	USART1_RX_INT_EnableOrDisable(1);
+	USART1_CTS_EnableOrDisable(0);
+	USART1_CTS_INT_EnableOrDisable(0);
+	USART1_RTS_EnableOrDisable(0);
+	
   //LL_USART_Enable(USART1);
 	USART1_EnableOrDisable(1);
 }
