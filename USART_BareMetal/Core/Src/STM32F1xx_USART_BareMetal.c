@@ -5,14 +5,14 @@
 
 //********************************
 void USART1_PutChar(char data){
-  LL_USART_TransmitData8(USART1,data);
+  LL_USART_TransmitData8(USART1, data);
 	while(!LL_USART_IsActiveFlag_TXE(USART1)){}
 }
 
 //********************************
 void USART1_PutString(char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1,*str);
+		LL_USART_TransmitData8(USART1, *str);
 		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }
@@ -23,7 +23,7 @@ void USART1_PutString(char *str){
 //********************************
 void USART1_PutStringFromFlash(const char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1,*str);
+		LL_USART_TransmitData8(USART1, *str);
 		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }

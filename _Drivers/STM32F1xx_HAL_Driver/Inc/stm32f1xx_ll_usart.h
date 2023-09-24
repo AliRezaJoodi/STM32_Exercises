@@ -1085,8 +1085,7 @@ __STATIC_INLINE uint32_t LL_USART_GetBaudRate(const USART_TypeDef *USARTx, uint3
   * @param  BaudRate Baud Rate
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t BaudRate)
-{
+__STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t BaudRate){
   USARTx->BRR = (uint16_t)(__LL_USART_DIV_SAMPLING16(PeriphClk, BaudRate));
 }
 
@@ -1099,15 +1098,13 @@ __STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t Periph
   * @param  PeriphClk Peripheral Clock
   * @retval Baud Rate
   */
-__STATIC_INLINE uint32_t LL_USART_GetBaudRate(const USART_TypeDef *USARTx, uint32_t PeriphClk)
-{
+__STATIC_INLINE uint32_t LL_USART_GetBaudRate(const USART_TypeDef *USARTx, uint32_t PeriphClk){
   uint32_t usartdiv = 0x0U;
   uint32_t brrresult = 0x0U;
 
   usartdiv = USARTx->BRR;
 
-  if ((usartdiv & 0xFFFFU) != 0U)
-  {
+  if ((usartdiv & 0xFFFFU) != 0U){
     brrresult = PeriphClk / usartdiv;
   }
   return (brrresult);
