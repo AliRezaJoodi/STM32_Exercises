@@ -42,6 +42,8 @@
 // Note: The M bit must not be modified during a data transfer (both transmission and reception)
 #define DATABITS_8B	0b0
 #define DATABITS_9B	0b1
+#define USART_GeDataBits(USARTx) \
+	GetBit(USARTx->CR1, USART_CR1_M_Pos)
 #define USART_SetDataBits(USARTx, MODE) \
 	WriteBit(USARTx->CR1, USART_CR1_M_Pos, MODE);
 #define USART1_SetDataBits(MODE) \
@@ -168,7 +170,7 @@
 	USART_EnableOrDisable(USART2, STATUS);
 
 #define USART_TransmitData_8Bits(USARTx, DATA) \
-	USARTx->DR = DATA;
+	USARTx->DR = DATA & 0xFFU;
 #define USART1_TransmitData_8Bits(DATA) \
 	USART_TransmitData_8Bits(USART1, DATA)
 #define USART2_TransmitData_8Bits(DATA) \
@@ -180,22 +182,44 @@
 	USART_TransmitData_9Bits(USART1, DATA)
 #define USART2_TransmitData_9Bits(DATA) \
 	USART_TransmitData_9Bits(USART2, DATA)
-		
+
+#define USART_TransmitData(USARTx, DATA) \
+	if(USART_GeDataBits(USARTx)==DATABITS_8B){USART_TransmitData_8Bits(USARTx, DATA)}\
+		else{USART_TransmitData_9Bits(USARTx, DATA)}
+#define USART1_TransmitData(DATA) \
+	USART_TransmitData(USART1, DATA)
+#define USART2_TransmitData(DATA) \
+	USART_TransmitData(USART2, DATA)
+
 // Status of transmit data to the shift register
-#define USART_TXE_GeFlagStatus(USARTx) \
+#define USART_TX_GeTransmitStatus(USARTx) \
 	GetBit(USARTx->SR, USART_SR_TXE_Pos)
-#define USART1_TXE_GeFlagStatus \
-	USART_TXE_GeFlagStatus(USART1)
-#define USART2_TXE_GeFlagStatus \
-	USART_TXE_GeFlagStatus(USART2)
+#define USART1_TX_GeTransmitStatus \
+	USART_TX_GeTransmitStatus(USART1)
+#define USART2_TX_GeTransmitStatus \
+	USART_TX_GeTransmitStatus(USART2)
 
 // Transfer completion status
-#define USART_TC_GeFlagStatus(USARTx) \
+#define USART_TX_GeTransferCompletionStatus(USARTx) \
 	GetBit(USARTx->SR, USART_SR_TC_Pos)
-#define USART1_TC_GeFlagStatus \
-	USART_TC_GeFlagStatus(USART1)
-#define USART2_TC_GeFlagStatus \
-	USART_TC_GeFlagStatus(USART2)
+#define USART1_TX_GeTransferCompletionStatus \
+	USART_TX_GeTransferCompletionStatus(USART1)
+#define USART2_TX_GeTransferCompletionStatus \
+	USART_TX_GeTransferCompletionStatus(USART2)
+
+#define USART_RX_GetReceiveFlag(USARTx) \
+	GetBit(USARTx->SR, USART_SR_RXNE_Pos)
+#define USART1_RX_GetReceiveFlag \
+	USART_RX_GetReceiveFlag(USART1)
+#define USART2_RX_GetReceiveFlag \
+	USART_RX_GetReceiveFlag(USART2)
+
+#define USART_RX_INT_GetEnableStatus(USARTx) \
+	GetBit(USARTx->CR1, USART_CR1_RXNEIE_Pos)
+#define USART1_RX_INT_GetEnableStatus \
+	USART_RX_INT_GetEnableStatus(USART1)
+#define USART2_RX_INT_GetEnableStatus \
+	USART_RX_INT_GetEnableStatus(USART2)
 
 
 void USART1_PutChar(char data);
