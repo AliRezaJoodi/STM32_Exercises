@@ -166,7 +166,38 @@
 	USART_EnableOrDisable(USART1, STATUS);
 #define USART2_EnableOrDisable(STATUS) \
 	USART_EnableOrDisable(USART2, STATUS);
+
+#define USART_TransmitData_8Bits(USARTx, DATA) \
+	USARTx->DR = DATA;
+#define USART1_TransmitData_8Bits(DATA) \
+	USART_TransmitData_8Bits(USART1, DATA)
+#define USART2_TransmitData_8Bits(DATA) \
+	USART_TransmitData_8Bits(USART2, DATA)
+
+#define USART_TransmitData_9Bits(USARTx, DATA) \
+	USARTx->DR = DATA & 0x1FFU;
+#define USART1_TransmitData_9Bits(DATA) \
+	USART_TransmitData_9Bits(USART1, DATA)
+#define USART2_TransmitData_9Bits(DATA) \
+	USART_TransmitData_9Bits(USART2, DATA)
 		
+// Status of transmit data to the shift register
+#define USART_TXE_GeFlagStatus(USARTx) \
+	GetBit(USARTx->SR, USART_SR_TXE_Pos)
+#define USART1_TXE_GeFlagStatus \
+	USART_TXE_GeFlagStatus(USART1)
+#define USART2_TXE_GeFlagStatus \
+	USART_TXE_GeFlagStatus(USART2)
+
+// Transfer completion status
+#define USART_TC_GeFlagStatus(USARTx) \
+	GetBit(USARTx->SR, USART_SR_TC_Pos)
+#define USART1_TC_GeFlagStatus \
+	USART_TC_GeFlagStatus(USART1)
+#define USART2_TC_GeFlagStatus \
+	USART_TC_GeFlagStatus(USART2)
+
+
 void USART1_PutChar(char data);
 void USART1_PutString(char *str);
 void USART1_PutStringFromFlash(const char *str);

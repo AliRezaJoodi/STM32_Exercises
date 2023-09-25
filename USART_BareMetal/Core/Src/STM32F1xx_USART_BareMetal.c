@@ -5,15 +5,19 @@
 
 //********************************
 void USART1_PutChar(char data){
-  LL_USART_TransmitData8(USART1, data);
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+  //LL_USART_TransmitData8(USART1, data);
+	USART1_TransmitData_8Bits(data);
+	//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+	while(!USART1_TXE_GeFlagStatus){};
 }
 
 //********************************
 void USART1_PutString(char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1, *str);
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+		//LL_USART_TransmitData8(USART1, *str);
+		USART1_TransmitData_8Bits(*str);
+		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+		while(!USART1_TXE_GeFlagStatus){};
     str++;
   }
 	//LL_USART_TransmitData8(USART1,13);
@@ -23,9 +27,11 @@ void USART1_PutString(char *str){
 //********************************
 void USART1_PutStringFromFlash(const char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1, *str);
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    str++;
+		//LL_USART_TransmitData8(USART1, *str);
+		USART1_TransmitData_8Bits(*str);
+		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+    while(!USART1_TXE_GeFlagStatus){};
+		str++;
   }
 	//LL_USART_TransmitData8(USART1,13);
 	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
