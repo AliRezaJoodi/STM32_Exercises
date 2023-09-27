@@ -10,30 +10,25 @@
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
 
-//uint8_t i2=0;
 uint8_t j=0;
-volatile uint8_t task_usart1=0;
+volatile char usart1_task=0;
 char txt[16]= "";
 
 void ConfigureSystemClock(void);
 static void ConfigureUSART1(void);
-
+void USART1_IRQHandler(void);
 
 int main(void){
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 	
-	//BUS_EnableClockForPWR;
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
 
   ConfigureSystemClock();
   ConfigureUSART1();
-	
-	//LL_USART_EnableIT_RXNE(USART1);
-
-	LL_mDelay(500);
+	//LL_mDelay(500);
 	
 	USART1_PutStringFromFlash("Test1\r\n");
 	
@@ -42,33 +37,32 @@ int main(void){
 	
 	char txt3[]= "Test3\r\n";
 	USART1_PutString(txt3);
-	/*
-	while(i2<6){
-		LL_USART_TransmitData8(USART1, NAME[i2++]);
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	}
-	*/
-	
-	//LL_USART_TransmitData8(USART1, 13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1))
 	
   while(1){
-		if(task_usart1==1){
-			task_usart1=0;
-			//USART1_PutChar(13);
+		if(usart1_task==1){
+			usart1_task=0;
 			USART1_PutString(txt);
 			USART1_PutStringFromFlash("\r\n");
-			for(j=0;j<16;++j){txt[j]=0;};
-			//while(txt[j] != 0){txt[j]=0;}
-		}
-		/*
-		if (j<5 && x==1){
-			LL_USART_TransmitData8(USART1, Value_RX[j++]);
-			while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-		}
-		if(j==5){j=0; x=0;}
-		*/
+		}	
   }
+}
+
+//*****************************************
+void USART1_IRQHandler(void){
+	static char c;
+	static unsigned char i=0;
+	
+	if(USART1_RX_GetReceiveFlag && USART1_RX_INT_GetEnableStatus){
+		if(c==13){
+			do{--i; txt[i]=0;} while(i);
+		}
+				
+		c = USART1_ReceiveData_8Bits;
+		USART1_TransmitData(c);
+		
+		if(32<=c && c<127){txt[i]=c; ++i;}
+			else if(c==13){i=0; usart1_task=1;}
+	}
 }
 
 //****************************************************
@@ -101,7 +95,6 @@ static void ConfigureUSART1(void){
 	BUS_USART1_EnableOrDisable(1);
 	
   LL_USART_InitTypeDef USART_InitStruct = {0};
-
   USART_InitStruct.BaudRate = 9600;
   //USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
   //USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
@@ -110,7 +103,7 @@ static void ConfigureUSART1(void){
   //USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
   USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
   LL_USART_Init(USART1, &USART_InitStruct);
-  //LL_USART_ConfigAsyncMode(USART1);
+
 	USART1_SetMode(MODE_ASYNCRON);
 	USART1_SetDataBits(DATABITS_8B);
 	USART1_SetParity(PARITY_NONE);
@@ -122,7 +115,6 @@ static void ConfigureUSART1(void){
 	USART1_CTS_EnableOrDisable(0);
 	USART1_CTS_INT_EnableOrDisable(0);
 	USART1_RTS_EnableOrDisable(0);	
-  //LL_USART_Enable(USART1);
 	USART1_EnableOrDisable(1);
 }
 

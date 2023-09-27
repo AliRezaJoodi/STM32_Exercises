@@ -43,23 +43,3 @@ void USART1_ConfigureNVIC(void){
   NVIC_EnableIRQ(USART1_IRQn);
 }
 
-//*****************************************
-void USART1_IRQHandler(void){
-	char c;
-	static uint8_t i=0;
-	//extern uint8_t j;
-	extern uint8_t task_usart1;
-	extern char txt[16];
-	
-	//if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
-	if(USART1_RX_GetReceiveFlag && USART1_RX_INT_GetEnableStatus){
-		//c=LL_USART_ReceiveData8(USART1);
-		USART1_ReceiveData(c);
-		//LL_USART_TransmitData8(USART1,c);
-		USART1_TransmitData(c);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-	
-		if(32<=c && c<127){txt[i]=c; ++i;}
-			else if(c==13){i=0; task_usart1=1;}
-	}
-}

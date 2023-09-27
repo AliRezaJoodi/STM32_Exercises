@@ -220,7 +220,7 @@
 	USART_ReceiveData_9Bits(USART1)
 #define USART2_ReceiveData_9Bits \
 	USART_ReceiveData_9Bits(USART2)
-
+/*
 #define USART_ReceiveData(USARTx, DATA) \
 	if(USART_GeDataBits(USARTx)==DATABITS_8B){DATA=USART_ReceiveData_8Bits(USARTx);}\
 		else{DATA=USART_ReceiveData_9Bits(USARTx);}
@@ -228,6 +228,7 @@
 	USART_ReceiveData(USART1, DATA)
 #define USART2_ReceiveData(DATA) \
 	USART_ReceiveData(USART2, DATA)
+*/
 
 #define USART_RX_GetReceiveFlag(USARTx) \
 	GetBit(USARTx->SR, USART_SR_RXNE_Pos)
