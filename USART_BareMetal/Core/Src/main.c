@@ -121,8 +121,7 @@ static void ConfigureUSART1(void){
 	USART1_RX_INT_EnableOrDisable(1);
 	USART1_CTS_EnableOrDisable(0);
 	USART1_CTS_INT_EnableOrDisable(0);
-	USART1_RTS_EnableOrDisable(0);
-	
+	USART1_RTS_EnableOrDisable(0);	
   //LL_USART_Enable(USART1);
 	USART1_EnableOrDisable(1);
 }

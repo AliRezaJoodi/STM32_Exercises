@@ -53,7 +53,8 @@ void USART1_IRQHandler(void){
 	
 	//if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
 	if(USART1_RX_GetReceiveFlag && USART1_RX_INT_GetEnableStatus){
-		c=LL_USART_ReceiveData8(USART1);
+		//c=LL_USART_ReceiveData8(USART1);
+		USART1_ReceiveData(c);
 		//LL_USART_TransmitData8(USART1,c);
 		USART1_TransmitData(c);
 		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
