@@ -2,7 +2,6 @@
 
 #include "main.h"
 
-//#include <stdio.h>
 #include "Utility.h"
 #include "STM32F1xx_System_BareMetal.h"
 #include "STM32F1xx_RCC_BareMetal.h"
@@ -29,8 +28,11 @@ int main(void){
   ConfigureSystemClock();
   ConfigureUSART1();
 	//LL_mDelay(500);
+
+	USART1_PutChar('A'); USART1_PutNewLine;
+	//USART1_PutNumber(9); USART1_PutNewLine;
 	
-	USART1_PutStringFromFlash("Test1\r\n");
+	USART1_PutString("Test1\r\n");
 	
 	const char txt2[]= "Test2\r\n";
 	USART1_PutStringFromFlash(txt2);
@@ -38,11 +40,12 @@ int main(void){
 	char txt3[]= "Test3\r\n";
 	USART1_PutString(txt3);
 	
+	//USART1_PutInteger(123);
+	
   while(1){
 		if(usart1_task==1){
 			usart1_task=0;
-			USART1_PutString(txt);
-			USART1_PutStringFromFlash("\r\n");
+			USART1_PutString(txt); USART1_PutNewLine;
 		}	
   }
 }

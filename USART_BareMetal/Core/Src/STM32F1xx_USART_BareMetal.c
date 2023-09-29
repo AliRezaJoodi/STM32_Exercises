@@ -4,38 +4,43 @@
 #include "STM32F1xx_USART_BareMetal.h"
 
 //********************************
+/*
 void USART1_PutChar(char data){
-  //LL_USART_TransmitData8(USART1, data);
 	USART1_TransmitData(data);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
 	while(!USART1_TX_GeTransmitStatus){};
 }
+*/
 
 //********************************
 void USART1_PutString(char *str){
   while(*str != 0){
-		//LL_USART_TransmitData8(USART1, *str);
-		USART1_TransmitData(*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-		while(!USART1_TX_GeTransmitStatus){};
-    str++;
+		//USART1_TransmitData(*str);
+		//while(!USART1_TX_GeTransmitStatus){};
+		USART1_PutChar(*str);
+    ++str;
   }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
 }
 
 //********************************
 void USART1_PutStringFromFlash(const char *str){
   while(*str != 0){
-		//LL_USART_TransmitData8(USART1, *str);
-		USART1_TransmitData(*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    while(!USART1_TX_GeTransmitStatus){};
-		str++;
+		//USART1_TransmitData(*str);
+    //while(!USART1_TX_GeTransmitStatus){};
+		USART1_PutChar(*str);
+		++str;
   }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
 }
+
+//*****************************************
+/*
+void USART1_PutInteger(int number){
+	int n=number;
+	while(n != 0){
+		USART1_PutNumber(n - (n/10));
+		n=n/10;
+	}
+}
+*/
 
 //*****************************************
 void USART1_ConfigureNVIC(void){
