@@ -10,6 +10,17 @@
 	extern "C" {
 #endif
 
+/*
+PeriphCLK	| BaudRate	| DIV
+8MHz			| 9600			|	833
+*/
+#define USART_SetBaudRate(USARTx, DIV) \
+	USARTx->BRR = DIV;
+#define USART1_SetBaudRate(DIV) \
+	USART_SetBaudRate(USART1, DIV);
+#define USART2_SetBaudRate(DIV) \
+	USART_SetBaudRate(USART2, DIV);
+	
 #define MODE_ASYNCRON		0
 #define MODE_SYNCRON		1
 #define USART_SetMode(USARTx, MODE) \

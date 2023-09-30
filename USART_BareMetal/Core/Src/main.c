@@ -44,8 +44,16 @@ int main(void){
 	ClearString(txt3);
 	USART1_PutString(txt3);
 	
+	sprintf(txt3, "a=%3d", 12);
+	USART1_PutString(txt3); USART1_PutNewLine;
 	
-	sprintf(txt3, "a=%0.3f", 12.3456);
+	sprintf(txt3, "a=%.3f", 12.3456);
+	USART1_PutString(txt3); USART1_PutNewLine;
+	
+	unsigned int a1=0;
+	//a1=USART1->BRR;
+	a1 = __LL_USART_DIV_SAMPLING16(8000000, 9600);
+	sprintf(txt3, "BRR=%d", a1);
 	USART1_PutString(txt3); USART1_PutNewLine;
 	
   while(1){
