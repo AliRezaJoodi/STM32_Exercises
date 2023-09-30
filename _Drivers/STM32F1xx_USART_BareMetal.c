@@ -1,41 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "main.h"
 #include "STM32F1xx_USART_BareMetal.h"
-
-//********************************
-void USART1_PutChar(char data){
-  //LL_USART_TransmitData8(USART1, data);
-	USART1_TransmitData(data);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-	while(!USART1_TX_GeTransmitStatus){};
-}
-
-//********************************
-void USART1_PutString(char *str){
-  while(*str != 0){
-		//LL_USART_TransmitData8(USART1, *str);
-		USART1_TransmitData(*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-		while(!USART1_TX_GeTransmitStatus){};
-    str++;
-  }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-}
-
-//********************************
-void USART1_PutStringFromFlash(const char *str){
-  while(*str != 0){
-		//LL_USART_TransmitData8(USART1, *str);
-		USART1_TransmitData(*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    while(!USART1_TX_GeTransmitStatus){};
-		str++;
-  }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-}
 
 //*****************************************
 void USART1_ConfigureNVIC(void){
@@ -43,3 +8,50 @@ void USART1_ConfigureNVIC(void){
   NVIC_EnableIRQ(USART1_IRQn);
 }
 
+//********************************
+/*
+void USART1_PutChar(char data){
+	USART1_TransmitData(data);
+	while(!USART1_TX_GeTransmitStatus){};
+}
+*/
+
+//********************************
+void USART1_PutString(char *str){
+  while(*str != 0){
+		USART1_PutChar(*str);
+    ++str;
+  }
+}
+
+//********************************
+void USART1_PutStringFromFlash(const char *str){
+  while(*str != 0){
+		USART1_PutChar(*str);
+		++str;
+  }
+}
+
+//********************************
+/*
+void USART2_PutChar(char data){
+	USART2_TransmitData(data);
+	while(!USART2_TX_GeTransmitStatus){};
+}
+*/
+
+//********************************
+void USART2_PutString(char *str){
+  while(*str != 0){
+		USART2_PutChar(*str);
+    ++str;
+  }
+}
+
+//********************************
+void USART2_PutStringFromFlash(const char *str){
+  while(*str != 0){
+		USART2_PutChar(*str);
+		++str;
+  }
+}

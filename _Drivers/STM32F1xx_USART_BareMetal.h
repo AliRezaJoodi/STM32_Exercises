@@ -244,13 +244,33 @@
 #define USART2_RX_INT_GetEnableStatus \
 	USART_RX_INT_GetEnableStatus(USART2)
 
+#define USART_PutNewLine(USARTx)\
+	USART_TransmitData(USARTx, '\r');\
+	while(!USART_TX_GeTransmitStatus(USARTx)){};\
+	USART_TransmitData(USARTx, '\n');\
+	while(!USART_TX_GeTransmitStatus(USARTx)){};
+#define USART1_PutNewLine\
+	USART_PutNewLine(USART1);
+#define USART2_PutNewLine\
+	USART_PutNewLine(USART2);
 
-void USART1_PutChar(char data);
+#define USART_PutChar(USARTx, DATA)\
+	USART_TransmitData(USARTx, DATA);\
+	while(!USART_TX_GeTransmitStatus(USARTx)){};
+#define USART1_PutChar(DATA)\
+	USART_PutChar(USART1, DATA);
+#define USART2_PutChar(DATA)\
+	USART_PutChar(USART2, DATA);	
+		
+//void USART1_PutChar(char data);
 void USART1_PutString(char *str);
 void USART1_PutStringFromFlash(const char *str);
-
+//void USART2_PutChar(char data);
+void USART2_PutString(char *str);
+void USART2_PutStringFromFlash(const char *str);
+		
 void USART1_ConfigureNVIC(void);
-void USART1_IRQHandler(void);
+//void USART1_IRQHandler(void);
 
 #ifdef __cplusplus
 	}
