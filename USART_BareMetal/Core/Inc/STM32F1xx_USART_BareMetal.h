@@ -261,20 +261,16 @@
 	USART_PutChar(USART1, DATA);
 #define USART2_PutChar(DATA)\
 	USART_PutChar(USART2, DATA);	
-/*		
-#define USART1_PutNumber(NUMBER)\
-	USART_PutChar(USART1, NUMBER+48);
-#define USART2_PutNumber(NUMBER)\
-	USART_PutChar(USART2, NUMBER+48);
-*/
 		
 //void USART1_PutChar(char data);
 void USART1_PutString(char *str);
 void USART1_PutStringFromFlash(const char *str);
-//void USART1_PutInteger(int number);
+//void USART2_PutChar(char data);
+void USART2_PutString(char *str);
+void USART2_PutStringFromFlash(const char *str);
 		
 void USART1_ConfigureNVIC(void);
-void USART1_IRQHandler(void);
+//void USART1_IRQHandler(void);
 
 #ifdef __cplusplus
 	}
