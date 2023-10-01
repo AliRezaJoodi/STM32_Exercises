@@ -1,9 +1,5 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "stm32f1xx_ll_rcc.h"
-#include "stm32f1xx_ll_utils.h"
-#include "stm32f1xx_ll_usart.h"
-
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
@@ -15,7 +11,9 @@
 	extern "C" {
 #endif
 
-void USART1_Configure(void);
+//#define USART_CR1_OVER16
+
+void USART1_Configuration(void);
 void USART1_IRQHandler(void);
 
 #ifdef __cplusplus

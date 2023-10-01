@@ -10,6 +10,24 @@
 	extern "C" {
 #endif
 
+#define _DIV_INTEGER_SAMPLING16(PERIPHCLK, BAUDRATE) \
+	( ((PERIPHCLK)*25) / (4*(BAUDRATE)) )
+#define _DIV_MANTISSA_SAMPLING16(PERIPHCLK, BAUDRATE) \
+	(_DIV_INTEGER_SAMPLING16((PERIPHCLK), (BAUDRATE)) / 100)
+#define _DIV_FRACTION_SAMPLING16(PERIPHCLK, BAUDRATE) \
+	((((_DIV_INTEGER_SAMPLING16((PERIPHCLK), (BAUDRATE)) - (_DIV_MANTISSA_SAMPLING16((PERIPHCLK), (BAUDRATE))*100) ) * 16) + 50) / 100)
+#define _DIV_SAMPLING16(PERIPHCLK, BAUDRATE) \
+	(((_DIV_MANTISSA_SAMPLING16((PERIPHCLK), (BAUDRATE)) << 4) + \
+	(_DIV_FRACTION_SAMPLING16((PERIPHCLK), (BAUDRATE)) & 0xF0)) + \
+	(_DIV_FRACTION_SAMPLING16((PERIPHCLK), (BAUDRATE)) & 0x0F))
+
+#define USART_SetBaudRate(USARTx, PERIPHCLK, BAUDRATE) \
+	USARTx->BRR = _DIV_SAMPLING16(PERIPHCLK, BAUDRATE);
+#define USART1_SetBaudRate(PERIPHCLK, BAUDRATE) \
+	USART_SetBaudRate(USART1, PERIPHCLK, BAUDRATE);
+#define USART2_SetBaudRate(PERIPHCLK, BAUDRATE) \
+	USART_SetBaudRate(USART2, PERIPHCLK, BAUDRATE);
+	
 #define MODE_ASYNCRON		0
 #define MODE_SYNCRON		1
 #define USART_SetMode(USARTx, MODE) \
@@ -40,8 +58,8 @@
 */
 
 // Note: The M bit must not be modified during a data transfer (both transmission and reception)
-#define DATABITS_8B	0b0
-#define DATABITS_9B	0b1
+#define DATABITS_8BITS	0b0
+#define DATABITS_9BITS	0b1
 #define USART_GeDataBits(USARTx) \
 	GetBit(USARTx->CR1, USART_CR1_M_Pos)
 #define USART_SetDataBits(USARTx, MODE) \
@@ -184,7 +202,7 @@
 	USART_TransmitData_9Bits(USART2, DATA)
 
 #define USART_TransmitData(USARTx, DATA) \
-	if(USART_GeDataBits(USARTx)==DATABITS_8B){USART_TransmitData_8Bits(USARTx, DATA)}\
+	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){USART_TransmitData_8Bits(USARTx, DATA)}\
 		else{USART_TransmitData_9Bits(USARTx, DATA)}
 #define USART1_TransmitData(DATA) \
 	USART_TransmitData(USART1, DATA)
@@ -222,7 +240,7 @@
 	USART_ReceiveData_9Bits(USART2)
 /*
 #define USART_ReceiveData(USARTx, DATA) \
-	if(USART_GeDataBits(USARTx)==DATABITS_8B){DATA=USART_ReceiveData_8Bits(USARTx);}\
+	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){DATA=USART_ReceiveData_8Bits(USARTx);}\
 		else{DATA=USART_ReceiveData_9Bits(USARTx);}
 #define USART1_ReceiveData(DATA) \
 	USART_ReceiveData(USART1, DATA)
