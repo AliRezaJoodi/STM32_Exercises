@@ -405,19 +405,9 @@
           <GroupName>Drivers/STM32F1xx_HAL_Driver</GroupName>
           <Files>
             <File>
-              <FileName>stm32f1xx_ll_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usart.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_rcc.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 
+#include "stm32f1xx_ll_utils.h"
+
 #include "Utility.h"
 #include "STM32F1xx_System_BareMetal.h"
 #include "STM32F1xx_RCC_BareMetal.h"
@@ -30,7 +32,7 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
   ConfigureSystemClock();
-  USART1_Configure();
+  USART1_Configuration();
 	//LL_mDelay(500);
 
 	USART1_PutChar('A');USART1_PutNewLine;	
@@ -51,8 +53,8 @@ int main(void){
 	USART1_PutString(txt3); USART1_PutNewLine;
 	
 	unsigned int a1=0;
-	//a1=USART1->BRR;
-	a1 = __LL_USART_DIV_SAMPLING16(8000000, 9600);
+	a1=USART1->BRR;
+	//a1 = _DIV_SAMPLING16(8000000, 9600);
 	sprintf(txt3, "BRR=%d", a1);
 	USART1_PutString(txt3); USART1_PutNewLine;
 	
