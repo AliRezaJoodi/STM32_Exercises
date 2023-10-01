@@ -6,8 +6,9 @@ void delay_us(unsigned int us){
   volatile unsigned int i;
   volatile unsigned int t;
 
-  for(i=0; i<us; i++){
-    t=_LAG; while(t!=0){t--;}
+  for(i=0; i<us; ++i){
+    t=_LAG; 
+		while(t!=0){--t;}
   }
 }
 

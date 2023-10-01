@@ -7,29 +7,26 @@
     #define _SYSTEM_INCLUDED
 
 #ifdef __cplusplus
-    extern "C" {
+	extern "C" {
 #endif
 
 
-#define FLASH_LATENCY0	0b000U	// Zero wait state, if 0 < SYSCLK <= 24MHz
-#define FLASH_LATENCY1	0b001U	// One wait state, if 24MHz < SYSCLK <= 48MHz
-#define FLASH_LATENCY2	0b010U	// Two wait states, if 48MHz < SYSCLK <= 72MHz
-#define FLASH_ConfigureLatency(MODE) \
-	Write3Bit(FLASH->ACR,FLASH_ACR_LATENCY_Pos,MODE)
-	//FLASH->ACR= (FLASH->ACR & ~FLASH_ACR_LATENCY) | ((MODE&0b111U) << FLASH_ACR_LATENCY_Pos);
-#define FLASH_GetLatency \
-	Get3Bit(FLASH->ACR,FLASH_ACR_LATENCY_Pos)
-	//((FLASH->ACR & FLASH_ACR_LATENCY) >> FLASH_ACR_LATENCY_Pos)
-#define FLASH_WaitTillRightLatency(MODE) \
-	while(FLASH_GetLatency != MODE){}
-
+#define LATENCY0	0b000	// Zero wait state, if 0 < SYSCLK <= 24MHz
+#define LATENCY1	0b001	// One wait state, if 24MHz < SYSCLK <= 48MHz
+#define LATENCY2	0b010	// Two wait states, if 48MHz < SYSCLK <= 72MHz
+#define _GetLatency \
+	Get3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos)
+#define FLASH_SetLatency(MODE) \
+	Write3Bit(FLASH->ACR, FLASH_ACR_LATENCY_Pos, MODE);\
+	while(_GetLatency != MODE){};
+		
 // HCLK Clock Frequency		
-#define SetDirectlySystemCoreClock(HZ) \
-	SystemCoreClock= HZ;
+#define System_SetCoreClockFrequency(HZ) \
+	SystemCoreClock = HZ;
 
 
 #ifdef __cplusplus
-    }
+	}
 #endif
 
 #endif
