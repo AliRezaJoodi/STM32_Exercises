@@ -82,6 +82,8 @@
 #define RCC_APB2_SetPrescaler(MODE) \
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);
 
+// _SystemClock.h
+void SystemClock_Configuration(void);
 
 #ifdef __cplusplus
 	}

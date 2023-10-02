@@ -1,7 +1,9 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "_USART.h"
-
+#include "STM32F1xx_BUS_BareMetal.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
+#include "STM32F1xx_USART_BareMetal.h"
+	
 //****************************************************
 //PA9 -> USART1_TX
 //PA10 -> USART1_RX

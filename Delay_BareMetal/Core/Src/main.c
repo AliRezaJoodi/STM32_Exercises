@@ -1,5 +1,23 @@
+// GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "main.h"
+//#include "main.h"
+
+#include "stm32f1xx_ll_utils.h"
+
+#include "Utility.h"
+#include "STM32F1xx_System_BareMetal.h"
+#include "STM32F1xx_RCC_BareMetal.h"
+#include "STM32F1xx_BUS_BareMetal.h"
+#include "STM32F1xx_GPIO_BareMetal.h"
+#include "Delay.h"
+
+#ifndef NVIC_PRIORITYGROUP_0
+	#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, 4 bits for subpriority */
+	#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority, 3 bits for subpriority */
+	#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority, 2 bits for subpriority */
+	#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority, 1 bit  for subpriority */
+	#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority, 0 bit  for subpriority */
+#endif
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -25,7 +43,7 @@ int main(void){
 	LED_ConfigurePin();
 	
   while(1){	
-		TogglePinFromOutput(GPIOA,1); delay_ms(10);
+		TogglePinFromOutput(GPIOA,1); Delay_ms(10);
   }
 }
 
