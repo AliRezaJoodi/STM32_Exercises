@@ -14,12 +14,11 @@ void ConfigureBcdDisplay(void);
 int main(void){
 	char status0=0;
 
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init	
-	/* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
+  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
 	
 	BUS_PWR_EnableOrDisable(1);
-	BUS_AFIO_EnableOrDisable(0);
+	BUS_AFIO_EnableOrDisable(1);
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
 
   SystemClock_Configuration();
