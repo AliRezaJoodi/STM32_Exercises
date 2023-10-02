@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
+              <Define>HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\CMSIS\Include</IncludePath>
+              <IncludePath>..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\Core</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,7 +382,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Application/MDK-ARM</GroupName>
+          <GroupName>StartUp</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f103xb.s</FileName>
@@ -392,32 +392,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/CMSIS</GroupName>
+          <GroupName>Drivers</GroupName>
           <Files>
             <File>
               <FileName>system_stm32f1xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/system_stm32f1xx.c</FilePath>
+              <FilePath>..\UserCode\system_stm32f1xx.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/STM32F1xx_HAL_Driver</GroupName>
+          <GroupName>UserCode</GroupName>
           <Files>
             <File>
-              <FileName>stm32f1xx_ll_utils.c</FileName>
+              <FileName>Main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c</FilePath>
+              <FilePath>..\UserCode\Main.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Application/User/Core</GroupName>
-          <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>_SystemClock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
+              <FilePath>..\UserCode\_SystemClock.c</FilePath>
             </File>
           </Files>
         </Group>
