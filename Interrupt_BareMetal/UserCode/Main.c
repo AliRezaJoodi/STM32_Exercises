@@ -7,7 +7,6 @@
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_EXTI_BareMetal.h"
 
-void ConfigureExternalInterrupts(void);
 void ConfigureOutputPins(void);
 void ConfigureOutputPins2(void);
 
@@ -19,8 +18,8 @@ int main(void){
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
   
 	SystemClock_Configuration();
+  EXTI_Configuration();
 	
-  ConfigureExternalInterrupts();
 	ConfigureOutputPins();
 	ConfigureOutputPins2();
 	
@@ -30,43 +29,6 @@ int main(void){
   }
 }
 
-//**********************************************************
-void ConfigureExternalInterrupts(void){	
-	EXTI_ConfigureNVIC_EXTI0();
-	EXTI_ConfigureNVIC_EXTI5_9();
-	EXTI_ConfigureNVIC_EXTI10_15();
-
-	BUS_GPIOA_EnableOrDisable(1);
-	
-	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT0);
-	//GPIO_ConfigureInputTypeForPin(GPIOA,0,FLOATING_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,0, INPUT_FLOATING);
-	EXTI_EnableOrDisableInterruptMode(EXTI_INT0,1);
-	EXTI_EnableOrDisableEventMode(EXTI_INT0,0);
-	EXTI_EnableOrDisableRisingTrigger(EXTI_INT0,1);
-	EXTI_EnableOrDisableFallingTrigger(EXTI_INT0,0);
-
-	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT6);
-	GPIO_InputMode_SetInputType(GPIOA,6,INPUT_FLOATING);
-	EXTI_EnableOrDisableInterruptMode(EXTI_INT6,1);
-	EXTI_EnableOrDisableEventMode(EXTI_INT6,0);
-	EXTI_EnableOrDisableRisingTrigger(EXTI_INT6,0);
-	EXTI_EnableOrDisableFallingTrigger(EXTI_INT6,1);
-	
-	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT11);
-	GPIO_InputMode_SetInputType(GPIOA,11,INPUT_FLOATING);
-	EXTI_EnableOrDisableInterruptMode(EXTI_INT11,1);
-	EXTI_EnableOrDisableEventMode(EXTI_INT11,0);
-	EXTI_EnableOrDisableRisingTrigger(EXTI_INT11,1);
-	EXTI_EnableOrDisableFallingTrigger(EXTI_INT11,1);
-	
-	EXTI_ConfigureSource(EXTI_PORTA,EXTI_INT12);
-	GPIO_InputMode_SetInputType(GPIOA,12,INPUT_FLOATING);
-	EXTI_EnableOrDisableInterruptMode(EXTI_INT12,1);
-	EXTI_EnableOrDisableEventMode(EXTI_INT12,0);
-	EXTI_EnableOrDisableRisingTrigger(EXTI_INT12,1);
-	EXTI_EnableOrDisableFallingTrigger(EXTI_INT12,0);
-}
 
 //*************************************************
 void ConfigureOutputPins(void){
