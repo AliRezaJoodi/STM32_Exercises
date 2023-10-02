@@ -8,10 +8,10 @@
 #endif 
 
 
-#define _LAG	8
+#define _DELAY_LAG	8
 
-void delay_us(unsigned int us);
-void delay_ms(unsigned int ms);
+void Delay_us(unsigned int us);
+void Delay_ms(unsigned int ms);
 
 #ifdef __cplusplus
 	}

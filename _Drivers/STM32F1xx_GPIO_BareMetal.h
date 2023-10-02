@@ -41,8 +41,8 @@
 
 #define INPUT_ANALOG		0b00
 #define INPUT_FLOATING	0b01
-#define INPUT_PULLDOWN	0b10 | (0b0<<2)
-#define INPUT_PULLUP		0b10 | (0b1<<2)
+#define INPUT_PULLDOWN	0b10 | 0b000
+#define INPUT_PULLUP		0b10 | 0b100
 #define GPIO_InputMode_SetInputType(GPIOx, PIN, MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL, (PIN*4)+2, MODE);}\
 		else{Write2Bit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}\

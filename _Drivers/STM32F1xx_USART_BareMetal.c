@@ -2,6 +2,14 @@
 
 #include "STM32F1xx_USART_BareMetal.h"
 
+//********************************
+void USART_ClearString(char *str){
+  while(*str != 0){
+		*str=0;
+    ++str;
+  }
+}
+
 //*****************************************
 void USART1_ConfigureNVIC(void){
 	NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
@@ -55,3 +63,4 @@ void USART2_PutStringFromFlash(const char *str){
 		++str;
   }
 }
+
