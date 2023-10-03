@@ -13,6 +13,7 @@ extern "C" {
 #define ClearBit(ADDRESS, BIT) 							ADDRESS = (ADDRESS) & (~(0b1UL<<(BIT)));
 #define ClearBit_NoLastStatus(ADDRESS, BIT) ADDRESS = ~(0b1UL<<(BIT));
 #define ToggleBit(ADDRESS, BIT)        			ADDRESS = (ADDRESS) ^ (0b1UL<<(BIT));
+#define ToggleData(ADDRESS)        					ADDRESS = ~(ADDRESS);
 #define WriteBit(ADDRESS, BIT, STATUS)			ADDRESS = ((ADDRESS) & (~(0b1UL<<(BIT)))) | (((STATUS)&0b1UL) << (BIT));
 #define Write2Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b11UL<<(FROM)))) | (((VALUE)&0b11UL) << (FROM));
 #define Write3Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b111UL<<(FROM)))) | (((VALUE)&0b111UL) << (FROM));
