@@ -16,7 +16,7 @@
 	#define _7SEGMENT_PORT 
     
 	#define DISPLAYLAG    5 //Display Lag
-	#define SEGMENT_ON		1
+	#define SEGMENT_ON		0
     
 	#define A_GPIO				GPIOA
   #define A_PIN					0
@@ -77,10 +77,11 @@
 	GPIO_WritePin(G_GPIO, G_PIN, GetBit(data,6));\
 	GPIO_WritePin(DP_GPIO, DP_PIN, GetBit(data,7));
 
-
-void DisplayOn7Segment_Configuration(void);
-void DisplayOn7Segment_Number(unsigned char value);
-
+void SevenSegment_1Digit_Configuration(void);
+void SevenSegment_1Digit_Number(unsigned char value);
+void SevenSegment_4Digit_Configuration(void);
+void SevenSegment_4Digit_UpdateNumbers_uint(unsigned int value);
+void SevenSegment_4Digit_RefreshRightToLeft_uint(void);
 
 #ifdef __cplusplus
 	}

@@ -25,7 +25,7 @@ int main(void){
   SystemClock_Configuration();
   USART1_Configuration();
 	ConfigureButtons();
-	DisplayOn7Segment_Configuration();
+	SevenSegment_1Digit_Configuration();
 	
 	USART1_PutChar('A');USART1_PutNewLine;	
 	
@@ -50,13 +50,13 @@ int main(void){
 	sprintf(txt3, "BRR=%d", a1);
 	USART1_PutString(txt3); USART1_PutNewLine;
 	
-	DisplayOn7Segment_Number(0);
+	SevenSegment_1Digit_Number(0);
 	
   while(1){
 		if(GPIO_GetPin(GPIOB,0)==0 && status==1){
 			status=0;
 			i++; if(i>9){i=0;}
-			DisplayOn7Segment_Number(i);
+			SevenSegment_1Digit_Number(i);
 		}
 		if(GPIO_GetPin(GPIOB,0)){status=1;}
 	}

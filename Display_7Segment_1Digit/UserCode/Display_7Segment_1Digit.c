@@ -29,7 +29,7 @@ const unsigned char table_7segment[18]={
 
 
 //***************************************************
-void DisplayOn7Segment_Configuration(void){
+void SevenSegment_1Digit_Configuration(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
 	_ConfigureSegmentsPins;
@@ -40,9 +40,12 @@ void DisplayOn7Segment_Configuration(void){
 }
 
 //**************************************
-void DisplayOn7Segment_Number(unsigned char value){
-	value = table_7segment[value];
-	if(SEGMENT_ON==0){ToggleData(value);}
+void SevenSegment_1Digit_Number(unsigned char value){
+	#if SEGMENT_ON == 0
+		value = ~table_7segment[value];
+	#else
+		value = table_7segment[value];
+	#endif
 	_DriveDataOn7Segment(value);
 	GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, DIGIT_ON);
 }
