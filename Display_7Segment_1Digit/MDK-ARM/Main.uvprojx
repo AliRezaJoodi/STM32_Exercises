@@ -400,11 +400,6 @@
               <FilePath>..\UserCode\system_stm32f1xx.c</FilePath>
             </File>
             <File>
-              <FileName>STM32F1xx_USART_BareMetal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UserCode\STM32F1xx_USART_BareMetal.c</FilePath>
-            </File>
-            <File>
               <FileName>Display_7Segment_1Digit.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UserCode\Display_7Segment_1Digit.c</FilePath>
@@ -423,11 +418,6 @@
               <FileName>_SystemClock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UserCode\_SystemClock.c</FilePath>
-            </File>
-            <File>
-              <FileName>_USART.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UserCode\_USART.c</FilePath>
             </File>
           </Files>
         </Group>

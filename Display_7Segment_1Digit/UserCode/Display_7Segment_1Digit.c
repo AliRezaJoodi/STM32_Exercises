@@ -5,7 +5,7 @@
 #ifndef _DIGITS_PORT
     #define _DIGITS_PORT 
 		
-		#define DIGIT_ON      0
+		#define DIGIT_ON      1
 		
 		#define DIGIT0_GPIO         GPIOA
     #define DIGIT0_PIN          15
