@@ -9,8 +9,8 @@
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
 
-char usart1_txt[16]= "";
-volatile char usart1_task=0;
+extern char usart1_txt[16];
+extern char usart1_task;
 
 int main(void){
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init

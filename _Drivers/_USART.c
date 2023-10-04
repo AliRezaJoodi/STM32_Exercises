@@ -3,6 +3,9 @@
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
+
+volatile char usart1_txt[16]= "";
+volatile char usart1_task=0;
 	
 //****************************************************
 //PA9 -> USART1_TX
@@ -37,9 +40,7 @@ void USART1_Configuration(void){
 void USART1_IRQHandler(void){
 	char c;
 	static unsigned char i=0;
-	extern char usart1_txt[16];
-	extern char usart1_task;
-	
+
 	if(USART1_RX_GetReceiveFlag && USART1_RX_INT_GetEnableStatus){		
 		c = USART1_ReceiveData_8Bits;
 		USART1_TransmitData(c);
