@@ -65,7 +65,7 @@
 	SetBit_NoLastStatus(RCC->APB2RSTR, RCC_APB2RSTR_IOPDRST_Pos);
 #define _GPIOD_GeEnableStatus \
 	GetBit(RCC->APB2ENR, RCC_APB2ENR_IOPDEN_Pos)
-#define BUS_GPIOD_EnableOrDisableClock(STATUS) \
+#define BUS_GPIOD_EnableOrDisable(STATUS) \
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPDEN_Pos, STATUS);\
 	while(_GPIOD_GeEnableStatus != STATUS){};
 		

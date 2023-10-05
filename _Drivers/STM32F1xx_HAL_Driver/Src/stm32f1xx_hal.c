@@ -139,8 +139,7 @@ HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
   *         to have correct HAL operation.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_Init(void)
-{
+HAL_StatusTypeDef HAL_Init(void){
   /* Configure Flash prefetch */
 #if (PREFETCH_ENABLE != 0)
 #if defined(STM32F101x6) || defined(STM32F101xB) || defined(STM32F101xE) || defined(STM32F101xG) || \
@@ -301,8 +300,7 @@ __weak void HAL_IncTick(void)
   *       implementations in user file.
   * @retval tick value
   */
-__weak uint32_t HAL_GetTick(void)
-{
+__weak uint32_t HAL_GetTick(void){
   return uwTick;
 }
 
@@ -368,20 +366,15 @@ HAL_TickFreqTypeDef HAL_GetTickFreq(void)
   * @param Delay specifies the delay time length, in milliseconds.
   * @retval None
   */
-__weak void HAL_Delay(uint32_t Delay)
-{
+__weak void HAL_Delay(uint32_t Delay){
   uint32_t tickstart = HAL_GetTick();
   uint32_t wait = Delay;
 
   /* Add a freq to guarantee minimum wait */
-  if (wait < HAL_MAX_DELAY)
-  {
-    wait += (uint32_t)(uwTickFreq);
-  }
+  if(wait < HAL_MAX_DELAY){
+    wait += (uint32_t)(uwTickFreq);}
 
-  while ((HAL_GetTick() - tickstart) < wait)
-  {
-  }
+  while((HAL_GetTick() - tickstart) < wait){}
 }
 
 /**

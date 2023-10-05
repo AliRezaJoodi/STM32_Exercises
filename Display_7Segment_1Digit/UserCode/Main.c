@@ -7,7 +7,7 @@
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "Display_7Segment.h"
 
-char usart1_txt[16]= "";
+char usart1_txt[16]="";
 volatile char usart1_task=0;
 void ConfigureButtons(void);
 

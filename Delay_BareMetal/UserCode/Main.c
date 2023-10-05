@@ -25,6 +25,7 @@ int main(void){
 	
   while(1){	
 		GPIO_TogglePin(GPIOA,1); Delay_ms(10);
+		//if(Refresh()){GPIO_TogglePin(GPIOA,1);}
   }
 }
 

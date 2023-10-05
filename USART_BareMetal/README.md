@@ -1,7 +1,11 @@
-## USART with Bare Metal
+## USART with Bare Metal Programming
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
+USART1:		Asyncron, 9600  
+USART1_TX:	Enable, Transfer Text  
+USART1_RX:	Enable, Receiving Text  
+USART1_RX_INT:	Enable  
 
 ### Folder and Files Description
 It has included:
