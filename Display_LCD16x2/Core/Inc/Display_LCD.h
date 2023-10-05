@@ -33,6 +33,32 @@ extern "C" {
 	#define D4_PIN  			4
 #endif
 
+#define _LCD_SetPinForOutputMode(GPIOx, PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_OUTPUT_2MHz);\
+	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, OUTPUT_GPIO);\
+	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
+
+#define _LCD_SetPinForInputMode(GPIOx, PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_INPUT);\
+	GPIO_InputMode_SetInputType(GPIOx, PIN, INPUT_FLOATING);
+
+#define _LCD_ControlPins_Configuration \
+	_LCD_SetPinForOutputMode(RS_PORT, RS_PIN);\
+	_LCD_SetPinForOutputMode(RW_PORT, RW_PIN);\
+	_LCD_SetPinForOutputMode(EN_PORT, EN_PIN);
+
+#define _LCD_DataPins_ConfigurationForOutputMode \
+	_LCD_SetPinForOutputMode(D7_PORT, D7_PIN);\
+	_LCD_SetPinForOutputMode(D6_PORT, D6_PIN);\
+	_LCD_SetPinForOutputMode(D5_PORT, D5_PIN);\
+	_LCD_SetPinForOutputMode(D4_PORT, D4_PIN);	
+
+#define _LCD_DataPins_ConfigurationForInputMode \
+	_LCD_SetPinForInputMode(D7_PORT, D7_PIN);\
+	_LCD_SetPinForInputMode(D6_PORT, D6_PIN);\
+	_LCD_SetPinForInputMode(D5_PORT, D5_PIN);\
+	_LCD_SetPinForInputMode(D4_PORT, D4_PIN);
+	
 #define _CLEAR_DISPLAY  0x01 // Clear display command
 #define _RETURN_HOME    0x02 // Return home command
 
@@ -83,7 +109,7 @@ void LCD_ConfigureInterfaceDataLength(char mode);
 void LCD_ConfigureLine(char mode);
 void LCD_ClearDisplay(void);
 void LCD_GoToXY(unsigned char x, unsigned char y);
-void LCD_ConfigureDefaultMode(void);
+void LCD_Configuration(void);
 void LCD_PutChar(char data);
 void LCD_PutString(char *str);
 void LCD_PutStringFromFlash(const char *str);
@@ -93,7 +119,7 @@ void LCD_PutStringFromFlash(const char *str);
 #define lcd_putchar(c)   	LCD_PutChar(c)
 #define lcd_puts(str)   	LCD_PutString(str)
 #define lcd_putsf(str)    LCD_PutStringFromFlash(str)
-#define lcd_init()				LCD_ConfigureDefaultMode()
+#define lcd_init()				LCD_Configuration()
 
 #ifdef __cplusplus
 }

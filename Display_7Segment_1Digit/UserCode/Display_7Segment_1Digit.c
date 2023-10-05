@@ -7,14 +7,14 @@
 		
 		#define DIGIT_ON      1
 		
-		#define DIGIT0_GPIO         GPIOA
-    #define DIGIT0_PIN          15
+		#define DIGIT0_GPIO   GPIOA
+    #define DIGIT0_PIN		15
 #endif
 
-#define _ConfigureDigitsPins \
-	_ConfigurePinFor7Segment(DIGIT0_GPIO, DIGIT0_PIN);\
+#define _7segment_DigitsPins_Configuration \
+	_7Segment_SetPinForOutputMode(DIGIT0_GPIO, DIGIT0_PIN);\
 
-#define _OffDigitsPins \
+#define _7segment_DigitsPins_TurnOff \
 	GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, !DIGIT_ON);\
 
 
@@ -32,11 +32,11 @@ const unsigned char table_7segment[18]={
 void SevenSegment_1Digit_Configuration(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
-	_ConfigureSegmentsPins;
-	_OffSegmentsPins;
+	_7segment_SegmentsPins_Configuration;
+	_7segment_SegmentsPins_TurnOff;
 	
-	_ConfigureDigitsPins;
-	_OffDigitsPins;
+	_7segment_DigitsPins_Configuration;
+	_7segment_DigitsPins_TurnOff;
 }
 
 //**************************************

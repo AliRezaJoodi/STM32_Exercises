@@ -1,4 +1,4 @@
-## 4-Digit 7-Segment Driver
+## 4-Digit 7-Segment Driver with Bare Metal Programming
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  

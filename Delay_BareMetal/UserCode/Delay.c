@@ -20,3 +20,15 @@ void Delay_ms(unsigned int ms){
     Delay_us(1000);
   }
 }
+
+//********************************************
+char Refresh(void){
+	static unsigned int i=0;
+	
+	++i;
+	if(i>_REFRESH_LAG){
+		i=0;
+		return 1;
+	}
+	return 0;
+}

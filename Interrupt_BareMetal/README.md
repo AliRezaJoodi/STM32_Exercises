@@ -1,4 +1,4 @@
-## External Interrupts with Bare Metal
+## External Interrupts with Bare Metal Programming
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
