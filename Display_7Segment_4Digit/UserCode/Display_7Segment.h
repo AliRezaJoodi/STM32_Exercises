@@ -16,7 +16,7 @@
 	#define _SEGMENTS_PORT 
 
 	//#define _1DIGIT
-	//#define _4DIGIT
+	#define _4DIGIT
 	
 	#define SEGMENT_ON		0
     
@@ -69,7 +69,7 @@
 	GPIO_WritePin(F_PORT, F_PIN, !SEGMENT_ON);\
 	GPIO_WritePin(DP_PORT, DP_PIN, !SEGMENT_ON);
 	
-#define _DriveDataOn7Segment(data) \
+#define _7segment_DriveDataOnSegments(data) \
 	GPIO_WritePin(A_PORT, A_PIN, GetBit(data,0));\
 	GPIO_WritePin(B_PORT, B_PIN, GetBit(data,1));\
 	GPIO_WritePin(C_PORT, C_PIN, GetBit(data,2));\
@@ -77,20 +77,31 @@
 	GPIO_WritePin(E_PORT, E_PIN, GetBit(data,4));\
 	GPIO_WritePin(F_PORT, F_PIN, GetBit(data,5));\
 	GPIO_WritePin(G_PORT, G_PIN, GetBit(data,6));\
-	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));		
+	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));
 
-void SevenSegment_Configuration(void);
-void SevenSegment_SetOnOff(char status);
-void SevenSegment_SetValue_uint(unsigned int value);
-void SevenSegment_SetValue_float(float value);
-void SevenSegment_DisplayValue(void);
-
-#define SevenSegment_SetValue(value)		SevenSegment_SetValue_float(value)
-
-/*
-#ifdef _4DIGIT
+#ifdef _1DIGIT
+	void SevenSegment_1Digit_Configuration(void);
+	void SevenSegment_1Digit_SetOnOff(char status);
+	void SevenSegment_1Digit_DisplayNumber(unsigned char number);
+	
+	#define SevenSegment_Configuration()				SevenSegment_1Digit_Configuration()
+	#define SevenSegment_SetOnOff(status)				SevenSegment_1Digit_SetOnOff(status)
+	#define SevenSegment_DisplayNumber(number)	SevenSegment_1Digit_DisplayNumber(number)
 #endif
-*/
+
+#ifdef _4DIGIT
+	void SevenSegment_4Digit_Configuration(void);
+	void SevenSegment_4Digit_SetOnOff(char status);
+	void SevenSegment_4Digit_SetValue_uint(unsigned int value);
+	void SevenSegment_4Digit_SetValue_float(float value);
+	void SevenSegment_4Digit_DisplayValue(void);
+	
+	#define SevenSegment_Configuration()				SevenSegment_4Digit_Configuration()
+	#define SevenSegment_SetOnOff(status)				SevenSegment_4Digit_SetOnOff(status)
+	#define SevenSegment_SetValue_uint(value)		SevenSegment_4Digit_SetValue_uint(value)
+	#define SevenSegment_SetValue(value)				SevenSegment_4Digit_SetValue_float(value)
+	#define SevenSegment_DisplayValue()					SevenSegment_4Digit_DisplayValue()
+#endif
 
 #ifdef __cplusplus
 	}
