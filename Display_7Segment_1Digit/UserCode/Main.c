@@ -5,6 +5,7 @@
 #include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
+
 #include "Display_7Segment.h"
 
 char usart1_txt[16]="";
@@ -20,15 +21,17 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
   SystemClock_Configuration();
-	SevenSegment_1Digit_Configuration();
-	SevenSegment_1Digit_Number(0);
 	ConfigureButtons();
+	
+	SevenSegment_Configuration();
+	SevenSegment_SetOnOff(1);
+	SevenSegment_DisplayNumber(9);
 	
   while(1){
 		if(GPIO_GetPin(GPIOB,0)==0 && status==1){
 			status=0;
 			i++; if(i>9){i=0;}
-			SevenSegment_1Digit_Number(i);
+			SevenSegment_DisplayNumber(i);
 		}
 		if(GPIO_GetPin(GPIOB,0)){status=1;}
 	}

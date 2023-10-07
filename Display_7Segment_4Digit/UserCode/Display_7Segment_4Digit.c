@@ -21,13 +21,13 @@
     #define DIGIT3_PIN    0
 #endif
 
-#define _7segment_DigitsPins_Configuration \
+#define _4Digit_DigitsPins_Configuration \
 	_7Segment_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);\
 	_7Segment_SetPinForOutputMode(DIGIT1_PORT, DIGIT1_PIN);\
 	_7Segment_SetPinForOutputMode(DIGIT2_PORT, DIGIT2_PIN);\
 	_7Segment_SetPinForOutputMode(DIGIT3_PORT, DIGIT3_PIN);
 
-#define _7segment_DigitsPins_TurnOff \
+#define _4Digit_DigitsPins_TurnOff \
 	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);\
 	GPIO_WritePin(DIGIT1_PORT, DIGIT1_PIN, !DIGIT_ON);\
 	GPIO_WritePin(DIGIT2_PORT, DIGIT2_PIN, !DIGIT_ON);\
@@ -43,10 +43,10 @@ const unsigned char _7segment_table[19]={
     0b01000000 , 0b10000000, 0b00000000
  };
  
-unsigned char _7segment_data[4]; //={~0b01100110, ~0b01001111, ~0b01011011, ~0b00000110};
-char _decimal=0;
-char _onoff=1;
-//char sign=0;
+unsigned char _4digit_data[4]; //={~0b01100110, ~0b01001111, ~0b01011011, ~0b00000110};
+char _4digit_decimal=0;
+char _4digit_onoff=1;
+//char _4digit_sign=0;
 
  /*
 typedef struct{
@@ -59,7 +59,7 @@ display1.decimal_=0;
 */ 
 
 //********************************
- void _7segment_EnableBusForPorts(void){
+ void _4Digit_EnableBusForPorts(void){
 	if(	A_PORT 			==	GPIOA || \
 			B_PORT 			==	GPIOA || \
 			C_PORT 			==	GPIOA || \
@@ -118,93 +118,93 @@ display1.decimal_=0;
 }
 
 //***************************************************
-void SevenSegment_Configuration(void){
-	_7segment_EnableBusForPorts();
+void SevenSegment_4Digit_Configuration(void){
+	_4Digit_EnableBusForPorts();
 	
 	_7segment_SegmentsPins_Configuration;
 	_7segment_SegmentsPins_TurnOff;
 	
-	_7segment_DigitsPins_Configuration;
-	_7segment_DigitsPins_TurnOff;
+	_4Digit_DigitsPins_Configuration;
+	_4Digit_DigitsPins_TurnOff;
 }
 
 //********************************************
-void SevenSegment_SetOnOff(char Status){
-	_onoff = Status & 0b1;
+void SevenSegment_4Digit_SetOnOff(char Status){
+	_4digit_onoff = Status & 0b1;
 }
 
 //***************************************************
-void SevenSegment_SetValue_uint(unsigned int value){
+void SevenSegment_4Digit_SetValue_uint(unsigned int value){
 	unsigned int value_int=0;
 	unsigned char digit=0;
 	
 	value_int=value/1; 
 	digit=value_int%10;
-	_7segment_data[0] = _7segment_table[digit];
+	_4digit_data[0] = _7segment_table[digit];
 
 	value_int=value/10; 
 	digit=value_int%10;
-	_7segment_data[1] = _7segment_table[digit];
+	_4digit_data[1] = _7segment_table[digit];
 	
 	value_int=value/100; 
 	digit=value_int%10;
-	_7segment_data[2] = _7segment_table[digit];
+	_4digit_data[2] = _7segment_table[digit];
 	
 	value_int=value/1000; 
 	digit=value_int%10;
-	_7segment_data[3] = _7segment_table[digit];
+	_4digit_data[3] = _7segment_table[digit];
 	
-	if(_decimal==0){
-		if(_7segment_data[3]==0b00111111 && _7segment_data[2]==0b00111111 && _7segment_data[1]==0b00111111){
-			_7segment_data[1] = _7segment_table[18];
-			_7segment_data[2] = _7segment_table[18];
-			_7segment_data[3] = _7segment_table[18];
+	if(_4digit_decimal==0){
+		if(_4digit_data[3]==0b00111111 && _4digit_data[2]==0b00111111 && _4digit_data[1]==0b00111111){
+			_4digit_data[1] = _7segment_table[18];
+			_4digit_data[2] = _7segment_table[18];
+			_4digit_data[3] = _7segment_table[18];
 		}
-		if(_7segment_data[3]==0b00111111 && _7segment_data[2]==0b00111111){
-			_7segment_data[2] = _7segment_table[18];
-			_7segment_data[3] = _7segment_table[18];
+		if(_4digit_data[3]==0b00111111 && _4digit_data[2]==0b00111111){
+			_4digit_data[2] = _7segment_table[18];
+			_4digit_data[3] = _7segment_table[18];
 		}
-		if(_7segment_data[3]==0b00111111){
-			_7segment_data[3] = _7segment_table[18];
+		if(_4digit_data[3]==0b00111111){
+			_4digit_data[3] = _7segment_table[18];
 		}
 	}
-	else if(_decimal==1){SetBit(_7segment_data[1],7);}
-		else if(_decimal==2){SetBit(_7segment_data[2],7);}
-			else if(_decimal==3){SetBit(_7segment_data[3],7);}
+	else if(_4digit_decimal==1){SetBit(_4digit_data[1],7);}
+		else if(_4digit_decimal==2){SetBit(_4digit_data[2],7);}
+			else if(_4digit_decimal==3){SetBit(_4digit_data[3],7);}
 	
 	if(value>9999){
-			_7segment_data[0] = _7segment_table[16];
-			_7segment_data[1] = _7segment_table[16];
-			_7segment_data[2] = _7segment_table[16];
-			_7segment_data[3] = _7segment_table[16];		
+			_4digit_data[0] = _7segment_table[16];
+			_4digit_data[1] = _7segment_table[16];
+			_4digit_data[2] = _7segment_table[16];
+			_4digit_data[3] = _7segment_table[16];		
 	};
 	
 	#if SEGMENT_ON == 0
-		_7segment_data[0] = ~_7segment_data[0];
-		_7segment_data[1] = ~_7segment_data[1];
-		_7segment_data[2] = ~_7segment_data[2];
-		_7segment_data[3] = ~_7segment_data[3];
+		_4digit_data[0] = ~_4digit_data[0];
+		_4digit_data[1] = ~_4digit_data[1];
+		_4digit_data[2] = ~_4digit_data[2];
+		_4digit_data[3] = ~_4digit_data[3];
 	#endif
 }
 
 //***************************************************
-void SevenSegment_SetValue_float(float value){
+void SevenSegment_4Digit_SetValue_float(float value){
 	unsigned int value_int=0;
 	
-	if(value<10){value_int=value*1000; _decimal=3;}
-		else if(value<100){value_int=value*100; _decimal=2;}
-			else if(value<1000){value_int=value*10; _decimal=1;}
-				else {value_int=value; _decimal=0;}
+	if(value<10){value_int=value*1000; _4digit_decimal=3;}
+		else if(value<100){value_int=value*100; _4digit_decimal=2;}
+			else if(value<1000){value_int=value*10; _4digit_decimal=1;}
+				else {value_int=value; _4digit_decimal=0;}
 	
-	SevenSegment_SetValue_uint(value_int);
+	SevenSegment_4Digit_SetValue_uint(value_int);
 }
 
 //***************************************************
-char _Display1_RefreshRightToLeft(void){
+char _4Digit_RefreshRightToLeft(void){
 	static unsigned char i=0; 
 	
-	_7segment_DigitsPins_TurnOff;
-	_DriveDataOn7Segment(_7segment_data[i]);
+	_4Digit_DigitsPins_TurnOff;
+	_7segment_DriveDataOnSegments(_4digit_data[i]);
 
 	switch(i){
 		case 0:
@@ -229,11 +229,11 @@ char _Display1_RefreshRightToLeft(void){
 }
 
 //***************************************************
-char _Display1_RefreshLefToRight(void){
+char _4Digit_RefreshLefToRight(void){
 	static unsigned char i=3; 
 	
-	_7segment_DigitsPins_TurnOff;
-	_DriveDataOn7Segment(_7segment_data[i]);
+	_4Digit_DigitsPins_TurnOff;
+	_7segment_DriveDataOnSegments(_4digit_data[i]);
 	
 	switch(i){
 		case 3:
@@ -258,13 +258,13 @@ char _Display1_RefreshLefToRight(void){
 }
 
 //********************************************
-void SevenSegment_DisplayValue(void){
+void SevenSegment_4Digit_DisplayValue(void){
 	static unsigned int i=0;
 	
 	++i;
 	if(i>DISPLAYLAG){
 		i=0;
-		if(_onoff){_Display1_RefreshLefToRight();}
+		if(_4digit_onoff){_4Digit_RefreshLefToRight();}
 	}
 }
 
