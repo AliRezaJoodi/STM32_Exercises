@@ -16,13 +16,14 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	AFIO_SetSerialWireDebugPort(FULL_SWJ);
   SystemClock_Configuration();
-	SevenSegment_4Digit_Configuration();
+	SevenSegment_Configuration();
 
-	//SevenSegment_4Digit_UpdateNumbers_uint(1234);
-	SevenSegment_4Digit_UpdateNumbers_float(1.2345);
+	//SevenSegment_SetValue_uint(1234);
+	SevenSegment_SetValue(1.2345);
+	SevenSegment_SetOnOff(1);
 	
   while(1){
-		SevenSegment_4Digit_Refresh(1);
+		SevenSegment_DisplayValue();
 	}
 }
 

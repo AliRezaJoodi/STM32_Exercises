@@ -12,9 +12,12 @@
 	extern "C" {
 #endif
 
-#ifndef _7SEGMENT_PORT
-	#define _7SEGMENT_PORT 
+#ifndef _SEGMENTS_PORT
+	#define _SEGMENTS_PORT 
 
+	//#define _1DIGIT
+	//#define _4DIGIT
+	
 	#define SEGMENT_ON		0
     
 	#define A_PORT				GPIOA
@@ -74,15 +77,20 @@
 	GPIO_WritePin(E_PORT, E_PIN, GetBit(data,4));\
 	GPIO_WritePin(F_PORT, F_PIN, GetBit(data,5));\
 	GPIO_WritePin(G_PORT, G_PIN, GetBit(data,6));\
-	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));
+	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));		
 
-void SevenSegment_1Digit_Configuration(void);
-void SevenSegment_1Digit_Number(unsigned char value);
-void SevenSegment_4Digit_Configuration(void);
-void SevenSegment_4Digit_UpdateNumbers_uint(unsigned int value);
-void SevenSegment_4Digit_UpdateNumbers_float(float value);
-void SevenSegment_4Digit_Refresh(char onoff);
+void SevenSegment_Configuration(void);
+void SevenSegment_SetOnOff(char status);
+void SevenSegment_SetValue_uint(unsigned int value);
+void SevenSegment_SetValue_float(float value);
+void SevenSegment_DisplayValue(void);
 
+#define SevenSegment_SetValue(value)		SevenSegment_SetValue_float(value)
+
+/*
+#ifdef _4DIGIT
+#endif
+*/
 
 #ifdef __cplusplus
 	}
