@@ -79,7 +79,7 @@
 	GPIO_WritePin(G_PORT, G_PIN, GetBit(data,6));\
 	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));
 
-#ifdef _1DIGIT
+#if defined(_1DIGIT)
 	void SevenSegment_1Digit_Configuration(void);
 	void SevenSegment_1Digit_SetOnOff(char status);
 	void SevenSegment_1Digit_DisplayNumber(unsigned char number);
@@ -87,9 +87,7 @@
 	#define SevenSegment_Configuration()				SevenSegment_1Digit_Configuration()
 	#define SevenSegment_SetOnOff(status)				SevenSegment_1Digit_SetOnOff(status)
 	#define SevenSegment_DisplayNumber(number)	SevenSegment_1Digit_DisplayNumber(number)
-#endif
-
-#ifdef _4DIGIT
+#elif defined(_4DIGIT)
 	void SevenSegment_4Digit_Configuration(void);
 	void SevenSegment_4Digit_SetOnOff(char status);
 	void SevenSegment_4Digit_SetValue_uint(unsigned int value);
@@ -101,6 +99,8 @@
 	#define SevenSegment_SetValue_uint(value)		SevenSegment_4Digit_SetValue_uint(value)
 	#define SevenSegment_SetValue(value)				SevenSegment_4Digit_SetValue_float(value)
 	#define SevenSegment_DisplayValue()					SevenSegment_4Digit_DisplayValue()
+#else
+	#error "Please defined _1DIGIT or _4DIGIT"
 #endif
 
 #ifdef __cplusplus
