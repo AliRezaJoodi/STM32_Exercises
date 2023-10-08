@@ -21,19 +21,6 @@
     #define DIGIT3_PIN    0
 #endif
 
-#define _4Digit_DigitsPins_Configuration \
-	_7Segment_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT1_PORT, DIGIT1_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT2_PORT, DIGIT2_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT3_PORT, DIGIT3_PIN);
-
-#define _4Digit_DigitsPins_TurnOff \
-	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);\
-	GPIO_WritePin(DIGIT1_PORT, DIGIT1_PIN, !DIGIT_ON);\
-	GPIO_WritePin(DIGIT2_PORT, DIGIT2_PIN, !DIGIT_ON);\
-	GPIO_WritePin(DIGIT3_PORT, DIGIT3_PIN, !DIGIT_ON);
-
-
 //0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 //A , B , C , D , E , F,
 // -, Dp, NULL
@@ -57,6 +44,18 @@ typedef struct{
 _7segment display1;
 display1.decimal_=0;
 */ 
+
+#define _4Digit_DigitsPins_Configuration \
+	_7Segment_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);\
+	_7Segment_SetPinForOutputMode(DIGIT1_PORT, DIGIT1_PIN);\
+	_7Segment_SetPinForOutputMode(DIGIT2_PORT, DIGIT2_PIN);\
+	_7Segment_SetPinForOutputMode(DIGIT3_PORT, DIGIT3_PIN);
+
+#define _4Digit_DigitsPins_TurnOff \
+	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT1_PORT, DIGIT1_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT2_PORT, DIGIT2_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT3_PORT, DIGIT3_PIN, !DIGIT_ON);
 
 //********************************
  void _4Digit_EnableBusForPorts(void){
