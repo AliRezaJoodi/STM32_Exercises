@@ -49,185 +49,185 @@
 	GetBit(EXTI->IMR, Get4Bit(LINE,8))
 #define EXTI_InterruptMode_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->IMR, Get4Bit(LINE,8), STATUS);
-#define EXTI_INT0_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI0_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT0, STATUS);
-#define EXTI_INT1_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI1_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT1, STATUS);
-#define EXTI_INT2_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI2_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT2, STATUS);
-#define EXTI_INT3_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI3_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT3, STATUS);
-#define EXTI_INT4_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI4_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT4, STATUS);
-#define EXTI_INT5_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI5_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT5, STATUS);
-#define EXTI_INT6_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI6_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT6, STATUS);
-#define EXTI_INT7_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI7_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT7, STATUS);
-#define EXTI_INT8_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI8_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT8, STATUS);
-#define EXTI_INT9_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI9_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT9, STATUS);
-#define EXTI_INT10_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI10_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT10, STATUS);
-#define EXTI_INT11_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI11_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT11, STATUS);
-#define EXTI_INT12_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI12_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT12, STATUS);
-#define EXTI_INT13_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI13_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT13, STATUS);
-#define EXTI_INT14_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI14_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT14, STATUS);
-#define EXTI_INT15_InterruptMode_EnableOrDisable(STATUS) \
+#define EXTI15_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT15, STATUS);
 
 #define EXTI_EventMode_GetEnableStatus(LINE) \
 	GetBit(EXTI->EMR,Get4Bit(LINE,8))
 #define EXTI_EventMode_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->EMR,Get4Bit(LINE,8), STATUS);
-#define EXTI_INT0_EventMode_EnableOrDisable(STATUS) \
+#define EXTI0_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT0, STATUS);
-#define EXTI_INT1_EventMode_EnableOrDisable(STATUS) \
+#define EXTI1_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT1, STATUS);
-#define EXTI_INT2_EventMode_EnableOrDisable(STATUS) \
+#define EXTI2_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT2, STATUS);
-#define EXTI_INT3_EventMode_EnableOrDisable(STATUS) \
+#define EXTI3_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT3, STATUS);
-#define EXTI_INT4_EventMode_EnableOrDisable(STATUS) \
+#define EXTI4_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT4, STATUS);
-#define EXTI_INT5_EventMode_EnableOrDisable(STATUS) \
+#define EXTI5_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT5, STATUS);
-#define EXTI_INT6_EventMode_EnableOrDisable(STATUS) \
+#define EXTI6_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT6, STATUS);
-#define EXTI_INT7_EventMode_EnableOrDisable(STATUS) \
+#define EXTI7_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT7, STATUS);
-#define EXTI_INT8_EventMode_EnableOrDisable(STATUS) \
+#define EXTI8_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT8, STATUS);
-#define EXTI_INT9_EventMode_EnableOrDisable(STATUS) \
+#define EXTI9_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT9, STATUS);
-#define EXTI_INT10_EventMode_EnableOrDisable(STATUS) \
+#define EXTI10_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT10, STATUS);
-#define EXTI_INT11_EventMode_EnableOrDisable(STATUS) \
+#define EXTI11_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT11, STATUS);
-#define EXTI_INT12_EventMode_EnableOrDisable(STATUS) \
+#define EXTI12_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT12, STATUS);
-#define EXTI_INT13_EventMode_EnableOrDisable(STATUS) \
+#define EXTI13_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT13, STATUS);
-#define EXTI_INT14_EventMode_EnableOrDisable(STATUS) \
+#define EXTI14_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT14, STATUS);
-#define EXTI_INT15_EventMode_EnableOrDisable(STATUS) \
+#define EXTI15_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT15, STATUS);
 
 #define EXTI_RisingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->RTSR, Get4Bit(LINE,8))
 #define EXTI_RisingTrigger_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->RTSR, Get4Bit(LINE,8),STATUS);
-#define EXTI_INT0_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI0_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
-#define EXTI_INT1_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI1_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT1, STATUS);
-#define EXTI_INT2_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI2_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT2, STATUS);
-#define EXTI_INT3_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI3_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT3, STATUS);
-#define EXTI_INT4_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI4_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT4, STATUS);
-#define EXTI_INT5_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI5_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT5, STATUS);
-#define EXTI_INT6_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI6_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT6, STATUS);
-#define EXTI_INT7_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI7_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT7, STATUS);
-#define EXTI_INT8_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI8_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT8, STATUS);
-#define EXTI_INT9_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI9_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT9, STATUS);
-#define EXTI_INT10_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI10_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT10, STATUS);
-#define EXTI_INT11_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI11_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT11, STATUS);
-#define EXTI_INT12_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI12_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT12, STATUS);
-#define EXTI_INT13_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI13_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT13, STATUS);
-#define EXTI_INT14_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI14_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT14, STATUS);
-#define EXTI_INT15_RisingTrigger_EnableOrDisable(STATUS) \
+#define EXTI15_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
 
 #define EXTI_FallingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->FTSR, Get4Bit(LINE,8))
 #define EXTI_FallingTrigger_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->FTSR, Get4Bit(LINE,8),STATUS);
-#define EXTI_INT0_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI0_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
-#define EXTI_INT1_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI1_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT1, STATUS);
-#define EXTI_INT2_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI2_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT2, STATUS);
-#define EXTI_INT3_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI3_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT3, STATUS);
-#define EXTI_INT4_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI4_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT4, STATUS);
-#define EXTI_INT5_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI5_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT5, STATUS);
-#define EXTI_INT6_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI6_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT6, STATUS);
-#define EXTI_INT7_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI7_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT7, STATUS);
-#define EXTI_INT8_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI8_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT8, STATUS);
-#define EXTI_INT9_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI9_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT9, STATUS);
-#define EXTI_INT10_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI10_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT10, STATUS);
-#define EXTI_INT11_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI11_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT11, STATUS);
-#define EXTI_INT12_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI12_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT12, STATUS);
-#define EXTI_INT13_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI13_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT13, STATUS);
-#define EXTI_INT14_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI14_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT14, STATUS);
-#define EXTI_INT15_FallingTrigger_EnableOrDisable(STATUS) \
+#define EXTI15_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
 
 #define EXTI_SoftwareInterrupt_GetEnableStatus(LINE) \
 	GetBit(EXTI->SWIER, Get4Bit(LINE,8))
 #define EXTI_SoftwareInterrupt_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->SWIER, Get4Bit(LINE,8),STATUS);
-#define EXTI_INT0_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI0_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT0, STATUS);
-#define EXTI_INT1_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI1_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT1, STATUS);
-#define EXTI_INT2_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI2_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT2, STATUS);
-#define EXTI_INT3_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI3_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT3, STATUS);
-#define EXTI_INT4_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI4_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT4, STATUS);
-#define EXTI_INT5_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI5_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT5, STATUS);
-#define EXTI_INT6_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI6_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT6, STATUS);
-#define EXTI_INT7_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI7_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT7, STATUS);
-#define EXTI_INT8_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI8_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT8, STATUS);
-#define EXTI_INT9_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI9_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT9, STATUS);
-#define EXTI_INT10_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI10_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT10, STATUS);
-#define EXTI_INT11_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI11_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT11, STATUS);
-#define EXTI_INT12_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI12_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT12, STATUS);
-#define EXTI_INT13_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI13_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT13, STATUS);
-#define EXTI_INT14_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI14_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT14, STATUS);
-#define EXTI_INT15_SoftwareInterrupt_EnableOrDisable(STATUS) \
+#define EXTI15_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT15, STATUS);
 
 #define EXTI_GetActiveFlag(LINE) \
@@ -235,13 +235,13 @@
 #define EXTI_ClearPendingRegister(LINE) \
 	SetBit_NoLastStatus(EXTI->PR, Get4Bit(LINE,8));
 
-void EXTI_INT0_ConfigureNVIC(void);
-void EXTI_INT1_ConfigureNVIC(void);
-void EXTI_INT2_ConfigureNVIC(void);
-void EXTI_INT3_ConfigureNVIC(void);
-void EXTI_INT4_ConfigureNVIC(void);
-void EXTI_INT5To9_ConfigureNVIC(void);
-void EXTI_INT10To15_ConfigureNVIC(void);
+void EXTI0_NVIC_Configuration(void);
+void EXTI1_NVIC_Configuration(void);
+void EXTI2_NVIC_Configuration(void);
+void EXTI3_NVIC_Configuration(void);
+void EXTI4_NVIC_Configuration(void);
+void EXTI5To9_NVIC_Configuration(void);
+void EXTI10To15_NVIC_Configuration(void);
 
 // _EXTI.c
 void EXTI_Configuration(void);
