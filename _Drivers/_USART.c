@@ -1,11 +1,9 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+// It's a local library
 
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
-
-volatile char usart1_txt[16]= "";
-volatile char usart1_task=0;
 	
 //****************************************************
 //PA9 -> USART1_TX
@@ -18,7 +16,7 @@ void USART1_Configuration(void){
 	GPIO_SetInputOrOutputMode(GPIOA,10, MODE_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
 	
-	USART1_ConfigureNVIC();
+	USART1_NVIC_Configuration();
 	BUS_USART1_EnableOrDisable(1);
 
 	USART1_SetBaudRate(8000000, 9600);
@@ -38,6 +36,8 @@ void USART1_Configuration(void){
 
 //*****************************************
 void USART1_IRQHandler(void){
+	extern char usart1_txt[16];
+	extern char usart1_task;
 	char c;
 	static unsigned char i=0;
 

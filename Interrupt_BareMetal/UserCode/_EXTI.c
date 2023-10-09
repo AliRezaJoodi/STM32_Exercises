@@ -7,69 +7,47 @@
 
 //**********************************************************
 void EXTI_Configuration(void){	
-	EXTI_INT0_ConfigureNVIC();
-	EXTI_INT5To9_ConfigureNVIC();
-	EXTI_INT10To15_ConfigureNVIC();
+	EXTI0_NVIC_Configuration();
+	EXTI5To9_NVIC_Configuration();
+	EXTI10To15_NVIC_Configuration();
 
 	BUS_GPIOA_EnableOrDisable(1);
 	
 	GPIO_SetInputOrOutputMode(GPIOA,0, MODE_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,0, INPUT_FLOATING);
 	EXTI_SetSource(EXTI_PORTA, EXTI_INT0);
-	EXTI_INT0_InterruptMode_EnableOrDisable(1);
-	EXTI_INT0_EventMode_EnableOrDisable(0);
-	EXTI_INT0_RisingTrigger_EnableOrDisable(1);
-	EXTI_INT0_FallingTrigger_EnableOrDisable(0);
-	EXTI_INT0_SoftwareInterrupt_EnableOrDisable(0);
-	//EXTI_InterruptMode_EnableOrDisable(EXTI_INT0, 1);
-	//EXTI_EventMode_EnableOrDisable(EXTI_INT0, 0);
-	//EXTI_RisingTrigger_EnableOrDisable(EXTI_INT0, 1);
-	//EXTI_FallingTrigger_EnableOrDisable(EXTI_INT0, 0);
+	EXTI0_InterruptMode_EnableOrDisable(1);
+	EXTI0_EventMode_EnableOrDisable(0);
+	EXTI0_RisingTrigger_EnableOrDisable(1);
+	EXTI0_FallingTrigger_EnableOrDisable(0);
+	EXTI0_SoftwareInterrupt_EnableOrDisable(0);
 	
 	GPIO_SetInputOrOutputMode(GPIOA,6, MODE_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,6, INPUT_FLOATING);
 	EXTI_SetSource(EXTI_PORTA, EXTI_INT6);
-	EXTI_INT6_InterruptMode_EnableOrDisable(1);
-	EXTI_INT6_EventMode_EnableOrDisable(0);
-	EXTI_INT6_RisingTrigger_EnableOrDisable(0);
-	EXTI_INT6_FallingTrigger_EnableOrDisable(1);
-	EXTI_INT6_SoftwareInterrupt_EnableOrDisable(0);
-	/*
-	EXTI_InterruptMode_EnableOrDisable(EXTI_INT6, 1);
-	EXTI_EventMode_EnableOrDisable(EXTI_INT6, 0);
-	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT6, 0);
-	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT6, 1);
-	*/
+	EXTI6_InterruptMode_EnableOrDisable(1);
+	EXTI6_EventMode_EnableOrDisable(0);
+	EXTI6_RisingTrigger_EnableOrDisable(0);
+	EXTI6_FallingTrigger_EnableOrDisable(1);
+	EXTI6_SoftwareInterrupt_EnableOrDisable(0);
 	
 	GPIO_SetInputOrOutputMode(GPIOA,11, MODE_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,11, INPUT_FLOATING);
 	EXTI_SetSource(EXTI_PORTA, EXTI_INT11);
-	EXTI_INT11_InterruptMode_EnableOrDisable(1);
-	EXTI_INT11_EventMode_EnableOrDisable(0);
-	EXTI_INT11_RisingTrigger_EnableOrDisable(1);
-	EXTI_INT11_FallingTrigger_EnableOrDisable(1);
-	EXTI_INT11_SoftwareInterrupt_EnableOrDisable(0);
-	/*
-	EXTI_InterruptMode_EnableOrDisable(EXTI_INT11, 1);
-	EXTI_EventMode_EnableOrDisable(EXTI_INT11, 0);
-	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT11, 1);
-	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT11, 1);
-	*/
-	
+	EXTI11_InterruptMode_EnableOrDisable(1);
+	EXTI11_EventMode_EnableOrDisable(0);
+	EXTI11_RisingTrigger_EnableOrDisable(1);
+	EXTI11_FallingTrigger_EnableOrDisable(1);
+	EXTI11_SoftwareInterrupt_EnableOrDisable(0);
+
 	GPIO_SetInputOrOutputMode(GPIOA,12, MODE_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,12, INPUT_FLOATING);
 	EXTI_SetSource(EXTI_PORTA, EXTI_INT12);
-	EXTI_INT12_InterruptMode_EnableOrDisable(1);
-	EXTI_INT12_EventMode_EnableOrDisable(0);
-	EXTI_INT12_RisingTrigger_EnableOrDisable(1);
-	EXTI_INT12_FallingTrigger_EnableOrDisable(0);
-	EXTI_INT12_SoftwareInterrupt_EnableOrDisable(0);
-	/*
-	EXTI_InterruptMode_EnableOrDisable(EXTI_INT12, 1);
-	EXTI_EventMode_EnableOrDisable(EXTI_INT12, 0);
-	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT12, 1);
-	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT12, 0);
-	*/
+	EXTI12_InterruptMode_EnableOrDisable(1);
+	EXTI12_EventMode_EnableOrDisable(0);
+	EXTI12_RisingTrigger_EnableOrDisable(1);
+	EXTI12_FallingTrigger_EnableOrDisable(0);
+	EXTI12_SoftwareInterrupt_EnableOrDisable(0);
 }
 
 //*****************************************

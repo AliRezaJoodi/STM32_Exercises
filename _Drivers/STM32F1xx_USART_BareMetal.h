@@ -280,13 +280,14 @@
 #define USART2_PutChar(DATA)\
 	USART_PutChar(USART2, DATA);	
 
+void USART1_NVIC_Configuration(void);		
+void USART2_NVIC_Configuration(void);
 void USART_ClearString(char *str);
-void USART1_ConfigureNVIC(void);		
 //void USART1_PutChar(char data);
-void USART1_PutString(char *str);
-void USART1_PutStringFromFlash(const char *str);
 //void USART2_PutChar(char data);
+void USART1_PutString(char *str);
 void USART2_PutString(char *str);
+void USART1_PutStringFromFlash(const char *str);
 void USART2_PutStringFromFlash(const char *str);
 		
 // _USART.c

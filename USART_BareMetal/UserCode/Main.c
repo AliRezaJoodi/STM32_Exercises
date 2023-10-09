@@ -9,8 +9,8 @@
 #include "STM32F1xx_GPIO_BareMetal.h"
 #include "STM32F1xx_USART_BareMetal.h"
 
-extern char usart1_txt[16];
-extern char usart1_task;
+char usart1_txt[16]="";
+volatile char usart1_task=0;
 
 int main(void){
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
@@ -43,7 +43,7 @@ int main(void){
 	//a1 = _DIV_SAMPLING16(8000000, 9600);
 	sprintf(txt3, "BRR=%d", a1);
 	USART1_PutString(txt3); USART1_PutNewLine;
-	
+
   while(1){
 		if(usart1_task==1){
 			usart1_task=0;
