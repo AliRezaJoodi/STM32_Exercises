@@ -91,7 +91,7 @@ int main(void){
 //  uint8_t message[10];  //  Declaring a buffer of 10 bytes
   // Receive data via UART using interrupt
 	HAL_UART_Transmit(&huart1, txt, sizeof(txt), 5);
-  HAL_UART_Receive_IT (&huart1, message, 4);
+  HAL_UART_Receive_IT (&huart1, message, 3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
