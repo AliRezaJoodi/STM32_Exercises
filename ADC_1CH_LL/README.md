@@ -2,8 +2,8 @@
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Interrupt Method, 1ch  
-ADC_INT:	Enable  
+ADC:		Polling Method, 1ch  		
+ADC_INT:	Disable  
 
 ### Folder and Files Description
 It has included:
