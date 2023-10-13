@@ -5,7 +5,7 @@
 #include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
-#include "Display_7Segment.h"
+#include "Display_7Segment_4Digit.h"
 
 int main(void){
 	char status=1;

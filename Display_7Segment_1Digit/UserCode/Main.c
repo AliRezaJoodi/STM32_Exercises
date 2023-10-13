@@ -5,8 +5,7 @@
 #include "STM32F1xx_RCC_BareMetal.h"
 #include "STM32F1xx_BUS_BareMetal.h"
 #include "STM32F1xx_GPIO_BareMetal.h"
-
-#include "Display_7Segment.h"
+#include "Display_7Segment_1Digit.h"
 
 char usart1_txt[16]="";
 volatile char usart1_task=0;
@@ -25,13 +24,13 @@ int main(void){
 	
 	SevenSegment_Configuration();
 	SevenSegment_SetOnOff(1);
-	SevenSegment_DisplayNumber(9);
+	SevenSegment_DisplayValue(9);
 	
   while(1){
 		if(GPIO_GetPin(GPIOB,0)==0 && status==1){
 			status=0;
 			i++; if(i>9){i=0;}
-			SevenSegment_DisplayNumber(i);
+			SevenSegment_DisplayValue(i);
 		}
 		if(GPIO_GetPin(GPIOB,0)){status=1;}
 	}

@@ -1,25 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "Display_7Segment.h"
-
-#ifndef _DIGITS_PORT
-    #define _DIGITS_PORT 
-		
-		#define DISPLAYLAG    15000 //Display Lag
-		#define DIGIT_ON      1
-		
-		#define DIGIT0_PORT		GPIOB
-    #define DIGIT0_PIN    3
-		
-		#define DIGIT1_PORT		GPIOB
-    #define DIGIT1_PIN    2
-		
-		#define DIGIT2_PORT		GPIOB
-    #define DIGIT2_PIN    1
-		
-		#define DIGIT3_PORT		GPIOB
-    #define DIGIT3_PIN    0
-#endif
+#include "Display_7Segment_4Digit.h"
 
 //0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 //A , B , C , D , E , F,
@@ -30,10 +11,10 @@ const unsigned char _7segment_table[19]={
     0b01000000 , 0b10000000, 0b00000000
  };
  
-unsigned char _4digit_data[4]; //={~0b01100110, ~0b01001111, ~0b01011011, ~0b00000110};
-char _4digit_decimal=0;
-char _4digit_onoff=1;
-//char _4digit_sign=0;
+unsigned char _display_data[4]; //={~0b01100110, ~0b01001111, ~0b01011011, ~0b00000110};
+char _display_decimal=0;
+char _display_onoff=1;
+//char _display_sign=0;
 
  /*
 typedef struct{
@@ -45,20 +26,42 @@ _7segment display1;
 display1.decimal_=0;
 */ 
 
-#define _4Digit_DigitsPins_Configuration \
-	_7Segment_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT1_PORT, DIGIT1_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT2_PORT, DIGIT2_PIN);\
-	_7Segment_SetPinForOutputMode(DIGIT3_PORT, DIGIT3_PIN);
+#define _7Segment_SetPinForOutputMode(GPIOx, PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_OUTPUT_2MHz);\
+	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, OUTPUT_GPIO);\
+	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
 
-#define _4Digit_DigitsPins_TurnOff \
+#define _7segment_TurnOffAllPins \
+	GPIO_WritePin(A_PORT, A_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(B_PORT, B_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(C_PORT, C_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(D_PORT, D_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(E_PORT, E_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(F_PORT, F_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(DP_PORT, DP_PIN, !SEGMENT_ON);\
 	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);\
 	GPIO_WritePin(DIGIT1_PORT, DIGIT1_PIN, !DIGIT_ON);\
 	GPIO_WritePin(DIGIT2_PORT, DIGIT2_PIN, !DIGIT_ON);\
 	GPIO_WritePin(DIGIT3_PORT, DIGIT3_PIN, !DIGIT_ON);
+	
+#define _7segment_TurnOffDigitsPins \
+	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT1_PORT, DIGIT1_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT2_PORT, DIGIT2_PIN, !DIGIT_ON);\
+	GPIO_WritePin(DIGIT3_PORT, DIGIT3_PIN, !DIGIT_ON);
+	
+#define _7segment_DriveData(data) \
+	GPIO_WritePin(A_PORT, A_PIN, GetBit(data,0));\
+	GPIO_WritePin(B_PORT, B_PIN, GetBit(data,1));\
+	GPIO_WritePin(C_PORT, C_PIN, GetBit(data,2));\
+	GPIO_WritePin(D_PORT, D_PIN, GetBit(data,3));\
+	GPIO_WritePin(E_PORT, E_PIN, GetBit(data,4));\
+	GPIO_WritePin(F_PORT, F_PIN, GetBit(data,5));\
+	GPIO_WritePin(G_PORT, G_PIN, GetBit(data,6));\
+	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));
 
 //********************************
- void _4Digit_EnableBusForPorts(void){
+ void _7segment_EnableBusForPorts(void){
 	if(	A_PORT 			==	GPIOA || \
 			B_PORT 			==	GPIOA || \
 			C_PORT 			==	GPIOA || \
@@ -117,93 +120,103 @@ display1.decimal_=0;
 }
 
 //***************************************************
-void SevenSegment_4Digit_Configuration(void){
-	_4Digit_EnableBusForPorts();
+void SevenSegment_Configuration(void){
+	_7segment_EnableBusForPorts();
 	
-	_7segment_SegmentsPins_Configuration;
-	_7segment_SegmentsPins_TurnOff;
+	_7Segment_SetPinForOutputMode(A_PORT, A_PIN);
+	_7Segment_SetPinForOutputMode(B_PORT, B_PIN);
+	_7Segment_SetPinForOutputMode(C_PORT, C_PIN);
+	_7Segment_SetPinForOutputMode(D_PORT, D_PIN);
+	_7Segment_SetPinForOutputMode(E_PORT, E_PIN);
+	_7Segment_SetPinForOutputMode(F_PORT, F_PIN);
+	_7Segment_SetPinForOutputMode(G_PORT, G_PIN);
+	_7Segment_SetPinForOutputMode(DP_PORT, DP_PIN);
+
+	_7Segment_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);
+	_7Segment_SetPinForOutputMode(DIGIT1_PORT, DIGIT1_PIN);
+	_7Segment_SetPinForOutputMode(DIGIT2_PORT, DIGIT2_PIN);
+	_7Segment_SetPinForOutputMode(DIGIT3_PORT, DIGIT3_PIN);
 	
-	_4Digit_DigitsPins_Configuration;
-	_4Digit_DigitsPins_TurnOff;
+	_7segment_TurnOffAllPins;
 }
 
 //********************************************
-void SevenSegment_4Digit_SetOnOff(char Status){
-	_4digit_onoff = Status & 0b1;
+void SevenSegment_SetOnOff(char Status){
+	_display_onoff = Status & 0b1;
 }
 
 //***************************************************
-void SevenSegment_4Digit_SetValue_uint(unsigned int value){
+void SevenSegment_SetValue_uint(unsigned int value){
 	unsigned int value_int=0;
 	unsigned char digit=0;
 	
 	value_int=value/1; 
 	digit=value_int%10;
-	_4digit_data[0] = _7segment_table[digit];
+	_display_data[0] = _7segment_table[digit];
 
 	value_int=value/10; 
 	digit=value_int%10;
-	_4digit_data[1] = _7segment_table[digit];
+	_display_data[1] = _7segment_table[digit];
 	
 	value_int=value/100; 
 	digit=value_int%10;
-	_4digit_data[2] = _7segment_table[digit];
+	_display_data[2] = _7segment_table[digit];
 	
 	value_int=value/1000; 
 	digit=value_int%10;
-	_4digit_data[3] = _7segment_table[digit];
+	_display_data[3] = _7segment_table[digit];
 	
-	if(_4digit_decimal==0){
-		if(_4digit_data[3]==0b00111111 && _4digit_data[2]==0b00111111 && _4digit_data[1]==0b00111111){
-			_4digit_data[1] = _7segment_table[18];
-			_4digit_data[2] = _7segment_table[18];
-			_4digit_data[3] = _7segment_table[18];
+	if(_display_decimal==0){
+		if(_display_data[3]==0b00111111 && _display_data[2]==0b00111111 && _display_data[1]==0b00111111){
+			_display_data[1] = _7segment_table[18];
+			_display_data[2] = _7segment_table[18];
+			_display_data[3] = _7segment_table[18];
 		}
-		if(_4digit_data[3]==0b00111111 && _4digit_data[2]==0b00111111){
-			_4digit_data[2] = _7segment_table[18];
-			_4digit_data[3] = _7segment_table[18];
+		if(_display_data[3]==0b00111111 && _display_data[2]==0b00111111){
+			_display_data[2] = _7segment_table[18];
+			_display_data[3] = _7segment_table[18];
 		}
-		if(_4digit_data[3]==0b00111111){
-			_4digit_data[3] = _7segment_table[18];
+		if(_display_data[3]==0b00111111){
+			_display_data[3] = _7segment_table[18];
 		}
 	}
-	else if(_4digit_decimal==1){SetBit(_4digit_data[1],7);}
-		else if(_4digit_decimal==2){SetBit(_4digit_data[2],7);}
-			else if(_4digit_decimal==3){SetBit(_4digit_data[3],7);}
+	else if(_display_decimal==1){SetBit(_display_data[1],7);}
+		else if(_display_decimal==2){SetBit(_display_data[2],7);}
+			else if(_display_decimal==3){SetBit(_display_data[3],7);}
 	
 	if(value>9999){
-			_4digit_data[0] = _7segment_table[16];
-			_4digit_data[1] = _7segment_table[16];
-			_4digit_data[2] = _7segment_table[16];
-			_4digit_data[3] = _7segment_table[16];		
+			_display_data[0] = _7segment_table[16];
+			_display_data[1] = _7segment_table[16];
+			_display_data[2] = _7segment_table[16];
+			_display_data[3] = _7segment_table[16];		
 	};
 	
 	#if SEGMENT_ON == 0
-		_4digit_data[0] = ~_4digit_data[0];
-		_4digit_data[1] = ~_4digit_data[1];
-		_4digit_data[2] = ~_4digit_data[2];
-		_4digit_data[3] = ~_4digit_data[3];
+		_display_data[0] = ~_display_data[0];
+		_display_data[1] = ~_display_data[1];
+		_display_data[2] = ~_display_data[2];
+		_display_data[3] = ~_display_data[3];
 	#endif
 }
 
 //***************************************************
-void SevenSegment_4Digit_SetValue_float(float value){
+void SevenSegment_SetValue_float(float value){
 	unsigned int value_int=0;
 	
-	if(value<10){value_int=value*1000; _4digit_decimal=3;}
-		else if(value<100){value_int=value*100; _4digit_decimal=2;}
-			else if(value<1000){value_int=value*10; _4digit_decimal=1;}
-				else {value_int=value; _4digit_decimal=0;}
+	if(value<10){value_int=value*1000; _display_decimal=3;}
+		else if(value<100){value_int=value*100; _display_decimal=2;}
+			else if(value<1000){value_int=value*10; _display_decimal=1;}
+				else {value_int=value; _display_decimal=0;}
 	
-	SevenSegment_4Digit_SetValue_uint(value_int);
+	SevenSegment_SetValue_uint(value_int);
 }
 
 //***************************************************
 char _4Digit_RefreshRightToLeft(void){
 	static unsigned char i=0; 
 	
-	_4Digit_DigitsPins_TurnOff;
-	_7segment_DriveDataOnSegments(_4digit_data[i]);
+	_7segment_TurnOffDigitsPins;
+	_7segment_DriveData(_display_data[i]);
 
 	switch(i){
 		case 0:
@@ -231,8 +244,8 @@ char _4Digit_RefreshRightToLeft(void){
 char _4Digit_RefreshLefToRight(void){
 	static unsigned char i=3; 
 	
-	_4Digit_DigitsPins_TurnOff;
-	_7segment_DriveDataOnSegments(_4digit_data[i]);
+	_7segment_TurnOffDigitsPins;
+	_7segment_DriveData(_display_data[i]);
 	
 	switch(i){
 		case 3:
@@ -257,13 +270,13 @@ char _4Digit_RefreshLefToRight(void){
 }
 
 //********************************************
-void SevenSegment_4Digit_DisplayValue(void){
+void SevenSegment_DisplayValue(void){
 	static unsigned int i=0;
 	
 	++i;
-	if(i>DISPLAYLAG){
+	if(i>DISPLAY_LAG){
 		i=0;
-		if(_4digit_onoff){_4Digit_RefreshLefToRight();}
+		if(_display_onoff){_4Digit_RefreshLefToRight();}
 	}
 }
 
