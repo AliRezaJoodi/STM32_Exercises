@@ -13,21 +13,21 @@ int main(void){
 
 	LCD_Configuration();
 	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); HAL_Delay(250);
-	LCD_ConfigureDisplayStatus(0); HAL_Delay(250);
-	LCD_ConfigureDisplayStatus(1); HAL_Delay(250);
+	LCD_SetOnOff(0); HAL_Delay(250);
+	LCD_SetOnOff(1); HAL_Delay(250);
 	LCD_GoToXY(0,1); LCD_PutString(txt); HAL_Delay(250);
-	LCD_ConfigureCursorStatus(1); HAL_Delay(250);
+	LCD_Cursor_SetOnOff(1); HAL_Delay(250);
 	LCD_ClearDisplay();
 	LCD_PutChar(65);
-	LCD_ConfigureBlinkingCursorStatus(1); HAL_Delay(2000);
-	LCD_ConfigureBlinkingCursorStatus(0); HAL_Delay(1000);
-	LCD_ConfigureCursorStatus(0); HAL_Delay(250);
+	LCD_BlinkingCursor_SetOnOff(1); HAL_Delay(2000);
+	LCD_BlinkingCursor_SetOnOff(0); HAL_Delay(1000);
+	LCD_Cursor_SetOnOff(0); HAL_Delay(250);
 
   while(1){
   }
 }
 
-
+//**************************************************
 void SystemClock_Config(void){
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};

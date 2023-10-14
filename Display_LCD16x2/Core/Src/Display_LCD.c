@@ -2,8 +2,75 @@
 
 #include "Display_LCD.h"
 
+#define _CLEAR_DISPLAY  0x01 // Clear display command
+#define _RETURN_HOME    0x02 // Return home command
+
+#define _DISPLAY_POS		2
+#define DISPLAY_OFF			0
+#define DISPLAY_ON			1
+
+#define _CURSOR_POS			1
+#define CURSOR_OFF			0
+#define CURSOR_ON				1
+
+#define _BLINK_POS			0
+#define BLINK_OFF				0
+#define BLINK_ON				1
+
+#define _INTERFACE_POS	4
+#define INTERFACE_4BIT	0
+#define INTERFACE_8BIT	1
+
+#define _LINE_POS				3
+#define LINE_SINGLE			0
+#define LINE_DUAL				1
+
 static unsigned char _display_cursor_bink=(0b00001000 | (DISPLAY_ON<<_DISPLAY_POS) | (CURSOR_OFF<<_CURSOR_POS) | (BLINK_OFF<<_BLINK_POS));
 static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
+
+#define _LCD_SetPinForOutputMode(GPIOx, PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_OUTPUT_2MHz);\
+	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, OUTPUT_GPIO);\
+	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
+
+#define _LCD_SetPinForInputMode(GPIOx, PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_INPUT);\
+	GPIO_InputMode_SetInputType(GPIOx, PIN, INPUT_FLOATING);
+
+#define _LCD_ControlPins_Configuration \
+	_LCD_SetPinForOutputMode(RS_PORT, RS_PIN);\
+	_LCD_SetPinForOutputMode(RW_PORT, RW_PIN);\
+	_LCD_SetPinForOutputMode(EN_PORT, EN_PIN);
+
+#define _LCD_DataPins_ConfigureForOutputMode \
+	_LCD_SetPinForOutputMode(D7_PORT, D7_PIN);\
+	_LCD_SetPinForOutputMode(D6_PORT, D6_PIN);\
+	_LCD_SetPinForOutputMode(D5_PORT, D5_PIN);\
+	_LCD_SetPinForOutputMode(D4_PORT, D4_PIN);	
+
+#define _LCD_DataPins_ConfigureForInputMode \
+	_LCD_SetPinForInputMode(D7_PORT, D7_PIN);\
+	_LCD_SetPinForInputMode(D6_PORT, D6_PIN);\
+	_LCD_SetPinForInputMode(D5_PORT, D5_PIN);\
+	_LCD_SetPinForInputMode(D4_PORT, D4_PIN);
+
+#define _REGISTER_INSTRUCTION		0
+#define _REGISTER_DATA					1
+#define _SetInstructionOrDataRegister(MODE) \
+	GPIO_WritePin(RS_PORT, RS_PIN, MODE);
+	
+#define _OPERATION_WRITE	0
+#define _OPERATION_READ		1
+#define _SetWriteOrReadMode(MODE) \
+	GPIO_WritePin(RW_PORT, RW_PIN, MODE);
+
+#define _INSTRUCTION_WRITE	0b00
+#define _INSTRUCTION_READ		0b01
+#define _DATA_WRITE					0b10
+#define _DATA_READ					0b11
+#define _SetOperationMode(MODE) \
+	GPIO_WritePin(RS_PORT, RS_PIN, GetBit(MODE,1));\
+	GPIO_WritePin(RW_PORT, RW_PIN, GetBit(MODE,0));
 
 //********************************
 void _LCD_EnableBusForPorts(void){
@@ -53,8 +120,8 @@ void _LCD_Delay(void){
 //********************************
 void _LCD_Ready(void){
 	volatile char busy_flag=1;
-	_LCD_DataPins_ConfigurationForInputMode;
-	_SelectOperationMode(_INSTRUCTION_READ);
+	_LCD_DataPins_ConfigureForInputMode;
+	_SetOperationMode(_INSTRUCTION_READ);
 	_LCD_Delay();
 	
 	do{
@@ -66,7 +133,7 @@ void _LCD_Ready(void){
 		GPIO_ResetPin(EN_PORT, EN_PIN); _LCD_Delay();
 	} while(busy_flag!=0);
 	
-	_LCD_DataPins_ConfigurationForOutputMode;
+	_LCD_DataPins_ConfigureForOutputMode;
 }
 
 //********************************
@@ -91,37 +158,37 @@ void _LCD_Write_4BitMode(unsigned char data){
 //********************************
 void LCD_PutCommand(unsigned char data){
 	_LCD_Ready();
-	_SelectOperationMode(_INSTRUCTION_WRITE);
+	_SetOperationMode(_INSTRUCTION_WRITE);
 	_LCD_Write_4BitMode(data); //HAL_Delay(1);
 }
 
 //********************************
-void LCD_ConfigureDisplayStatus(char status){
-	WriteBit(_display_cursor_bink,_DISPLAY_POS,status);
+void LCD_SetOnOff(char status){
+	WriteBit(_display_cursor_bink, _DISPLAY_POS, status);
 	LCD_PutCommand(_display_cursor_bink);
 }
 
 //********************************
-void LCD_ConfigureCursorStatus(char status){
-	WriteBit(_display_cursor_bink,_CURSOR_POS,status);
+void LCD_Cursor_SetOnOff(char status){
+	WriteBit(_display_cursor_bink, _CURSOR_POS, status);
 	LCD_PutCommand(_display_cursor_bink);
 }
 
 //********************************
-void LCD_ConfigureBlinkingCursorStatus(char status){
-	WriteBit(_display_cursor_bink,_BLINK_POS,status);
+void LCD_BlinkingCursor_SetOnOff(char status){
+	WriteBit(_display_cursor_bink, _BLINK_POS, status);
 	LCD_PutCommand(_display_cursor_bink);
 }
 
 //********************************
-void LCD_ConfigureInterfaceDataLength(char mode){
-	WriteBit(_interface_line,_INTERFACE_POS,mode);
+void LCD_InterfaceDataLength_Set4BitOr8Bit(char mode){
+	WriteBit(_interface_line, _INTERFACE_POS, mode);
 	LCD_PutCommand(_interface_line);
 }
 
 //********************************
-void LCD_ConfigureLine(char mode){
-	WriteBit(_interface_line,_LINE_POS,mode);
+void LCD_SetLine(char mode){
+	WriteBit(_interface_line, _LINE_POS, mode);
 	LCD_PutCommand(_interface_line);
 }
 
@@ -140,7 +207,7 @@ void LCD_ClearDisplay(void){
 //********************************
 void LCD_PutChar(char data){
 	_LCD_Ready();
-	_SelectOperationMode(_DATA_WRITE);
+	_SetOperationMode(_DATA_WRITE);
   _LCD_Write_4BitMode(data); //HAL_Delay(1);
 }
 
@@ -165,7 +232,7 @@ void LCD_Configuration(void){
   HAL_Delay(20);
 	_LCD_EnableBusForPorts();
 	_LCD_ControlPins_Configuration;
-	_LCD_DataPins_ConfigurationForOutputMode;
+	_LCD_DataPins_ConfigureForOutputMode;
 	
 	LCD_PutCommand(_RETURN_HOME); HAL_Delay(2);
 	LCD_PutCommand(_interface_line);

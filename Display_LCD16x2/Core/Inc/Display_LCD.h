@@ -9,7 +9,7 @@
 	#define _LCD_INCLOUDED
 
 #ifdef __cplusplus
-extern "C" {
+	extern "C" {
 #endif
 
 
@@ -32,81 +32,13 @@ extern "C" {
 	#define D4_PORT  			GPIOA
 	#define D4_PIN  			4
 #endif
-
-#define _LCD_SetPinForOutputMode(GPIOx, PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_OUTPUT_2MHz);\
-	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, OUTPUT_GPIO);\
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
-
-#define _LCD_SetPinForInputMode(GPIOx, PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_INPUT);\
-	GPIO_InputMode_SetInputType(GPIOx, PIN, INPUT_FLOATING);
-
-#define _LCD_ControlPins_Configuration \
-	_LCD_SetPinForOutputMode(RS_PORT, RS_PIN);\
-	_LCD_SetPinForOutputMode(RW_PORT, RW_PIN);\
-	_LCD_SetPinForOutputMode(EN_PORT, EN_PIN);
-
-#define _LCD_DataPins_ConfigurationForOutputMode \
-	_LCD_SetPinForOutputMode(D7_PORT, D7_PIN);\
-	_LCD_SetPinForOutputMode(D6_PORT, D6_PIN);\
-	_LCD_SetPinForOutputMode(D5_PORT, D5_PIN);\
-	_LCD_SetPinForOutputMode(D4_PORT, D4_PIN);	
-
-#define _LCD_DataPins_ConfigurationForInputMode \
-	_LCD_SetPinForInputMode(D7_PORT, D7_PIN);\
-	_LCD_SetPinForInputMode(D6_PORT, D6_PIN);\
-	_LCD_SetPinForInputMode(D5_PORT, D5_PIN);\
-	_LCD_SetPinForInputMode(D4_PORT, D4_PIN);
-	
-#define _CLEAR_DISPLAY  0x01 // Clear display command
-#define _RETURN_HOME    0x02 // Return home command
-
-#define _DISPLAY_POS		2
-#define DISPLAY_OFF			0
-#define DISPLAY_ON			1
-
-#define _CURSOR_POS			1
-#define CURSOR_OFF			0
-#define CURSOR_ON				1
-
-#define _BLINK_POS			0
-#define BLINK_OFF				0
-#define BLINK_ON				1
-
-#define _INTERFACE_POS	4
-#define INTERFACE_4BIT	0
-#define INTERFACE_8BIT	1
-
-#define _LINE_POS				3
-#define LINE_SINGLE			0
-#define LINE_DUAL				1
-
-
-#define _REGISTER_INSTRUCTION		0
-#define _REGISTER_DATA					1
-#define _SelectInstructionOrDataRegister(MODE) \
-	GPIO_WritePin(RS_PORT,RS_PIN,MODE);
-	
-#define _OPERATION_WRITE	0
-#define _OPERATION_READ		1
-#define _SelectWriteOrReadMode(MODE) \
-	GPIO_WritePin(RW_PORT,RW_PIN,MODE);
-
-#define _INSTRUCTION_WRITE	0b00
-#define _INSTRUCTION_READ		0b01
-#define _DATA_WRITE					0b10
-#define _DATA_READ					0b11
-#define _SelectOperationMode(MODE) \
-	GPIO_WritePin(RS_PORT,RS_PIN,GetBit(MODE,1));\
-	GPIO_WritePin(RW_PORT,RW_PIN,GetBit(MODE,0));
 	
 void LCD_PutCommand(unsigned char data);
-void LCD_ConfigureDisplayStatus(char status);
-void LCD_ConfigureCursorStatus(char status);
-void LCD_ConfigureBlinkingCursorStatus(char status);
-void LCD_ConfigureInterfaceDataLength(char mode);
-void LCD_ConfigureLine(char mode);
+void LCD_SetOnOff(char status);
+void LCD_Cursor_SetOnOff(char status);
+void LCD_BlinkingCursor_SetOnOff(char status);
+void LCD_InterfaceDataLength_Set4BitOr8Bit(char mode);
+void LCD_SetLine(char mode);
 void LCD_ClearDisplay(void);
 void LCD_GoToXY(unsigned char x, unsigned char y);
 void LCD_Configuration(void);
@@ -122,7 +54,7 @@ void LCD_PutStringFromFlash(const char *str);
 #define lcd_init()				LCD_Configuration()
 
 #ifdef __cplusplus
-}
+	}
 #endif
 
 #endif
