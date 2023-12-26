@@ -18,7 +18,7 @@ int main(void){
   SystemClock_Configuration();
 	SevenSegment_Configuration();
 
-	//SevenSegment_SetValue_uint(1234);
+	//SevenSegment_SetValue_uint(14);
 	SevenSegment_SetValue(1.2345);
 	SevenSegment_SetOnOff(1);
 	

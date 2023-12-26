@@ -15,7 +15,7 @@
 #ifndef _7SEGMENT_PORT
 	#define _7SEGMENT_PORT 
 
-	#define DISPLAY_LAG   3000 //Display Lag
+	#define DISPLAY_LAG   30000 //Display Lag
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
