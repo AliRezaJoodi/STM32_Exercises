@@ -1,10 +1,11 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+// Bare Metal Programming
 
 #include "stm32f1xx.h"
-#include "Utility.h"
+#include "utility.h"
 
-#ifndef _USART_INCLUDED
-	#define _USART_INCLUDED
+#ifndef _STM32F1xx_BM_USART_INCLUDED
+	#define _STM32F1xx_BM_USART_INCLUDED
 
 #ifdef __cplusplus
 	extern "C" {

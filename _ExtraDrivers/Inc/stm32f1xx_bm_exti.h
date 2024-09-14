@@ -1,4 +1,5 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+// Bare Metal Programming
 
 /*
 	Abbreviations:
@@ -6,11 +7,11 @@
 */
 
 #include "stm32f1xx.h"
-#include "Utility.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
+#include "utility.h"
+#include "stm32f1xx_bm_gpio.h"
 
-#ifndef _EXTI_INCLUDED
-	#define _EXTI_INCLUDED
+#ifndef _STM32F1xx_BM_EXTI_INCLUDED
+	#define _STM32F1xx_BM_EXTI_INCLUDED
 
 #ifdef __cplusplus
 	extern "C" {

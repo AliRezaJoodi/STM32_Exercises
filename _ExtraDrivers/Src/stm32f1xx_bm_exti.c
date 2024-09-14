@@ -1,6 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "STM32F1xx_EXTI_BareMetal.h"
+#include "stm32f1xx_bm_exti.h"
 
 //*****************************************
 void EXTI0_NVIC_Configuration(void){

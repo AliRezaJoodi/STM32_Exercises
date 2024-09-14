@@ -2,8 +2,8 @@
 
 #include "stm32f1xx_hal.h"
 #include "Utility.h"
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
+#include "stm32f1xx_bm_bus.h"
+#include "stm32f1xx_bm_gpio.h"
 
 #ifndef _LCD_INCLOUDED
 	#define _LCD_INCLOUDED

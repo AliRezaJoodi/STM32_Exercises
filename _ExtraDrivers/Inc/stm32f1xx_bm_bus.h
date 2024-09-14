@@ -1,4 +1,5 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+// Bare Metal Programming
 
 /*
 	Abbreviations:
@@ -7,10 +8,10 @@
 */
 
 #include "stm32f1xx.h"
-#include "Utility.h"
+#include "utility.h"
 
-#ifndef _BUS_INCLUDED
-	#define _BUS_INCLUDED
+#ifndef _STM32F1xx_BM_BUS_INCLUDED
+	#define _STM32F1xx_BM_BUS_INCLUDED
 
 #ifdef __cplusplus
 	extern "C" {

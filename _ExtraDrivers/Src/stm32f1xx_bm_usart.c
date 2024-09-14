@@ -1,6 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include "STM32F1xx_USART_BareMetal.h"
+#include "stm32f1xx_bm_usart.h"
 
 //*****************************************
 void USART1_NVIC_Configuration(void){

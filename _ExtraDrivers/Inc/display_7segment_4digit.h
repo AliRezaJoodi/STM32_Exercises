@@ -2,11 +2,11 @@
 
 #include "stm32f1xx.h"
 #include "Utility.h"
-#include "STM32F1xx_BUS_BareMetal.h"
-#include "STM32F1xx_GPIO_BareMetal.h"
+#include "stm32f1xx_bm_bus.h"
+#include "stm32f1xx_bm_gpio.h"
 
-#ifndef _7SEGMENT1DIGIT_INCLUDED
-    #define _7SEGMENT1DIGIT_INCLUDED
+#ifndef _7SEGMENT4DIGIT_INCLUDED
+    #define _7SEGMENT4DIGIT_INCLUDED
 
 #ifdef __cplusplus
 	extern "C" {
@@ -14,7 +14,8 @@
 
 #ifndef _7SEGMENT_PORT
 	#define _7SEGMENT_PORT 
-	
+
+	#define DISPLAY_LAG   3000 //Display Lag
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
@@ -42,14 +43,26 @@
   #define DP_PORT       GPIOA
   #define DP_PIN        7
 	
-	#define DIGIT0_PORT   GPIOA
-  #define DIGIT0_PIN		15
+	#define DIGIT0_PORT		GPIOB
+  #define DIGIT0_PIN    3
+		
+	#define DIGIT1_PORT		GPIOB
+  #define DIGIT1_PIN    2
+		
+	#define DIGIT2_PORT		GPIOB
+  #define DIGIT2_PIN    1
+		
+	#define DIGIT3_PORT		GPIOB
+  #define DIGIT3_PIN    0
 #endif
 
 void SevenSegment_Configuration(void);
 void SevenSegment_SetOnOff(char status);
-void SevenSegment_DisplayValue(unsigned char number);
+void SevenSegment_SetValue_uint(unsigned int value);
+void SevenSegment_SetValue_float(float value);
+void SevenSegment_DisplayValue(void);
 
+#define SevenSegment_SetValue(value)				SevenSegment_SetValue_float(value)
 
 #ifdef __cplusplus
 	}
