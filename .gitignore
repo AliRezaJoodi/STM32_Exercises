@@ -28,8 +28,7 @@ RTE
 
 # STM32CubeMX
 .mxproject
-CMSIS
-STM32F1xx_HAL_Driver
+_Drivers
 
 
 
