@@ -1,15 +1,15 @@
-# Operating System folders and files for ignore
+# Operating System folders and files
 desktop.ini
 
-# Personal folders and files for ignore
+# Personal folders and files
 _Pending
 
-# Proteus folders and files for ignore
+# Proteus folders and files
 Project Backups
 *.workspace
 *.BMP
 
-# MDK-ARM folders and files for ignore
+# MDK-ARM folders and files
 DebugConfig
 RTE
 *.Home
@@ -28,6 +28,9 @@ RTE
 
 # STM32CubeMX
 .mxproject
+CMSIS
+STM32F1xx_HAL_Driver
+
 
 
 
