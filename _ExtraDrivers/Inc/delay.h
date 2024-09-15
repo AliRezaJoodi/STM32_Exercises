@@ -8,7 +8,7 @@
 #endif 
 
 
-#define _DELAY_LAG		8
+#define _DELAY_LAG		1
 #define _REFRESH_LAG	40000
 
 void Delay_us(unsigned int us);
