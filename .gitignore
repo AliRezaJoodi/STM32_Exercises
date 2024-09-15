@@ -25,6 +25,8 @@ RTE
 *.dep
 *.scvd
 *.lst
+JLinkLog.txt
+JLinkSettings.ini
 
 # STM32CubeMX
 .mxproject
