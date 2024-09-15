@@ -76,9 +76,9 @@ int main(void)
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** Enable the Serial wire JTAG configuration
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
-  LL_GPIO_AF_EnableRemap_SWJ();
+  LL_GPIO_AF_Remap_SWJ_NOJTAG();
 
   /* USER CODE BEGIN Init */
 
@@ -103,9 +103,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		LL_GPIO_SetOutputPin(LED_GPIO_Port, LED_Pin);
+		LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13); 
 		LL_mDelay(500);
-		LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin);
+		LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13); 
 		LL_mDelay(500);
   }
   /* USER CODE END 3 */
@@ -155,17 +155,18 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
 
   /**/
-  LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin);
+  LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
 
   /**/
-  GPIO_InitStruct.Pin = LED_Pin;
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
