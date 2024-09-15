@@ -1,8 +1,8 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
-#include "stm32f1xx.h"
-#include "utility.h"
+#include <stm32f1xx.h>
+#include <utility.h>
 
 #ifndef _STM32F1xx_BM_GPIO_INCLUDED
     #define _STM32F1xx_BM_GPIO_INCLUDED
@@ -12,18 +12,24 @@
 #endif
 
 
-#define FULL_SWJ												0b000
-#define FULL_SWJ_WITHOUT_NJTRST					0b001
-#define JTAG_DISABLED_AND_SWD_ENABLED		0b010
-#define JTAG_DISABLED_AND_SWD_DISABLED	0b100
-#define AFIO_SetSerialWireDebugPort(MODE) \
+/*
+#define FULL_SWJ												0b000		//SWD(on),	JTAG(on), 	NJTRST(on)
+#define FULL_SWJ_WITHOUT_NJTRST					0b001		//SWD(on), 	JTAG(on), 	NJTRST(off)
+#define JTAG_DISABLED_AND_SWD_ENABLED		0b010		//SWD(on), 	JTAG(off), 	NJTRST(off)	
+#define JTAG_DISABLED_AND_SWD_DISABLED	0b100		//SWD(off), JTAG(off), 	NJTRST(off)
+*/
+#define SWD_ON__JTAG_ON__NJTRST_ON				0b000		//Reset State
+#define SWD_ON__JTAG_ON__NJTRST_OFF				0b001
+#define SWD_ON__JTAG_OFF									0b010
+#define SWD_OFF__JTAG_OFF									0b100
+#define GPIO_SWJ_SetDebugInterfaces(MODE) \
 	Write3Bit(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_Pos, MODE);
 
-#define MODE_INPUT          0b00
-#define MODE_OUTPUT_10MHz   0b01
-#define MODE_OUTPUT_2MHz    0b10
-#define MODE_OUTPUT_50MHz		0b11
-#define MODE_OUTPUT   			MODE_OUTPUT_2MHz
+#define IO_INPUT          0b00
+#define IO_OUTPUT_10MHz   0b01
+#define IO_OUTPUT_2MHz    0b10
+#define IO_OUTPUT_50MHz		0b11
+#define IO_OUTPUT   			IO_OUTPUT_2MHz
 #define GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL, PIN*4, MODE);}\
 		else{Write2Bit(GPIOx->CRH, (PIN-8)*4, MODE);}
@@ -77,9 +83,9 @@
 	if(PIN<=7){Write2Bit(GPIOx->CRL, (PIN*4)+2, MODE);}\
 		else{Write2Bit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}
 
-#define OUTPUT_GPIO	0b0
-#define OUTPUT_AFIO	0b1
-#define GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, MODE) \
+#define OUTPUT_GP		0b0		// General Purpose
+#define OUTPUT_AF		0b1		// Alternate Function
+#define GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx,PIN, MODE) \
 	if(PIN<=7){WriteBit(GPIOx->CRL, (PIN*4)+3, MODE);}\
 		else{WriteBit(GPIOx->CRH, ((PIN-8)*4)+3, MODE);}
 /*

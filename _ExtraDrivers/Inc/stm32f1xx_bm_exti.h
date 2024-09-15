@@ -6,9 +6,9 @@
 	EXTI: External Interrupt
 */
 
-#include "stm32f1xx.h"
-#include "utility.h"
-#include "stm32f1xx_bm_gpio.h"
+#include <stm32f1xx.h>
+#include <utility.h>
+#include <stm32f1xx_bm_gpio.h>
 
 #ifndef _STM32F1xx_BM_EXTI_INCLUDED
 	#define _STM32F1xx_BM_EXTI_INCLUDED
