@@ -7,8 +7,8 @@
 	AFIO: 	Alternate Function I/O
 */
 
-#include "stm32f1xx.h"
-#include "utility.h"
+#include <stm32f1xx.h>
+#include <utility.h>
 
 #ifndef _STM32F1xx_BM_BUS_INCLUDED
 	#define _STM32F1xx_BM_BUS_INCLUDED
