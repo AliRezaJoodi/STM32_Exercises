@@ -18,9 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Utility.h"
+#include "_Test.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +49,8 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Button1(void);
+void Button2(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -78,9 +80,9 @@ int main(void)
   /* SysTick_IRQn interrupt configuration */
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
 
-  /** DISABLE: JTAG-DP Disabled and SW-DP Disabled
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
-  LL_GPIO_AF_DisableRemap_SWJ();
+  LL_GPIO_AF_Remap_SWJ_NOJTAG();
 
   /* USER CODE BEGIN Init */
 
@@ -101,24 +103,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t value2=0b101101001U;
-	//GPIOB->ODR= Get4Bit(value1,5);
-	Write4Bit(value2,11,0b1101U);
-	GPIOB->ODR=value2;
-	
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<0))>>0)){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_15);}
-			else{LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_15);}
+		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<0))>>0)){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_15);}
+			//else{LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_15);}
 		
-		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_3);}
-		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<2))>>2)==0){LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_3);}
+		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_3);}
+		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<2))>>2)==0){LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_3);}
+		Button1();
+		Button2();
 		
-		uint32_t value= Get4Bit(GPIOA->IDR,7); 
-		Write4Bit(GPIOA->ODR,11,value);
+		uint32_t value=(GPIOA->IDR)>>4 & (0b1111U);
+    GPIOB->ODR= ((GPIOB->ODR) & ~(0b1111<<12)) | (value<<12);
   }
   /* USER CODE END 3 */
 }
@@ -167,30 +166,29 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_3|LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13
-                          |LL_GPIO_PIN_14|LL_GPIO_PIN_15);
+  LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_10
-                          |LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14
-                          |LL_GPIO_PIN_15|LL_GPIO_PIN_3|LL_GPIO_PIN_4|LL_GPIO_PIN_5
-                          |LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9);
+  LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14|LL_GPIO_PIN_15);
 
   /**/
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9|LL_GPIO_PIN_10;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-	/**/
+  /**/
   GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	
+
   /**/
   GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
@@ -198,24 +196,12 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_4|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_3|LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13
-                          |LL_GPIO_PIN_14|LL_GPIO_PIN_15;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /**/
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_10
-                          |LL_GPIO_PIN_11|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14
-                          |LL_GPIO_PIN_15|LL_GPIO_PIN_3|LL_GPIO_PIN_4|LL_GPIO_PIN_5
-                          |LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9;
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14|LL_GPIO_PIN_15;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
@@ -226,7 +212,62 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+//**********************************************
+void Button1(void){
+		static char status=1;
+	
+    if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0) && status==1){
+				LL_mDelay(30);
+				if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0)){
+					status=0;
+					LL_GPIO_TogglePin(GPIOC,LL_GPIO_PIN_13);
+				}
+		}
+    else if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0) && status==0){
+			LL_mDelay(30);
+			if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0)){
+				status=1;
+			}	
+		}		
+}
 
+//**********************************************
+void Button2(void){
+	static char status=0;
+
+		if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1) && status==0){
+				LL_mDelay(30);
+				if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1)){
+					status=1;
+					LL_GPIO_SetOutputPin(GPIOC,LL_GPIO_PIN_13);
+				}
+		}
+		else if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1) && status==1){
+			LL_mDelay(30);
+			if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1)){
+				status=0;
+			}	
+		}	
+}
+
+//**********************************************
+/*void Button2(void){
+	static char status=0;
+
+		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1 && status==0){
+				LL_mDelay(30);
+				if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){
+					status=1;
+					LL_GPIO_SetOutputPin(GPIOC,LL_GPIO_PIN_13);
+				}
+		}
+		else if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==0 && status==1){
+			LL_mDelay(30);
+			if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==0){
+				status=0;
+			}	
+		}	
+}*/
 /* USER CODE END 4 */
 
 /**
