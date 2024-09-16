@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\UserCode;..\..\_ExtraDrivers\Inc</IncludePath>
+              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
