@@ -1,7 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #include <stm32f1xx.h>
-#include <Utility.h>
+#include <utility.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 
@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-#ifndef _7SEGMENT_PORT
-	#define _7SEGMENT_PORT 
+#ifndef _7SEGMENT_HARDWARE
+	#define _7SEGMENT_HARDWARE 
 
 	#define DISPLAY_LAG   3000 //Display Lag
 	#define SEGMENT_ON		0
@@ -56,13 +56,13 @@ extern "C" {
   #define DIGIT3_PIN    0
 #endif
 
-void SevenSegment_Configuration(void);
-void SevenSegment_SetOnOff(char status);
-void SevenSegment_SetValue_uint(unsigned int value);
-void SevenSegment_SetValue_float(float value);
-void SevenSegment_DisplayValue(void);
+void Display7Segment_Config(void);
+void Display7Segment_SetOnOff(char status);
+void Display7Segment_SetValue_uint(unsigned int value);
+void Display7Segment_SetValue_float(float value);
+void Display7Segment_DisplayValue(void);
 
-#define SevenSegment_SetValue(value)				SevenSegment_SetValue_float(value)
+#define Display7Segment_SetValue(value)				Display7Segment_SetValue_float(value)
 
 #ifdef __cplusplus
 }

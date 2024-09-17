@@ -27,3 +27,12 @@ USE_FULL_LL_DRIVER,USE_HAL_DRIVER,STM32F103xB
 ### Include Paths
 ..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
 
+### Groups
+Application/MDK-ARM
+Application/User/Core
+Drivers/STM32F1xx_HAL_Driver
+Drivers/CMSIS
+Drivers/ExtraDrivers
+
+
+
