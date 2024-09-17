@@ -26,9 +26,9 @@ _7segment display1;
 display1.decimal_=0;
 */ 
 
-#define _7Segment_SetPinForOutputMode(GPIOx, PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx, PIN, MODE_OUTPUT_2MHz);\
-	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOx, PIN, OUTPUT_GPIO);\
+#define _7Segment_SetPinForOutputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, IO_OUTPUT);\
+	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx, PIN, OUTPUT_GP);\
 	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
 
 #define _7segment_TurnOffAllPins \
@@ -120,7 +120,7 @@ display1.decimal_=0;
 }
 
 //***************************************************
-void SevenSegment_Configuration(void){
+void Display7Segment_Config(void){
 	_7segment_EnableBusForPorts();
 	
 	_7Segment_SetPinForOutputMode(A_PORT, A_PIN);
@@ -141,12 +141,12 @@ void SevenSegment_Configuration(void){
 }
 
 //********************************************
-void SevenSegment_SetOnOff(char Status){
+void Display7Segment_SetOnOff(char Status){
 	_display_onoff = Status & 0b1;
 }
 
 //***************************************************
-void SevenSegment_SetValue_uint(unsigned int value){
+void Display7Segment_SetValue_uint(unsigned int value){
 	unsigned int value_int=0;
 	unsigned char digit=0;
 	
@@ -200,7 +200,7 @@ void SevenSegment_SetValue_uint(unsigned int value){
 }
 
 //***************************************************
-void SevenSegment_SetValue_float(float value){
+void Display7Segment_SetValue_float(float value){
 	unsigned int value_int=0;
 	
 	if(value<10){value_int=value*1000; _display_decimal=3;}
@@ -208,7 +208,7 @@ void SevenSegment_SetValue_float(float value){
 			else if(value<1000){value_int=value*10; _display_decimal=1;}
 				else {value_int=value; _display_decimal=0;}
 	
-	SevenSegment_SetValue_uint(value_int);
+	Display7Segment_SetValue_uint(value_int);
 }
 
 //***************************************************
@@ -270,7 +270,7 @@ char _4Digit_RefreshLefToRight(void){
 }
 
 //********************************************
-void SevenSegment_DisplayValue(void){
+void Display7Segment_DisplayValue(void){
 	static unsigned int i=0;
 	
 	++i;

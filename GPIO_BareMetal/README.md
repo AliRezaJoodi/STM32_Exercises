@@ -7,7 +7,7 @@ System Clock:	8MHz with HSI RC
 It has included:
 - `MDK-ARM` (IDE File for Keil uVision5)
 - `Simulate` (Simulator File)
-- `UserCode` (User Code with C Language)
+- `Core` (User Code with C Language)
 
 ### Simulate: v1.0
 ![](Simulate/v1.0.png)
