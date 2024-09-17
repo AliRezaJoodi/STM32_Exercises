@@ -5,10 +5,10 @@
 #include <utility.h>
 
 #ifndef _STM32F1xx_BM_USART_INCLUDED
-	#define _STM32F1xx_BM_USART_INCLUDED
+#define _STM32F1xx_BM_USART_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 #define _DIV_INTEGER_SAMPLING16(PERIPHCLK, BAUDRATE) \
@@ -299,7 +299,7 @@ void USART2_IRQHandler(void);
 
 		
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _STM32F1xx_BM_USART_INCLUDED

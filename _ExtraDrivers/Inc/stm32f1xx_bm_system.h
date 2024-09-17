@@ -5,10 +5,10 @@
 #include <utility.h>
 
 #ifndef _STM32F1xx_BM_SYSTEM_INCLUDED
-    #define _STM32F1xx_BM_SYSTEM_INCLUDED
+#define _STM32F1xx_BM_SYSTEM_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 
@@ -39,7 +39,7 @@
   SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _STM32F1xx_BM_SYSTEM_INCLUDED

@@ -5,11 +5,11 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 
-#ifndef _7SEGMENT1DIGIT_INCLUDED
-    #define _7SEGMENT1DIGIT_INCLUDED
+#ifndef _7SEGMENT_1DIGIT_INCLUDED
+#define _7SEGMENT_1DIGIT_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 #ifndef _7SEGMENT_PORT
@@ -52,7 +52,7 @@ void SevenSegment_DisplayValue(unsigned char number);
 
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _7SEGMENT1DIGIT_INCLUDED

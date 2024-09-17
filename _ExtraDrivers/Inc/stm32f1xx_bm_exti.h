@@ -11,10 +11,10 @@
 #include <stm32f1xx_bm_gpio.h>
 
 #ifndef _STM32F1xx_BM_EXTI_INCLUDED
-	#define _STM32F1xx_BM_EXTI_INCLUDED
+#define _STM32F1xx_BM_EXTI_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 
@@ -256,9 +256,9 @@ void EXTI15_10_IRQHandler(void);
 
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _STM32F1xx_BM_EXTI_INCLUDED
 
 		

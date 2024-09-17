@@ -13,10 +13,10 @@
 #include <utility.h>
 
 #ifndef _STM32F1xx_BM_RCC_INCLUDED
-    #define _STM32F1xx_BM_RCC_INCLUDED
+#define _STM32F1xx_BM_RCC_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 
@@ -87,7 +87,7 @@
 void SystemClock_Configuration(void);
 
 #ifdef __cplusplus
-	}
+}
 #endif
 		
-#endif
+#endif	// _STM32F1xx_BM_RCC_INCLUDED
