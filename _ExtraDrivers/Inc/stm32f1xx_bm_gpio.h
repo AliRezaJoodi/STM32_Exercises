@@ -5,10 +5,10 @@
 #include <utility.h>
 
 #ifndef _STM32F1xx_BM_GPIO_INCLUDED
-    #define _STM32F1xx_BM_GPIO_INCLUDED
+#define _STM32F1xx_BM_GPIO_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 
@@ -179,8 +179,8 @@
 	while(GPIO_GetLockStatusFromPin(GPIOx, PIN)){}
 		
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _STM32F1xx_BM_GPIO_INCLUDED
 

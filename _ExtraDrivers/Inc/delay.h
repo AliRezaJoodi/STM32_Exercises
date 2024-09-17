@@ -1,10 +1,10 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #ifndef _DELAY_INCLUDED
-    #define _DELAY_INCLUDED
+#define _DELAY_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif 
 
 
@@ -17,7 +17,7 @@ char Refresh(void);
 
 
 #ifdef __cplusplus
-	}
+}
 #endif 
 
-#endif
+#endif	// _DELAY_INCLUDED

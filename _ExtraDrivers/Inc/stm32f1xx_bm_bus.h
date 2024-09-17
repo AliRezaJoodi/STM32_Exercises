@@ -11,10 +11,10 @@
 #include <utility.h>
 
 #ifndef _STM32F1xx_BM_BUS_INCLUDED
-	#define _STM32F1xx_BM_BUS_INCLUDED
+#define _STM32F1xx_BM_BUS_INCLUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 		
 #ifndef ENABLE
@@ -79,7 +79,7 @@
 	while(_USART1_GeEnableStatus != STATUS){};
 		
 #ifdef __cplusplus
-	}
+}
 #endif
 		
-#endif
+#endif	// _STM32F1xx_BM_BUS_INCLUDED

@@ -6,10 +6,10 @@
 #include <stm32f1xx_bm_gpio.h>
 
 #ifndef _LCD_INCLOUDED
-	#define _LCD_INCLOUDED
+#define _LCD_INCLOUDED
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
 
 
@@ -54,7 +54,7 @@ void LCD_PutStringFromFlash(const char *str);
 #define lcd_init()				LCD_Configuration()
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
-#endif
+#endif	// _LCD_INCLOUDED

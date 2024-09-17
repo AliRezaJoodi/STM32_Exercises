@@ -1,7 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #ifndef _UTILITY_INCLUDED
-    #define _UTILITY_INCLUDED
+#define _UTILITY_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,4 +28,4 @@ extern "C" {
 }
 #endif
 
-#endif
+#endif	// _UTILITY_INCLUDED
