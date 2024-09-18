@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-#ifndef _7SEGMENT_HARDWARE
-	#define _7SEGMENT_HARDWARE 
+#ifndef _7SEGMENT_4DIGIT_HARDWARE
+	#define _7SEGMENT_4DIGIT_HARDWARE 
 
 	#define DISPLAY_LAG   3000 //Display Lag
 	#define SEGMENT_ON		0
@@ -56,13 +56,13 @@ extern "C" {
   #define DIGIT3_PIN    0
 #endif
 
-void Display7Segment_Config(void);
-void Display7Segment_SetOnOff(char status);
-void Display7Segment_SetValue_uint(unsigned int value);
-void Display7Segment_SetValue_float(float value);
-void Display7Segment_DisplayValue(void);
+void Display7Segment4Digit_Config(void);
+void Display7Segment4Digit_SetOnOff(char status);
+void Display7Segment4Digit_SetValue_float(float value);
+void Display7Segment4Digit_SetValue_int(int value);
+void Display7Segment4Digit_Refresh(void);
 
-#define Display7Segment_SetValue(value)				Display7Segment_SetValue_float(value)
+#define Display7Segment4Digit_SetValue(value)		Display7Segment4Digit_SetValue_float(value)
 
 #ifdef __cplusplus
 }

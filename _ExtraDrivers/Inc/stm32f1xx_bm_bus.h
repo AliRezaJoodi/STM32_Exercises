@@ -16,11 +16,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-		
+
+/*
 #ifndef ENABLE
 	#define ENABLE		1
 	#define DISABLE		!ENABLE
 #endif
+*/
 
 #define BUS_PWR_ResetClock \
 	SetBit_NoLastStatus(RCC->APB1RSTR, RCC_APB1RSTR_PWRRST_Pos)

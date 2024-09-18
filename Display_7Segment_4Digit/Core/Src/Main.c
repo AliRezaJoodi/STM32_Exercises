@@ -20,14 +20,14 @@ int main(void){
 	GPIO_SWJ_SetDebugInterfaces(SWD_ON__JTAG_OFF);
   SystemClock_Config();
 	
-	Display7Segment_Config();
-
-	//Display7Segment_SetValue_uint(14);
-	Display7Segment_SetValue(1.234);
-	Display7Segment_SetOnOff(1);
+	Display7Segment4Digit_Config();
+	Display7Segment4Digit_SetOnOff(1);
+	
+	//Display7Segment4Digit_SetValue_int(-12);
+	Display7Segment4Digit_SetValue(-1.234);
 	
   while(1){
-		Display7Segment_DisplayValue();
+		Display7Segment4Digit_Refresh();
 	}
 }
 
