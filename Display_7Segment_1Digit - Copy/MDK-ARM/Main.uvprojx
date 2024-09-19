@@ -10,7 +10,6 @@
       <TargetName>Main</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
       <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
@@ -277,7 +276,7 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
+                <StartAddress>0x0</StartAddress>
                 <Size>0x10000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
@@ -341,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
+              <IncludePath>..\Core;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -383,7 +382,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Application/MDK-ARM</GroupName>
+          <GroupName>StartUp</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f103xb.s</FileName>
@@ -393,40 +392,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Application/User/Core</GroupName>
-          <Files>
-            <File>
-              <FileName>Main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\Main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/STM32F1xx_HAL_Driver</GroupName>
-        </Group>
-        <Group>
-          <GroupName>Drivers/CMSIS</GroupName>
+          <GroupName>Drivers</GroupName>
           <Files>
             <File>
               <FileName>system_stm32f1xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\system_stm32f1xx.c</FilePath>
+              <FilePath>..\UserCode\system_stm32f1xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>Display_7Segment_1Digit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserCode\Display_7Segment_1Digit.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/ExtraDrivers</GroupName>
+          <GroupName>UserCode</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
+              <FileName>Main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\delay.c</FilePath>
+              <FilePath>..\UserCode\Main.c</FilePath>
             </File>
             <File>
-              <FileName>display_7segment_1digit.c</FileName>
+              <FileName>_SystemClock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\display_7segment_1digit.c</FilePath>
+              <FilePath>..\UserCode\_SystemClock.c</FilePath>
             </File>
           </Files>
         </Group>

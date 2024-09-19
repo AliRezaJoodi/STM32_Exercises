@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-#ifndef _7SEGMENT_PORT
-	#define _7SEGMENT_PORT 
+#ifndef _7SEGMENT_1DIGIT_HARDWARE
+	#define _7SEGMENT_1DIGIT_HARDWARE
 	
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
@@ -46,10 +46,9 @@ extern "C" {
   #define DIGIT0_PIN		15
 #endif
 
-void SevenSegment_Configuration(void);
-void SevenSegment_SetOnOff(char status);
-void SevenSegment_DisplayValue(unsigned char number);
-
+void Display7Segment1Digit_Config(void);
+void Display7Segment1Digit_SetOnOff(char status);
+void Display7Segment1Digit_DisplayValue(unsigned char number);
 
 #ifdef __cplusplus
 }
