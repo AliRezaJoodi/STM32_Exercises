@@ -71,9 +71,8 @@ extern "C" {
 		else{Write2Bit(GPIOx->CRH,((PIN-8)*4)+2,INPUT_WITH_PULLUP_PULLDOWN);}\
 	WriteBit(GPIOx->ODR,PIN,PULLDOWN);	
 */
-//#define GPIO_ConfigurePullUpOrPullDown(GPIOx,PIN,MODE) \
-	//WriteBit(GPIOx->ODR,PIN,MODE);
-	//GPIOx->ODR= (GPIOx->ODR & ~(0b1UL << PIN)) | ((MODE&0b1UL) << PIN);
+#define GPIO_InputMode_PullUpPullDown_SetPullUpOrPullDown(GPIOx,PIN,MODE) \
+	WriteBit(GPIOx->ODR,PIN,MODE);
 
 #define GENERAL_PURPOSE_OUTPUT_PUSHPULL  		0b00
 #define GENERAL_PURPOSE_OUTPUT_OPENDRAIN 		0b01
