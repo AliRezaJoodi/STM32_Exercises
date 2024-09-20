@@ -4,6 +4,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
+
 #include "_hardware_v1.0.h"
 
 #ifndef _BUTTON_INCLUDED
@@ -15,9 +16,9 @@ extern "C" {
 
 #ifndef BUTTON_HARDWARE
 #define BUTTON_HARDWARE
-	#define PRESSED             0
-  #define BUTTONLAG1          30        //ms 
-  #define BUTTONLAG2          10000      //Button Lag
+	#define BUTTON_PRESSED      0
+  #define BUTTON_LAG1         30        //ms 
+  #define BUTTON_LAG2         5000      //Button Lag
 	
 	#define BUTTON1_GPIO				GPIOA
   #define BUTTON1_PIN					0
