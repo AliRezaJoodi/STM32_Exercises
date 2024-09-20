@@ -3,21 +3,27 @@
 
 //********************************
 void Delay_us(unsigned int us){
-  volatile unsigned int i;
-  volatile unsigned int t;
-
+  unsigned int i;
+	
   for(i=0; i<us; ++i){
-    //t=_DELAY_LAG; 
-		//while(t!=0){--t;}
+		__NOP();
+		__NOP();
+		__NOP();
+		__NOP();
+		__NOP();
+		__NOP();
+		__NOP();
+		__NOP();
   }
 }
 
 //********************************
 void Delay_ms(unsigned int ms){
-  volatile unsigned int i;
+  unsigned int i,i2;
+	
   for (i=0; i<ms; ++i){
-    Delay_us(1000);
-  }
+		Delay_us(1000);
+	}
 }
 
 //********************************************

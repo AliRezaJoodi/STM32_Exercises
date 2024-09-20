@@ -1,4 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
+// Set for 8MHz
+
+#include <stm32f1xx.h>
 
 #ifndef _DELAY_INCLUDED
 #define _DELAY_INCLUDED
@@ -8,7 +11,7 @@ extern "C" {
 #endif 
 
 
-#define _DELAY_LAG		1
+//#define _DELAY_LAG		5
 #define _REFRESH_LAG	40000
 
 void Delay_us(unsigned int us);
