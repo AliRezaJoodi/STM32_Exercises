@@ -5,16 +5,19 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 
-#ifndef _7SEGMENT_1DIGIT_INCLUDED
-#define _7SEGMENT_1DIGIT_INCLUDED
+#ifdef HARDWARE_LOCAL
+#include "_hardware.h"
+#endif
+
+#ifndef DISPLAY_7SEGMENT_1DIGIT_INCLUDED
+#define DISPLAY_7SEGMENT_1DIGIT_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _7SEGMENT_1DIGIT_HARDWARE
-	#define _7SEGMENT_1DIGIT_HARDWARE
-	
+#ifndef DISPLAY_7SEGMENT_1DIGIT_HARDWARE
+#define DISPLAY_7SEGMENT_1DIGIT_HARDWARE
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
