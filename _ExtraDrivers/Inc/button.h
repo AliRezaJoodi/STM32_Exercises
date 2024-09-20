@@ -1,6 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #include <utility.h>
+#include <stm32f1xx.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>

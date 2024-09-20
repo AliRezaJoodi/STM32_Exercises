@@ -19,43 +19,43 @@ char _1digit_onoff=1;
 	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
 
 #define _7Segment1Digit_TurnOffSegments \
-	GPIO_WritePin(A_PORT, A_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(B_PORT, B_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(C_PORT, C_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(D_PORT, D_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(E_PORT, E_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(F_PORT, F_PIN, !SEGMENT_ON);\
-  	GPIO_WritePin(G_PORT, G_PIN, !SEGMENT_ON);\
-	GPIO_WritePin(DP_PORT, DP_PIN, !SEGMENT_ON);
+	GPIO_WritePin(A_GPIO, A_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(B_GPIO, B_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(C_GPIO, C_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(D_GPIO, D_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(E_GPIO, E_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(F_GPIO, F_PIN, !SEGMENT_ON);\
+  	GPIO_WritePin(G_GPIO, G_PIN, !SEGMENT_ON);\
+	GPIO_WritePin(DP_GPIO, DP_PIN, !SEGMENT_ON);
 	
 #define _7Segment1Digit_DriveSegments(data) \
-	GPIO_WritePin(A_PORT, A_PIN, GetBit(data,0));\
-	GPIO_WritePin(B_PORT, B_PIN, GetBit(data,1));\
-	GPIO_WritePin(C_PORT, C_PIN, GetBit(data,2));\
-	GPIO_WritePin(D_PORT, D_PIN, GetBit(data,3));\
-	GPIO_WritePin(E_PORT, E_PIN, GetBit(data,4));\
-	GPIO_WritePin(F_PORT, F_PIN, GetBit(data,5));\
-	GPIO_WritePin(G_PORT, G_PIN, GetBit(data,6));\
-	GPIO_WritePin(DP_PORT, DP_PIN, GetBit(data,7));
+	GPIO_WritePin(A_GPIO, A_PIN, GetBit(data,0));\
+	GPIO_WritePin(B_GPIO, B_PIN, GetBit(data,1));\
+	GPIO_WritePin(C_GPIO, C_PIN, GetBit(data,2));\
+	GPIO_WritePin(D_GPIO, D_PIN, GetBit(data,3));\
+	GPIO_WritePin(E_GPIO, E_PIN, GetBit(data,4));\
+	GPIO_WritePin(F_GPIO, F_PIN, GetBit(data,5));\
+	GPIO_WritePin(G_GPIO, G_PIN, GetBit(data,6));\
+	GPIO_WritePin(DP_GPIO, DP_PIN, GetBit(data,7));
 
 #define _7Segment1Digit_TurnOffDigits \
-	GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, !DIGIT_ON);
+	GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, !DIGIT_ON);
 	
 
 //***************************************************
 void Display7Segment1Digit_Config(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
-	_7Segment1Digit_SetPinForOutputMode(A_PORT, A_PIN);
-	_7Segment1Digit_SetPinForOutputMode(B_PORT, B_PIN);
-	_7Segment1Digit_SetPinForOutputMode(C_PORT, C_PIN);
-	_7Segment1Digit_SetPinForOutputMode(D_PORT, D_PIN);
-	_7Segment1Digit_SetPinForOutputMode(E_PORT, E_PIN);
-	_7Segment1Digit_SetPinForOutputMode(F_PORT, F_PIN);
-	_7Segment1Digit_SetPinForOutputMode(G_PORT, G_PIN);
-	_7Segment1Digit_SetPinForOutputMode(DP_PORT, DP_PIN);
+	_7Segment1Digit_SetPinForOutputMode(A_GPIO, A_PIN);
+	_7Segment1Digit_SetPinForOutputMode(B_GPIO, B_PIN);
+	_7Segment1Digit_SetPinForOutputMode(C_GPIO, C_PIN);
+	_7Segment1Digit_SetPinForOutputMode(D_GPIO, D_PIN);
+	_7Segment1Digit_SetPinForOutputMode(E_GPIO, E_PIN);
+	_7Segment1Digit_SetPinForOutputMode(F_GPIO, F_PIN);
+	_7Segment1Digit_SetPinForOutputMode(G_GPIO, G_PIN);
+	_7Segment1Digit_SetPinForOutputMode(DP_GPIO, DP_PIN);
 	
-	_7Segment1Digit_SetPinForOutputMode(DIGIT0_PORT, DIGIT0_PIN);
+	_7Segment1Digit_SetPinForOutputMode(DIGIT0_GPIO, DIGIT0_PIN);
 	
 	_7Segment1Digit_TurnOffDigits;
 	_7Segment1Digit_TurnOffSegments;
@@ -81,6 +81,6 @@ void Display7Segment1Digit_DisplayValue(unsigned char number){
 		#endif
 	
 		_7Segment1Digit_DriveSegments(number);
-		GPIO_WritePin(DIGIT0_PORT, DIGIT0_PIN, DIGIT_ON);
+		GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, DIGIT_ON);
 	}
 }

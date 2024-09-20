@@ -13,7 +13,7 @@ void LED_Config(void);
 
 int main(void){
 	///char status0=0;
-
+	
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
 	
