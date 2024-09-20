@@ -5,7 +5,9 @@
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
 
-#include "_hardware_v1.0.h"
+#ifdef HARDWARE_LOCAL
+#include "_hardware.h"
+#endif
 
 #ifndef _BUTTON_INCLUDED
     #define _BUTTON_INCLUDED

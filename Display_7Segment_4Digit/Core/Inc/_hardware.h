@@ -1,22 +1,3 @@
-// GitHub Account: GitHub.com/AliRezaJoodi
-
-#include <stm32f1xx.h>
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <stm32f1xx_bm_gpio.h>
-
-#ifdef HARDWARE_LOCAL
-#include "_hardware.h"
-#endif
-
-#ifndef DISPLAY_7SEGMENT_4DIGIT_INCLUDED
-#define DISPLAY_7SEGMENT_4DIGIT_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifndef DISPLAY_7SEGMENT_4DIGIT_HARDWARE
 #define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
 	#define DISPLAY_LAG   3000 //Display Lag
 	#define SEGMENT_ON		0
@@ -57,18 +38,3 @@ extern "C" {
 		
 	#define DIGIT3_PORT		GPIOB
   #define DIGIT3_PIN    0
-#endif
-
-void Display7Segment4Digit_Config(void);
-void Display7Segment4Digit_SetOnOff(char status);
-void Display7Segment4Digit_SetValue_float(float value);
-void Display7Segment4Digit_SetValue_int(int value);
-void Display7Segment4Digit_Refresh(void);
-
-#define Display7Segment4Digit_SetValue(value)		Display7Segment4Digit_SetValue_float(value)
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif	// _7SEGMENT_4DIGIT_INCLUDED
