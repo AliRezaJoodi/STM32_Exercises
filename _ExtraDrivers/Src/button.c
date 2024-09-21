@@ -4,24 +4,26 @@
 
 //********************************
  void _Button_EnableBusForGPIO(void){
-	if( BUTTON1_GPIO 			==	GPIOA || \
-			BUTTON2_GPIO 			==	GPIOA || \
-			BUTTON3_GPIO 			==	GPIOA) 
-		{BUS_GPIOA_EnableOrDisable(1);}
+	#ifdef BUTTON1_PIN
+		if(BUTTON1_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
+			else if(BUTTON1_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
+				else if(BUTTON1_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
+					else if(BUTTON1_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+	#endif
 
-	if( BUTTON1_GPIO			==	GPIOB || \
-			BUTTON2_GPIO			==	GPIOB || \
-			BUTTON3_GPIO			==	GPIOB)
-		{BUS_GPIOB_EnableOrDisable(1);}
+	#ifdef BUTTON2_PIN
+		if(BUTTON2_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
+			else if(BUTTON2_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
+				else if(BUTTON2_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
+					else if(BUTTON2_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+	#endif
 
-	if( BUTTON1_GPIO			==	GPIOC || \
-			BUTTON2_GPIO			==	GPIOC || \
-			BUTTON3_GPIO			==	GPIOC)
-
-	if( BUTTON1_GPIO			==	GPIOD || \
-			BUTTON2_GPIO			==	GPIOD || \
-			BUTTON3_GPIO			==	GPIOD)
-		{BUS_GPIOD_EnableOrDisable(1);}	
+	#ifdef BUTTON3_PIN
+		if(BUTTON3_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
+			else if(BUTTON3_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
+				else if(BUTTON3_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
+					else if(BUTTON3_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+	#endif				
 }
  
 //*************************************************
@@ -56,6 +58,7 @@ void Button_Config(void){
 	#endif
 }
 
+#ifdef BUTTON1_PIN
 //*************************************************
 char Button1_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
@@ -86,7 +89,9 @@ char Button1_Continuous(void){
     
     return 0; 
 }
+#endif
 
+#ifdef BUTTON2_PIN
 //*************************************************
 char Button2_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
@@ -117,7 +122,10 @@ char Button2_Continuous(void){
     
     return 0; 
 }
+#endif
 
+
+#ifdef BUTTON3_PIN
 //*************************************************
 char Button3_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
@@ -148,3 +156,4 @@ char Button3_Continuous(void){
     
     return 0; 
 }
+#endif

@@ -18,7 +18,7 @@ extern "C" {
 
 #ifndef DISPLAY_7SEGMENT_4DIGIT_HARDWARE
 #define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
-	#define DISPLAY_LAG   2000 //Display Lag
+	#define DISPLAY_LAG   500 //Display Lag
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
