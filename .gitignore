@@ -25,6 +25,7 @@ RTE
 *.dep
 *.scvd
 *.lst
+*.Bak
 JLinkLog.txt
 JLinkSettings.ini
 
