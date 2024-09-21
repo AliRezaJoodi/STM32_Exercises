@@ -1,5 +1,5 @@
 #define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
-	#define DISPLAY_LAG   3000 //Display Lag
+	#define DISPLAY_LAG   2000 //Display Lag
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
@@ -28,13 +28,13 @@
   #define DP_PIN        7
 	
 	#define DIGIT0_GPIO		GPIOB
-  #define DIGIT0_PIN    3
+  #define DIGIT0_PIN    0
 		
 	#define DIGIT1_GPIO		GPIOB
-  #define DIGIT1_PIN    2
+  #define DIGIT1_PIN    1
 		
 	#define DIGIT2_GPIO		GPIOB
-  #define DIGIT2_PIN    1
+  #define DIGIT2_PIN    2
 		
 	#define DIGIT3_GPIO		GPIOB
-  #define DIGIT3_PIN    0
+  #define DIGIT3_PIN    3

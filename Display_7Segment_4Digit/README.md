@@ -9,6 +9,9 @@ It has included:
 - `Simulate` (Simulator File)
 - `Core` (User Code with C Language)
 
+### Pictures: v1.0
+![](Pictures/v1.0.jpg)
+
 ### Simulate: v1.0
 ![](Simulate/v1.0.png)
 
