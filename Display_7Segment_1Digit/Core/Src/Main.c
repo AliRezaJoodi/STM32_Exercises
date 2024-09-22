@@ -21,7 +21,7 @@ int main(void){
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWD_ON__JTAG_OFF);
+	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   SystemClock_Config();
 	Button_Config();
 	
@@ -50,9 +50,7 @@ int main(void){
 //**************************************
 void Button_Config(void){
 	BUS_GPIOB_EnableOrDisable(1); 
-	
-	GPIO_SetInputOrOutputMode(GPIOB,0, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOB,0, INPUT_PULLUP);
+	GPIO_ConfigPinForPullUpInputMode(GPIOB,0);
 }
 
 

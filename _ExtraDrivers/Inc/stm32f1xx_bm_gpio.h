@@ -18,10 +18,19 @@ extern "C" {
 #define JTAG_DISABLED_AND_SWD_ENABLED		0b010		//SWD(on), 	JTAG(off), 	NJTRST(off)	
 #define JTAG_DISABLED_AND_SWD_DISABLED	0b100		//SWD(off), JTAG(off), 	NJTRST(off)
 */
+
+/*
 #define SWD_ON__JTAG_ON__NJTRST_ON				0b000		//Reset State
 #define SWD_ON__JTAG_ON__NJTRST_OFF				0b001
 #define SWD_ON__JTAG_OFF									0b010
 #define SWD_OFF__JTAG_OFF									0b100
+*/
+
+#define SWJ_SWD_JTAG_NJTRST		0b000		// Full SWJ (JTAG-DP + SW-DP), Reset State
+#define SWJ_SWD_JTAG					0b001		// Full SWJ (JTAG-DP + SW-DP) but without NJTRST
+#define SWJ_SWD								0b010		// JTAG-DP Disabled and SW-DP Enabled
+#define SWJ_DISABLED					0b100		// JTAG-DP Disabled and SW-DP Disabled
+//#define SWJ_NULL					0b111		// No effect
 #define GPIO_SWJ_SetDebugInterfaces(MODE) \
 	Write3Bit(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_Pos, MODE);
 
@@ -48,12 +57,21 @@ extern "C" {
 
 #define INPUT_ANALOG		0b00
 #define INPUT_FLOATING	0b01
+#define INPUT_PULL			0b10
+#define GPIO_InInputMode_SetInputType(GPIOx, PIN, MODE) \
+	if(PIN<=7){Write2Bit(GPIOx->CRL, (PIN*4)+2, MODE);}\
+		else{Write2Bit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}
+	///WriteBit(GPIOx->ODR, PIN, GetBit(MODE,2));
+		
+/*#define INPUT_ANALOG		0b00
+#define INPUT_FLOATING	0b01
 #define INPUT_PULLDOWN	0b10 | 0b000
 #define INPUT_PULLUP		0b10 | 0b100
 #define GPIO_InputMode_SetInputType(GPIOx, PIN, MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL, (PIN*4)+2, MODE);}\
 		else{Write2Bit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}\
-	WriteBit(GPIOx->ODR, PIN, GetBit(MODE,2));
+	WriteBit(GPIOx->ODR, PIN, GetBit(MODE,2));*/
+		
 /*		
 #define GPIO_ConfigureFeatureOfInputPin(GPIOx,PIN,MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL,(PIN*4)+2,MODE);}\
@@ -71,20 +89,22 @@ extern "C" {
 		else{Write2Bit(GPIOx->CRH,((PIN-8)*4)+2,INPUT_WITH_PULLUP_PULLDOWN);}\
 	WriteBit(GPIOx->ODR,PIN,PULLDOWN);	
 */
-#define GPIO_InputMode_PullUpPullDown_SetPullUpOrPullDown(GPIOx,PIN,MODE) \
-	WriteBit(GPIOx->ODR,PIN,MODE);
+#define PULL_PULLDOWN		0b0		// Input with pull-down
+#define PULL_PULLUP			0b1		// Input with pull-up
+#define GPIO_InInputModeWithPull_SetPullUpOrPullDown(GPIOx, PIN, MODE) \
+	WriteBit(GPIOx->ODR, PIN, MODE);
 
-#define GENERAL_PURPOSE_OUTPUT_PUSHPULL  		0b00
-#define GENERAL_PURPOSE_OUTPUT_OPENDRAIN 		0b01
-#define ALTERNATE_FUNCTION_OUTPUT_PUSHPULL	0b10
-#define ALTERNATE_FUNCTION_OUTPUT_OPENDRAIN	0b11
-#define GPIO_OutputMode_SetFeatures(GPIOx,PIN,MODE) \
+#define OUTPUT_GP_PUSHPULL  	0b00		// General purpose output push-pull
+#define OUTPUT_GP_OPENDRAIN 	0b01		// General purpose output Open-drain
+#define OUTPUT_AF_PUSHPULL		0b10		// Alternate function output Push-pull
+#define OUTPUT_AF_OPENDRAIN		0b11		// Alternate function output Open-drain
+#define GPIO_InOutputMode_SetOutputType(GPIOx,PIN,MODE) \
 	if(PIN<=7){Write2Bit(GPIOx->CRL, (PIN*4)+2, MODE);}\
 		else{Write2Bit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}
 
 #define OUTPUT_GP		0b0		// General Purpose
 #define OUTPUT_AF		0b1		// Alternate Function
-#define GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx,PIN, MODE) \
+#define GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx,PIN, MODE) \
 	if(PIN<=7){WriteBit(GPIOx->CRL, (PIN*4)+3, MODE);}\
 		else{WriteBit(GPIOx->CRH, ((PIN-8)*4)+3, MODE);}
 /*
@@ -98,9 +118,9 @@ extern "C" {
 		else{WriteBit(GPIOx->CRH,((PIN-8)*4)+3,_ALTERNATE_FUNCTION_OUTPUT);}
 */
 
-#define OUTPUT_PUSHPULL		0b0
-#define OUTPUT_OPENDRAIN	0b1
-#define GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, MODE) \
+#define OUTPUT_PUSHPULL		0b0		// Push-Pull
+#define OUTPUT_OPENDRAIN	0b1		// Open-Drain
+#define GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, MODE) \
 	if(PIN<=7){WriteBit(GPIOx->CRL, (PIN*4)+2, MODE);}\
 		else{WriteBit(GPIOx->CRH, ((PIN-8)*4)+2, MODE);}
 /*
@@ -113,7 +133,31 @@ extern "C" {
 	if(PIN<=7){WriteBit(GPIOx->CRL,(PIN*4)+2,_OPENDRAIN);}\
 		else{WriteBit(GPIOx->CRH,((PIN-8)*4)+2,_OPENDRAIN);}
 */
-		
+
+#define GPIO_ConfigPinForPushPullOutputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, IO_OUTPUT);\
+	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx, PIN, OUTPUT_GP);\
+	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
+
+#define GPIO_ConfigPinForOpenDrainOutputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx, PIN, IO_OUTPUT);\
+	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx, PIN, OUTPUT_GP);\
+	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_OPENDRAIN);
+
+#define GPIO_ConfigPinForPullUpInputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx,PIN, IO_INPUT);\
+	GPIO_InInputMode_SetInputType(GPIOx,PIN, INPUT_PULL);\
+	GPIO_InInputModeWithPull_SetPullUpOrPullDown(GPIOx,PIN, PULL_PULLUP);
+	
+#define GPIO_ConfigPinForPullDownInputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx,PIN, IO_INPUT);\
+	GPIO_InInputMode_SetInputType(GPIOx,PIN, INPUT_PULL);\
+	GPIO_InInputModeWithPull_SetPullUpOrPullDown(GPIOx,PIN, PULL_PULLDOWN);
+
+#define GPIO_ConfigPinForFloatingInputMode(GPIOx,PIN); \
+	GPIO_SetInputOrOutputMode(GPIOx,PIN, IO_INPUT);\
+	GPIO_InInputMode_SetInputType(GPIOx,PIN, INPUT_FLOATING);
+	
 #define GPIO_GetPin(GPIOx, PIN) \
 	GetBit(GPIOx->IDR, PIN)
 #define GPIO_Get2Pin(GPIOx, FROM) \
