@@ -7,7 +7,9 @@
 */
 
 #include <stm32f1xx.h>
+
 #include <utility.h>
+#include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 
 #ifndef _STM32F1xx_BM_EXTI_INCLUDED
@@ -16,7 +18,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 #define EXTI_PORTA	0b0000U
 #define EXTI_PORTB	0b0001U
@@ -43,13 +44,14 @@ extern "C" {
 #define EXTI_INT14  ((14U<<8) | (3U<<4) | (8U<<0))  // LINE14, EXTICR[3], EXTI4_Pos
 #define EXTI_INT15	((15U<<8) | (3U<<4) | (12U<<0)) // LINE15, EXTICR[3], EXTI15_Pos
 
-#define EXTI_SetSource(PORT, LINE) \
+#define EXTI_SetSource(LINE, PORT) \
 	Write4Bit(AFIO->EXTICR[Get4Bit(LINE,4)], Get4Bit(LINE,0), PORT);
 
 #define EXTI_InterruptMode_GetEnableStatus(LINE) \
 	GetBit(EXTI->IMR, Get4Bit(LINE,8))
 #define EXTI_InterruptMode_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->IMR, Get4Bit(LINE,8), STATUS);
+/*
 #define EXTI0_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT0, STATUS);
 #define EXTI1_InterruptMode_EnableOrDisable(STATUS) \
@@ -82,11 +84,13 @@ extern "C" {
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT14, STATUS);
 #define EXTI15_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT15, STATUS);
+*/
 
 #define EXTI_EventMode_GetEnableStatus(LINE) \
 	GetBit(EXTI->EMR,Get4Bit(LINE,8))
 #define EXTI_EventMode_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->EMR,Get4Bit(LINE,8), STATUS);
+/*
 #define EXTI0_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT0, STATUS);
 #define EXTI1_EventMode_EnableOrDisable(STATUS) \
@@ -119,11 +123,13 @@ extern "C" {
 	EXTI_EventMode_EnableOrDisable(EXTI_INT14, STATUS);
 #define EXTI15_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT15, STATUS);
+*/
 
 #define EXTI_RisingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->RTSR, Get4Bit(LINE,8))
 #define EXTI_RisingTrigger_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->RTSR, Get4Bit(LINE,8),STATUS);
+/*
 #define EXTI0_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
 #define EXTI1_RisingTrigger_EnableOrDisable(STATUS) \
@@ -156,11 +162,13 @@ extern "C" {
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT14, STATUS);
 #define EXTI15_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
+*/
 
 #define EXTI_FallingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->FTSR, Get4Bit(LINE,8))
 #define EXTI_FallingTrigger_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->FTSR, Get4Bit(LINE,8),STATUS);
+/*
 #define EXTI0_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
 #define EXTI1_FallingTrigger_EnableOrDisable(STATUS) \
@@ -193,11 +201,13 @@ extern "C" {
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT14, STATUS);
 #define EXTI15_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
+*/
 
 #define EXTI_SoftwareInterrupt_GetEnableStatus(LINE) \
 	GetBit(EXTI->SWIER, Get4Bit(LINE,8))
 #define EXTI_SoftwareInterrupt_EnableOrDisable(LINE, STATUS) \
 	WriteBit(EXTI->SWIER, Get4Bit(LINE,8),STATUS);
+/*
 #define EXTI0_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT0, STATUS);
 #define EXTI1_SoftwareInterrupt_EnableOrDisable(STATUS) \
@@ -230,22 +240,22 @@ extern "C" {
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT14, STATUS);
 #define EXTI15_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT15, STATUS);
+*/
 
 #define EXTI_GetActiveFlag(LINE) \
 	GetBit(EXTI->PR, Get4Bit(LINE,8))
 #define EXTI_ClearPendingRegister(LINE) \
 	SetBit_NoLastStatus(EXTI->PR, Get4Bit(LINE,8));
 
-void EXTI0_NVIC_Configuration(void);
-void EXTI1_NVIC_Configuration(void);
-void EXTI2_NVIC_Configuration(void);
-void EXTI3_NVIC_Configuration(void);
-void EXTI4_NVIC_Configuration(void);
-void EXTI5To9_NVIC_Configuration(void);
-void EXTI10To15_NVIC_Configuration(void);
+void EXTI0_NVIC_Config(void);
+void EXTI1_NVIC_Config(void);
+void EXTI2_NVIC_Config(void);
+void EXTI3_NVIC_Config(void);
+void EXTI4_NVIC_Config(void);
+void EXTI5To9_NVIC_Config(void);
+void EXTI10To15_NVIC_Config(void);
 
-// _EXTI.c
-void EXTI_Configuration(void);
+// stm32f1xx_bm_exti_local.c
 void EXTI0_IRQHandler(void);
 void EXTI1_IRQHandler(void);
 void EXTI2_IRQHandler(void);

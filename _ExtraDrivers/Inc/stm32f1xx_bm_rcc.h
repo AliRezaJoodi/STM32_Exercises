@@ -11,6 +11,7 @@
 
 #include <stm32f1xx.h>
 #include <utility.h>
+#include <stm32f1xx_bm_system.h>
 
 #ifndef _STM32F1xx_BM_RCC_INCLUDED
 #define _STM32F1xx_BM_RCC_INCLUDED
@@ -84,7 +85,7 @@ extern "C" {
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);
 
 // _SystemClock.h
-void SystemClock_Configuration(void);
+void SystemClock_Config(void);
 
 #ifdef __cplusplus
 }
