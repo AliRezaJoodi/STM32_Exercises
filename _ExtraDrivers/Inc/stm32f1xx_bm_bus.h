@@ -71,6 +71,12 @@ extern "C" {
 #define BUS_GPIOD_EnableOrDisable(STATUS) \
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPDEN_Pos, STATUS);\
 	while(_GPIOD_GeEnableStatus != STATUS){};
+
+#define BUS_GPIOx_EnableOrDisableWithAutoSearch(GPIOx); \
+	if(GPIOx == GPIOA){BUS_GPIOA_EnableOrDisable(1);}\
+		else if(GPIOx ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}\
+			else if(GPIOx ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}\
+				else if(GPIOx ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
 		
 #define BUS_USART1_ResetClock \
 	SetBit_NoLastStatus(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos)

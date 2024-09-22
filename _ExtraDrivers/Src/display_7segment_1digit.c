@@ -39,17 +39,31 @@ char _1digit_onoff=1;
 
 //***************************************************
 void Display7Segment1Digit_Config(void){
-	BUS_GPIOA_EnableOrDisable(1);
-	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(A_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(A_GPIO, A_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(B_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(B_GPIO, B_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(C_GPIO, C_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(D_GPIO, D_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(E_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(E_GPIO, E_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(F_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(F_GPIO, F_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(G_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(G_GPIO, G_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DP_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DP_GPIO, DP_PIN);
 	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT0_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DIGIT0_GPIO, DIGIT0_PIN);
 	
 	_7Segment1Digit_TurnOffDigits;

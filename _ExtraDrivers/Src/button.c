@@ -5,24 +5,15 @@
 //********************************
  void _Button_EnableBusForGPIO(void){
 	#ifdef BUTTON1_PIN
-		if(BUTTON1_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
-			else if(BUTTON1_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
-				else if(BUTTON1_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
-					else if(BUTTON1_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON1_GPIO);
 	#endif
 
 	#ifdef BUTTON2_PIN
-		if(BUTTON2_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
-			else if(BUTTON2_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
-				else if(BUTTON2_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
-					else if(BUTTON2_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON2_GPIO);
 	#endif
 
 	#ifdef BUTTON3_PIN
-		if(BUTTON3_GPIO == GPIOA){BUS_GPIOA_EnableOrDisable(1);}
-			else if(BUTTON3_GPIO ==	GPIOB){BUS_GPIOB_EnableOrDisable(1);}
-				else if(BUTTON3_GPIO ==	GPIOC){BUS_GPIOC_EnableOrDisable(1);}
-					else if(BUTTON3_GPIO ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON3_GPIO);
 	#endif				
 }
  
