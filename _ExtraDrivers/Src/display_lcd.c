@@ -28,31 +28,22 @@
 static unsigned char _display_cursor_bink=(0b00001000 | (DISPLAY_ON<<_DISPLAY_POS) | (CURSOR_OFF<<_CURSOR_POS) | (BLINK_OFF<<_BLINK_POS));
 static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
 
-#define _LCD_SetPinForOutputMode(GPIOx,PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx,PIN, IO_OUTPUT);\
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx,PIN, OUTPUT_GP);\
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx,PIN, OUTPUT_PUSHPULL);
-
-#define _LCD_SetPinForInputMode(GPIOx,PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx,PIN, IO_INPUT);\
-	GPIO_InputMode_SetInputType(GPIOx,PIN, INPUT_FLOATING);
-
 #define _LCD_ControlPins_Config \
-	_LCD_SetPinForOutputMode(RS_GPIO, RS_PIN);\
-	_LCD_SetPinForOutputMode(RW_GPIO, RW_PIN);\
-	_LCD_SetPinForOutputMode(EN_GPIO, EN_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
 
 #define _LCD_DataPins_ConfigForOutputMode \
-	_LCD_SetPinForOutputMode(D7_GPIO, D7_PIN);\
-	_LCD_SetPinForOutputMode(D6_GPIO, D6_PIN);\
-	_LCD_SetPinForOutputMode(D5_GPIO, D5_PIN);\
-	_LCD_SetPinForOutputMode(D4_GPIO, D4_PIN);	
+	GPIO_ConfigPinForPushPullOutputMode(D7_GPIO, D7_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(D6_GPIO, D6_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(D5_GPIO, D5_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(D4_GPIO, D4_PIN);	
 
 #define _LCD_DataPins_ConfigForInputMode \
-	_LCD_SetPinForInputMode(D7_GPIO, D7_PIN);\
-	_LCD_SetPinForInputMode(D6_GPIO, D6_PIN);\
-	_LCD_SetPinForInputMode(D5_GPIO, D5_PIN);\
-	_LCD_SetPinForInputMode(D4_GPIO, D4_PIN);
+	GPIO_ConfigPinForFloatingInputMode(D7_GPIO, D7_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(D6_GPIO, D6_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(D5_GPIO, D5_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(D4_GPIO, D4_PIN);
 
 #define _RS_IR		0
 #define _RS_DR		1

@@ -13,11 +13,6 @@ const unsigned char _7segment_table[18]={
 
 char _1digit_onoff=1;
 
-#define _7Segment1Digit_SetPinForOutputMode(GPIOx, PIN); \
-	GPIO_SetInputOrOutputMode(GPIOx, PIN, IO_OUTPUT);\
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOx, PIN, OUTPUT_GP);\
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOx, PIN, OUTPUT_PUSHPULL);
-
 #define _7Segment1Digit_TurnOffSegments \
 	GPIO_WritePin(A_GPIO, A_PIN, !SEGMENT_ON);\
 	GPIO_WritePin(B_GPIO, B_PIN, !SEGMENT_ON);\
@@ -46,16 +41,16 @@ char _1digit_onoff=1;
 void Display7Segment1Digit_Config(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
-	_7Segment1Digit_SetPinForOutputMode(A_GPIO, A_PIN);
-	_7Segment1Digit_SetPinForOutputMode(B_GPIO, B_PIN);
-	_7Segment1Digit_SetPinForOutputMode(C_GPIO, C_PIN);
-	_7Segment1Digit_SetPinForOutputMode(D_GPIO, D_PIN);
-	_7Segment1Digit_SetPinForOutputMode(E_GPIO, E_PIN);
-	_7Segment1Digit_SetPinForOutputMode(F_GPIO, F_PIN);
-	_7Segment1Digit_SetPinForOutputMode(G_GPIO, G_PIN);
-	_7Segment1Digit_SetPinForOutputMode(DP_GPIO, DP_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(A_GPIO, A_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(B_GPIO, B_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(C_GPIO, C_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(D_GPIO, D_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(E_GPIO, E_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(F_GPIO, F_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(G_GPIO, G_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(DP_GPIO, DP_PIN);
 	
-	_7Segment1Digit_SetPinForOutputMode(DIGIT0_GPIO, DIGIT0_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(DIGIT0_GPIO, DIGIT0_PIN);
 	
 	_7Segment1Digit_TurnOffDigits;
 	_7Segment1Digit_TurnOffSegments;

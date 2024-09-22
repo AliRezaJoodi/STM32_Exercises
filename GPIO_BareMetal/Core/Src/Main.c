@@ -23,7 +23,7 @@ int main(void){
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWD_ON__JTAG_OFF);
+	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
 
   SystemClock_Config();
 
@@ -83,41 +83,26 @@ void Button2(void){
 void BcdInput_Config(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
-	GPIO_SetInputOrOutputMode(GPIOA,4, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,4, INPUT_FLOATING);
-	
-	GPIO_SetInputOrOutputMode(GPIOA,5, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,5, INPUT_FLOATING);
-	
-	GPIO_SetInputOrOutputMode(GPIOA,6, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,6, INPUT_FLOATING);
-	
-	GPIO_SetInputOrOutputMode(GPIOA,7, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,7	, INPUT_FLOATING);
+	GPIO_ConfigPinForFloatingInputMode(GPIOA,4);
+	GPIO_ConfigPinForFloatingInputMode(GPIOA,5);
+	GPIO_ConfigPinForFloatingInputMode(GPIOA,6);
+	GPIO_ConfigPinForFloatingInputMode(GPIOA,7);
 }
 
 //**************************************
 void BcdDisplay_Config(void){
 	BUS_GPIOB_EnableOrDisable(1);
 	
-	GPIO_SetInputOrOutputMode(GPIOB,12, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOB,12, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOB,12, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOB,12);
 	GPIO_ResetPin(GPIOB,12);
 	
-	GPIO_SetInputOrOutputMode(GPIOB,13, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOB,13, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOB,13, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOB,13);
 	GPIO_ResetPin(GPIOB,13);
 	
-	GPIO_SetInputOrOutputMode(GPIOB,14, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOB,14, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOB,14, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOB,14);
 	GPIO_ResetPin(GPIOB,14);
 	
-	GPIO_SetInputOrOutputMode(GPIOB,15, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOB,15, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOB,15, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOB,15);
 	GPIO_ResetPin(GPIOB,15);
 }
 
@@ -125,20 +110,15 @@ void BcdDisplay_Config(void){
 void Buttons_Config(void){
 	BUS_GPIOA_EnableOrDisable(1); 
 	
-	GPIO_SetInputOrOutputMode(GPIOA,0, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,0, INPUT_PULLUP);
-	
-	GPIO_SetInputOrOutputMode(GPIOA,1, IO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,1,INPUT_PULLDOWN);
+	GPIO_ConfigPinForPullUpInputMode(GPIOA,0);
+	GPIO_ConfigPinForPullDownInputMode(GPIOA,1);
 }
 
 //**************************************
 void LED_Config(void){
 	BUS_GPIOC_EnableOrDisable(1);
 	
-	GPIO_SetInputOrOutputMode(GPIOC,13, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOC,13, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOC,13, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOC,13);
 	GPIO_ResetPin(GPIOC,13);
 }
 

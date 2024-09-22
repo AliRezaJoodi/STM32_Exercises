@@ -12,14 +12,13 @@
 void LED_Config(void);
 
 int main(void){
-	///char status0=0;
 	
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWD_ON__JTAG_OFF);
+	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
 	
   SystemClock_Config();
 	LED_Config();
@@ -35,10 +34,7 @@ int main(void){
 //**************************************
 void LED_Config(void){
 	BUS_GPIOC_EnableOrDisable(1);
-	
-	GPIO_SetInputOrOutputMode(GPIOC,13, IO_OUTPUT);
-	GPIO_OutputMode_SetGeneralPurposeOrAlternateFunction(GPIOC,13, OUTPUT_GP);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOC,13, OUTPUT_PUSHPULL);
+	GPIO_ConfigPinForPushPullOutputMode(GPIOC,13);
 	GPIO_SetPin(GPIOC,13);
 	
 }

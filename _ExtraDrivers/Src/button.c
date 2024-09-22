@@ -31,29 +31,26 @@ void Button_Config(void){
 	_Button_EnableBusForGPIO();
 	
 	#ifdef BUTTON1_PIN
-		GPIO_SetInputOrOutputMode(BUTTON1_GPIO,BUTTON1_PIN, IO_INPUT);
 		#if BUTTON_PRESSED == 0
-			GPIO_InputMode_SetInputType(BUTTON1_GPIO,BUTTON1_PIN, INPUT_PULLUP);    
+			GPIO_ConfigPinForPullUpInputMode(BUTTON1_GPIO,BUTTON1_PIN);   
 		#else
-			GPIO_InputMode_SetInputType(BUTTON1_GPIO,BUTTON1_PIN, INPUT_PULLDOWN);    
+			GPIO_ConfigPinForPullDownInputMode(BUTTON1_GPIO,BUTTON1_PIN);
 		#endif
 	#endif
 	
 	#ifdef BUTTON2_PIN
-		GPIO_SetInputOrOutputMode(BUTTON2_GPIO,BUTTON2_PIN, IO_INPUT);
 		#if BUTTON_PRESSED == 0
-			GPIO_InputMode_SetInputType(BUTTON2_GPIO,BUTTON2_PIN, INPUT_PULLUP);    
+			GPIO_ConfigPinForPullUpInputMode(BUTTON2_GPIO,BUTTON2_PIN);   
 		#else
-			GPIO_InputMode_SetInputType(BUTTON2_GPIO,BUTTON2_PIN, INPUT_PULLDOWN);    
+			GPIO_ConfigPinForPullDownInputMode(BUTTON2_GPIO,BUTTON2_PIN);
 		#endif
 	#endif
 	
 	#ifdef BUTTON3_PIN
-		GPIO_SetInputOrOutputMode(BUTTON3_GPIO,BUTTON3_PIN, IO_INPUT);
 		#if BUTTON_PRESSED == 0
-			GPIO_InputMode_SetInputType(BUTTON3_GPIO,BUTTON3_PIN, INPUT_PULLUP);    
+			GPIO_ConfigPinForPullUpInputMode(BUTTON3_GPIO,BUTTON3_PIN);  
 		#else
-			GPIO_InputMode_SetInputType(BUTTON3_GPIO,BUTTON3_PIN, INPUT_PULLDOWN);    
+			GPIO_ConfigPinForPullDownInputMode(BUTTON3_GPIO,BUTTON3_PIN);		
 		#endif
 	#endif
 }
