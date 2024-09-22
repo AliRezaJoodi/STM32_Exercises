@@ -28,11 +28,6 @@
 static unsigned char _display_cursor_bink=(0b00001000 | (DISPLAY_ON<<_DISPLAY_POS) | (CURSOR_OFF<<_CURSOR_POS) | (BLINK_OFF<<_BLINK_POS));
 static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_POS) | (LINE_DUAL<<_LINE_POS));
 
-#define _LCD_ControlPins_Config \
-	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
-
 #define _LCD_DataPins_ConfigForOutputMode \
 	GPIO_ConfigPinForPushPullOutputMode(D7_GPIO, D7_PIN);\
 	GPIO_ConfigPinForPushPullOutputMode(D6_GPIO, D6_PIN);\
@@ -62,45 +57,6 @@ static unsigned char _interface_line=(0b00100000 | (INTERFACE_4BIT<<_INTERFACE_P
 #define _SetOperationMode(MODE) \
 	GPIO_WritePin(RS_GPIO,RS_PIN, GetBit(MODE,1));\
 	GPIO_WritePin(RW_GPIO,RW_PIN, GetBit(MODE,0));
-
-//********************************
-void _LCD_EnableBusForGPIO(void){
-	if(	RS_GPIO	==	GPIOA || \
-			RW_GPIO	==	GPIOA || \
-			EN_GPIO	==	GPIOA || \
-			D7_GPIO	==	GPIOA || \
-			D6_GPIO	==	GPIOA || \
-			D5_GPIO	==	GPIOA || \
-			D4_GPIO	==	GPIOA)
-		{BUS_GPIOA_EnableOrDisable(1);}
-
-	if(	RS_GPIO	==	GPIOB || \
-			RW_GPIO	==	GPIOB || \
-			EN_GPIO	==	GPIOB || \
-			D7_GPIO	==	GPIOB || \
-			D6_GPIO	==	GPIOB || \
-			D5_GPIO	==	GPIOB || \
-			D4_GPIO	==	GPIOB)
-		{BUS_GPIOB_EnableOrDisable(1);}
-
-	if(	RS_GPIO	==	GPIOC || \
-			RW_GPIO	==	GPIOC || \
-			EN_GPIO	==	GPIOC || \
-			D7_GPIO	==	GPIOC || \
-			D6_GPIO	==	GPIOC || \
-			D5_GPIO	==	GPIOC || \
-			D4_GPIO	==	GPIOC)
-		{BUS_GPIOC_EnableOrDisable(1);}
-
-	if( RS_GPIO	==	GPIOD || \
-			RW_GPIO	==	GPIOD || \
-			EN_GPIO	==	GPIOD || \
-			D7_GPIO	==	GPIOD || \
-			D6_GPIO	==	GPIOD || \
-			D5_GPIO	==	GPIOD || \
-			D4_GPIO	==	GPIOD)
-		{BUS_GPIOD_EnableOrDisable(1);}	
-}
 
 //********************************
 void _LCD_Ready(void){
@@ -232,8 +188,19 @@ void LCD_PutStringFromFlash(const char *str){
 
 //********************************
 void LCD_Config(void){
-	_LCD_EnableBusForGPIO();
-	_LCD_ControlPins_Config;
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(RS_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);
+	
+	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(RW_GPIO);
+	
+	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(EN_GPIO);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D4_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D5_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D6_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D7_GPIO);	
 	_LCD_DataPins_ConfigForOutputMode;
 	
 	Delay_ms(40);

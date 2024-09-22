@@ -53,81 +53,43 @@ display1.decimal_=0;
 	GPIO_WritePin(DIGIT3_GPIO, DIGIT3_PIN, !DIGIT_ON);
 
 
-//********************************
- void _7Segment4Digit_EnableBusForGPIO(void){
-	if(	A_GPIO 			==	GPIOA || \
-			B_GPIO 			==	GPIOA || \
-			C_GPIO 			==	GPIOA || \
-			D_GPIO 			==	GPIOA || \
-			E_GPIO 			==	GPIOA || \
-			F_GPIO 			==	GPIOA || \
-			G_GPIO 			==	GPIOA || \
-			DP_GPIO 		==	GPIOA || \
-			DIGIT0_GPIO ==	GPIOA || \
-			DIGIT1_GPIO ==	GPIOA || \
-			DIGIT2_GPIO == 	GPIOA || \
-			DIGIT3_GPIO == 	GPIOA )
-		{BUS_GPIOA_EnableOrDisable(1);}
-
-	if(	A_GPIO			==	GPIOB || \
-			B_GPIO			==	GPIOB || \
-			C_GPIO			==	GPIOB || \
-			D_GPIO			==	GPIOB || \
-			E_GPIO			==	GPIOB || \
-			F_GPIO			==	GPIOB || \
-			G_GPIO			==	GPIOB || \
-			DP_GPIO 		==	GPIOA || \
-			DIGIT0_GPIO	==	GPIOB || \
-			DIGIT1_GPIO	==	GPIOB || \
-			DIGIT2_GPIO	==	GPIOB || \
-			DIGIT3_GPIO	==	GPIOB)
-		{BUS_GPIOB_EnableOrDisable(1);}
-
-	if(	A_GPIO			==	GPIOC || \
-			B_GPIO			==	GPIOC || \
-			C_GPIO			==	GPIOC || \
-			D_GPIO			==	GPIOC || \
-			E_GPIO			==	GPIOC || \
-			F_GPIO			==	GPIOC || \
-			G_GPIO			==	GPIOC || \
-			DP_GPIO 		==	GPIOA || \
-			DIGIT0_GPIO	==	GPIOC || \
-			DIGIT1_GPIO	==	GPIOC || \
-			DIGIT2_GPIO	==	GPIOC || \
-			DIGIT3_GPIO	==	GPIOC)
-		{BUS_GPIOC_EnableOrDisable(1);}
-
-	if(	A_GPIO			==	GPIOD || \
-			B_GPIO			==	GPIOD || \
-			C_GPIO			==	GPIOD || \
-			D_GPIO			==	GPIOD || \
-			E_GPIO			==	GPIOD || \
-			F_GPIO			==	GPIOD || \
-			G_GPIO			==	GPIOD || \
-			DP_GPIO 		==	GPIOA || \
-			DIGIT0_GPIO	==	GPIOD || \
-			DIGIT1_GPIO	==	GPIOD || \
-			DIGIT2_GPIO	==	GPIOD || \
-			DIGIT3_GPIO	==	GPIOD)
-		{BUS_GPIOD_EnableOrDisable(1);}	
-}
-
 //***************************************************
 void Display7Segment4Digit_Config(void){
-	_7Segment4Digit_EnableBusForGPIO();
-	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(A_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(A_GPIO, A_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(B_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(B_GPIO, B_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(C_GPIO, C_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(D_GPIO, D_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(E_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(E_GPIO, E_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(F_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(F_GPIO, F_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(G_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(G_GPIO, G_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DP_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DP_GPIO, DP_PIN);
 
+
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT0_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DIGIT0_GPIO, DIGIT0_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT1_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DIGIT1_GPIO, DIGIT1_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT2_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DIGIT2_GPIO, DIGIT2_PIN);
+	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT3_GPIO);
 	GPIO_ConfigPinForPushPullOutputMode(DIGIT3_GPIO, DIGIT3_PIN);
 	
 	_7Segment4Digit_TurnOffDigits;
