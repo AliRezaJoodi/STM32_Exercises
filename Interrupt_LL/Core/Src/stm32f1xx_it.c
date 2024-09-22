@@ -210,7 +210,7 @@ void EXTI0_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_0);
     /* USER CODE BEGIN LL_EXTI_LINE_0 */
-		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_1);
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_0 */
   }
   /* USER CODE BEGIN EXTI0_IRQn 1 */
@@ -230,7 +230,7 @@ void EXTI9_5_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
-		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_2);
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_6 */
   }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
@@ -250,15 +250,8 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
-		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_3);
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_11 */
-  }
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_12) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_12);
-    /* USER CODE BEGIN LL_EXTI_LINE_12 */
-		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_4);
-    /* USER CODE END LL_EXTI_LINE_12 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 

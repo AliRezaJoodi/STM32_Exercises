@@ -10,6 +10,7 @@
       <TargetName>Main</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
       <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
@@ -276,7 +277,7 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
+                <StartAddress>0x8000000</StartAddress>
                 <Size>0x10000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
@@ -340,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\Core</IncludePath>
+              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,7 +383,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>StartUp</GroupName>
+          <GroupName>Application/MDK-ARM</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f103xb.s</FileName>
@@ -392,37 +393,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers</GroupName>
+          <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>system_stm32f1xx.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\UserCode\system_stm32f1xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>STM32F1xx_EXTI_BareMetal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UserCode\STM32F1xx_EXTI_BareMetal.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>UserCode</GroupName>
-          <Files>
-            <File>
-              <FileName>Main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UserCode\Main.c</FilePath>
+              <FilePath>..\Core\Src\main.c</FilePath>
             </File>
             <File>
               <FileName>_SystemClock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\UserCode\_SystemClock.c</FilePath>
+              <FilePath>..\Core\Src\_SystemClock.c</FilePath>
             </File>
             <File>
-              <FileName>_EXTI.c</FileName>
+              <FileName>stm32f1xx_bm_exti_local.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\UserCode\_EXTI.c</FilePath>
+              <FilePath>..\Core\Src\stm32f1xx_bm_exti_local.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>system_stm32f1xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\system_stm32f1xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/ExtraDrivers</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f1xx_bm_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_exti.c</FilePath>
             </File>
           </Files>
         </Group>
