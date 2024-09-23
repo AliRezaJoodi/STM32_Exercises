@@ -68,23 +68,37 @@ void USART1_PutChar(char data){
 //********************************
 void USART1_PutString(char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1,*str);
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+		USART1_PutChar(*str);
+		//LL_USART_TransmitData8(USART1,*str);
+		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	/*
+	LL_USART_TransmitData8(USART1,0x0D);		// \r
+	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	LL_USART_TransmitData8(USART1,0x0A);		// \n
+	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	*/
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 
 //********************************
 void USART1_PutStringFromFlash(const char *str){
   while(*str != 0){
-		LL_USART_TransmitData8(USART1,*str);
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+		USART1_PutChar(*str);
+		//LL_USART_TransmitData8(USART1,*str);
+		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
     str++;
   }
-	//LL_USART_TransmitData8(USART1,13);
-	//while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	/*
+	LL_USART_TransmitData8(USART1,'\r');
+	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	LL_USART_TransmitData8(USART1,'\n');
+	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+	*/
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 /* USER CODE END 0 */
 
@@ -92,7 +106,8 @@ void USART1_PutStringFromFlash(const char *str){
   * @brief  The application entry point.
   * @retval int
   */
-int main(void){
+int main(void)
+{
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
@@ -105,9 +120,9 @@ int main(void){
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** ENABLE: Full SWJ (JTAG-DP + SW-DP): Reset State
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
-  LL_GPIO_AF_EnableRemap_SWJ();
+  LL_GPIO_AF_Remap_SWJ_NOJTAG();
 
   /* USER CODE BEGIN Init */
 
@@ -133,12 +148,13 @@ int main(void){
 	LL_USART_EnableIT_RXNE(USART1);
 	LL_mDelay(500);
 	
-	USART1_PutStringFromFlash("Test1\r\n");
-	
-	const char txt2[]= "Test2\r\n";
+	USART1_PutStringFromFlash("AAA");
+	USART1_PutStringFromFlash("BBB");
+
+	const char txt2[]= "Test2";
 	USART1_PutStringFromFlash(txt2);
 	
-	char txt3[]= "Test3\r\n";
+	char txt3[]= "Test3";
 	USART1_PutString(txt3);
 	/*
 	while(i2<6){
@@ -156,7 +172,8 @@ int main(void){
     /* USER CODE BEGIN 3 */
 		if(task_usart1==1){
 			task_usart1=0;
-			//USART1_PutChar(13);
+			USART1_PutChar('\r');		// 0x0D
+			USART1_PutChar('\n');		// 0x0A
 			USART1_PutString(txt);
 			for(j=0;j<16;++j){txt[j]=0;};
 			//while(txt[j] != 0){txt[j]=0;}
@@ -273,7 +290,6 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
