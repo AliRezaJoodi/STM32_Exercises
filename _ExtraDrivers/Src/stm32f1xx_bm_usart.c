@@ -44,6 +44,8 @@ void USART1_PutString(char *str){
 		USART1_PutChar(*str);
     ++str;
   }
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 
 //********************************
@@ -52,6 +54,8 @@ void USART2_PutString(char *str){
 		USART2_PutChar(*str);
     ++str;
   }
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 
 //********************************
@@ -60,6 +64,8 @@ void USART1_PutStringFromFlash(const char *str){
 		USART1_PutChar(*str);
 		++str;
   }
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 
 //********************************
@@ -68,5 +74,7 @@ void USART2_PutStringFromFlash(const char *str){
 		USART2_PutChar(*str);
 		++str;
   }
+	USART1_PutChar('\r');		// 0x0D
+	USART1_PutChar('\n');		// 0x0A
 }
 

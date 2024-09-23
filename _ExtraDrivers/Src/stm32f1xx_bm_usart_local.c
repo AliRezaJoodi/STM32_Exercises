@@ -1,8 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // It's a local library
 
-#include <STM32F1xx_BUS_BareMetal.h>
-#include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_usart.h>
 	
 //****************************************************
@@ -10,11 +8,11 @@
 //PA10 -> USART1_RX
 void USART1_Configuration(void){
 	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA,9, MODE_OUTPUT_50MHz);
-	GPIO_OutputMode_SetGeneralOrAlternateOutput(GPIOA,9, OUTPUT_AFIO);
-	GPIO_OutputMode_SetPushPullOrOpenDrain(GPIOA,9, OUTPUT_PUSHPULL);
-	GPIO_SetInputOrOutputMode(GPIOA,10, MODE_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
+	GPIO_SetInputOrOutputMode(GPIOA,9, IO_OUTPUT_50MHz);
+	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOA,9, OUTPUT_AF);
+	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOA,9, OUTPUT_PUSHPULL);
+	GPIO_SetInputOrOutputMode(GPIOA,10, IO_INPUT);
+	GPIO_InInputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
 	
 	USART1_NVIC_Configuration();
 	BUS_USART1_EnableOrDisable(1);
