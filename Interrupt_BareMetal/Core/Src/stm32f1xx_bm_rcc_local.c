@@ -3,7 +3,7 @@
 #include <stm32f1xx_bm_rcc.h>
 
 //****************************************************
-void SystemClock_Config(void){
+void RCC_ConfigSystemClock(void){
 	FLASH_SetLatency(LATENCY0);
 	RCC_HSI_SetCalibTrimming(16);
 	RCC_HSI_EnableOrDisable(1);

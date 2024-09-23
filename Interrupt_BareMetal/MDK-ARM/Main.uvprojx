@@ -401,9 +401,9 @@
               <FilePath>..\Core\Src\main.c</FilePath>
             </File>
             <File>
-              <FileName>_SystemClock.c</FileName>
+              <FileName>stm32f1xx_bm_rcc_local.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\_SystemClock.c</FilePath>
+              <FilePath>..\Core\Src\stm32f1xx_bm_rcc_local.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_bm_exti_local.c</FileName>

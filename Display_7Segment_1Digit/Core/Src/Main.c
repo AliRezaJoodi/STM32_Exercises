@@ -8,8 +8,6 @@
 #include <delay.h>
 #include <display_7segment_1digit.h>
 
-#include "_SystemClock.h"
-
 char usart1_txt[16]="";
 volatile char usart1_task=0;
 void Button_Config(void);
@@ -22,9 +20,9 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-  SystemClock_Config();
-	Button_Config();
+  RCC_ConfigSystemClock();
 	
+	Button_Config();
 	Display7Segment1Digit_Config();
 	Display7Segment1Digit_SetOnOff(1);
 	Display7Segment1Digit_DisplayValue(9);
