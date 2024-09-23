@@ -3,6 +3,8 @@
 
 #include <stm32f1xx.h>
 #include <utility.h>
+#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_gpio.h>
 
 #ifndef _STM32F1xx_BM_USART_INCLUDED
 #define _STM32F1xx_BM_USART_INCLUDED

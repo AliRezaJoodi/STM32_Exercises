@@ -1,12 +1,9 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
-// It's a local library
 
-#include "Utility.h"
-#include "STM32F1xx_System_BareMetal.h"
-#include "STM32F1xx_RCC_BareMetal.h"
+#include <stm32f1xx_bm_rcc.h>
 
 //****************************************************
-void SystemClock_Configuration(void){
+void RCC_ConfigSystemClock(void){
 	FLASH_SetLatency(LATENCY0);
 	RCC_HSI_SetCalibTrimming(16);
 	RCC_HSI_EnableOrDisable(1);
