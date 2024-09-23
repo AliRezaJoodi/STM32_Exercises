@@ -8,8 +8,6 @@
 #include <delay.h>
 #include <display_lcd.h>
 
-#include "_SystemClock.h"
-
 int main(void){
 	const char txt1[16]="012345678901234";
 	char txt[16]="AliRezaJoodi";
@@ -21,7 +19,7 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
 
-  SystemClock_Config();
+  RCC_ConfigSystemClock();
 
 	LCD_Config();
 	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(250);

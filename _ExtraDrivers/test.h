@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-#ifndef _TEST_HARDWARE
-#define _TEST_HARDWARE
+#ifndef TEST_HARDWARE
+#define TEST_HARDWARE
 #endif
 
 #ifdef __cplusplus

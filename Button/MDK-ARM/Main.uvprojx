@@ -396,9 +396,14 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>Main.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\Main.c</FilePath>
+              <FilePath>..\Core\Src\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_rcc_local.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\stm32f1xx_bm_rcc_local.c</FilePath>
             </File>
           </Files>
         </Group>

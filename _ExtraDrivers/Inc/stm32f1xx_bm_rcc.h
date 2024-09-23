@@ -10,6 +10,7 @@
 */
 
 #include <stm32f1xx.h>
+
 #include <utility.h>
 #include <stm32f1xx_bm_system.h>
 
@@ -84,8 +85,8 @@ extern "C" {
 #define RCC_APB2_SetPrescaler(MODE) \
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);
 
-// _SystemClock.h
-void SystemClock_Config(void);
+// stm32f1xx_bm_rcc_local.c
+void RCC_ConfigSystemClock(void);
 
 #ifdef __cplusplus
 }

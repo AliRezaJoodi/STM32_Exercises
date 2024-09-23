@@ -18,7 +18,7 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   
-	SystemClock_Config();
+	RCC_ConfigSystemClock();
   EXTI_Config();
 	
 	OutputPin_Config();

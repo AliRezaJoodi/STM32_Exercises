@@ -7,8 +7,6 @@
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
 
-#include "_SystemClock.h"
-//void SystemClock_Config(void);
 void LED_Config(void);
 
 int main(void){
@@ -19,8 +17,8 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+  RCC_ConfigSystemClock();
 	
-  SystemClock_Config();
 	LED_Config();
 	
   while(1){	
