@@ -252,10 +252,11 @@ void EXTI1_NVIC_Config(void);
 void EXTI2_NVIC_Config(void);
 void EXTI3_NVIC_Config(void);
 void EXTI4_NVIC_Config(void);
-void EXTI5To9_NVIC_Config(void);
-void EXTI10To15_NVIC_Config(void);
+void EXTI9To5_NVIC_Config(void);
+void EXTI15To10_NVIC_Config(void);
 
 // stm32f1xx_bm_exti_local.c
+void EXTI_Config(void);
 void EXTI0_IRQHandler(void);
 void EXTI1_IRQHandler(void);
 void EXTI2_IRQHandler(void);

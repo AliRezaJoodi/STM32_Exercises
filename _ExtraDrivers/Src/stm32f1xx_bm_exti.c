@@ -38,14 +38,14 @@ void EXTI4_NVIC_Config(void){
 }
 
 //*****************************************
-void EXTI5To9_NVIC_Config(void){	
+void EXTI9To5_NVIC_Config(void){	
   NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1, 0));
   NVIC_EnableIRQ(EXTI9_5_IRQn);
 	//NVIC_DisableIRQ(EXTI9_5_IRQn);
 }
 
 //*****************************************
-void EXTI10To15_NVIC_Config(void){	
+void EXTI15To10_NVIC_Config(void){	
   NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),2, 0));
   NVIC_EnableIRQ(EXTI15_10_IRQn);	
 	//NVIC_DisableIRQ(EXTI15_10_IRQn);
