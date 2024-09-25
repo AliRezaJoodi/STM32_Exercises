@@ -26,10 +26,10 @@ extern "C" {
 
 #define USART_SetBaudRate(USARTx, PERIPHCLK, BAUDRATE) \
 	USARTx->BRR = _DIV_SAMPLING16(PERIPHCLK, BAUDRATE);
-#define USART1_SetBaudRate(PERIPHCLK, BAUDRATE) \
+/*#define USART1_SetBaudRate(PERIPHCLK, BAUDRATE) \
 	USART_SetBaudRate(USART1, PERIPHCLK, BAUDRATE);
 #define USART2_SetBaudRate(PERIPHCLK, BAUDRATE) \
-	USART_SetBaudRate(USART2, PERIPHCLK, BAUDRATE);
+	USART_SetBaudRate(USART2, PERIPHCLK, BAUDRATE);*/
 	
 #define MODE_ASYNCRON		0
 #define MODE_SYNCRON		1
@@ -46,10 +46,10 @@ extern "C" {
 		ClearBit(USARTx->CR3, USART_CR3_SCEN_Pos);\
 		ClearBit(USARTx->CR3, USART_CR3_HDSEL_Pos);\
 		ClearBit(USARTx->CR3, USART_CR3_IREN_Pos);}
-#define USART1_SetMode(MODE) \
+/*#define USART1_SetMode(MODE) \
 	USART_SetMode(USART1, MODE);
 #define USART2_SetMode(MODE) \
-	USART_SetMode(USART1, MODE);
+	USART_SetMode(USART1, MODE);*/
 
 /*	
 #define USART1_SetAsyncMode \
@@ -67,10 +67,10 @@ extern "C" {
 	GetBit(USARTx->CR1, USART_CR1_M_Pos)
 #define USART_SetDataBits(USARTx, MODE) \
 	WriteBit(USARTx->CR1, USART_CR1_M_Pos, MODE);
-#define USART1_SetDataBits(MODE) \
+/*#define USART1_SetDataBits(MODE) \
 	USART_SetDataBits(USART1, MODE);
 #define USART2_SetDataBits(MODE) \
-	USART_SetDataBits(USART2, MODE);
+	USART_SetDataBits(USART2, MODE);*/
 
 /*	
 #define USART_EnableOrDisableParity(USARTx, STATUS) \
@@ -90,10 +90,10 @@ extern "C" {
 	else{\
 		SetBit(USARTx->CR1, USART_CR1_PCE_Pos);\
 		WriteBit(USARTx->CR1, USART_CR1_PS_Pos, MODE);}
-#define USART1_SetParity(MODE) \
+/*#define USART1_SetParity(MODE) \
 	USART_SetParity(USART1, MODE);
 #define USART2_SetParity(MODE) \
-	USART_SetParity(USART2, MODE);
+	USART_SetParity(USART2, MODE);*/
 
 // The 0.5 Stop bit and 1.5 Stop bit are not available for UART4 & UART5.
 #define STOPBITS_1 		0b00
@@ -102,10 +102,10 @@ extern "C" {
 #define STOPBITS_1_5 	0b11		
 #define USART_SetStopBits(USARTx, MODE) \
 	Write2Bit(USARTx->CR2, USART_CR2_STOP_Pos, MODE);
-#define USART1_SetStopBits(MODE) \
+/*#define USART1_SetStopBits(MODE) \
 	USART_SetStopBits(USART1, MODE);
 #define USART2_SetStopBits(MODE) \
-	USART_SetStopBits(USART2, MODE);
+	USART_SetStopBits(USART2, MODE);*/
 
 /*
 #define DIRECTION_NONE 		0
@@ -133,31 +133,31 @@ extern "C" {
 
 #define USART_TX_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR1, USART_CR1_TE_Pos, STATUS);
-#define USART1_TX_EnableOrDisable(STATUS) \
+/*#define USART1_TX_EnableOrDisable(STATUS) \
 	USART_TX_EnableOrDisable(USART1, STATUS);
 #define USART2_TX_EnableOrDisable(STATUS) \
-	USART_TX_EnableOrDisable(USART2, STATUS);
+	USART_TX_EnableOrDisable(USART2, STATUS);*/
 
 #define USART_TX_INT_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR1, USART_CR1_TXEIE_Pos, STATUS);
-#define USART1_TX_INT_EnableOrDisable(STATUS) \
+/*#define USART1_TX_INT_EnableOrDisable(STATUS) \
 	USART_TX_INT_EnableOrDisable(USART1, STATUS);
 #define USART2_TX_INT_EnableOrDisable(STATUS) \
-	USART_TX_INT_EnableOrDisable(USART2, STATUS);
+	USART_TX_INT_EnableOrDisable(USART2, STATUS);*/
 
 #define USART_RX_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR1, USART_CR1_RE_Pos, STATUS);
-#define USART1_RX_EnableOrDisable(STATUS) \
+/*#define USART1_RX_EnableOrDisable(STATUS) \
 	USART_RX_EnableOrDisable(USART1, STATUS);
 #define USART2_RX_EnableOrDisable(STATUS) \
-	USART_RX_EnableOrDisable(USART2, STATUS);
+	USART_RX_EnableOrDisable(USART2, STATUS);*/
 
 #define USART_RX_INT_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR1, USART_CR1_RXNEIE_Pos, STATUS);
-#define USART1_RX_INT_EnableOrDisable(STATUS) \
+/*#define USART1_RX_INT_EnableOrDisable(STATUS) \
 	USART_RX_INT_EnableOrDisable(USART1, STATUS);
 #define USART2_RX_INT_EnableOrDisable(STATUS) \
-	USART_RX_INT_EnableOrDisable(USART2, STATUS);
+	USART_RX_INT_EnableOrDisable(USART2, STATUS);*/
 
 #define USART_CTS_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR3, USART_CR3_CTSE_Pos, STATUS);
@@ -168,28 +168,28 @@ extern "C" {
 
 #define USART_CTS_INT_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR3, USART_CR3_CTSIE_Pos, STATUS);
-#define USART1_CTS_INT_EnableOrDisable(STATUS) \
+/*#define USART1_CTS_INT_EnableOrDisable(STATUS) \
 	USART_CTS_INT_EnableOrDisable(USART1, STATUS);
 #define USART2_CTS_INT_EnableOrDisable(STATUS) \
-	USART_CTS_INT_EnableOrDisable(USART2, STATUS);
+	USART_CTS_INT_EnableOrDisable(USART2, STATUS);*/
 
 #define USART_RTS_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR3, USART_CR3_RTSE_Pos, STATUS);
-#define USART1_RTS_EnableOrDisable(STATUS) \
+/*#define USART1_RTS_EnableOrDisable(STATUS) \
 	USART_RTS_EnableOrDisable(USART1, STATUS);
 #define USART2_RTS_EnableOrDisable(STATUS) \
-	USART_RTS_EnableOrDisable(USART2, STATUS);
+	USART_RTS_EnableOrDisable(USART2, STATUS);*/
 
 #define _USART_GeEnableStatus(USARTx) \
 	GetBit(USARTx->CR1, USART_CR1_UE_Pos)
 #define USART_EnableOrDisable(USARTx, STATUS) \
 	WriteBit(USARTx->CR1, USART_CR1_UE_Pos, STATUS);\
 	while(_USART_GeEnableStatus(USARTx) != STATUS){};
-#define USART1_EnableOrDisable(STATUS) \
+/*#define USART1_EnableOrDisable(STATUS) \
 	USART_EnableOrDisable(USART1, STATUS);
 #define USART2_EnableOrDisable(STATUS) \
-	USART_EnableOrDisable(USART2, STATUS);
-
+	USART_EnableOrDisable(USART2, STATUS);*/
+		
 #define USART_TransmitData_8Bits(USARTx, DATA) \
 	USARTx->DR = DATA & 0xFFU;
 #define USART1_TransmitData_8Bits(DATA) \
@@ -215,18 +215,18 @@ extern "C" {
 // Status of transmit data to the shift register
 #define USART_TX_GeTransmitStatus(USARTx) \
 	GetBit(USARTx->SR, USART_SR_TXE_Pos)
-#define USART1_TX_GeTransmitStatus \
+/*#define USART1_TX_GeTransmitStatus \
 	USART_TX_GeTransmitStatus(USART1)
 #define USART2_TX_GeTransmitStatus \
-	USART_TX_GeTransmitStatus(USART2)
+	USART_TX_GeTransmitStatus(USART2)*/
 
 // Transfer completion status
 #define USART_TX_GeTransferCompletionStatus(USARTx) \
 	GetBit(USARTx->SR, USART_SR_TC_Pos)
-#define USART1_TX_GeTransferCompletionStatus \
+/*#define USART1_TX_GeTransferCompletionStatus \
 	USART_TX_GeTransferCompletionStatus(USART1)
 #define USART2_TX_GeTransferCompletionStatus \
-	USART_TX_GeTransferCompletionStatus(USART2)
+	USART_TX_GeTransferCompletionStatus(USART2)*/
 
 #define USART_ReceiveData_8Bits(USARTx) \
 	(USARTx->DR & 0xFFU)
@@ -253,38 +253,38 @@ extern "C" {
 
 #define USART_RX_GetReceiveFlag(USARTx) \
 	GetBit(USARTx->SR, USART_SR_RXNE_Pos)
-#define USART1_RX_GetReceiveFlag \
+/*#define USART1_RX_GetReceiveFlag \
 	USART_RX_GetReceiveFlag(USART1)
 #define USART2_RX_GetReceiveFlag \
-	USART_RX_GetReceiveFlag(USART2)
+	USART_RX_GetReceiveFlag(USART2)*/
 
 #define USART_RX_INT_GetEnableStatus(USARTx) \
 	GetBit(USARTx->CR1, USART_CR1_RXNEIE_Pos)
-#define USART1_RX_INT_GetEnableStatus \
+/*#define USART1_RX_INT_GetEnableStatus \
 	USART_RX_INT_GetEnableStatus(USART1)
 #define USART2_RX_INT_GetEnableStatus \
-	USART_RX_INT_GetEnableStatus(USART2)
+	USART_RX_INT_GetEnableStatus(USART2)*/
 
-#define USART_PutNewLine(USARTx)\
+#define USARTx_PutChar(USARTx, DATA)\
+	USART_TransmitData(USARTx, DATA);\
+	while(!USART_TX_GeTransmitStatus(USARTx)){};
+#define USART1_PutChar(DATA)\
+	USARTx_PutChar(USART1, DATA);
+#define USART2_PutChar(DATA)\
+	USARTx_PutChar(USART2, DATA);	
+
+#define USARTx_PutNewLine(USARTx)\
 	USART_TransmitData(USARTx, '\r');\
 	while(!USART_TX_GeTransmitStatus(USARTx)){};\
 	USART_TransmitData(USARTx, '\n');\
 	while(!USART_TX_GeTransmitStatus(USARTx)){};
 #define USART1_PutNewLine\
-	USART_PutNewLine(USART1);
+	USARTx_PutNewLine(USART1);
 #define USART2_PutNewLine\
-	USART_PutNewLine(USART2);
+	USARTx_PutNewLine(USART2);
 
-#define USART_PutChar(USARTx, DATA)\
-	USART_TransmitData(USARTx, DATA);\
-	while(!USART_TX_GeTransmitStatus(USARTx)){};
-#define USART1_PutChar(DATA)\
-	USART_PutChar(USART1, DATA);
-#define USART2_PutChar(DATA)\
-	USART_PutChar(USART2, DATA);	
-
-void USART1_NVIC_Configuration(void);		
-void USART2_NVIC_Configuration(void);
+///void USART1_NVIC_Configuration(void);		
+//void USART2_NVIC_Configuration(void);
 void USART_ClearString(char *str);
 //void USART1_PutChar(char data);
 //void USART2_PutChar(char data);
@@ -294,8 +294,8 @@ void USART1_PutStringFromFlash(const char *str);
 void USART2_PutStringFromFlash(const char *str);
 		
 // _USART.c
-void USART1_Configuration(void);
-void USART2_Configuration(void);
+void USART1_Config(void);
+void USART2_Config(void);
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 
