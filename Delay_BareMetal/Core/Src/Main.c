@@ -10,9 +10,8 @@
 void LED_Config(void);
 
 int main(void){
-	
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
+  ///NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
+  ///NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
@@ -23,9 +22,11 @@ int main(void){
 	
   while(1){	
 		//GPIO_TogglePin(GPIOC,13); Delay_ms(1000);
-		//if(Refresh()){GPIO_TogglePin(GPIOA,1);}
+		//if(Refresh()){GPIO_TogglePin(GPIOC,13);}
 		GPIO_ResetPin(GPIOC,13); Delay_ms(10);
 		GPIO_SetPin(GPIOC,13); Delay_ms(1000); 
+		//GPIO_WritePin(GPIOC,13,0); Delay_ms(500);
+		//GPIO_WritePin(GPIOC,13,1); Delay_ms(500); 
   }
 }
 

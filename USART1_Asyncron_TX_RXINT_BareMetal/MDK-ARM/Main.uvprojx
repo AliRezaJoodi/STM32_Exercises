@@ -426,6 +426,11 @@
           <GroupName>Drivers/ExtraDrivers</GroupName>
           <Files>
             <File>
+              <FileName>stm32f1xx_bm_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f1xx_bm_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_usart.c</FilePath>
