@@ -1,27 +1,11 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #include <button.h>
-
-//********************************
- void _Button_EnableBusForGPIO(void){
-	#ifdef BUTTON1_PIN
-		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON1_GPIO);
-	#endif
-
-	#ifdef BUTTON2_PIN
-		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON2_GPIO);
-	#endif
-
-	#ifdef BUTTON3_PIN
-		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON3_GPIO);
-	#endif				
-}
  
 //*************************************************
 void Button_Config(void){
-	_Button_EnableBusForGPIO();
-	
 	#ifdef BUTTON1_PIN
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON1_GPIO);
 		#if BUTTON_PRESSED == 0
 			GPIO_ConfigPinForPullUpInputMode(BUTTON1_GPIO,BUTTON1_PIN);   
 		#else
@@ -30,6 +14,7 @@ void Button_Config(void){
 	#endif
 	
 	#ifdef BUTTON2_PIN
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON2_GPIO);
 		#if BUTTON_PRESSED == 0
 			GPIO_ConfigPinForPullUpInputMode(BUTTON2_GPIO,BUTTON2_PIN);   
 		#else
@@ -38,6 +23,7 @@ void Button_Config(void){
 	#endif
 	
 	#ifdef BUTTON3_PIN
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON3_GPIO);
 		#if BUTTON_PRESSED == 0
 			GPIO_ConfigPinForPullUpInputMode(BUTTON3_GPIO,BUTTON3_PIN);  
 		#else

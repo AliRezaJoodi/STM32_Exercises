@@ -1,15 +1,15 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include <stm32f1xx.h>
 #include <utility.h>
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
+#include <button.h>
 
 uint32_t value=3;
-
-#include <button.h>
 
 void BcdDisplay_Config(void);
 
