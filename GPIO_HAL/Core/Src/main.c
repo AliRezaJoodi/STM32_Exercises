@@ -99,7 +99,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		Button1();
     Button2();
-		
+
     uint32_t value=(GPIOA->IDR)>>4 & (0b1111U);
     GPIOB->ODR= ((GPIOB->ODR) & ~(0b1111<<12)) | (value<<12);
 		//HAL_Delay(250);

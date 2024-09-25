@@ -2,18 +2,6 @@
 
 #include <stm32f1xx_bm_usart.h>
 
-//*****************************************
-void USART1_NVIC_Configuration(void){
-	NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(USART1_IRQn);
-}
-
-//*****************************************
-void USART2_NVIC_Configuration(void){
-	NVIC_SetPriority(USART2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(USART2_IRQn);
-}
-
 //********************************
 void USART_ClearString(char *str){
   while(*str != 0){

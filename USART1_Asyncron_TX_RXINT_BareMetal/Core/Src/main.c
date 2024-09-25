@@ -12,15 +12,15 @@
 
 char usart1_txt[16]="";
 volatile char usart1_task=0;
+float number = 12.3456;
 
 int main(void){
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
-  USART1_Configuration();
-	//LL_mDelay(500);
+  USART1_Config();
+	NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
 
 	USART1_PutChar('A'); USART1_PutNewLine;	
 	
@@ -36,7 +36,8 @@ int main(void){
 	sprintf(txt3, "a=%3d", 12);
 	USART1_PutString(txt3);
 	
-	//sprintf(txt3, "a=%0.3f", 12.3456);
+	///sprintf(txt3, "a=%0.3f", 12.3456);
+	//sprintf(txt3, "a=%.3f", number);
 	//USART1_PutString(txt3);
 	
 	unsigned int a1=0;
