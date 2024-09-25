@@ -4,11 +4,6 @@
 
 //**********************************************************
 void EXTI_Config(void){	
-	/*
-	EXTI0_NVIC_Config();
-	EXTI9To5_NVIC_Config();
-	EXTI15To10_NVIC_Config();
-
 	BUS_GPIOA_EnableOrDisable(1);
 	
 	GPIO_SetInputOrOutputMode(GPIOA,0, IO_INPUT);
@@ -39,14 +34,13 @@ void EXTI_Config(void){
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT11,1);
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT11,1);
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT11,0);
-	*/
 }
 
 //*****************************************
 void EXTI0_IRQHandler(void){
 	if (EXTI_GetActiveFlag(EXTI_INT0) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT0);
-		//GPIO_TogglePin(GPIOC,13);
+		GPIO_TogglePin(GPIOC,13);
   }
 }
 
@@ -86,7 +80,7 @@ void EXTI4_IRQHandler(void){
 void EXTI9_5_IRQHandler(void){
 	if (EXTI_GetActiveFlag(EXTI_INT6) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT6);
-		//GPIO_TogglePin(GPIOC,13);
+		GPIO_TogglePin(GPIOC,13);
   }
 }
 
@@ -94,7 +88,7 @@ void EXTI9_5_IRQHandler(void){
 void EXTI15_10_IRQHandler(void){
 	if (EXTI_GetActiveFlag(EXTI_INT11) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT11);
-		//GPIO_TogglePin(GPIOC,13);
+		GPIO_TogglePin(GPIOC,13);
   }
 }
 

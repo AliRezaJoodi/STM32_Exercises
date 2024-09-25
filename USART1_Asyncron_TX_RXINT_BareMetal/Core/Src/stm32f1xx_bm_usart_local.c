@@ -15,7 +15,6 @@ void USART1_Config(void){
 	GPIO_InInputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
 	
 	BUS_USART1_EnableOrDisable(1);
-
 	USART_SetBaudRate(USART1, 8000000, 9600);
 	USART_SetMode(USART1, MODE_ASYNCRON);
 	USART_SetDataBits(USART1, DATABITS_8BITS);
@@ -43,10 +42,6 @@ void USART1_Config(void){
 	//USART1_CTS_INT_EnableOrDisable(0);
 	//USART1_RTS_EnableOrDisable(0);	
 	//USART1_EnableOrDisable(1);
-	
-	NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_DisableIRQ(USART1_IRQn);
-	NVIC_EnableIRQ(USART1_IRQn);
 }
 
 //*****************************************

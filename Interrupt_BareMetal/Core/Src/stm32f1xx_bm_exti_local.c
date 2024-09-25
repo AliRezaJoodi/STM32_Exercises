@@ -4,10 +4,6 @@
 
 //**********************************************************
 void EXTI_Config(void){	
-	EXTI0_NVIC_Config();
-	EXTI9To5_NVIC_Config();
-	EXTI15To10_NVIC_Config();
-
 	BUS_GPIOA_EnableOrDisable(1);
 	
 	GPIO_SetInputOrOutputMode(GPIOA,0, IO_INPUT);
