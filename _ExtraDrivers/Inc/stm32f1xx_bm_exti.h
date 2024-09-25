@@ -11,6 +11,7 @@
 #include <utility.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
+//#include <stm32f1xx_bm_nvic.h>
 
 #ifndef _STM32F1xx_BM_EXTI_INCLUDED
 #define _STM32F1xx_BM_EXTI_INCLUDED
@@ -44,13 +45,22 @@ extern "C" {
 #define EXTI_INT14  ((14U<<8) | (3U<<4) | (8U<<0))  // LINE14, EXTICR[3], EXTI4_Pos
 #define EXTI_INT15	((15U<<8) | (3U<<4) | (12U<<0)) // LINE15, EXTICR[3], EXTI15_Pos
 
-#define EXTI_SetSource(LINE, PORT) \
+__STATIC_INLINE void EXTI_SetSource(uint32_t LINE, uint32_t PORT){
 	Write4Bit(AFIO->EXTICR[Get4Bit(LINE,4)], Get4Bit(LINE,0), PORT);
+}
+/*#define EXTI_SetSource(LINE, PORT) \
+	Write4Bit(AFIO->EXTICR[Get4Bit(LINE,4)], Get4Bit(LINE,0), PORT);*/
 
-#define EXTI_InterruptMode_GetEnableStatus(LINE) \
-	GetBit(EXTI->IMR, Get4Bit(LINE,8))
-#define EXTI_InterruptMode_EnableOrDisable(LINE, STATUS) \
-	WriteBit(EXTI->IMR, Get4Bit(LINE,8), STATUS);
+__STATIC_INLINE uint32_t EXTI_InterruptMode_GetEnableStatus(uint32_t LINE){
+		return ( GetBit(EXTI->IMR, Get4Bit(LINE,8)) );
+}
+/*#define EXTI_InterruptMode_GetEnableStatus(LINE) \
+	GetBit(EXTI->IMR, Get4Bit(LINE,8))*/
+__STATIC_INLINE void EXTI_InterruptMode_EnableOrDisable(uint32_t LINE, uint32_t STATUS){
+		WriteBit(EXTI->IMR, Get4Bit(LINE,8), STATUS);
+}
+/*#define EXTI_InterruptMode_EnableOrDisable(LINE, STATUS) \
+	WriteBit(EXTI->IMR, Get4Bit(LINE,8), STATUS);*/
 /*
 #define EXTI0_InterruptMode_EnableOrDisable(STATUS) \
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT0, STATUS);
@@ -86,10 +96,16 @@ extern "C" {
 	EXTI_InterruptMode_EnableOrDisable(EXTI_INT15, STATUS);
 */
 
-#define EXTI_EventMode_GetEnableStatus(LINE) \
-	GetBit(EXTI->EMR,Get4Bit(LINE,8))
-#define EXTI_EventMode_EnableOrDisable(LINE, STATUS) \
+__STATIC_INLINE uint32_t EXTI_EventMode_GetEnableStatus(uint32_t LINE){
+	return ( GetBit(EXTI->EMR,Get4Bit(LINE,8)) );
+}
+__STATIC_INLINE void EXTI_EventMode_EnableOrDisable(uint32_t LINE, uint32_t STATUS){
 	WriteBit(EXTI->EMR,Get4Bit(LINE,8), STATUS);
+}
+/*#define EXTI_EventMode_GetEnableStatus(LINE) \
+	GetBit(EXTI->EMR,Get4Bit(LINE,8))*/
+/*#define EXTI_EventMode_EnableOrDisable(LINE, STATUS) \
+	WriteBit(EXTI->EMR,Get4Bit(LINE,8), STATUS);*/
 /*
 #define EXTI0_EventMode_EnableOrDisable(STATUS) \
 	EXTI_EventMode_EnableOrDisable(EXTI_INT0, STATUS);
@@ -125,10 +141,16 @@ extern "C" {
 	EXTI_EventMode_EnableOrDisable(EXTI_INT15, STATUS);
 */
 
-#define EXTI_RisingTrigger_GetEnableStatus(LINE) \
+__STATIC_INLINE uint32_t EXTI_RisingTrigger_GetEnableStatus(uint32_t LINE){
+	return ( GetBit(EXTI->RTSR, Get4Bit(LINE,8)) );
+}
+__STATIC_INLINE void EXTI_RisingTrigger_EnableOrDisable(uint32_t LINE, uint32_t STATUS){
+	WriteBit(EXTI->RTSR, Get4Bit(LINE,8),STATUS);
+}
+/*#define EXTI_RisingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->RTSR, Get4Bit(LINE,8))
 #define EXTI_RisingTrigger_EnableOrDisable(LINE, STATUS) \
-	WriteBit(EXTI->RTSR, Get4Bit(LINE,8),STATUS);
+	WriteBit(EXTI->RTSR, Get4Bit(LINE,8),STATUS);*/
 /*
 #define EXTI0_RisingTrigger_EnableOrDisable(STATUS) \
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
@@ -164,10 +186,17 @@ extern "C" {
 	EXTI_RisingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
 */
 
-#define EXTI_FallingTrigger_GetEnableStatus(LINE) \
+__STATIC_INLINE uint32_t EXTI_FallingTrigger_GetEnableStatus(uint32_t LINE){
+	return ( GetBit(EXTI->FTSR, Get4Bit(LINE,8)) );
+}
+__STATIC_INLINE void EXTI_FallingTrigger_EnableOrDisable(uint32_t LINE, uint32_t STATUS){
+	WriteBit(EXTI->FTSR, Get4Bit(LINE,8),STATUS);
+}
+
+/*#define EXTI_FallingTrigger_GetEnableStatus(LINE) \
 	GetBit(EXTI->FTSR, Get4Bit(LINE,8))
 #define EXTI_FallingTrigger_EnableOrDisable(LINE, STATUS) \
-	WriteBit(EXTI->FTSR, Get4Bit(LINE,8),STATUS);
+	WriteBit(EXTI->FTSR, Get4Bit(LINE,8),STATUS);*/
 /*
 #define EXTI0_FallingTrigger_EnableOrDisable(STATUS) \
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT0, STATUS);
@@ -203,10 +232,17 @@ extern "C" {
 	EXTI_FallingTrigger_EnableOrDisable(EXTI_INT15, STATUS);
 */
 
-#define EXTI_SoftwareInterrupt_GetEnableStatus(LINE) \
+__STATIC_INLINE uint32_t EXTI_SoftwareInterrupt_GetEnableStatus(uint32_t LINE){
+	return ( GetBit(EXTI->SWIER, Get4Bit(LINE,8)) );
+}
+__STATIC_INLINE void EXTI_SoftwareInterrupt_EnableOrDisable(uint32_t LINE, uint32_t STATUS){
+	WriteBit(EXTI->SWIER, Get4Bit(LINE,8),STATUS);
+}
+
+/*#define EXTI_SoftwareInterrupt_GetEnableStatus(LINE) \
 	GetBit(EXTI->SWIER, Get4Bit(LINE,8))
 #define EXTI_SoftwareInterrupt_EnableOrDisable(LINE, STATUS) \
-	WriteBit(EXTI->SWIER, Get4Bit(LINE,8),STATUS);
+	WriteBit(EXTI->SWIER, Get4Bit(LINE,8),STATUS);*/
 /*
 #define EXTI0_SoftwareInterrupt_EnableOrDisable(STATUS) \
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT0, STATUS);
@@ -242,18 +278,16 @@ extern "C" {
 	EXTI_SoftwareInterrupt_EnableOrDisable(EXTI_INT15, STATUS);
 */
 
-#define EXTI_GetActiveFlag(LINE) \
+__STATIC_INLINE uint32_t EXTI_GetActiveFlag(uint32_t LINE){
+	return ( GetBit(EXTI->PR, Get4Bit(LINE,8)) );
+}
+__STATIC_INLINE void EXTI_ClearPendingRegister(uint32_t LINE){
+	SetBit_NoLastStatus(EXTI->PR, Get4Bit(LINE,8));
+}
+/*#define EXTI_GetActiveFlag(LINE) \
 	GetBit(EXTI->PR, Get4Bit(LINE,8))
 #define EXTI_ClearPendingRegister(LINE) \
-	SetBit_NoLastStatus(EXTI->PR, Get4Bit(LINE,8));
-
-void EXTI0_NVIC_Config(void);
-void EXTI1_NVIC_Config(void);
-void EXTI2_NVIC_Config(void);
-void EXTI3_NVIC_Config(void);
-void EXTI4_NVIC_Config(void);
-void EXTI9To5_NVIC_Config(void);
-void EXTI15To10_NVIC_Config(void);
+	SetBit_NoLastStatus(EXTI->PR, Get4Bit(LINE,8));*/
 
 // stm32f1xx_bm_exti_local.c
 void EXTI_Config(void);

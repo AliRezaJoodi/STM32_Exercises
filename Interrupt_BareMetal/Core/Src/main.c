@@ -7,19 +7,23 @@
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
-#include "stm32f1xx_bm_exti.h"
+#include <stm32f1xx_bm_exti.h>
+#include <stm32f1xx_bm_nvic.h>
 
 void OutputPin_Config(void);
 
 int main(void){
-	NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   
 	RCC_ConfigSystemClock();
   EXTI_Config();
+	
+	NVIC_ConfigGroup();
+	NVIC_EXTI0_Config();
+	NVIC_EXTI9To5_Config();
+	NVIC_EXTI15To10_Config();
 	
 	OutputPin_Config();
 	

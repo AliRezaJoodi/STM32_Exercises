@@ -9,6 +9,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_usart.h>
+#include <stm32f1xx_bm_nvic.h>
 
 char usart1_txt[16]="";
 volatile char usart1_task=0;
@@ -20,8 +21,10 @@ int main(void){
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
   USART1_Config();
-	NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-
+	
+	NVIC_ConfigGroup();
+	NVIC_USART1_Config();
+	
 	USART1_PutChar('A'); USART1_PutNewLine;	
 	
 	USART1_PutString("Test1");	
