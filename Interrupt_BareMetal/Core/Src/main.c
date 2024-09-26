@@ -16,14 +16,9 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-  
 	RCC_ConfigSystemClock();
   EXTI_Config();
-	
-	NVIC_ConfigGroup(NVIC_PRIORITYGROUP_4);
-	NVIC_EXTI0_Config();
-	NVIC_EXTI9To5_Config();
-	NVIC_EXTI15To10_Config();
+	NVIC_Config();
 	
 	OutputPin_Config();
 	

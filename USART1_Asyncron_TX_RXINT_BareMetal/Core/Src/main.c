@@ -21,11 +21,8 @@ int main(void){
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
   USART1_Config();
-	
-	NVIC_ConfigGroup(NVIC_PRIORITYGROUP_4);
-	NVIC_USART1_Config();
+	NVIC_Config();
 
-	
 	USART1_PutChar('A'); USART1_PutNewLine;	
 	
 	USART1_PutString("Test1");	
