@@ -45,6 +45,10 @@ void USART1_Config(void){
 }
 
 //*****************************************
+void USART2_Config(void){
+}
+
+//*****************************************
 void USART1_IRQHandler(void){
 	extern char usart1_txt[16];
 	extern char usart1_task;
@@ -52,9 +56,8 @@ void USART1_IRQHandler(void){
 	static unsigned char i=0;
 
 	if(USART_RX_GetReceiveFlag(USART1) && USART_RX_INT_GetEnableStatus(USART1)){		
-		c = USART1_ReceiveData_8Bits;
-		USART1_TransmitData(c);
-		
+		c = USART_ReceiveData_8Bits(USART1);
+		USART_TransmitData_8Bits(USART1, c);
 		if(32<=c && c<127){usart1_txt[i]=c; ++i;}
 			else if(c==13){i=0; usart1_task=1;}
 	}
