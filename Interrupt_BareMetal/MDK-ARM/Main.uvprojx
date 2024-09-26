@@ -411,9 +411,9 @@
               <FilePath>..\Core\Src\stm32f1xx_bm_exti_local.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_bm_nvic_local.c</FileName>
+              <FileName>stm32f1xx_bm_nvic_exti_local.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\stm32f1xx_bm_nvic_local.c</FilePath>
+              <FilePath>..\Core\Src\stm32f1xx_bm_nvic_exti_local.c</FilePath>
             </File>
           </Files>
         </Group>

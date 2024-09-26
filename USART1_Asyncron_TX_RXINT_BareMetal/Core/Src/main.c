@@ -22,8 +22,9 @@ int main(void){
   RCC_ConfigSystemClock();
   USART1_Config();
 	
-	NVIC_ConfigGroup();
+	NVIC_ConfigGroup(NVIC_PRIORITYGROUP_4);
 	NVIC_USART1_Config();
+
 	
 	USART1_PutChar('A'); USART1_PutNewLine;	
 	
