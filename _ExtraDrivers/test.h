@@ -1,5 +1,7 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include <stm32f1xx.h>
+
 #ifndef _TEST_INCLUDED
     #define _TEST_INCLUDED
 
