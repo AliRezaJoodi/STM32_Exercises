@@ -1,9 +1,8 @@
-## USART with Bare Metal Programming
+## Keypad 4x4
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-USART1:		Asyncron, 9600  
-USART1_TX:	Enable  
+Display:	USART1,	Asyncron, 9600  
 
 ### Folder and Files Description
 It has included:

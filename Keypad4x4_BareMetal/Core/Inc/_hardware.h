@@ -1,23 +1,3 @@
-// GitHub Account: GitHub.com/AliRezaJoodi
-
-#include <stm32f1xx.h>
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <stm32f1xx_bm_gpio.h>
-#include <delay.h>
-
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
-
-#ifndef _KEYPAD4X4_INCLUDED
-#define _KEYPAD4X4_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifndef KEYPAD4X4_HARDWARE
 #define KEYPAD4X4_HARDWARE
 	#define R1_GPIO			GPIOA
   #define R1_PIN			0
@@ -52,15 +32,4 @@ extern "C" {
   #define N13					119
   #define N14					183
   #define N15					231
-#endif
-
-
-uint8_t _Keypad4x4_GetInitialNumber(void);
-uint8_t _Keypad4x4_ConvertNumber(uint8_t key);
-uint8_t Keypad4x4_GetNumber(void);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif		// _KEYPAD4X4_INCLUDED
+	
