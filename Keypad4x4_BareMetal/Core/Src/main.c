@@ -23,6 +23,7 @@ int main(void){
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
 	
+	Keypad4x4_Config();
   USART1_Config();
 	USART_PutStringFromFlash(USART1, "Test USART1");
 	

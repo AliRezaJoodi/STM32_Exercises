@@ -5,6 +5,18 @@
 const uint8_t keypad_data[16]={N00,N01,N02,N03,N04,N05,N06,N07,N08,N09,N10,N11,N12,N13,N14,N15};
 
 //********************************************************
+void Keypad4x4_Config(void){
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(R1_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(R2_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(R3_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(R4_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C1_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C2_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C3_GPIO);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(C4_GPIO);
+}
+
+//********************************************************
 uint8_t _Keypad4x4_GetInitialNumber(void){
 	uint8_t numer;
 	
