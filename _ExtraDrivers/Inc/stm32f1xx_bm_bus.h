@@ -158,6 +158,17 @@ __STATIC_INLINE void BUS_USART1_EnableOrDisable(uint32_t STATUS){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_USART1EN_Pos, STATUS);\
 	while(_USART1_GeEnableStatus != STATUS){};*/
 
+__STATIC_INLINE void BUS_USART2_ResetClock(void){
+	SetBit_NoLastStatus(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos)
+}	
+__STATIC_INLINE uint32_t _USART2_GeEnableStatus(void){
+	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos) );
+}
+__STATIC_INLINE void BUS_USART2_EnableOrDisable(uint32_t STATUS){
+	WriteBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos, STATUS);
+	while(_USART2_GeEnableStatus() != STATUS){};	
+}
+
 void BUS_GPIOx_EnableOrDisableWithAutoSearch(GPIO_TypeDef *GPIOx);
 
 

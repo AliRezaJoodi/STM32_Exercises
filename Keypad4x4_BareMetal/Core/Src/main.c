@@ -36,10 +36,12 @@ int main(void){
 		//number= _Keypad4x4_GetInitialNumber();
 		number= Keypad4x4_GetNumber();
 		
-		if(number != number_last && number != 16){
+		if(number != number_last){
 			number_last=number;
-			sprintf(txt, "Number(DEC)=%3d", number);
-			USART_PutString(USART1, txt);
+			if(number != 16){
+				sprintf(txt, "Number(DEC)=%3d", number);
+				USART_PutString(USART1, txt);
+			}
 		}
   }
 }
