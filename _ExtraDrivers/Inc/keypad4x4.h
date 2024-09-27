@@ -54,7 +54,7 @@ extern "C" {
   #define N15					231
 #endif
 
-
+void Keypad4x4_Config(void);
 uint8_t _Keypad4x4_GetInitialNumber(void);
 uint8_t _Keypad4x4_ConvertNumber(uint8_t key);
 uint8_t Keypad4x4_GetNumber(void);
