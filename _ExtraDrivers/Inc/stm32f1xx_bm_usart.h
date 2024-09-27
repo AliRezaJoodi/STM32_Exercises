@@ -419,6 +419,7 @@ void USART2_PutStringFromFlash(const char *str);*/
 // _USART.c
 void USART1_Config(void);
 void USART2_Config(void);
+
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 
