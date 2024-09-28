@@ -20,32 +20,38 @@ extern "C" {
 	#define HCLK_VALUE		8000000
 #endif
 
-#define SYSTICK_CLKSOURCE_INTCLK	0b0UL
+//**************************************************
+#define SYSTICK_CLKSOURCE_HCLK8P	0b0UL		// HCLK Frequency/8
 #define SYSTICK_CLKSOURCE_HCLK		0b1UL		// HCLK Frequency
 __STATIC_INLINE void SysTick_SetClockSource(uint32_t MODE){
 	WriteBit(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Pos, MODE);
 }
 
+//**************************************************
 __STATIC_INLINE void SysTick_SetLoadValue(uint32_t value){
 	SysTick->LOAD = value;
 }
 
+//**************************************************
 __STATIC_INLINE void SysTick_ResetCounter(void){
 	SysTick->VAL = 0UL;
 }
 
+//**************************************************
 #define SYSTICK_DISABLE		0b0UL
 #define SYSTICK_ENABLE		0b1UL
 __STATIC_INLINE void SysTick_EnableOrDisable(uint32_t STATUS){
 	WriteBit(SysTick->CTRL, SysTick_CTRL_ENABLE_Pos, STATUS);
 }
 
+//**************************************************
 #define SYSTICK_INT_DISABLE		0b0UL
 #define SYSTICK_INT_ENABLE		0b1UL
 __STATIC_INLINE void SysTick_INT_EnableOrDisable(uint32_t STATUS){
 	WriteBit(SysTick->CTRL, SysTick_CTRL_TICKINT_Pos, STATUS);
 }
 
+//**************************************************
 __STATIC_INLINE void SysTick_Delay_1us(uint32_t us){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
 	SysTick_SetLoadValue(HCLK_VALUE/1000000);
@@ -60,6 +66,7 @@ __STATIC_INLINE void SysTick_Delay_1us(uint32_t us){
 	SysTick_EnableOrDisable(0);
 }
 
+//**************************************************
 __STATIC_INLINE void SysTick_Delay_1ms(uint32_t ms){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
 	SysTick_SetLoadValue(HCLK_VALUE/1000);
