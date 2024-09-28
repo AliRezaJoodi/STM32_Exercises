@@ -6,15 +6,12 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
-#include <display_lcd.h>
+#include <display_lcd_bm.h>
 
 int main(void){
 	const char txt1[16]="012345678901234";
 	char txt[16]="AliRezaJoodi";
 
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
-	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);

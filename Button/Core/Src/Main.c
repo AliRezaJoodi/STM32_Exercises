@@ -7,16 +7,13 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
-#include <button.h>
+#include <button_bm.h>
 
 uint32_t value=3;
 
 void BcdDisplay_Config(void);
 
 int main(void){
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
-	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
