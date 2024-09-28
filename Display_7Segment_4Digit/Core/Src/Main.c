@@ -6,13 +6,12 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
-#include <display_7segment_4digit.h>
+#include <display_7segment_4digit_bm.h>
 
 int main(void){
 	char status=1;
 	unsigned char i =0; 
 	
-  //NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
