@@ -25,43 +25,15 @@ void NVIC_Config(void);
 
 #endif		// _STM32F1xx_BM_NVIC_INCLUDED_INCLUDED
 
-// List:
-	//NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
-	//NVIC_EnableIRQ(SysTick_IRQn);
-	//NVIC_DisableIRQ(SysTick_IRQn);
-	
-	//NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-	//NVIC_EnableIRQ(USART1_IRQn);
-	//NVIC_DisableIRQ(USART1_IRQn);
-
-	//NVIC_SetPriority(USART2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-	//NVIC_EnableIRQ(USART2_IRQn);
-	//NVIC_DisableIRQ(USART2_IRQn);
-	
-	//NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI0_IRQn);
-	//NVIC_DisableIRQ(EXTI1_IRQn);
-
-	//NVIC_SetPriority(EXTI1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-	//NVIC_EnableIRQ(EXTI1_IRQn);
-	//NVIC_DisableIRQ(EXTI1_IRQn);	
-
-	//NVIC_SetPriority(EXTI2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI2_IRQn);
-	//NVIC_DisableIRQ(EXTI2_IRQn);	
-
-	//NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI3_IRQn);
-	//NVIC_DisableIRQ(EXTI3_IRQn);	
-
-	//NVIC_SetPriority(EXTI4_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI4_IRQn);
-	//NVIC_DisableIRQ(EXTI4_IRQn);	
-	
-	//NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI9_5_IRQn);
-	//NVIC_DisableIRQ(EXTI9_5_IRQn);
-	
-	//NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  //NVIC_EnableIRQ(EXTI15_10_IRQn);	
-	//NVIC_DisableIRQ(EXTI15_10_IRQn);	
+/* List:
+	SysTick_IRQn
+	USART1_IRQn
+	USART2_IRQn
+	EXTI0_IRQn
+	EXTI1_IRQn
+	EXTI2_IRQn
+	EXTI3_IRQn
+	EXTI4_IRQn
+	EXTI9_5_IRQn
+	EXTI15_10_IRQn
+*/

@@ -28,24 +28,6 @@ void USART1_Config(void){
 	USART_CTS_INT_EnableOrDisable(USART1, 0);
 	USART_RTS_EnableOrDisable(USART1, 0);
 	USART_EnableOrDisable(USART1, 1);
-	
-	//USART1_SetBaudRate(8000000, 9600);
-	//USART1_SetMode(MODE_ASYNCRON);
-	//USART1_SetDataBits(DATABITS_8BITS);
-	//USART1_SetParity(PARITY_NONE);
-	//USART1_SetStopBits(STOPBITS_1);
-	//USART1_TX_EnableOrDisable(1);
-	//USART1_TX_INT_EnableOrDisable(0);
-	//USART1_RX_EnableOrDisable(1);
-	//USART1_RX_INT_EnableOrDisable(1);
-	//USART1_CTS_EnableOrDisable(0);
-	//USART1_CTS_INT_EnableOrDisable(0);
-	//USART1_RTS_EnableOrDisable(0);	
-	//USART1_EnableOrDisable(1);
-}
-
-//*****************************************
-void USART2_Config(void){
 }
 
 //*****************************************
