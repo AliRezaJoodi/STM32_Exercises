@@ -416,13 +416,14 @@ void USART2_PutString(char *str);
 void USART1_PutStringFromFlash(const char *str);
 void USART2_PutStringFromFlash(const char *str);*/
 		
-// _USART.c
+
 void USART1_Config(void);
 void USART2_Config(void);
+void USART3_Config(void);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
-
+void USART3_IRQHandler(void);
 		
 #ifdef __cplusplus
 }

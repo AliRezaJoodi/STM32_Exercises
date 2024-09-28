@@ -140,7 +140,7 @@ __STATIC_INLINE void BUS_GPIOD_EnableOrDisable(uint32_t STATUS){
 				else if(GPIOx ==	GPIOD){BUS_GPIOD_EnableOrDisable(1);}*/
 
 __STATIC_INLINE void BUS_USART1_ResetClock(void){
-	SetBit_NoLastStatus(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos)
+	SetBit_NoLastStatus(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos);
 }	
 __STATIC_INLINE uint32_t _USART1_GeEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_USART1EN_Pos) );
@@ -159,7 +159,7 @@ __STATIC_INLINE void BUS_USART1_EnableOrDisable(uint32_t STATUS){
 	while(_USART1_GeEnableStatus != STATUS){};*/
 
 __STATIC_INLINE void BUS_USART2_ResetClock(void){
-	SetBit_NoLastStatus(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos)
+	SetBit_NoLastStatus(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos);
 }	
 __STATIC_INLINE uint32_t _USART2_GeEnableStatus(void){
 	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos) );
@@ -167,6 +167,17 @@ __STATIC_INLINE uint32_t _USART2_GeEnableStatus(void){
 __STATIC_INLINE void BUS_USART2_EnableOrDisable(uint32_t STATUS){
 	WriteBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos, STATUS);
 	while(_USART2_GeEnableStatus() != STATUS){};	
+}
+
+__STATIC_INLINE void BUS_USART3_ResetClock(void){
+	SetBit_NoLastStatus(RCC->APB1RSTR, RCC_APB1RSTR_USART3RST_Pos);
+}	
+__STATIC_INLINE uint32_t _USART3_GeEnableStatus(void){
+	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_USART3EN_Pos) );
+}
+__STATIC_INLINE void BUS_USART3_EnableOrDisable(uint32_t STATUS){
+	WriteBit(RCC->APB1ENR, RCC_APB1ENR_USART3EN_Pos, STATUS);
+	while(_USART3_GeEnableStatus() != STATUS){};	
 }
 
 void BUS_GPIOx_EnableOrDisableWithAutoSearch(GPIO_TypeDef *GPIOx);
