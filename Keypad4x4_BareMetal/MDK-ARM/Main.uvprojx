@@ -446,9 +446,9 @@
               <FilePath>..\..\_ExtraDrivers\Src\delay.c</FilePath>
             </File>
             <File>
-              <FileName>keypad4x4.c</FileName>
+              <FileName>keypad4x4_bm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\keypad4x4.c</FilePath>
+              <FilePath>..\..\_ExtraDrivers\Src\keypad4x4_bm.c</FilePath>
             </File>
           </Files>
         </Group>

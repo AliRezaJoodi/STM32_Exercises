@@ -1,4 +1,4 @@
-## Keypad 4x4
+## Keypad 4x4 with Bare Metal Programming
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  

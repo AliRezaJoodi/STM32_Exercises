@@ -1,6 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include <display_lcd.h>
+#include <display_lcd_bm.h>
 
 #define _CLEAR_DISPLAY  0x01 // Clear display command
 #define _RETURN_HOME    0x02 // Return home command

@@ -424,11 +424,6 @@
           <GroupName>Drivers/ExtraDrivers</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_bm_bus.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_bus.c</FilePath>
@@ -439,9 +434,14 @@
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>button.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\button.c</FilePath>
+              <FilePath>..\..\_ExtraDrivers\Src\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\button_bm.c</FilePath>
             </File>
           </Files>
         </Group>
