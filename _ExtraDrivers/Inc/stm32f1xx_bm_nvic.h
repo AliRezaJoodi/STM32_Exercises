@@ -29,6 +29,7 @@ void NVIC_Config(void);
 	SysTick_IRQn
 	USART1_IRQn
 	USART2_IRQn
+	USART3_IRQn
 	EXTI0_IRQn
 	EXTI1_IRQn
 	EXTI2_IRQn
