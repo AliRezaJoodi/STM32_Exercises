@@ -46,9 +46,9 @@ int main(void){
 	unsigned int a1=0;
 	a1=USART2->BRR;
 	//a1 = _DIV_SAMPLING16(8000000, 9600);
-	sprintf(txt3, "USART1_BRR=%d", a1);
+	sprintf(txt3, "USART2_BRR=%d", a1);
 	USART_PutString(USART2, txt3);
-	sprintf(txt3, "USART1_BRR (HEX)=%x", a1);
+	sprintf(txt3, "USART2_BRR (HEX)=%x", a1);
 	USART_PutString(USART2, txt3);
 	
   while(1){
