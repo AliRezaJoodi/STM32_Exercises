@@ -3,6 +3,7 @@
 #include <stm32f1xx.h>
 #include <core_cm3.h>
 #include <utility.h>
+#include <stm32f1xx_bm_gpio.h>
 
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
@@ -81,6 +82,9 @@ __STATIC_INLINE void SysTick_Delay_1ms(uint32_t ms){
 	SysTick_EnableOrDisable(0);
 }
 
+
+void SysTick_ConfigWithInterruptMode(void);
+void SysTick_Handler(void);
 
 #ifdef __cplusplus
 }

@@ -28,11 +28,13 @@ __STATIC_INLINE void FLASH_SetLatency(uint32_t MODE){
 #define System_SetCoreClockFrequency(HZ) \
 	SystemCoreClock = HZ;
 
+/*
 __STATIC_INLINE void System_SetSysTick_1ms(uint32_t HCLK_HZ){
   SysTick->LOAD = (uint32_t)((HCLK_HZ / 1000U) - 1UL);
   SysTick->VAL = 0UL;
   SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;	
 }
+*/
 /*#define System_SetSysTick_1ms(HCLK_HZ) \
   SysTick->LOAD = (uint32_t)((HCLK_HZ / 1000U) - 1UL);\
   SysTick->VAL = 0UL;\

@@ -13,6 +13,6 @@ void RCC_ConfigSystemClock(void){
 	RCC_APB2_SetPrescaler(APB2_DIV1);
 		
 	SystemCoreClockUpdate();	
-	System_SetSysTick_1ms(8000000);
+	//System_SetSysTick_1ms(8000000);
 	System_SetCoreClockFrequency(8000000);
 }

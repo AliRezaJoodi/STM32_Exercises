@@ -26,6 +26,10 @@ void NVIC_Config(void);
 #endif		// _STM32F1xx_BM_NVIC_INCLUDED_INCLUDED
 
 // List:
+	//NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+	//NVIC_EnableIRQ(SysTick_IRQn);
+	//NVIC_DisableIRQ(SysTick_IRQn);
+	
 	//NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
 	//NVIC_EnableIRQ(USART1_IRQn);
 	//NVIC_DisableIRQ(USART1_IRQn);
