@@ -1,5 +1,7 @@
-## Delay Function Without SysTick Timer
-             
+## Timer, SysTick, Bare Metal Programming 
+
+Note: Delay Function with SysTick for ms and us. 
+            
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
 

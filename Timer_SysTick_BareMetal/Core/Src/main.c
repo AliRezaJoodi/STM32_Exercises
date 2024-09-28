@@ -15,11 +15,12 @@ int main(void){
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
-	
+
 	LED_Config();
 	
   while(1){	
-		GPIO_TogglePin(GPIOC,13); SysTick_Delay_1ms(1000);
+		GPIO_TogglePin(GPIOC,13);
+		SysTick_Delay_1ms(1000);
 		
 		//GPIO_WritePin(GPIOC,13,0); SysTick_Delay_1ms(10);
 		//GPIO_WritePin(GPIOC,13,1); SysTick_Delay_1ms(1000);
