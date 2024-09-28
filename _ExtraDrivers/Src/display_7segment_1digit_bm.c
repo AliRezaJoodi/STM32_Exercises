@@ -1,6 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include <display_7segment_1digit.h>
+#include <display_7segment_1digit_bm.h>
 
 //0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 //A , B , C , D , E , F,

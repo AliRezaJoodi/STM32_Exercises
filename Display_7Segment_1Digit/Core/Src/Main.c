@@ -6,7 +6,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <delay.h>
-#include <display_7segment_1digit.h>
+#include <display_7segment_1digit_bm.h>
 
 char usart1_txt[16]="";
 volatile char usart1_task=0;
@@ -15,8 +15,7 @@ void Button_Config(void);
 int main(void){
 	char status=1;
 	unsigned char i =0; 
-	
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
+
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
