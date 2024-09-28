@@ -12,6 +12,6 @@ void SysTick_ConfigWithInterruptMode(void){
 }
 
 void SysTick_Handler(void){
-	//GPIO_TogglePin(GPIOC,13);
+
 }
 
