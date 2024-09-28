@@ -27,11 +27,6 @@ void USART1_Config(void){
 	USART_RTS_EnableOrDisable(USART1, 0);
 	USART_EnableOrDisable(USART1, 1);
 }
-
-//*****************************************
-void USART2_Config(void){
-}
-
 //*****************************************
 void USART1_IRQHandler(void){
 	if(USART_RX_GetReceiveFlag(USART1) && USART_RX_INT_GetEnableStatus(USART1)){

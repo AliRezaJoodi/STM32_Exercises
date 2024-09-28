@@ -2,7 +2,6 @@
 
 #include <stm32f1xx_bm_timer_systick.h>
 
-
 void SysTick_ConfigWithInterruptMode(void){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
 	SysTick_SetLoadValue(HCLK_VALUE/2);		// 0.5s
