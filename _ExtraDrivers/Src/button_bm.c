@@ -38,14 +38,14 @@ char Button1_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
     
     if(GPIO_GetPin(BUTTON1_GPIO,BUTTON1_PIN)==BUTTON_PRESSED && last_status==!BUTTON_PRESSED){
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON1_GPIO,BUTTON1_PIN)==BUTTON_PRESSED){
             last_status=BUTTON_PRESSED;
             return 1; 
         } 
     }
     if(GPIO_GetPin(BUTTON1_GPIO,BUTTON1_PIN)==!BUTTON_PRESSED  && last_status==BUTTON_PRESSED){ 
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON1_GPIO,BUTTON1_PIN)==!BUTTON_PRESSED){last_status=!BUTTON_PRESSED;}
     }
     
@@ -71,14 +71,14 @@ char Button2_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
     
     if(GPIO_GetPin(BUTTON2_GPIO,BUTTON2_PIN)==BUTTON_PRESSED && last_status==!BUTTON_PRESSED){
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON2_GPIO,BUTTON2_PIN)==BUTTON_PRESSED){
             last_status=BUTTON_PRESSED;
             return 1; 
         } 
     }
     if(GPIO_GetPin(BUTTON2_GPIO,BUTTON2_PIN)==!BUTTON_PRESSED  && last_status==BUTTON_PRESSED){ 
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON2_GPIO,BUTTON2_PIN)==!BUTTON_PRESSED){last_status=!BUTTON_PRESSED;}
     }
     
@@ -105,14 +105,14 @@ char Button3_OneStep(void){
     static char last_status=!BUTTON_PRESSED; 
     
     if(GPIO_GetPin(BUTTON3_GPIO,BUTTON3_PIN)==BUTTON_PRESSED && last_status==!BUTTON_PRESSED){
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON3_GPIO,BUTTON3_PIN)==BUTTON_PRESSED){
             last_status=BUTTON_PRESSED;
             return 1; 
         } 
     }
     if(GPIO_GetPin(BUTTON3_GPIO,BUTTON3_PIN)==!BUTTON_PRESSED  && last_status==BUTTON_PRESSED){ 
-        Delay_ms(BUTTON_LAG1);
+        SysTick_Delay_1ms(BUTTON_LAG1);
         if(GPIO_GetPin(BUTTON3_GPIO,BUTTON3_PIN)==!BUTTON_PRESSED){last_status=!BUTTON_PRESSED;}
     }
     
