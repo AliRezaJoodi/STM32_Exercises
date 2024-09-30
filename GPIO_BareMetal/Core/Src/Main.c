@@ -5,7 +5,7 @@
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
-#include <delay.h>
+#include <delay_nop.h>
 
 void LED_Config(void);
 void Buttons_Config(void);
@@ -16,9 +16,6 @@ void Button2(void);
 
 int main(void){
 	uint32_t value=0;
-	
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); // System interrupt init
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0)); // SysTick_IRQn interrupt configuration
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);

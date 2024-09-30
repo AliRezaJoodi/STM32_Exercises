@@ -2,7 +2,6 @@
 // Set for 8MHz
 
 #include <stm32f1xx.h>
-///#include <cmsis_armclang.h>
 
 #ifndef _DELAY_INCLUDED
 #define _DELAY_INCLUDED
