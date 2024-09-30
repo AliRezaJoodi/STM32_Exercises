@@ -5,7 +5,7 @@
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
-#include <delay.h>
+#include <delay_nop.h>
 #include <display_7segment_1digit_bm.h>
 
 char usart1_txt[16]="";

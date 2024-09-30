@@ -5,7 +5,7 @@
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
-#include <delay.h>
+#include <delay_nop.h>
 
 void LED_Config(void);
 

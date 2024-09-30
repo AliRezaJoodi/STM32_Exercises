@@ -434,14 +434,14 @@
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>button_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\button_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay_nop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\delay_nop.c</FilePath>
             </File>
           </Files>
         </Group>

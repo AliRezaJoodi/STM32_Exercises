@@ -16,7 +16,7 @@
 #include <utility.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
-#include <delay.h>
+#include <delay_nop.h>
 
 #ifdef HARDWARE_LOCAL
 #include "_hardware.h"
