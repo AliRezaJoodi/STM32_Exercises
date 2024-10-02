@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <stm32f1xx_ll_usart_put.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,9 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t data[3]={0x10,0x43,0x63};
-uint32_t crc32=0;
-char txt[20];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,50 +57,7 @@ static void MX_CRC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-//********************************
-void USART1_PutChar(char data){
-  LL_USART_TransmitData8(USART1,data);
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-}
-
-//********************************
-void USART1_PutString(char *str){
-  while(*str != 0){
-		USART1_PutChar(*str);
-		//LL_USART_TransmitData8(USART1,*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    str++;
-  }
-	/*
-	LL_USART_TransmitData8(USART1,0x0D);		// \r
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	LL_USART_TransmitData8(USART1,0x0A);		// \n
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	*/
-	USART1_PutChar('\r');		// 0x0D
-	USART1_PutChar('\n');		// 0x0A
-}
-
-//********************************
-void USART1_PutStringFromFlash(const char *str){
-  while(*str != 0){
-		USART1_PutChar(*str);
-		//LL_USART_TransmitData8(USART1,*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    str++;
-  }
-	/*
-	LL_USART_TransmitData8(USART1,'\r');
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	LL_USART_TransmitData8(USART1,'\n');
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	*/
-	USART1_PutChar('\r');		// 0x0D
-	USART1_PutChar('\n');		// 0x0A
-}
-
-uint32_t CRC_Calc_LL(uint32_t* data, uint32_t length);
+uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length);
 /* USER CODE END 0 */
 
 /**
@@ -120,7 +76,7 @@ int main(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
   /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+  //NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
@@ -147,26 +103,22 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	uint32_t data[3]={0x10,0x43,0x63};	
+	char txt[20];
+	uint32_t crc32=0;
 	
-	//LL_USART_EnableIT_RXNE(USART1);
-	//LL_mDelay(500);
-		
 	for(uint8_t i=0; i<3; ++i){
-		sprintf(txt, "Data[%1d]=%3d  ", i, data[i]);
-		USART1_PutString(txt);
+		sprintf(txt, "Data[%1d]=0x%2X", i, data[i]);
+		USART_PutString(USART1, txt);
 	}	
 	
-	crc32=CRC_Calc_LL(data,1);
-	
-	///crc32=CRC->DR;
-	sprintf(txt, "CRC=%2X", crc32);
-	USART1_PutString(txt);
+	crc32=LL_CRC_Calculate(data,3);
+	sprintf(txt, "CRC=0x%2X", crc32);
+	USART_PutString(USART1, txt);
 	
   while(1){
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 }
@@ -300,18 +252,17 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 //************************************************************
-uint32_t CRC_Calc_LL(uint32_t* data, uint32_t length) {
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);		// Enable CRC clock
-    LL_CRC_ResetCRCCalculationUnit(CRC);		// Reset CRC calculation unit
-
-    for (uint32_t i=0; i<length; ++i) {
-        LL_CRC_FeedData32(CRC, data[i]);		// Feed data to the CRC unit
-    }
-
-		LL_mDelay(1);
-    uint32_t crc = LL_CRC_ReadData32(CRC);	// Retrieve the final CRC value
-		
-    return crc;
+uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length) {
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);		// Enable CRC clock
+  LL_CRC_ResetCRCCalculationUnit(CRC);		// Reset CRC calculation unit
+  
+	for(uint32_t i=0; i<length; ++i){
+		LL_CRC_FeedData32(CRC, data[i]);		// Feed data to the CRC unit
+  }
+	
+	__NOP();
+  uint32_t crc = LL_CRC_ReadData32(CRC);	// Retrieve the final CRC value
+  return crc;
 }
 
 /* USER CODE END 4 */

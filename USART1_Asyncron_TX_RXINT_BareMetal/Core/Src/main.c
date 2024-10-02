@@ -47,7 +47,7 @@ int main(void){
 	//a1 = _DIV_SAMPLING16(8000000, 9600);
 	sprintf(txt3, "USART1_BRR=%d", a1);
 	USART_PutString(USART1, txt3);
-	sprintf(txt3, "USART1_BRR (HEX)=%x", a1);
+	sprintf(txt3, "USART1_BRR=0x%X", a1);
 	USART_PutString(USART1, txt3);
 	
   while(1){
