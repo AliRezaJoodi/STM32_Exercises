@@ -130,8 +130,8 @@ __STATIC_INLINE void RCC_APB2_SetPrescaler(uint32_t MODE){
 /*#define RCC_APB2_SetPrescaler(MODE) \
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, MODE);*/
 
-// stm32f1xx_bm_rcc_local.c
-void RCC_ConfigSystemClock(void);
+
+void RCC_SystemClock_ConfigDefault1(void);
 
 #ifdef __cplusplus
 }

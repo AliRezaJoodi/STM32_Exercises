@@ -7,7 +7,6 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_timer_systick.h>
-///#include <delay_nop.h>
 #include <button_bm.h>
 
 uint32_t value=3;
@@ -18,7 +17,7 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-  RCC_ConfigSystemClock();
+  RCC_SystemClock_ConfigDefault1();
 
 	Button_Config();
 	BcdDisplay_Config();

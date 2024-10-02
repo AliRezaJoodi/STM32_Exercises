@@ -8,7 +8,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_exti.h>
-#include <stm32f1xx_bm_nvic.h>
+#include <stm32f1xx_bm_it.h>
 
 void OutputPin_Config(void);
 
@@ -16,8 +16,8 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-	RCC_ConfigSystemClock();
-  EXTI_Config();
+	RCC_SystemClock_ConfigDefault1();
+  EXTI_ConfigDefault1();
 	NVIC_Config();
 	
 	OutputPin_Config();

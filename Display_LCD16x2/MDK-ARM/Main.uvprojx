@@ -400,11 +400,6 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32f1xx_bm_rcc_local.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\stm32f1xx_bm_rcc_local.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -424,6 +419,11 @@
           <GroupName>Drivers/ExtraDrivers</GroupName>
           <Files>
             <File>
+              <FileName>stm32f1xx_bm_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_rcc.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f1xx_bm_bus.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_bus.c</FilePath>
@@ -437,11 +437,6 @@
               <FileName>display_lcd_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\display_lcd_bm.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay_nop.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\_ExtraDrivers\Src\delay_nop.c</FilePath>
             </File>
           </Files>
         </Group>

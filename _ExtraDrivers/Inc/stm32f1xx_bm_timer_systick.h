@@ -83,8 +83,8 @@ __STATIC_INLINE void SysTick_Delay_1ms(uint32_t ms){
 }
 
 
-void SysTick_ConfigWithInterruptMode(void);
-void SysTick_Handler(void);
+void SysTick_ConfigDefault1_INT(void);
+
 
 #ifdef __cplusplus
 }

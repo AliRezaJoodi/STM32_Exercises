@@ -1,9 +1,15 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 #include <stm32f1xx.h>
+#include <utility.h>
+#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_gpio.h>
+#include <stm32f1xx_bm_timer_systick.h>
+#include <stm32f1xx_bm_usart.h>
+#include <stm32f1xx_bm_exti.h>
 
-#ifndef _STM32F1xx_BM_NVIC_INCLUDED
-    #define _STM32F1xx_BM_NVIC_INCLUDED
+#ifndef _STM32F1xx_BM_IT_INCLUDED
+#define _STM32F1xx_BM_IT_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,22 +25,21 @@ extern "C" {
 
 void NVIC_Config(void);
 
+void USART1_IRQHandler(void);
+void USART2_IRQHandler(void);
+void USART3_IRQHandler(void);
+
+void EXTI0_IRQHandler(void);
+void EXTI1_IRQHandler(void);
+void EXTI2_IRQHandler(void);
+void EXTI3_IRQHandler(void);
+void EXTI4_IRQHandler(void);
+void EXTI9_5_IRQHandler(void);
+void EXTI15_10_IRQHandler(void);
+
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif		// _STM32F1xx_BM_NVIC_INCLUDED_INCLUDED
-
-/* List:
-	SysTick_IRQn
-	USART1_IRQn
-	USART2_IRQn
-	USART3_IRQn
-	EXTI0_IRQn
-	EXTI1_IRQn
-	EXTI2_IRQn
-	EXTI3_IRQn
-	EXTI4_IRQn
-	EXTI9_5_IRQn
-	EXTI15_10_IRQn
-*/
+#endif		// _STM32F1xx_BM_IT_INCLUDED
