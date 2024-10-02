@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <stm32f1xx_ll_usart_put.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,48 +59,6 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-//********************************
-void USART1_PutChar(char data){
-  LL_USART_TransmitData8(USART1,data);
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-}
-
-//********************************
-void USART1_PutString(char *str){
-  while(*str != 0){
-		USART1_PutChar(*str);
-		//LL_USART_TransmitData8(USART1,*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    str++;
-  }
-	/*
-	LL_USART_TransmitData8(USART1,0x0D);		// \r
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	LL_USART_TransmitData8(USART1,0x0A);		// \n
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	*/
-	USART1_PutChar('\r');		// 0x0D
-	USART1_PutChar('\n');		// 0x0A
-}
-
-//********************************
-void USART1_PutStringFromFlash(const char *str){
-  while(*str != 0){
-		USART1_PutChar(*str);
-		//LL_USART_TransmitData8(USART1,*str);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-    str++;
-  }
-	/*
-	LL_USART_TransmitData8(USART1,'\r');
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	LL_USART_TransmitData8(USART1,'\n');
-	while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-	*/
-	USART1_PutChar('\r');		// 0x0D
-	USART1_PutChar('\n');		// 0x0A
-}
 /* USER CODE END 0 */
 
 /**
@@ -148,14 +107,20 @@ int main(void)
 	LL_USART_EnableIT_RXNE(USART1);
 	LL_mDelay(500);
 	
-	USART1_PutStringFromFlash("AAA");
-	USART1_PutStringFromFlash("BBB");
+	USART_PutStringFromFlash(USART1, "Test USART1");
 
 	const char txt2[]= "Test2";
-	USART1_PutStringFromFlash(txt2);
+	USART_PutStringFromFlash(USART1, txt2);
 	
-	char txt3[]= "Test3";
-	USART1_PutString(txt3);
+	char txt[20]= "Test3";
+	USART_PutString(USART1, txt);
+	
+	uint8_t number=17;
+	sprintf(txt, "Number(DEC)=%3d", number);
+	USART_PutString(USART1, txt);
+	sprintf(txt, "Number(Hex)=0x%X", number);
+	USART_PutString(USART1, txt);
+	
 	/*
 	while(i2<6){
 		LL_USART_TransmitData8(USART1, NAME[i2++]);
@@ -172,9 +137,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		if(task_usart1==1){
 			task_usart1=0;
-			USART1_PutChar('\r');		// 0x0D
-			USART1_PutChar('\n');		// 0x0A
-			USART1_PutString(txt);
+			USART_PutChar(USART1, '\r');		// 0x0D
+			USART_PutChar(USART1, '\n');		// 0x0A
+			USART_PutString(USART1, txt);
 			for(j=0;j<16;++j){txt[j]=0;};
 			//while(txt[j] != 0){txt[j]=0;}
 		}
