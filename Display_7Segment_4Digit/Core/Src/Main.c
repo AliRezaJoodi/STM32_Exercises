@@ -15,7 +15,7 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-  RCC_ConfigSystemClock();
+  RCC_SystemClock_ConfigDefault1();
 	
 	Display7Segment4Digit_Config();
 	Display7Segment4Digit_SetOnOff(1);

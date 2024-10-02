@@ -360,11 +360,7 @@ __STATIC_INLINE uint32_t USART_TX_GeCompleteFlag(USART_TypeDef *USARTx){
 #define USART2_TX_GeTransferCompletionStatus \
 	USART_TX_GeCompleteFlag(USART2)*/
 
-__STATIC_INLINE void USART_PutChar(USART_TypeDef *USARTx, uint16_t DATA){
-	while(!USART_TX_GetEmptyFlag(USARTx)){};	
-	USART_TransmitData_8Bits(USARTx, DATA);
-	while(!USART_TX_GeCompleteFlag(USARTx)){};
-}
+
 /*#define USART_PutChar(USARTx, DATA)\
 	USART_TransmitData(USARTx, DATA);\
 	while(!USART_TX_GetEmptyFlag(USARTx)){};*/
@@ -383,50 +379,6 @@ __STATIC_INLINE void USART_PutChar(USART_TypeDef *USARTx, uint16_t DATA){
 #define USART2_PutNewLine\
 	USART_PutNewLine(USART2);*/
 
-__STATIC_INLINE void USART_PutString(USART_TypeDef *USARTx, char *str){
-  while(*str != 0){
-		//USART_PutChar(USARTx, *str);
-		while(!USART_TX_GetEmptyFlag(USARTx)){};
-		USART_TransmitData_8Bits(USARTx, *str);	
-    ++str;
-  }
-	
-	while(!USART_TX_GetEmptyFlag(USARTx)){};
-	USART_TransmitData_8Bits(USARTx, '\r');	
-	while(!USART_TX_GetEmptyFlag(USARTx)){};
-	USART_TransmitData_8Bits(USARTx, '\n');
-		
-	while(!USART_TX_GeCompleteFlag(USARTx)){};
-	
-	///USART_PutChar(USARTx, '\r');		// 0x0D
-	///USART_PutChar(USARTx, '\n');		// 0x0A
-}
-
-__STATIC_INLINE void USART_PutStringFromFlash(USART_TypeDef *USARTx, const char *str){
-  while(*str != 0){
-		///USART_PutChar(USARTx, *str);
-		while(!USART_TX_GetEmptyFlag(USARTx)){};
-		USART_TransmitData_8Bits(USARTx, *str);
-    ++str;
-  }
-	
-	while(!USART_TX_GetEmptyFlag(USARTx)){};
-	USART_TransmitData_8Bits(USARTx, '\r');	
-	while(!USART_TX_GetEmptyFlag(USARTx)){};
-	USART_TransmitData_8Bits(USARTx, '\n');
-		
-	while(!USART_TX_GeCompleteFlag(USARTx)){};
-		
-	///USART_PutChar(USARTx, '\r');		// 0x0D
-	///USART_PutChar(USARTx, '\n');		// 0x0A
-}
-
-__STATIC_INLINE void USART_ClearString(char *str){
-  while(*str != 0){
-		*str=0;
-    ++str;
-  }
-}
 ///void USART1_NVIC_Configuration(void);		
 //void USART2_NVIC_Configuration(void);
 //void USART_ClearString(char *str);
@@ -436,15 +388,16 @@ __STATIC_INLINE void USART_ClearString(char *str){
 void USART2_PutString(char *str);
 void USART1_PutStringFromFlash(const char *str);
 void USART2_PutStringFromFlash(const char *str);*/
-		
 
+void USART_PutChar(USART_TypeDef *USARTx, uint16_t data);
+void USART_PutString(USART_TypeDef *USARTx, char *str);
+void USART_PutStringFromFlash(USART_TypeDef *USARTx, const char *str);
+void USART_ClearString(char *str);
+
+void USART1_ConfigDefault1_TX_RXINT(void);
 void USART1_ConfigDefault2_TX(void);
-void USART2_Config(void);
-void USART3_Config(void);
-
-void USART1_IRQHandler(void);
-void USART2_IRQHandler(void);
-void USART3_IRQHandler(void);
+void USART2_ConfigDefault1_TX_RXINT(void);
+void USART3_ConfigDefault1_TX_RXINT(void);
 		
 #ifdef __cplusplus
 }

@@ -9,7 +9,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_usart.h>
-#include <stm32f1xx_bm_nvic.h>
+#include <stm32f1xx_bm_it.h>
 
 char usart3_txt[16]="";
 volatile char usart3_task=0;
@@ -18,9 +18,8 @@ int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
-  RCC_ConfigSystemClock();
-	
-  USART3_Config();
+  RCC_SystemClock_ConfigDefault1();	
+  USART3_ConfigDefault1_TX_RXINT();
 	NVIC_Config();
 
 	USART_PutChar(USART3,'A');
