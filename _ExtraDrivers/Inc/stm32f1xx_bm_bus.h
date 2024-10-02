@@ -180,6 +180,15 @@ __STATIC_INLINE void BUS_USART3_EnableOrDisable(uint32_t STATUS){
 	while(_USART3_GeEnableStatus() != STATUS){};	
 }
 
+
+__STATIC_INLINE uint32_t _CRC_GeEnableStatus(void){
+	return ( GetBit(RCC->AHBENR, RCC_AHBENR_CRCEN_Pos) );
+}
+__STATIC_INLINE void BUS_CRC_EnableOrDisable(uint32_t STATUS){
+	WriteBit(RCC->AHBENR, RCC_AHBENR_CRCEN_Pos, STATUS);
+	while(_CRC_GeEnableStatus() != STATUS){};
+}
+
 void BUS_GPIOx_EnableOrDisableWithAutoSearch(GPIO_TypeDef *GPIOx);
 
 

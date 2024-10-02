@@ -24,7 +24,7 @@ int main(void){
 	
 	sprintf(txt, "Number(DEC)=%3d", number);
 	USART_PutString(USART1, txt);
-	sprintf(txt, "Number(Hex)=%X", number);
+	sprintf(txt, "Number(Hex)=0x%X", number);
 	USART_PutString(USART1, txt);	
 	
   while(1){
