@@ -434,6 +434,11 @@
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>delay_nop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\delay_nop.c</FilePath>
+            </File>
+            <File>
               <FileName>display_lcd_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\display_lcd_bm.c</FilePath>
