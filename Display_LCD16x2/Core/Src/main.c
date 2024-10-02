@@ -6,7 +6,7 @@
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
 #include <stm32f1xx_bm_timer_systick.h>
-///#include <delay_nop.h>
+#include <delay_nop.h>
 #include <display_lcd_bm.h>
 
 int main(void){
@@ -20,16 +20,16 @@ int main(void){
   RCC_SystemClock_ConfigDefault1();
 
 	LCD_Config();
-	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); SysTick_Delay_1ms(250);
-	LCD_SetOnOff(0); SysTick_Delay_1ms(250);
-	LCD_SetOnOff(1); SysTick_Delay_1ms(250);
-	LCD_GoToXY(0,1); LCD_PutString(txt); SysTick_Delay_1ms(250);
-	LCD_Cursor_SetOnOff(1); SysTick_Delay_1ms(250);
+	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(250);
+	LCD_SetOnOff(0); Delay_ms(250);
+	LCD_SetOnOff(1); Delay_ms(250);
+	LCD_GoToXY(0,1); LCD_PutString(txt); Delay_ms(250);
+	LCD_Cursor_SetOnOff(1); Delay_ms(250);
 	LCD_ClearDisplay();
 	LCD_PutChar(65);
-	LCD_BlinkingCursor_SetOnOff(1); SysTick_Delay_1ms(2000);
-	LCD_BlinkingCursor_SetOnOff(0); SysTick_Delay_1ms(1000);
-	LCD_Cursor_SetOnOff(0); SysTick_Delay_1ms(250);
+	LCD_BlinkingCursor_SetOnOff(1); Delay_ms(2000);
+	LCD_BlinkingCursor_SetOnOff(0); Delay_ms(1000);
+	LCD_Cursor_SetOnOff(0); Delay_ms(250);
 
   while(1){
   }

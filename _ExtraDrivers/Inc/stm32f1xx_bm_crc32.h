@@ -17,13 +17,6 @@
 extern "C" {
 #endif
 
-#ifndef CRC32_HARDWARE
-#define CRC32_HARDWARE
-		#define CRC32_DEFAULT				0xFFFFFFFF
-		#define CRC32_POLYNOMIAL		0x04C11DB7
-#endif
-
-
 __STATIC_INLINE void CRC32_ResetValue(void){
 	SetBit(CRC->CR, CRC_CR_RESET_Pos);
 }
