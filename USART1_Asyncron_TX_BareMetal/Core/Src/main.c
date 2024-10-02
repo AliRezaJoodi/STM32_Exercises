@@ -19,7 +19,7 @@ int main(void){
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
   RCC_ConfigSystemClock();
 	
-  USART1_Config();
+  USART1_ConfigDefault2_TX();
 	USART_PutStringFromFlash(USART1, "Test USART1");
 	
 	sprintf(txt, "Number(DEC)=%3d", number);

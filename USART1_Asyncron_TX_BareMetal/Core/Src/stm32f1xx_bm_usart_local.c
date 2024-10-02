@@ -5,8 +5,7 @@
 	
 //****************************************************
 //PA9 -> USART1_TX
-//PA10 -> USART1_RX
-void USART1_Config(void){
+void USART1_ConfigDefault2_TX(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	GPIO_SetInputOrOutputMode(GPIOA,9, IO_OUTPUT_50MHz);
 	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOA,9, OUTPUT_AF);

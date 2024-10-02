@@ -253,64 +253,6 @@ __STATIC_INLINE void USART_EnableOrDisable(USART_TypeDef *USARTx, uint32_t STATU
 #define USART2_EnableOrDisable(STATUS) \
 	USART_EnableOrDisable(USART2, STATUS);*/
 
-__STATIC_INLINE void USART_TransmitData_8Bits(USART_TypeDef *USARTx, uint8_t DATA){
-	USARTx->DR = (DATA & 0xFFU);
-}
-/*#define USART_TransmitData_8Bits(USARTx, DATA) \
-	USARTx->DR = DATA & 0xFFU;*/
-/*#define USART1_TransmitData_8Bits(DATA) \
-	USART_TransmitData_8Bits(USART1, DATA)
-#define USART2_TransmitData_8Bits(DATA) \
-	USART_TransmitData_8Bits(USART2, DATA)*/
-
-__STATIC_INLINE void USART_TransmitData_9Bits(USART_TypeDef *USARTx, uint16_t DATA){
-	USARTx->DR = (DATA & 0x1FFU);
-}
-/*#define USART_TransmitData_9Bits(USARTx, DATA) \
-	USARTx->DR = DATA & 0x1FFU;*/
-/*#define USART1_TransmitData_9Bits(DATA) \
-	USART_TransmitData_9Bits(USART1, DATA);
-#define USART2_TransmitData_9Bits(DATA) \
-	USART_TransmitData_9Bits(USART2, DATA);*/
-
-__STATIC_INLINE void USART_TransmitData(USART_TypeDef *USARTx, uint16_t DATA){
-	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){
-		USART_TransmitData_8Bits(USARTx, DATA);
-	}
-	else{
-		USART_TransmitData_9Bits(USARTx, DATA);
-	}	
-}
-/*#define USART_TransmitData(USARTx, DATA) \
-	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){USART_TransmitData_8Bits(USARTx, DATA);}\
-		else{USART_TransmitData_9Bits(USARTx, DATA);}*/
-/*#define USART1_TransmitData(DATA) \
-	USART_TransmitData(USART1, DATA)
-#define USART2_TransmitData(DATA) \
-	USART_TransmitData(USART2, DATA)*/
-
-// Status of transmit data to the shift register
-__STATIC_INLINE uint32_t USART_TX_GeTransmitStatus(USART_TypeDef *USARTx){
-	return ( GetBit(USARTx->SR, USART_SR_TXE_Pos) );
-}
-/*#define USART_TX_GeTransmitStatus(USARTx) \
-	GetBit(USARTx->SR, USART_SR_TXE_Pos)*/
-/*#define USART1_TX_GeTransmitStatus \
-	USART_TX_GeTransmitStatus(USART1)
-#define USART2_TX_GeTransmitStatus \
-	USART_TX_GeTransmitStatus(USART2)*/
-
-// Transfer completion status
-__STATIC_INLINE uint32_t USART_TX_GeTransferCompletionStatus(USART_TypeDef *USARTx){
-	return ( GetBit(USARTx->SR, USART_SR_TC_Pos) );
-}
-/*#define USART_TX_GeTransferCompletionStatus(USARTx) \
-	GetBit(USARTx->SR, USART_SR_TC_Pos)*/
-/*#define USART1_TX_GeTransferCompletionStatus \
-	USART_TX_GeTransferCompletionStatus(USART1)
-#define USART2_TX_GeTransferCompletionStatus \
-	USART_TX_GeTransferCompletionStatus(USART2)*/
-
 __STATIC_INLINE uint8_t USART_ReceiveData_8Bits(USART_TypeDef *USARTx){
 	return (USARTx->DR & 0xFFU);
 }
@@ -360,13 +302,72 @@ __STATIC_INLINE uint32_t USART_RX_INT_GetEnableStatus(USART_TypeDef *USARTx){
 #define USART2_RX_INT_GetEnableStatus \
 	USART_RX_INT_GetEnableStatus(USART2)*/
 
+__STATIC_INLINE void USART_TransmitData_8Bits(USART_TypeDef *USARTx, uint8_t data){
+	USARTx->DR = (data & 0xFFU);
+}
+/*#define USART_TransmitData_8Bits(USARTx, DATA) \
+	USARTx->DR = DATA & 0xFFU;*/
+/*#define USART1_TransmitData_8Bits(DATA) \
+	USART_TransmitData_8Bits(USART1, DATA)
+#define USART2_TransmitData_8Bits(DATA) \
+	USART_TransmitData_8Bits(USART2, DATA)*/
+
+__STATIC_INLINE void USART_TransmitData_9Bits(USART_TypeDef *USARTx, uint16_t data){
+	USARTx->DR = (data & 0x1FFU);
+}
+/*#define USART_TransmitData_9Bits(USARTx, DATA) \
+	USARTx->DR = DATA & 0x1FFU;*/
+/*#define USART1_TransmitData_9Bits(DATA) \
+	USART_TransmitData_9Bits(USART1, DATA);
+#define USART2_TransmitData_9Bits(DATA) \
+	USART_TransmitData_9Bits(USART2, DATA);*/
+
+__STATIC_INLINE void USART_TransmitData(USART_TypeDef *USARTx, uint16_t data){
+	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){
+		USART_TransmitData_8Bits(USARTx, data);
+	}
+	else{
+		USART_TransmitData_9Bits(USARTx, data);
+	}	
+}
+/*#define USART_TransmitData(USARTx, DATA) \
+	if(USART_GeDataBits(USARTx)==DATABITS_8BITS){USART_TransmitData_8Bits(USARTx, DATA);}\
+		else{USART_TransmitData_9Bits(USARTx, DATA);}*/
+/*#define USART1_TransmitData(DATA) \
+	USART_TransmitData(USART1, DATA)
+#define USART2_TransmitData(DATA) \
+	USART_TransmitData(USART2, DATA)*/
+
+// Transmit Data Register Empty
+__STATIC_INLINE uint32_t USART_TX_GetEmptyFlag(USART_TypeDef *USARTx){
+	return ( GetBit(USARTx->SR, USART_SR_TXE_Pos) );
+}
+/*#define USART_TX_GetEmptyFlag(USARTx) \
+	GetBit(USARTx->SR, USART_SR_TXE_Pos)*/
+/*#define USART1_TX_GeTransmitStatus \
+	USART_TX_GetEmptyFlag(USART1)
+#define USART2_TX_GeTransmitStatus \
+	USART_TX_GetEmptyFlag(USART2)*/
+
+// Transmission Complete
+__STATIC_INLINE uint32_t USART_TX_GeCompleteFlag(USART_TypeDef *USARTx){
+	return ( GetBit(USARTx->SR, USART_SR_TC_Pos) );
+}
+/*#define USART_TX_GeCompleteFlag(USARTx) \
+	GetBit(USARTx->SR, USART_SR_TC_Pos)*/
+/*#define USART1_TX_GeTransferCompletionStatus \
+	USART_TX_GeCompleteFlag(USART1)
+#define USART2_TX_GeTransferCompletionStatus \
+	USART_TX_GeCompleteFlag(USART2)*/
+
 __STATIC_INLINE void USART_PutChar(USART_TypeDef *USARTx, uint16_t DATA){
-	USART_TransmitData(USARTx, DATA);
-	while(!USART_TX_GeTransmitStatus(USARTx)){};	
+	while(!USART_TX_GetEmptyFlag(USARTx)){};	
+	USART_TransmitData_8Bits(USARTx, DATA);
+	while(!USART_TX_GeCompleteFlag(USARTx)){};
 }
 /*#define USART_PutChar(USARTx, DATA)\
 	USART_TransmitData(USARTx, DATA);\
-	while(!USART_TX_GeTransmitStatus(USARTx)){};*/
+	while(!USART_TX_GetEmptyFlag(USARTx)){};*/
 /*#define USART1_PutChar(DATA)\
 	USART_PutChar(USART1, DATA);
 #define USART2_PutChar(DATA)\
@@ -374,9 +375,9 @@ __STATIC_INLINE void USART_PutChar(USART_TypeDef *USARTx, uint16_t DATA){
 
 /*#define USART_PutNewLine(USARTx)\
 	USART_TransmitData(USARTx, '\r');\
-	while(!USART_TX_GeTransmitStatus(USARTx)){};\
+	while(!USART_TX_GetEmptyFlag(USARTx)){};\
 	USART_TransmitData(USARTx, '\n');\
-	while(!USART_TX_GeTransmitStatus(USARTx)){};
+	while(!USART_TX_GetEmptyFlag(USARTx)){};
 #define USART1_PutNewLine\
 	USART_PutNewLine(USART1);
 #define USART2_PutNewLine\
@@ -384,20 +385,40 @@ __STATIC_INLINE void USART_PutChar(USART_TypeDef *USARTx, uint16_t DATA){
 
 __STATIC_INLINE void USART_PutString(USART_TypeDef *USARTx, char *str){
   while(*str != 0){
-		USART_PutChar(USARTx, *str);
+		//USART_PutChar(USARTx, *str);
+		while(!USART_TX_GetEmptyFlag(USARTx)){};
+		USART_TransmitData_8Bits(USARTx, *str);	
     ++str;
   }
-	USART_PutChar(USARTx, '\r');		// 0x0D
-	USART_PutChar(USARTx, '\n');		// 0x0A
+	
+	while(!USART_TX_GetEmptyFlag(USARTx)){};
+	USART_TransmitData_8Bits(USARTx, '\r');	
+	while(!USART_TX_GetEmptyFlag(USARTx)){};
+	USART_TransmitData_8Bits(USARTx, '\n');
+		
+	while(!USART_TX_GeCompleteFlag(USARTx)){};
+	
+	///USART_PutChar(USARTx, '\r');		// 0x0D
+	///USART_PutChar(USARTx, '\n');		// 0x0A
 }
 
 __STATIC_INLINE void USART_PutStringFromFlash(USART_TypeDef *USARTx, const char *str){
   while(*str != 0){
-		USART_PutChar(USARTx, *str);
+		///USART_PutChar(USARTx, *str);
+		while(!USART_TX_GetEmptyFlag(USARTx)){};
+		USART_TransmitData_8Bits(USARTx, *str);
     ++str;
   }
-	USART_PutChar(USARTx, '\r');		// 0x0D
-	USART_PutChar(USARTx, '\n');		// 0x0A
+	
+	while(!USART_TX_GetEmptyFlag(USARTx)){};
+	USART_TransmitData_8Bits(USARTx, '\r');	
+	while(!USART_TX_GetEmptyFlag(USARTx)){};
+	USART_TransmitData_8Bits(USARTx, '\n');
+		
+	while(!USART_TX_GeCompleteFlag(USARTx)){};
+		
+	///USART_PutChar(USARTx, '\r');		// 0x0D
+	///USART_PutChar(USARTx, '\n');		// 0x0A
 }
 
 __STATIC_INLINE void USART_ClearString(char *str){
@@ -417,7 +438,7 @@ void USART1_PutStringFromFlash(const char *str);
 void USART2_PutStringFromFlash(const char *str);*/
 		
 
-void USART1_Config(void);
+void USART1_ConfigDefault2_TX(void);
 void USART2_Config(void);
 void USART3_Config(void);
 
