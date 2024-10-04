@@ -14,6 +14,7 @@
 	EXTI4_IRQn
 	EXTI9_5_IRQn
 	EXTI15_10_IRQn
+	RTC_Alarm_IRQn
 */
 //**********************************************************
 void NVIC_Config(void){	
@@ -29,16 +30,19 @@ void NVIC_Config(void){
 //	NVIC_EnableIRQ(USART3_IRQn);
 	
 //	NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-//  NVIC_EnableIRQ(EXTI0_IRQn);
+//	NVIC_EnableIRQ(EXTI0_IRQn);
 	
 //	NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1, 0));
-//  NVIC_EnableIRQ(EXTI9_5_IRQn);
+//	NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 //	NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),2, 0));
-//  NVIC_EnableIRQ(EXTI15_10_IRQn);
+//	NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 //	NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
 //	NVIC_EnableIRQ(SysTick_IRQn);
+
+//	NVIC_SetPriority(RTC_Alarm_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+//	NVIC_EnableIRQ(RTC_Alarm_IRQn);
 }
 
 //*****************************************
@@ -121,6 +125,11 @@ void EXTI15_10_IRQHandler(void){
 	if (EXTI_GetActiveFlag(EXTI_INT11) != RESET){
 		EXTI_ClearPendingRegister(EXTI_INT11);
   }
+}
+
+//*****************************************
+void RTC_Alarm_IRQHandler(void){
+
 }
 
 
