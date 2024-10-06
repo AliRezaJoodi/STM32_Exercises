@@ -2,12 +2,13 @@
 // Bare Metal Programming
 
 /*
-	Abbreviations:
-	PWR_CR: 		Power control register
+	It's about:
+		PWR_CR: Power control register
 */
 
 #include <stm32f1xx.h>
 #include <utility.h>
+#include <timeout.h>
 
 #ifndef _STM32F1xx_BM_PWR_INCLUDED
 #define _STM32F1xx_BM_PWR_INCLUDED
@@ -31,9 +32,14 @@ __STATIC_INLINE uint32_t _BackupDomain_GetAccessStatus(void){
 }
 
 //******************************************************************
-__STATIC_INLINE void PWR_BackupDomain_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t PWR_BackupDomain_EnableOrDisable(uint32_t status){
 	WriteBit(PWR->CR, PWR_CR_DBP_Pos, status);
-	while(_BackupDomain_GetAccessStatus() != status){};
+
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_BackupDomain_GetAccessStatus, status) );
+	#else
+		return 0;
+	#endif
 }
 
 #ifdef __cplusplus
