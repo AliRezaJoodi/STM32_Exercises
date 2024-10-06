@@ -15,9 +15,8 @@ void RCC_SystemClock_ConfigDefault1(void){
 	RCC_SYSCLK_SetClockSource(SYSTEM_CLKSOURCE_HSI);
 	
 	RCC_HSI_EnableOrDisable(1);
-	
-	SystemCoreClockUpdate();	
-	System_SetCoreClockFrequency(8000000);
+	///SystemCoreClockUpdate();	
+	///System_SetCoreClockFrequency(8000000);
 }
 
 //****************************************************
