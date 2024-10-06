@@ -1,5 +1,9 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+/*
+	Abbreviations:
+*/
+
 #include <stm32f1xx.h>
 
 
