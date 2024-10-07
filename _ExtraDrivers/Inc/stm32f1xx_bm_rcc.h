@@ -279,22 +279,46 @@ __STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
 	#endif
 }
 
+/*
+LSERDY: External low-speed oscillator ready
+				Set and cleared by hardware to indicate when the external 32 kHz oscillator is stable. After
+				the LSEON bit is cleared, LSERDY goes low after 6 external low-speed oscillator clock cycles.
+				0: External 32 kHz oscillator not ready
+				1: External 32 kHz oscillator ready
+*/
 __STATIC_INLINE uint32_t _LSE_GetReadyFlag(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSERDY_Pos) );
 }
 
+/*
+LSEON: 	External low-speed oscillator enable
+				Set and cleared by software.
+				0: External 32 kHz oscillator OFF
+				1: External 32 kHz oscillator ON
+*/
 __STATIC_INLINE uint32_t _LSE_GetEnableStatus(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEON_Pos) );
 }
 
 //******************************************************************
-__STATIC_INLINE void RCC_LSE_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEON_Pos, status);	
+	
 	if(status){
-		while(_LSE_GetReadyFlag() != 1){};
+		//while(_LSE_GetReadyFlag() != 1){};
+		#ifdef TIMEOUT_INCLUDED
+			return ( Timeout_WaitUntil(_LSE_GetReadyFlag, status) );
+		#else
+			return 0;
+		#endif	
 	}
 	else{
-		while(_LSE_GetEnableStatus() != 0){};
+		//while(_LSE_GetEnableStatus() != 0){};
+		#ifdef TIMEOUT_INCLUDED
+			return ( Timeout_WaitUntil(_LSE_GetEnableStatus, status) );
+		#else
+			return 0;
+		#endif
 	};	
 }
 	
@@ -324,23 +348,46 @@ __STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
 	#endif
 }
 
-
+/*
+LSIRDY: Internal low-speed oscillator ready
+				Set and cleared by hardware to indicate when the internal RC 40 kHz oscillator is stable.
+				After the LSION bit is cleared, LSIRDY goes low after 3 internal RC 40kHz oscillator clock cycles.
+				0: Internal RC 40 kHz oscillator not ready
+				1: Internal RC 40 kHz oscillator ready
+*/
 __STATIC_INLINE uint32_t _LSI_GetReadyFlag(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSIRDY_Pos) );
 }
 
+/*
+LSION: 	Internal low-speed oscillator enable
+				Set and cleared by software.
+				0: Internal RC 40 kHz oscillator OFF
+				1: Internal RC 40 kHz oscillator ON
+*/
 __STATIC_INLINE uint32_t _LSI_GetEnableStatus(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSION_Pos) );
 }
 
 //******************************************************************
-__STATIC_INLINE void RCC_LSI_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CSR, RCC_CSR_LSION_Pos, status);
+	
 	if(status){
-		while(_LSI_GetReadyFlag() != 1){};
+		//while(_LSI_GetReadyFlag() != 1){};
+		#ifdef TIMEOUT_INCLUDED
+			return ( Timeout_WaitUntil(_LSI_GetReadyFlag, status) );
+		#else
+			return 0;
+		#endif	
 	}
 	else{
-		while(_LSI_GetEnableStatus()  != 0){};
+		//while(_LSI_GetEnableStatus()  != 0){};
+		#ifdef TIMEOUT_INCLUDED
+			return ( Timeout_WaitUntil(_LSI_GetEnableStatus, status) );
+		#else
+			return 0;
+		#endif
 	}
 }
 
@@ -365,9 +412,14 @@ __STATIC_INLINE uint32_t _RTC_GetClockSource(void){
 }
 
 //******************************************************************
-__STATIC_INLINE void RCC_RTC_SetClockSource(uint32_t mode){
+__STATIC_INLINE uint32_t RCC_RTC_SetClockSource(uint32_t mode){
 	Write2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos, mode);
-	while(_RTC_GetClockSource() != mode){};	
+	//while(_RTC_GetClockSource() != mode){};
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_RTC_GetClockSource, mode) );
+	#else
+		return 0;
+	#endif		
 }
 
 /*	
