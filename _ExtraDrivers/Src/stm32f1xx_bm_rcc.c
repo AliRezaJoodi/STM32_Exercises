@@ -45,6 +45,7 @@ void RCC_RTC_ConfigDefault1(void){
 	RCC_LSE_EnableOrDisable(0);
 	RCC_LSE_SetClockSource(LSE_CLKSOURCE_XTAL);
 	
+	// if	
 	RCC_BackupDomain_Reset();
 	RCC_RTC_SetClockSource(RTC_CLKSOURCE_LSE);
 	
