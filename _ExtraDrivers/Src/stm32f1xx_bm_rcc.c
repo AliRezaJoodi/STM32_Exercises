@@ -15,8 +15,6 @@ void RCC_SystemClock_ConfigDefault1(void){
 	RCC_SYSCLK_SetClockSource(SYSTEM_CLKSOURCE_HSI);
 	
 	RCC_HSI_EnableOrDisable(1);
-	///SystemCoreClockUpdate();	
-	///System_SetCoreClockFrequency(8000000);
 }
 
 //****************************************************
@@ -42,14 +40,17 @@ void RCC_SystemClock_ConfigDefault2(void){
 void RCC_RTC_ConfigDefault1(void){
 	PWR_BackupDomain_EnableOrDisable(1);
 	
-	RCC_LSE_EnableOrDisable(0);
-	RCC_LSE_SetClockSource(LSE_CLKSOURCE_XTAL);
+	if(_LSE_GetClockSource() != LSE_CLKSOURCE_XTAL){
+		RCC_LSE_EnableOrDisable(0);
+		RCC_LSE_SetClockSource(LSE_CLKSOURCE_XTAL);
+	}
 	
-	// if	
-	RCC_BackupDomain_Reset();
-	RCC_RTC_SetClockSource(RTC_CLKSOURCE_LSE);
+	if(_RTC_GetClockSource() != RTC_CLKSOURCE_LSE){
+		RCC_BackupDomain_ResetOrRelease(1);
+		RCC_BackupDomain_ResetOrRelease(0);
+		RCC_RTC_SetClockSource(RTC_CLKSOURCE_LSE);
+	}
 	
 	RCC_LSE_EnableOrDisable(1);
-	//RCC_LSI_EnableOrDisable(0);
 	RCC_RTC_EnableOrDisable(1);
 }

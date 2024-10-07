@@ -14,6 +14,7 @@
 #include <stm32f1xx.h>
 
 #include <utility.h>
+#include <timeout.h>
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_pwr.h>
 
@@ -260,14 +261,22 @@ __STATIC_INLINE void RCC_APB2_SetPrescaler(uint32_t mode){
 }*/
 
 /*	BDRST: Backup domain software reset
+		Set and cleared by software.
 		0: Reset not activated.
 		1: Resets the entire Backup domain. */
+__STATIC_INLINE uint32_t _BackupDomain_GetResetStatus(void){
+		return ( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) );
+}
+
 //******************************************************************
-__STATIC_INLINE void RCC_BackupDomain_Reset(void){
-	SetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos);
-	while( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) != 1){};
-	ClearBit(RCC->BDCR, RCC_BDCR_BDRST_Pos);
-	while( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) != 0){};
+__STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
+	WriteBit(RCC->BDCR, RCC_BDCR_BDRST_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_BackupDomain_GetResetStatus, status) );
+	#else
+		return 0;
+	#endif
 }
 
 __STATIC_INLINE uint32_t _LSE_GetReadyFlag(void){
@@ -288,42 +297,31 @@ __STATIC_INLINE void RCC_LSE_EnableOrDisable(uint32_t status){
 		while(_LSE_GetEnableStatus() != 0){};
 	};	
 }
-
-/*	LSEBYP: External low-speed oscillator bypass
-		This bit can be written only when the external 32 kHz oscillator is disabled.*/
-/*__STATIC_INLINE void _LSE_EnableOrDisableBypass(uint32_t status){
-	WriteBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos, status);
-}*/
-
 	
-/*	LSEBYP: External low-speed oscillator bypass
-		This bit can be written only when the external 32 kHz oscillator is disabled.
-		0: LSE oscillator not bypassed
-		1: LSE oscillator bypassed */
+/*	
+LSEBYP: External low-speed oscillator bypass
+				Set and cleared by software to bypass oscillator in debug mode.
+				This bit can be written only when the external 32 kHz oscillator is disabled.
+				0: LSE oscillator not bypassed
+				1: LSE oscillator bypassed 
+*/
+
 #define LSE_CLKSOURCE_XTAL			0b0
 #define LSE_CLKSOURCE_EXTCLK		0b1
-///#define LSE_CLKSOURCE_NONE      0b10
+
+__STATIC_INLINE uint32_t _LSE_GetClockSource(void){
+		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos) );
+}
+
 //******************************************************************
-__STATIC_INLINE void RCC_LSE_SetClockSource(uint32_t mode){
+__STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos, mode);
-	while( GetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos) != mode){};
-	//RCC_LSE_EnableOrDisable(0);
-	/*switch(mode){
-		case LSE_CLKSOURCE_XTAL:
-			ClearBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos);
-			break;
-		case LSE_CLKSOURCE_EXTCLK:
-			SetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos);
-			break;
-	}	*/
-	/*if(mode == LSE_CLKSOURCE_XTAL){
-		_LSE_EnableOrDisableBypass(0);
-		RCC_LSE_EnableOrDisable(1);
-	}
-	else if(mode == LSE_CLKSOURCE_EXTCLK){
-		_LSE_EnableOrDisableBypass(1);
-		RCC_LSE_EnableOrDisable(1);
-	}*/
+	//while( _LSE_GetClockSource() != mode){};
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_LSE_GetClockSource, mode) );
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -346,34 +344,50 @@ __STATIC_INLINE void RCC_LSI_EnableOrDisable(uint32_t status){
 	}
 }
 
-__STATIC_INLINE uint32_t _RTC_GetClockSource(void){
-		return ( Get2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos) );
-}
+/*	
+RTCSEL[1:0]: 	RTC clock source selection
+							Set by software to select the clock source for the RTC.
+							Once the RTC clock source has been selected, it cannot be changed anymore unless the Backup domain is reset. 
+							The BDRST bit can be used to reset them. 
+							00: No clock
+							01: LSE oscillator clock used as RTC clock
+							10: LSI oscillator clock used as RTC clock
+							11: HSE oscillator clock divided by 128 used as RTC clock
+*/
 
-/*	RTCSEL[1:0]: RTC clock source selection
-		Once the RTC clock source has been selected, it cannot be changed anymore unless the Backup domain is reset. 
-		The BDRST bit can be used to reset them. */
 #define RTC_CLKSOURCE_NONE					0b00
 #define RTC_CLKSOURCE_LSE    				0b01
 #define RTC_CLKSOURCE_LSI    				0b10
 #define RTC_CLKSOURCE_HSE_DIV128		0b11
+
+__STATIC_INLINE uint32_t _RTC_GetClockSource(void){
+		return ( Get2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos) );
+}
+
 //******************************************************************
 __STATIC_INLINE void RCC_RTC_SetClockSource(uint32_t mode){
 	Write2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos, mode);
 	while(_RTC_GetClockSource() != mode){};	
 }
 
+/*	
+RTCEN: 	RTC clock enable
+				0: RTC clock disabled
+				1: RTC clock enabled 
+*/
 __STATIC_INLINE uint32_t _RTC_GeEnableStatus(void){
 	return ( GetBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos) );
 }
 
-/*	RTCEN: RTC clock enable
-		0: RTC clock disabled
-		1: RTC clock enabled */
 //******************************************************************
-__STATIC_INLINE void RCC_RTC_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_RTC_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos, status);
-	while(_RTC_GeEnableStatus() != status){};
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_RTC_GeEnableStatus, status) );
+	#else
+		return 0;
+	#endif
 }
 
 //******************************************************************
