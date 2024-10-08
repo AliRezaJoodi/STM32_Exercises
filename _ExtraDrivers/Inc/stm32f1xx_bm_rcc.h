@@ -233,32 +233,58 @@ __STATIC_INLINE void RCC_SYSCLK_SetClockSource(uint32_t mode){
 __STATIC_INLINE void RCC_AHB_SetPrescaler(uint32_t value){
 		Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, value);
 }
-		
+
+/*
+PPRE1[2:0]: APB Low-speed prescaler (APB1)
+						Set and cleared by software to control the division factor of the APB Low speed clock (PCLK1).
+						0xx: HCLK not divided
+						100: HCLK divided by 2
+						101: HCLK divided by 4
+						110: HCLK divided by 8
+						111: HCLK divided by 16
+						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
+*/
+
 #define APB1_DIV1		0b000
 #define APB1_DIV2		0b100
 #define APB1_DIV4		0b101
 #define APB1_DIV8		0b110
 #define APB1_DIV16	0b111
-// Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
+
+__STATIC_INLINE uint32_t _APB1_GetPrescaler(void){
+		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
+}
+
 //******************************************************************
 __STATIC_INLINE void RCC_APB1_SetPrescaler(uint32_t mode){
 		Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, mode);
 }
+
+/*
+PPRE2[2:0]: APB high-speed prescaler (APB2)
+						Set and cleared by software to control the division factor of the APB High speed clock (PCLK2).
+						0xx: HCLK not divided
+						100: HCLK divided by 2
+						101: HCLK divided by 4
+						110: HCLK divided by 8
+						111: HCLK divided by 16
+						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
+*/
 
 #define APB2_DIV1		0b000
 #define APB2_DIV2		0b100
 #define APB2_DIV4		0b101
 #define APB2_DIV8		0b110
 #define APB2_DIV16	0b111
-// Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
+
+__STATIC_INLINE uint32_t _APB2_GetPrescaler(void){
+		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
+}
+
 //******************************************************************
 __STATIC_INLINE void RCC_APB2_SetPrescaler(uint32_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, mode);
 }
-
-/*__STATIC_INLINE uint32_t _BackupDomain_GetResetStatus(void){
-		return ( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) );
-}*/
 
 /*	BDRST: Backup domain software reset
 		Set and cleared by software.

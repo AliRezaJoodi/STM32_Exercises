@@ -113,7 +113,7 @@ int main(void)
   //LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 	BUS_PWR_EnableOrDisable(1);
   /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+  //NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
