@@ -228,18 +228,16 @@ int main(void)
   * @param None
   * @retval None
   */
-static void MX_RTC_Init(void)
-{
-
+static void MX_RTC_Init(void){
   /* USER CODE BEGIN RTC_Init 0 */
 
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
 
-    LL_PWR_EnableBkUpAccess();
-    /* Enable BKP CLK enable for backup registers */
-    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
+  LL_PWR_EnableBkUpAccess();
+  /* Enable BKP CLK enable for backup registers */
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
   /* Peripheral clock enable */
   //LL_RCC_EnableRTC();
 	RCC_RTC_EnableOrDisable(1);
