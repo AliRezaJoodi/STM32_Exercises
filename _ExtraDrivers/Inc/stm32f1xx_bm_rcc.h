@@ -42,11 +42,17 @@ __STATIC_INLINE uint32_t _HSI_GetReadyFlag(void){
 }
 
 //******************************************************************
-__STATIC_INLINE void RCC_HSI_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_HSI_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_HSION_Pos, status);
-	if(status){
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_HSI_GetReadyFlag, status) );
+	#else
+		return 0;
+	#endif
+	/*if(status){
 		while(!_HSI_GetReadyFlag()){};
-	}	
+	}*/	
 }
 
 __STATIC_INLINE uint32_t _HSE_GetReadyFlag(void){
@@ -58,15 +64,21 @@ __STATIC_INLINE uint32_t _HSE_GetEnableStatus(void){
 }
 
 //******************************************************************
-__STATIC_INLINE void RCC_HSE_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_HSE_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_HSEON_Pos, status);
 	
-	if(status){
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_HSE_GetReadyFlag, status) );
+	#else
+		return 0;
+	#endif
+	
+	/*if(status){
 		while(_HSE_GetReadyFlag() != 1){};
 	}
 	else{
 		while(_HSE_GetEnableStatus() != 0){};
-	}
+	}*/
 }
 
 // The HSEBYP bit can be written only if the HSE oscillator is disabled.
@@ -110,25 +122,44 @@ __STATIC_INLINE void RCC_HSE_SetClockSource(uint32_t mode){
 	}*/
 }
 
+/*
+PLLRDY: PLL clock ready flag
+				Set by hardware to indicate that the PLL is locked.
+				0: PLL unlocked
+				1: PLL locked
+*/
 __STATIC_INLINE uint32_t _PLL_GetReadyFlag(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLRDY_Pos) );
 }
 
+/*
+PLLON: 	PLL enable
+				Set and cleared by software to enable PLL.
+				Cleared by hardware when entering Stop or Standby mode. 
+				This bit can not be reset if the PLL clock is used as system clock or is selected to become the system clock.
+				0: PLL OFF
+				1: PLL ON
+*/
 __STATIC_INLINE uint32_t _PLL_GetEnableStatus(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLON_Pos) );
 }
 
-// PLLON: PLL enable
-// This bit can not be reset if the PLL clock is used as system clock or is selected to become the system clock.
 //******************************************************************
-__STATIC_INLINE void RCC_PLL_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint32_t RCC_PLL_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_PLLON_Pos, status);
-	if(status){
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_PLL_GetReadyFlag, status) );
+	#else
+		return 0;
+	#endif
+	
+	/*if(status){
 		while(_PLL_GetReadyFlag() != 1){};
 	}
 	else{
 		while(_PLL_GetEnableStatus() != 0){};
-	};	
+	};*/	
 }
 
 
@@ -330,7 +361,12 @@ __STATIC_INLINE uint32_t _LSE_GetEnableStatus(void){
 __STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEON_Pos, status);	
 	
-	if(status){
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_LSE_GetReadyFlag, status) );
+	#else
+		return 0;
+	#endif
+	/*if(status){
 		//while(_LSE_GetReadyFlag() != 1){};
 		#ifdef TIMEOUT_INCLUDED
 			return ( Timeout_WaitUntil(_LSE_GetReadyFlag, status) );
@@ -345,7 +381,7 @@ __STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 		#else
 			return 0;
 		#endif
-	};	
+	};*/	
 }
 	
 /*	
@@ -399,7 +435,13 @@ __STATIC_INLINE uint32_t _LSI_GetEnableStatus(void){
 __STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CSR, RCC_CSR_LSION_Pos, status);
 	
-	if(status){
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_LSI_GetReadyFlag, status) );
+	#else
+		return 0;
+	#endif	
+	
+	/*if(status){
 		//while(_LSI_GetReadyFlag() != 1){};
 		#ifdef TIMEOUT_INCLUDED
 			return ( Timeout_WaitUntil(_LSI_GetReadyFlag, status) );
@@ -414,7 +456,7 @@ __STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 		#else
 			return 0;
 		#endif
-	}
+	}*/
 }
 
 /*	
