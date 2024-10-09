@@ -198,10 +198,8 @@ __STATIC_INLINE void RTC_SecondFlag_ResetFlag(void){
 }
 
 /*
-RTC_PRLH:	RTC prescaler load register high, 16 Bits, Write only
-					PRL[19:16]: RTC prescaler reload value high
-RTC_PRLL:	RTC prescaler load register low, 16 Bits, Write only
-					PRL[15:0]: RTC prescaler reload value low
+RTC_PRLH:	RTC prescaler load register high, Write only, Included PRL[19:16]
+RTC_PRLL:	RTC prescaler load register low, Write only, Included PRL[15:0]
 					
 					The Prescaler Load registers keep the period counting value of the RTC prescaler. 
 					They are write-protected by the RTOFF bit in the RTC_CR register, and a write operation is allowed if the RTOFF value is ‘1’.
@@ -216,6 +214,54 @@ RTC_PRLL:	RTC prescaler load register low, 16 Bits, Write only
 __STATIC_INLINE void RTC_SetPrescaler(uint32_t prescaler){
 	RTC->PRLH = 0xF & (prescaler >> 16);
   RTC->PRLL = 0xFFFF & prescaler;
+}
+
+/*
+RTC_DIVH: RTC prescaler divider register high, 16-bit register, Read Only, Included RTC_DIV[19:16]
+RTC_DIVL: RTC prescaler divider register low, 16-bit register, Read Only, Included RTC_DIV[15:0]
+
+					During each period of TR_CLK, the counter inside the RTC prescaler is reloaded with the value stored in the RTC_PRL register.
+					To get an accurate time measurement it is possible to read the current value of the prescaler counter, 
+					stored in the RTC_DIV register, without stopping it. 
+					This register is read-only and it is reloaded by hardware after any change in the RTC_PRL or RTC_CNT registers.
+*/
+
+__STATIC_INLINE uint32_t RTC_GetDivider(void){
+	uint32_t high= (RTC->DIVH) & 0xF;
+	uint32_t low= (RTC->DIVL) & 0xFFFF;
+	uint32_t out= (high<<16) | low;
+	return out;
+}
+
+/*
+RTC_CNTH: RTC counter register high, 16-bit
+RTC_CNTL: RTC counter register low, 16-bit
+
+					Note: For write to this register it is necessary to enter configuration mode.
+*/
+
+__STATIC_INLINE uint32_t RTC_GetCounterValue(void){
+	uint32_t high= (RTC->CNTH) & 0xFFFF;
+	uint32_t low= (RTC->CNTL) & 0xFFFF;
+	uint32_t out= (high<<16) | low;
+	return out;	
+}
+
+__STATIC_INLINE void RTC_SetCounterValue(uint32_t value){
+	RTC->CNTH = (value>>16) & 0xFFFF;
+	RTC->CNTL = value & 0xFFFF;
+}
+
+/*
+RTC_ALRH: RTC alarm register high, 16-bit, Write only
+RTC_ALRL: RTC alarm register low, 16-bit, Write only
+
+					Note: For write to this register it is necessary to enter configuration mode.
+*/
+
+__STATIC_INLINE void RTC_SetAlarmValue(uint32_t value){
+	RTC->ALRH = (value>>16) & 0xFFFF;
+	RTC->ALRL = value & 0xFFFF;
 }
 
 #ifdef __cplusplus
