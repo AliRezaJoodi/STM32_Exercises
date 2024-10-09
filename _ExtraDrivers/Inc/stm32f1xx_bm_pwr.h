@@ -19,7 +19,8 @@ extern "C" {
 
 
 /*
-DBP:	Disable backup domain write protection.
+DBP:	Disable backup domain write protection
+			1 Bit, Read/Write by software
 			In reset state, the RTC and backup registers are protected against parasitic write access.
 			This bit must be set to enable write access to these registers.
 			0: Access to RTC and Backup registers disabled
@@ -31,7 +32,6 @@ __STATIC_INLINE uint32_t _BackupDomain_GetAccessStatus(void){
 		return ( GetBit(PWR->CR, PWR_CR_DBP_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t PWR_BackupDomain_EnableOrDisable(uint32_t status){
 	WriteBit(PWR->CR, PWR_CR_DBP_Pos, status);
 

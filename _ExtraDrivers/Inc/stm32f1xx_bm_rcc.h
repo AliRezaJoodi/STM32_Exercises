@@ -25,7 +25,6 @@
 extern "C" {
 #endif
 
-//******************************************************************
 __STATIC_INLINE void RCC_HSI_SetCalibTrimming(uint32_t value){
 	RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (value<<RCC_CR_HSITRIM_Pos);
 }
@@ -50,9 +49,6 @@ __STATIC_INLINE uint32_t RCC_HSI_EnableOrDisable(uint32_t status){
 	#else
 		return 0;
 	#endif
-	/*if(status){
-		while(!_HSI_GetReadyFlag()){};
-	}*/	
 }
 
 __STATIC_INLINE uint32_t _HSE_GetReadyFlag(void){
@@ -63,7 +59,6 @@ __STATIC_INLINE uint32_t _HSE_GetEnableStatus(void){
 		return ( GetBit(RCC->CR, RCC_CR_HSEON_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_HSE_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_HSEON_Pos, status);
 	
@@ -72,54 +67,25 @@ __STATIC_INLINE uint32_t RCC_HSE_EnableOrDisable(uint32_t status){
 	#else
 		return 0;
 	#endif
-	
-	/*if(status){
-		while(_HSE_GetReadyFlag() != 1){};
-	}
-	else{
-		while(_HSE_GetEnableStatus() != 0){};
-	}*/
 }
 
-// The HSEBYP bit can be written only if the HSE oscillator is disabled.
-/*__STATIC_INLINE void _HSE_EnableOrDisableBypass(uint32_t status){
-	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, status);
-}*/
-
-/* 	HSEBYP: External high-speed clock bypass
-		The HSEBYP bit can be written only if the HSE oscillator is disabled.
-		0: external 3-25 MHz oscillator not bypassed
-		1: external 3-25 MHz oscillator bypassed with external clock
+/* 	
+HSEBYP: External high-speed clock bypass
+				The HSEBYP bit can be written only if the HSE oscillator is disabled.
+				0: external 3-25 MHz oscillator not bypassed
+				1: external 3-25 MHz oscillator bypassed with external clock
 */
-//******************************************************************
+
 __STATIC_INLINE uint32_t RCC_HSE_GetClockSource(void){
   return ( GetBit(RCC->CR, RCC_CR_HSEBYP_Pos) );
 }
 
 #define HSE_CLKSOURCE_XTAL      0b0
 #define HSE_CLKSOURCE_EXTCLK		0b1
-//#define HSE_CLKSOURCE_NONE      0b10
-//******************************************************************
+
 __STATIC_INLINE void RCC_HSE_SetClockSource(uint32_t mode){
 	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, mode);
 	while(RCC_HSE_GetClockSource() != mode){};	
-	//RCC_HSE_EnableOrDisable(0);
-	/*switch(mode){
-		case HSE_CLKSOURCE_XTAL:
-			ClearBit(RCC->CR, RCC_CR_HSEBYP_Pos);
-			//_HSE_EnableOrDisableBypass(0);
-			break;
-		case HSE_CLKSOURCE_EXTCLK:
-			SetBit(RCC->CR, RCC_CR_HSEBYP_Pos);
-			//_HSE_EnableOrDisableBypass(1);
-			break;
-	}	*/
-	/*if(mode == HSE_CLKSOURCE_XTAL){
-		_HSE_EnableOrDisableBypass(0);
-	}
-	else if(mode == HSE_CLKSOURCE_EXTCLK){
-		_HSE_EnableOrDisableBypass(1);
-	}*/
 }
 
 /*
@@ -144,7 +110,6 @@ __STATIC_INLINE uint32_t _PLL_GetEnableStatus(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLON_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_PLL_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_PLLON_Pos, status);
 	
@@ -152,16 +117,8 @@ __STATIC_INLINE uint32_t RCC_PLL_EnableOrDisable(uint32_t status){
 		return ( Timeout_WaitUntil(_PLL_GetReadyFlag, status) );
 	#else
 		return 0;
-	#endif
-	
-	/*if(status){
-		while(_PLL_GetReadyFlag() != 1){};
-	}
-	else{
-		while(_PLL_GetEnableStatus() != 0){};
-	};*/	
+	#endif	
 }
-
 
 /* 	
 PLLSRC:		PLL entry clock source
@@ -173,11 +130,11 @@ PLLXTPRE: HSE divider for PLL entry
 					0: HSE clock not divided
 					1: HSE clock divided by 2
 */
+
 #define PLL_CLKSOURCE_HSI_DIV2	0b00
 #define PLL_CLKSOURCE_HSE_DIV1  0b01
 #define PLL_CLKSOURCE_HSE_DIV2	0b10
 
-//******************************************************************
 __STATIC_INLINE void RCC_PLL_SetClockSource(uint32_t mode){
 	char e_status= _PLL_GetEnableStatus();
 
@@ -203,6 +160,7 @@ PLLMUL:	PLL multiplication factor
 				These bits can be written only when PLL is disabled.
 				Caution: The PLL output frequency must not exceed 72 MHz.
 */
+
 #define PLL_MUL_2			0b0000
 #define PLL_MUL_3			0b0001
 #define PLL_MUL_4			0b0010
@@ -220,7 +178,6 @@ PLLMUL:	PLL multiplication factor
 #define PLL_MUL_16		0b1110
 #define PLL_MUL_16_		0b1111
 
-//******************************************************************
 __STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint32_t mode){
 	Write4Bit(RCC->CFGR, RCC_CFGR_PLLMULL_Pos, mode);
 	while( Get4Bit(RCC->CFGR,RCC_CFGR_PLLMULL_Pos) != mode ){};
@@ -244,7 +201,6 @@ __STATIC_INLINE uint32_t _SYSCLK_GetClockSource(void){
 		return ( Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE void RCC_SYSCLK_SetClockSource(uint32_t mode){
 	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, mode);
 	while(_SYSCLK_GetClockSource() != mode){};	
@@ -259,8 +215,8 @@ __STATIC_INLINE void RCC_SYSCLK_SetClockSource(uint32_t mode){
 #define AHB_DIV128		0b1101
 #define AHB_DIV256   	0b1110
 #define AHB_DIV512		0b1111	
+
 // The AHB clock frequency must be at least 25 MHz when the Ethernet is used.
-//******************************************************************
 __STATIC_INLINE void RCC_AHB_SetPrescaler(uint32_t value){
 		Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, value);
 }
@@ -286,7 +242,6 @@ __STATIC_INLINE uint32_t _APB1_GetPrescaler(void){
 		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE void RCC_APB1_SetPrescaler(uint32_t mode){
 		Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, mode);
 }
@@ -312,20 +267,22 @@ __STATIC_INLINE uint32_t _APB2_GetPrescaler(void){
 		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE void RCC_APB2_SetPrescaler(uint32_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, mode);
 }
 
-/*	BDRST: Backup domain software reset
-		Set and cleared by software.
-		0: Reset not activated.
-		1: Resets the entire Backup domain. */
+/*	
+BDRST: 	Backup domain software reset
+				1 Bit, Read/Write by software
+				Note: The RTC_PRL, RTC_ALR, RTC_CNT, and RTC_DIV registers are reset only by a Backup Domain reset.
+				0: Reset not activated.
+				1: Resets the entire Backup domain. 
+*/
+
 __STATIC_INLINE uint32_t _BackupDomain_GetResetStatus(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_BDRST_Pos, status);
 	
@@ -338,26 +295,28 @@ __STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
 
 /*
 LSERDY: External low-speed oscillator ready
+				1 Bit, Read by software, Write by hardware
 				Set and cleared by hardware to indicate when the external 32 kHz oscillator is stable. After
 				the LSEON bit is cleared, LSERDY goes low after 6 external low-speed oscillator clock cycles.
 				0: External 32 kHz oscillator not ready
 				1: External 32 kHz oscillator ready
 */
+
 __STATIC_INLINE uint32_t _LSE_GetReadyFlag(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSERDY_Pos) );
 }
 
 /*
 LSEON: 	External low-speed oscillator enable
-				Set and cleared by software.
+				1 Bit, Read/Write by software
 				0: External 32 kHz oscillator OFF
 				1: External 32 kHz oscillator ON
 */
+
 __STATIC_INLINE uint32_t _LSE_GetEnableStatus(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEON_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEON_Pos, status);	
 	
@@ -365,27 +324,12 @@ __STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 		return ( Timeout_WaitUntil(_LSE_GetReadyFlag, status) );
 	#else
 		return 0;
-	#endif
-	/*if(status){
-		//while(_LSE_GetReadyFlag() != 1){};
-		#ifdef TIMEOUT_INCLUDED
-			return ( Timeout_WaitUntil(_LSE_GetReadyFlag, status) );
-		#else
-			return 0;
-		#endif	
-	}
-	else{
-		//while(_LSE_GetEnableStatus() != 0){};
-		#ifdef TIMEOUT_INCLUDED
-			return ( Timeout_WaitUntil(_LSE_GetEnableStatus, status) );
-		#else
-			return 0;
-		#endif
-	};*/	
+	#endif	
 }
 	
 /*	
 LSEBYP: External low-speed oscillator bypass
+				1 Bit, Read/Write by software
 				Set and cleared by software to bypass oscillator in debug mode.
 				This bit can be written only when the external 32 kHz oscillator is disabled.
 				0: LSE oscillator not bypassed
@@ -399,10 +343,9 @@ __STATIC_INLINE uint32_t _LSE_GetClockSource(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos, mode);
-	//while( _LSE_GetClockSource() != mode){};
+
 	#ifdef TIMEOUT_INCLUDED
 		return ( Timeout_WaitUntil(_LSE_GetClockSource, mode) );
 	#else
@@ -412,26 +355,28 @@ __STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
 
 /*
 LSIRDY: Internal low-speed oscillator ready
+				1 Bit, Read by software, Write by hardware
 				Set and cleared by hardware to indicate when the internal RC 40 kHz oscillator is stable.
 				After the LSION bit is cleared, LSIRDY goes low after 3 internal RC 40kHz oscillator clock cycles.
 				0: Internal RC 40 kHz oscillator not ready
 				1: Internal RC 40 kHz oscillator ready
 */
+
 __STATIC_INLINE uint32_t _LSI_GetReadyFlag(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSIRDY_Pos) );
 }
 
 /*
 LSION: 	Internal low-speed oscillator enable
-				Set and cleared by software.
+				1 Bit, Read/Write by software
 				0: Internal RC 40 kHz oscillator OFF
 				1: Internal RC 40 kHz oscillator ON
 */
+
 __STATIC_INLINE uint32_t _LSI_GetEnableStatus(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSION_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CSR, RCC_CSR_LSION_Pos, status);
 	
@@ -440,23 +385,6 @@ __STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 	#else
 		return 0;
 	#endif	
-	
-	/*if(status){
-		//while(_LSI_GetReadyFlag() != 1){};
-		#ifdef TIMEOUT_INCLUDED
-			return ( Timeout_WaitUntil(_LSI_GetReadyFlag, status) );
-		#else
-			return 0;
-		#endif	
-	}
-	else{
-		//while(_LSI_GetEnableStatus()  != 0){};
-		#ifdef TIMEOUT_INCLUDED
-			return ( Timeout_WaitUntil(_LSI_GetEnableStatus, status) );
-		#else
-			return 0;
-		#endif
-	}*/
 }
 
 /*	
@@ -479,10 +407,9 @@ __STATIC_INLINE uint32_t _RTC_GetClockSource(void){
 		return ( Get2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_RTC_SetClockSource(uint32_t mode){
 	Write2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos, mode);
-	//while(_RTC_GetClockSource() != mode){};
+
 	#ifdef TIMEOUT_INCLUDED
 		return ( Timeout_WaitUntil(_RTC_GetClockSource, mode) );
 	#else
@@ -492,14 +419,15 @@ __STATIC_INLINE uint32_t RCC_RTC_SetClockSource(uint32_t mode){
 
 /*	
 RTCEN: 	RTC clock enable
+				1 Bit, Read/Write by software
 				0: RTC clock disabled
 				1: RTC clock enabled 
 */
+
 __STATIC_INLINE uint32_t _RTC_GeEnableStatus(void){
 	return ( GetBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos) );
 }
 
-//******************************************************************
 __STATIC_INLINE uint32_t RCC_RTC_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos, status);
 	
