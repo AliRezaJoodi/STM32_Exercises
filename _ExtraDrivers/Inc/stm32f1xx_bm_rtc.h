@@ -295,6 +295,7 @@ uint32_t RTC_ConfigAlarm(uint8_t hour, uint8_t min, uint8_t sec);
 void RTC_ConfigDefault1(void);
 uint32_t RTC_GetTime(uint8_t *hour, uint8_t *min, uint8_t *sec);
 
+
 #ifdef __cplusplus
 }
 #endif

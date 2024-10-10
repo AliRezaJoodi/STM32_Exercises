@@ -124,24 +124,26 @@ int main(void)
   MX_GPIO_Init();
   MX_RTC_Init();
   MX_USART1_UART_Init();
+	printf("TEST USART1 \r\n");
   /* USER CODE BEGIN 2 */
   /* configue date, time and alarm and also enabling alarm interrupt */
-//  LL_RTC_DisableWriteProtection(RTC);
-//  LL_RTC_EnterInitMode(RTC);
-//	LL_RTC_EnableIT_ALR(RTC);
+	LL_RTC_DisableWriteProtection(RTC);
+  LL_RTC_EnterInitMode(RTC);
+	LL_RTC_EnableIT_ALR(RTC);
+	LL_RTC_ClearFlag_ALR(RTC);
 //	LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_17);
 //	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_17);
 //	
-//	LL_RTC_ExitInitMode(RTC);
-//	LL_RTC_EnableWriteProtection(RTC);		
+	LL_RTC_ExitInitMode(RTC);
+	LL_RTC_EnableWriteProtection(RTC);		
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	
-	//TIME_Config(23, 58, 57);
-	//ALARM_Config(00, 00, 30);
-	printf("TEST USART1 \r\n");
+	TIME_Config(23, 59, 55);
+	ALARM_Config(00, 00, 05);
+
 	//printf("GetRTCClockSource: %.2d\r\n", buffer);
 	
   while(1){
@@ -150,9 +152,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		/* update and print date and time */
 		for(int i=0; i<10; i++){	
-		TIME_Update();
-		printf("Time: %.2d:%.2d:%.2d\r\n", Time.hour, Time.min, Time.sec);
-		LL_mDelay(998);
+			TIME_Update();
+			printf("Time: %.2d:%.2d:%.2d\r\n", Time.hour, Time.min, Time.sec);
+			LL_mDelay(998);
 		}
   }
   /* USER CODE END 3 */
@@ -177,17 +179,10 @@ void SystemClock_Config(void)
 
   }
   LL_PWR_EnableBkUpAccess();
-	
-	//LL_RCC_ForceBackupDomainReset();
-  //LL_RCC_ReleaseBackupDomainReset();
-	//LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
-	//__NOP(); __NOP(); __NOP();
-	//buffer=LL_RCC_GetRTCClockSource();
-	
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE){
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
     LL_RCC_ForceBackupDomainReset();
     LL_RCC_ReleaseBackupDomainReset();
-		LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
   }
   LL_RCC_LSE_Enable();
 
@@ -196,7 +191,10 @@ void SystemClock_Config(void)
   {
 
   }
-
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+  }
   LL_RCC_EnableRTC();
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
@@ -225,12 +223,19 @@ static void MX_RTC_Init(void)
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
+  LL_RTC_TimeTypeDef RTC_TimeStruct = {0};
 
     LL_PWR_EnableBkUpAccess();
     /* Enable BKP CLK enable for backup registers */
     LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
   /* Peripheral clock enable */
   LL_RCC_EnableRTC();
+
+  /* RTC interrupt Init */
+  NVIC_SetPriority(TAMPER_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(TAMPER_IRQn);
+  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(RTC_IRQn);
 
   /* USER CODE BEGIN RTC_Init 1 */
 
@@ -241,6 +246,16 @@ static void MX_RTC_Init(void)
   RTC_InitStruct.AsynchPrescaler = 0xFFFFFFFFU;
   LL_RTC_Init(RTC, &RTC_InitStruct);
   LL_RTC_SetAsynchPrescaler(RTC, 0xFFFFFFFFU);
+
+  /** Initialize RTC and set the Time and Date
+  */
+  RTC_TimeStruct.Hours = 0;
+  RTC_TimeStruct.Minutes = 0;
+  RTC_TimeStruct.Seconds = 0;
+  LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
+
+  /** Initialize RTC and set the Time and Date
+  */
   /* USER CODE BEGIN RTC_Init 2 */
   /* set RTC clock prescaler to 32768 (8000-1 hex)*/
   RTC_InitStruct.AsynchPrescaler = 0x00007FFFU;
