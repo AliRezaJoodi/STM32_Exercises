@@ -93,4 +93,13 @@ uint32_t RTC_GetTime(uint8_t *hour, uint8_t *min, uint8_t *sec){
 void RTC_ConfigDefault1(void){
 	BUS_BKP_EnableOrDisable(1);
 	RTC_ConfigPrescalerLoadRegister(0x00007FFFU);	// TR_CLK = 1S
+	
+	RTC_OverflowInterrupt_EnableOrDisable(1);
+	RTC_OverflowFlag_ClearFlag();
+	
+	RTC_AlarmInterrupt_EnableOrDisable(1);
+	RTC_AlarmFlag_ClearFlag();
+	
+	RTC_SecondInterrupt_EnableOrDisable(1);
+	RTC_SecondFlag_ClearFlag();
 }

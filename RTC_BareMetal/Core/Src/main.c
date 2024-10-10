@@ -11,15 +11,16 @@
 #include <stm32f1xx_bm_timer_systick.h>
 #include <stm32f1xx_bm_usart.h>
 #include <stm32f1xx_bm_rtc.h>
+#include <stm32f1xx_bm_it.h>
 
-void write_uart(char data){
-	//while(!LL_USART_IsActiveFlag_TXE(USART1));
-	//LL_USART_TransmitData8(USART1, (uint8_t)data);
-}
+//void write_uart(char data){
+//	//while(!LL_USART_IsActiveFlag_TXE(USART1));
+//	//LL_USART_TransmitData8(USART1, (uint8_t)data);
+//}
 	
 /* Retargeting stdout_putchar as to use USART_TX for data output */	
 int stdout_putchar(int ch){
-	write_uart(ch);
+	//write_uart(ch);
 	return (ch);
 }
 
@@ -29,13 +30,14 @@ struct time_t
   uint8_t min;
   uint8_t hour;
 };
-
-struct time_t Time;
-struct time_t Alarm;
+struct time_t time;
+struct time_t alarm;
 
 int main(void){
-	char txt[20];
-
+	char txt[50];
+	char error=0;
+	char buffer=0;
+	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
@@ -44,39 +46,37 @@ int main(void){
 	RTC_ConfigDefault1();
 	USART1_ConfigDefault2_TX();
 	USART_PutStringFromFlash(USART1, "USART1 Test");
-
-  //MX_GPIO_Init();
-  //MX_USART1_UART_Init();
-
-//  LL_RTC_DisableWriteProtection(RTC);
-//  LL_RTC_EnterInitMode(RTC);
-//	LL_RTC_EnableIT_ALR(RTC);
-//	LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_17);
-//	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_17);
-//	
-//	LL_RTC_ExitInitMode(RTC);
-//	LL_RTC_EnableWriteProtection(RTC);		
-
+	NVIC_Config();
 
 //	error= RTC_ConfigTime(23, 59, 55);
-//	printf("Error in RTC_ConfigTime: %1d\r\n", error);
+//	sprintf(txt, "%.1d: Error in RTC_ConfigTime", error);	
+//	USART_PutString(USART1, txt);
 //	
 //	error= RTC_ConfigAlarm(00, 00, 5);
-//	printf("Error in RTC_ConfigAlarm: %1d\r\n", error);
-	
+//	sprintf(txt, "%.1d: Error in RTC_ConfigAlarm", error);	
+//	USART_PutString(USART1, txt);
 
-	
-	//RTC_AlarmInterrupt_EnableOrDisable(1);	
-  
+//	buffer= _AlarmInterrupt_GetEnableStatus();
+//	sprintf(txt, "%.1d: Status in AlarmInterrupt", buffer);	
+//	USART_PutString(USART1, txt);
+//	
+//	buffer= _OverflowInterrupt_GetEnableStatus();
+//	sprintf(txt, "%.1d: Status in OverflowInterrupt", buffer);	
+//	USART_PutString(USART1, txt);
+//	
+//	buffer= _SecondInterrupt_GetEnableStatus();
+//	sprintf(txt, "%.1d: Status in SecondInterrupt", buffer);	
+//	USART_PutString(USART1, txt);
+
 	while(1){
-		/*if(RTC_AlarmFlag_GetFlag()){
-			printf("Alarm Flag = 1\r\n");
-		}*/
-		RTC_GetTime(&Time.hour, &Time.min, &Time.sec);	
-		sprintf(txt, "Time: %.2d:%.2d:%.2d", Time.hour, Time.min, Time.sec);	
-		USART_PutString(USART1, txt);
-		
-		SysTick_Delay_1ms(995);
+		//if(RTC_AlarmFlag_GetFlag()){ USART_PutStringFromFlash(USART1, "AlarmFlag: 1"); }
+		//if(RTC_OverflowFlag_GetFlag()){ USART_PutStringFromFlash(USART1, "OverflowFlag: 1"); }
+		if(rtc_second_task){
+			rtc_second_task=0;
+			RTC_GetTime(&time.hour, &time.min, &time.sec);	
+			sprintf(txt, "%.2d:%.2d:%.2d", time.hour, time.min, time.sec);	
+			USART_PutString(USART1, txt);	
+		}
   }
 }
 

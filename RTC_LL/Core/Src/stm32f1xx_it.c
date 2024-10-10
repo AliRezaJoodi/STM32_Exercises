@@ -21,6 +21,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_it.h"
+#include "stdio.h"
+#include "stm32f1xx_ll_usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -198,6 +200,32 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f1xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles Tamper interrupt.
+  */
+void TAMPER_IRQHandler(void)
+{
+  /* USER CODE BEGIN TAMPER_IRQn 0 */
+
+  /* USER CODE END TAMPER_IRQn 0 */
+  /* USER CODE BEGIN TAMPER_IRQn 1 */
+
+  /* USER CODE END TAMPER_IRQn 1 */
+}
+
+/**
+  * @brief This function handles RTC global interrupt.
+  */
+void RTC_IRQHandler(void)
+{
+  /* USER CODE BEGIN RTC_IRQn 0 */
+	printf("RTC_IRQHandler\r\n");
+  /* USER CODE END RTC_IRQn 0 */
+  /* USER CODE BEGIN RTC_IRQn 1 */
+
+  /* USER CODE END RTC_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 
