@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
+//#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -131,11 +131,13 @@ int main(void)
   LL_RTC_EnterInitMode(RTC);
 	LL_RTC_EnableIT_ALR(RTC);
 	LL_RTC_ClearFlag_ALR(RTC);
-//	LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_17);
-//	LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_17);
-//	
+	LL_RTC_EnableIT_SEC(RTC);
+	LL_RTC_ClearFlag_SEC(RTC);
 	LL_RTC_ExitInitMode(RTC);
-	LL_RTC_EnableWriteProtection(RTC);		
+	LL_RTC_EnableWriteProtection(RTC);	
+
+	NVIC_SetPriority(RTC_Alarm_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(RTC_Alarm_IRQn);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -151,10 +153,10 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		/* update and print date and time */
-		for(int i=0; i<10; i++){	
+		if(rtc_second_task ==1){
 			TIME_Update();
 			printf("Time: %.2d:%.2d:%.2d\r\n", Time.hour, Time.min, Time.sec);
-			LL_mDelay(998);
+			rtc_second_task=0;
 		}
   }
   /* USER CODE END 3 */
@@ -249,10 +251,10 @@ static void MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_TimeStruct.Hours = 0;
-  RTC_TimeStruct.Minutes = 0;
-  RTC_TimeStruct.Seconds = 0;
-  LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
+//  RTC_TimeStruct.Hours = 0;
+//  RTC_TimeStruct.Minutes = 0;
+//  RTC_TimeStruct.Seconds = 0;
+//  LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
 
   /** Initialize RTC and set the Time and Date
   */

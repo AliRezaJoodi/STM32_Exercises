@@ -19,10 +19,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 #include "stm32f1xx_it.h"
-#include "stdio.h"
-#include "stm32f1xx_ll_usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -44,7 +41,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+	volatile uint8_t rtc_second_task = 0;
+	volatile uint8_t rtc_alarm_task = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -220,11 +218,39 @@ void TAMPER_IRQHandler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-	printf("RTC_IRQHandler\r\n");
+	if(LL_RTC_IsActiveFlag_SEC(RTC) ==1){
+		LL_RTC_ClearFlag_SEC(RTC);
+		
+		rtc_second_task=1;
+		//printf("RTC_IRQHandler, SECF\r\n");
+	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-
+	if(LL_RTC_IsActiveFlag_ALR(RTC) ==1){
+		LL_RTC_ClearFlag_ALR(RTC);
+		
+		rtc_alarm_task=1;
+		printf("RTC_IRQHandler, ALR\r\n");
+	}
   /* USER CODE END RTC_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Alarm interrupt.
+  */
+void RTC_Alarm_IRQHandler(void)
+{
+  /* USER CODE BEGIN TAMPER_IRQn 0 */
+	if(LL_RTC_IsActiveFlag_ALR(RTC) ==1){
+		LL_RTC_ClearFlag_ALR(RTC);
+		
+		rtc_alarm_task=1;
+		printf("RTC_Alarm_IRQHandler\r\n");
+	}
+  /* USER CODE END TAMPER_IRQn 0 */
+  /* USER CODE BEGIN TAMPER_IRQn 1 */
+
+  /* USER CODE END TAMPER_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

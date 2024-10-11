@@ -28,12 +28,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "main.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+	extern volatile uint8_t rtc_second_task;
+	extern volatile uint8_t rtc_alarm_task;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
