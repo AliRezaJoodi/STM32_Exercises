@@ -24,13 +24,13 @@ int main(void){
 	char txt[20];
 	uint32_t crc32=0;
 	
-	for(uint8_t i=0; i<3; ++i){
+	for(uint8_t i=0; i<3; i++){
 		sprintf(txt, "Data[%1d]=0x%2X", i, data[i]);
 		USART_PutString(USART1, txt);
 	}
-	
-	crc32=CRC32_Calculate(data,3);
-	sprintf(txt, "CRC=0x%2X", crc32);
+
+	crc32 = CRC32_Calculate(data, 3);
+	sprintf(txt, "CRC32=0x%2X", crc32);
 	USART_PutString(USART1, txt);
 	
   while(1){
