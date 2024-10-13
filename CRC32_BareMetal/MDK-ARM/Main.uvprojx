@@ -430,6 +430,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f1xx_bm_crc32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_crc32.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

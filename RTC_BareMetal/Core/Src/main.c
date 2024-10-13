@@ -13,17 +13,6 @@
 #include <stm32f1xx_bm_rtc.h>
 #include <stm32f1xx_bm_it.h>
 
-//void write_uart(char data){
-//	//while(!LL_USART_IsActiveFlag_TXE(USART1));
-//	//LL_USART_TransmitData8(USART1, (uint8_t)data);
-//}
-	
-/* Retargeting stdout_putchar as to use USART_TX for data output */	
-int stdout_putchar(int ch){
-	//write_uart(ch);
-	return (ch);
-}
-
 struct time_t
 {
   uint8_t sec;

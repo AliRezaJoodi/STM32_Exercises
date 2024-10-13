@@ -107,13 +107,13 @@ int main(void)
 	char txt[20];
 	uint32_t crc32=0;
 	
-	for(uint8_t i=0; i<3; ++i){
+	for(uint8_t i=0; i<3; i++){
 		sprintf(txt, "Data[%1d]=0x%2X", i, data[i]);
 		USART_PutString(USART1, txt);
 	}	
 	
 	crc32=LL_CRC_Calculate(data,3);
-	sprintf(txt, "CRC=0x%2X", crc32);
+	sprintf(txt, "CRC32=0x%2X", crc32);
 	USART_PutString(USART1, txt);
 	
   while(1){
@@ -255,12 +255,12 @@ static void MX_GPIO_Init(void)
 uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length) {
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);		// Enable CRC clock
   LL_CRC_ResetCRCCalculationUnit(CRC);		// Reset CRC calculation unit
-  
-	for(uint32_t i=0; i<length; ++i){
+  __NOP(); __NOP(); __NOP();	// Necessary delay
+	
+	for(uint32_t i=0; i<length; i++){
 		LL_CRC_FeedData32(CRC, data[i]);		// Feed data to the CRC unit
   }
 	
-	__NOP();
   uint32_t crc = LL_CRC_ReadData32(CRC);	// Retrieve the final CRC value
   return crc;
 }
