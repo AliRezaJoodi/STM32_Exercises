@@ -21,6 +21,8 @@ IRG List:
 //**********************************************************
 void NVIC_Config(void){	
 	NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+//	__disable_irq();
+//	__enable_irq();
 	
 //	NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
 //	NVIC_EnableIRQ(USART1_IRQn);
