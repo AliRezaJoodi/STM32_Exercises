@@ -2,7 +2,7 @@
 // Bare Metal Programming
 
 #include <stm32f1xx.h>
-#include <core_cm3.h>
+///#include <core_cm3.h>
 #include <utility.h>
 #include <stm32f1xx_bm_gpio.h>
 
