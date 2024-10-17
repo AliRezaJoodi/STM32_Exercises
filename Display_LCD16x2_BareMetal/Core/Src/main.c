@@ -20,16 +20,17 @@ int main(void){
   RCC_SystemClock_ConfigDefault1();
 
 	LCD_Config();
-	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(250);
-	LCD_SetOnOff(0); Delay_ms(250);
-	LCD_SetOnOff(1); Delay_ms(250);
-	LCD_GoToXY(0,1); LCD_PutString(txt); Delay_ms(250);
-	LCD_Cursor_SetOnOff(1); Delay_ms(250);
+	
+	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(1000);
+	LCD_SetOnOff(0); Delay_ms(1000);
+	LCD_SetOnOff(1); Delay_ms(1000);
+	LCD_GoToXY(0,1); LCD_PutString(txt); Delay_ms(1000);
+	LCD_Cursor_SetOnOff(1); Delay_ms(1000);
 	LCD_ClearDisplay();
 	LCD_PutChar(65);
-	LCD_BlinkingCursor_SetOnOff(1); Delay_ms(2000);
+	LCD_BlinkingCursor_SetOnOff(1); Delay_ms(1000);
 	LCD_BlinkingCursor_SetOnOff(0); Delay_ms(1000);
-	LCD_Cursor_SetOnOff(0); Delay_ms(250);
+	LCD_Cursor_SetOnOff(0);
 
   while(1){
   }
