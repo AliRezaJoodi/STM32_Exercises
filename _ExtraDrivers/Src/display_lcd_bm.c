@@ -198,18 +198,16 @@ void LCD_PutStringFromFlash(const char *str){
 //********************************
 void LCD_Config(void){
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(RS_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);
-	
-	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(RW_GPIO);
-	
-	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(EN_GPIO);
-	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(D4_GPIO);
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(D5_GPIO);
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(D6_GPIO);
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D7_GPIO);	
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(D7_GPIO);
+
+	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);	
+	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
 	_LCD_DataPins_ConfigForOutputMode;
 	
 	SysTick_Delay_1ms(40);
