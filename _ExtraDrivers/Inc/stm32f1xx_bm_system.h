@@ -1,15 +1,15 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
-#include <stm32f1xx.h>
-#include <utility.h>
-
 #ifndef _STM32F1xx_BM_SYSTEM_INCLUDED
 #define _STM32F1xx_BM_SYSTEM_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+#include <utility.h>
 
 #define LATENCY0	0b000	// Zero wait state, if 0 < SYSCLK <= 24MHz
 #define LATENCY1	0b001	// One wait state, if 24MHz < SYSCLK <= 48MHz

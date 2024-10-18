@@ -9,16 +9,16 @@
 		RCC_APB2ENR: 	APB2 peripheral clock enable register
 */
 
-#include <stm32f1xx.h>
-#include <utility.h>
-#include <timeout.h>
-
 #ifndef _STM32F1xx_BM_BUS_INCLUDED
 #define _STM32F1xx_BM_BUS_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+#include <utility.h>
+#include <timeout.h>
 
 /*
 PWRRST:	Power interface reset

@@ -1,9 +1,6 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
-#include <stm32f1xx.h>
-#include <utility.h>
-
 #ifndef _STM32F1xx_BM_GPIO_INCLUDED
 #define _STM32F1xx_BM_GPIO_INCLUDED
 
@@ -11,6 +8,8 @@
 extern "C" {
 #endif
 
+#include <stm32f1xx.h>
+#include <utility.h>
 
 /*
 #define FULL_SWJ												0b000		//SWD(on),	JTAG(on), 	NJTRST(on)

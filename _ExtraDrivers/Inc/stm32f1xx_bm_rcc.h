@@ -11,19 +11,19 @@
 	EXTCLK:	External Clock Source
 */
 
-#include <stm32f1xx.h>
-
-#include <utility.h>
-#include <timeout.h>
-#include <stm32f1xx_bm_system.h>
-#include <stm32f1xx_bm_pwr.h>
-
 #ifndef _STM32F1xx_BM_RCC_INCLUDED
 #define _STM32F1xx_BM_RCC_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+
+#include <utility.h>
+#include <timeout.h>
+#include <stm32f1xx_bm_system.h>
+#include <stm32f1xx_bm_pwr.h>
 
 __STATIC_INLINE void RCC_HSI_SetCalibTrimming(uint32_t value){
 	RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (value<<RCC_CR_HSITRIM_Pos);

@@ -1,5 +1,8 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+//#include "main.h"
+#include <_hardware.h>
+
 #include <utility.h>
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_rcc.h>
@@ -21,17 +24,20 @@ int main(void){
 
 	LCD_Config();
 	
-	LCD_GoToXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(1000);
-	LCD_SetOnOff(0); Delay_ms(1000);
-	LCD_SetOnOff(1); Delay_ms(1000);
-	LCD_GoToXY(0,1); LCD_PutString(txt); Delay_ms(1000);
+	LCD_Cursor_SetXY(0,0); LCD_PutString("0123456789012345"); Delay_ms(1000);
+	LCD_Display_SetOnOff(0); Delay_ms(1000);
+	LCD_Display_SetOnOff(1); Delay_ms(1000);
+	LCD_Cursor_SetXY(0,1); LCD_PutString(txt); Delay_ms(1000);
 	LCD_Cursor_SetOnOff(1); Delay_ms(1000);
-	LCD_ClearDisplay();
+	LCD_Display_Clear();
 	LCD_PutChar(65);
-	LCD_BlinkingCursor_SetOnOff(1); Delay_ms(1000);
-	LCD_BlinkingCursor_SetOnOff(0); Delay_ms(1000);
-	LCD_Cursor_SetOnOff(0);
-
+	LCD_Cursor_SetBlinking(1); Delay_ms(1000);
+	LCD_Cursor_SetBlinking(0); Delay_ms(1000);
+	LCD_Cursor_SetOnOff(0); Delay_ms(1000);
+	
+	LCD_Cursor_SetXY(8,0); LCD_PutStringFromFlash("Line1");
+	LCD_Cursor_SetXY(8,1); LCD_PutStringFromFlash("Line2");
+	
   while(1){
   }
 }
