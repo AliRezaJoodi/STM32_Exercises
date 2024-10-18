@@ -51,14 +51,13 @@ extern "C" {
 	#define D7_PIN  			7
 #endif
 
+//***********************************************
 void LCD_Config(void);
 void LCD_Display_SetOnOff(char status);
 void LCD_Display_Clear(void);
 void LCD_Cursor_SetXY(uint8_t x, uint8_t y);
 void LCD_Cursor_SetOnOff(char status);
 void LCD_Cursor_SetBlinking(char status);
-//void LCD_InterfaceDataLength_Set4BitOr8Bit(char mode);
-
 void LCD_PutChar(char data);
 void LCD_PutString(char *str);
 void LCD_PutStringFromFlash(const char *str);
