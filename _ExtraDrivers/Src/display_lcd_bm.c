@@ -208,7 +208,10 @@ void LCD_Config(void){
 	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);	
 	GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);
 	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
-	_LCD_DataPins_ConfigForOutputMode;
+	GPIO_ConfigPinForPushPullOutputMode(D7_GPIO, D7_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(D6_GPIO, D6_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(D5_GPIO, D5_PIN);
+	GPIO_ConfigPinForPushPullOutputMode(D4_GPIO, D4_PIN);
 	
 	SysTick_Delay_1ms(40);
 	///Delay_ms(40);
