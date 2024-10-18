@@ -1,14 +1,9 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
-#include <stm32f1xx.h>
-///#include <core_cm3.h>
-#include <utility.h>
-#include <stm32f1xx_bm_gpio.h>
-
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
+//#ifdef HARDWARE_LOCAL
+//	#include "_hardware.h"
+//#endif
 
 #ifndef _STM32F1XX_BM_TIMER_SYSTICK_INCLUDED
 #define _STM32F1XX_BM_TIMER_SYSTICK_INCLUDED
@@ -16,6 +11,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+///#include <core_cm3.h>
+#include <utility.h>
+#include <stm32f1xx_bm_gpio.h>
 
 #ifndef STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
 #define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE

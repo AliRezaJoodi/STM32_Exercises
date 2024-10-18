@@ -105,7 +105,7 @@ void _LCD_Write_4BitMode(unsigned char data){
 }
 
 //********************************
-void LCD_PutCommand(unsigned char data){
+void _LCD_PutCommand(uint8_t data){
 	_LCD_Ready();
 	_SetOperationMode(_IR_WRITE);
 	__NOP(); // Min: 40ns
@@ -113,9 +113,9 @@ void LCD_PutCommand(unsigned char data){
 }
 
 //********************************
-void LCD_SetOnOff(char status){
+void LCD_Display_SetOnOff(char status){
 	WriteBit(_display_cursor_bink, _DISPLAY_POS, status);
-	LCD_PutCommand(_display_cursor_bink);
+	_LCD_PutCommand(_display_cursor_bink);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
@@ -123,15 +123,15 @@ void LCD_SetOnOff(char status){
 //********************************
 void LCD_Cursor_SetOnOff(char status){
 	WriteBit(_display_cursor_bink, _CURSOR_POS, status);
-	LCD_PutCommand(_display_cursor_bink);
+	_LCD_PutCommand(_display_cursor_bink);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
 
 //********************************
-void LCD_BlinkingCursor_SetOnOff(char status){
+void LCD_Cursor_SetBlinking(char status){
 	WriteBit(_display_cursor_bink, _BLINK_POS, status);
-	LCD_PutCommand(_display_cursor_bink);
+	_LCD_PutCommand(_display_cursor_bink);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
@@ -139,33 +139,33 @@ void LCD_BlinkingCursor_SetOnOff(char status){
 //********************************
 void LCD_InterfaceDataLength_Set4BitOr8Bit(char mode){
 	WriteBit(_interface_line, _INTERFACE_POS, mode);
-	LCD_PutCommand(_interface_line);
+	_LCD_PutCommand(_interface_line);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
 
 //********************************
-void LCD_SetLine(char mode){
+void _LCD_SetLine(char mode){
 	WriteBit(_interface_line, _LINE_POS, mode);
-	LCD_PutCommand(_interface_line);
+	_LCD_PutCommand(_interface_line);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
 
 //********************************
-void LCD_GoToXY(unsigned char x, unsigned char y){
+void LCD_Cursor_SetXY(uint8_t x, uint8_t y){
 	const unsigned char address[4]={0x80,0xC0,0x94,0xD4};
-	LCD_PutCommand(address[y]+x);
+	_LCD_PutCommand(address[y]+x);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 }
 
 //********************************
-void LCD_ClearDisplay(void){
-	LCD_PutCommand(_CLEAR_DISPLAY);
+void LCD_Display_Clear(void){
+	_LCD_PutCommand(_CLEAR_DISPLAY);
 	SysTick_Delay_1us(1530);	
 	///Delay_ms(2);	// Min: 1.53ms
-	LCD_PutCommand(_RETURN_HOME); 
+	_LCD_PutCommand(_RETURN_HOME); 
 	SysTick_Delay_1us(1530);
 	///Delay_ms(2);	// Min: 1.53ms
 }
@@ -213,23 +213,23 @@ void LCD_Config(void){
 	SysTick_Delay_1ms(40);
 	///Delay_ms(40);
 	
-	LCD_PutCommand(_RETURN_HOME); 
+	_LCD_PutCommand(_RETURN_HOME); 
 	SysTick_Delay_1us(1530);
 	///Delay_ms(2);	// Min: 1.53ms
 	
-	LCD_PutCommand(_interface_line);
+	_LCD_PutCommand(_interface_line);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 	
-	LCD_PutCommand(_display_cursor_bink);
+	_LCD_PutCommand(_display_cursor_bink);
 	SysTick_Delay_1us(39);
 	///Delay_us(40); //Min: 39us
 	
-	LCD_PutCommand(_CLEAR_DISPLAY); 
+	_LCD_PutCommand(_CLEAR_DISPLAY); 
 	SysTick_Delay_1us(1530);
 	///Delay_ms(2);	// 1.53ms
 	
-	LCD_PutCommand(_RETURN_HOME); 
+	_LCD_PutCommand(_RETURN_HOME); 
 	SysTick_Delay_1us(1530);
 	///Delay_ms(2);	// 1.53ms
 }
