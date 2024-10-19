@@ -1,7 +1,9 @@
 #ifndef LCD_LL_H
 #define LCD_LL_H
 
+#include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_gpio.h"
+#include "stm32f1xx_ll_utils.h"
 
 // Define the LCD pins (adjust according to your connections)
 #define LCD_RS_PIN       LL_GPIO_PIN_0

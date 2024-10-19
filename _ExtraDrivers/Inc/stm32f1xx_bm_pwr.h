@@ -6,10 +6,6 @@
 		PWR_CR: Power control register
 */
 
-#include <stm32f1xx.h>
-#include <utility.h>
-#include <timeout.h>
-
 #ifndef _STM32F1xx_BM_PWR_INCLUDED
 #define _STM32F1xx_BM_PWR_INCLUDED
 
@@ -17,6 +13,9 @@
 extern "C" {
 #endif
 
+#include <stm32f1xx.h>
+#include <utility.h>
+#include <timeout.h>
 
 /*
 DBP:	Disable backup domain write protection

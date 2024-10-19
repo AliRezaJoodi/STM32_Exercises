@@ -1,17 +1,17 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
-#include <stm32f1xx.h>
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <stm32f1xx_bm_gpio.h>
-
 #ifndef _STM32F1xx_BM_USART_INCLUDED
 #define _STM32F1xx_BM_USART_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+#include <utility.h>
+#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_gpio.h>
 
 #define _DIV_INTEGER_SAMPLING16(PERIPHCLK, BAUDRATE) \
 	( ((PERIPHCLK)*25) / (4*(BAUDRATE)) )

@@ -6,19 +6,19 @@
 	EXTI: External Interrupt
 */
 
-#include <stm32f1xx.h>
-
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <stm32f1xx_bm_gpio.h>
-//#include <stm32f1xx_bm_nvic.h>
-
 #ifndef _STM32F1xx_BM_EXTI_INCLUDED
 #define _STM32F1xx_BM_EXTI_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+
+#include <utility.h>
+#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_gpio.h>
+//#include <stm32f1xx_bm_nvic.h>
 
 #define EXTI_PORTA	0b0000U
 #define EXTI_PORTB	0b0001U

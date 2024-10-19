@@ -1,14 +1,14 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
-#include <stm32f1xx.h>
-#include "stm32f1xx_ll_usart.h"
-
 #ifndef _STM32F1xx_LL_USART_PUT_INCLUDED
 #define _STM32F1xx_LL_USART_PUT_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+#include "stm32f1xx_ll_usart.h"
 
 //********************************
 void USART_PutChar(USART_TypeDef *USARTx, char data){

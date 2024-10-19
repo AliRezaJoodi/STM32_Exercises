@@ -1,6 +1,4 @@
 #include "lcd_ll.h"
-#include "stm32f1xx_ll_bus.h"
-#include "stm32f1xx_ll_utils.h"
 
 // Helper function to send 4 bits to the LCD
 static void LCD_Send4Bits(uint8_t data);

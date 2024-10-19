@@ -13,18 +13,18 @@ It's about:
 	CRC_CR: 	Control register
 */
 
-#include <stm32f1xx.h>
-
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <timeout.h>
-
 #ifndef _STM32F1xx_BM_CRC32_INCLUDED
 #define _STM32F1xx_BM_CRC32_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stm32f1xx.h>
+
+#include <utility.h>
+#include <stm32f1xx_bm_bus.h>
+#include <timeout.h>
 
 /*
 CRC_DR:	Data register

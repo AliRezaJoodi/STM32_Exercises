@@ -1,6 +1,13 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
+#ifndef DISPLAY_7SEGMENT_1DIGIT_INCLUDED
+#define DISPLAY_7SEGMENT_1DIGIT_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stm32f1xx.h>
 
 #include <utility.h>
@@ -9,13 +16,6 @@
 
 #ifdef HARDWARE_LOCAL
 #include "_hardware.h"
-#endif
-
-#ifndef DISPLAY_7SEGMENT_1DIGIT_INCLUDED
-#define DISPLAY_7SEGMENT_1DIGIT_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 #ifndef DISPLAY_7SEGMENT_1DIGIT_HARDWARE
