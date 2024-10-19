@@ -1,6 +1,13 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
+#ifndef _BUZZER_BM_INCLUDED
+#define _BUZZER_BM_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stm32f1xx.h>
 
 #include <utility.h>
@@ -10,13 +17,6 @@
 
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
-#endif
-
-#ifndef _BUZZER_BM_INCLUDED
-#define _BUZZER_BM_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 #ifndef BUZZER_BM_HARDWARE

@@ -1,6 +1,13 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 // Bare Metal Programming
 
+#ifndef _KEYPAD4X4_INCLUDED
+#define _KEYPAD4X4_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stm32f1xx.h>
 #include <utility.h>
 #include <stm32f1xx_bm_bus.h>
@@ -9,13 +16,6 @@
 
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
-#endif
-
-#ifndef _KEYPAD4X4_INCLUDED
-#define _KEYPAD4X4_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 #ifndef KEYPAD4X4_HARDWARE

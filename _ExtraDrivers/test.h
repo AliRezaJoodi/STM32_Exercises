@@ -4,19 +4,18 @@
 	Abbreviations:
 */
 
-#include <stm32f1xx.h>
-#include <utility.h>
-
-
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
-
 #ifndef _TEST_INCLUDED
 #define _TEST_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#include <stm32f1xx.h>
+#include <utility.h>
+
+#ifdef HARDWARE_LOCAL
+	#include "_hardware.h"
 #endif
 
 #ifndef TEST_HARDWARE

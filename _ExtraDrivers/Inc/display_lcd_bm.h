@@ -4,13 +4,14 @@
 // Set for 8MHz
 
 /*
-	Abbreviations:
+Abbreviations:
 	RS (LCD pin): 				Register Selector
 	RW (LCD pin): 				Read/Write
 	IR (8-Bit Register):	Instruction Register
 	DR (8-Bit Register):	Data Register
-	BF:	Busy Flag
-	AC: Address Counter
+	BF:										Busy Flag
+	AC: 									Address Counter
+	DDRAM:								Display Data RAM
 */
 
 #ifndef _LCD_INCLOUDED
@@ -53,11 +54,16 @@ extern "C" {
 
 //***********************************************
 void LCD_Config(void);
-void LCD_Display_SetOnOff(char status);
+void LCD_Interface_Set4BitOr8Bit(uint8_t mode);
+void LCD_Line_Set1LineOr2Line(uint8_t mode);
+void LCD_Font_Set5x8DotOr5x11Dot(char mode);
+void LCD_PutCommand(uint8_t data);
+void LCD_Display_SetOnOff(uint8_t status);
 void LCD_Display_Clear(void);
+void LCD_Cursor_ReturnHome(void);
 void LCD_Cursor_SetXY(uint8_t x, uint8_t y);
-void LCD_Cursor_SetOnOff(char status);
-void LCD_Cursor_SetBlinking(char status);
+void LCD_Cursor_SetOnOff(uint8_t status);
+void LCD_Cursor_SetBlinking(uint8_t status);
 void LCD_PutChar(char data);
 void LCD_PutString(char *str);
 void LCD_PutStringFromFlash(const char *str);

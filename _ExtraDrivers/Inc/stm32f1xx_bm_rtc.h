@@ -23,6 +23,14 @@ Resetting RTC registers:
 	The RTC_PRL, RTC_ALR, RTC_CNT, and RTC_DIV registers are reset only by a Backup Domain reset.
 */
 
+#ifndef _STM32F1xx_BM_RTC_INCLUDED
+#define _STM32F1xx_BM_RTC_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #include <stm32f1xx.h>
 #include <utility.h>
 #include <timeout.h>
@@ -30,13 +38,6 @@ Resetting RTC registers:
 
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
-#endif
-
-#ifndef _STM32F1xx_BM_RTC_INCLUDED
-#define _STM32F1xx_BM_RTC_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 /*
