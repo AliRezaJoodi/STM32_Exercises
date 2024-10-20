@@ -14,7 +14,11 @@
 int main(void){
 	const char txt1[16]="012345678901234";
 	char txt[16]="AliRezaJoodi";
-
+	
+	extern uint8_t char0[8];
+	extern uint8_t char1[8];
+	extern uint8_t char2[8];
+	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
 	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
@@ -35,7 +39,16 @@ int main(void){
 	LCD_Cursor_SetOnOff(0); Delay_ms(1000);
 	
 	LCD_Cursor_SetXY(8,0); LCD_PutStringFromFlash("Line1");
-	LCD_Cursor_SetXY(8,1); LCD_PutStringFromFlash("Line2");
+	//LCD_Cursor_SetXY(8,1); LCD_PutStringFromFlash("Line2");
+	
+	LCD_DefineChar(char0, 0);
+	LCD_DefineChar(char1, 1);
+	LCD_DefineChar(char2, 2);
+	
+	LCD_Cursor_SetXY(0,1); 
+	LCD_PutChar(0);
+	LCD_PutChar(1);
+	LCD_PutChar(2);
 	
   while(1){
   }
