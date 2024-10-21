@@ -438,6 +438,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\_ExtraDrivers\Src\button_bm.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f1xx_bm_timer_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_timer_systick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

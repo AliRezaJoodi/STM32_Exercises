@@ -1,3 +1,7 @@
+
+#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
+	#define HCLK_VALUE		8000000
+	
 #define BUTTON_HARDWARE
 	#define BUTTON_PRESSED      0
   #define BUTTON_LAG1         30        //ms 
