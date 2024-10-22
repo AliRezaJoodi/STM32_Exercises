@@ -36,9 +36,9 @@ extern "C" {
 #include <timeout.h>
 #include <stm32f1xx_bm_bus.h>
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
+//#ifdef HARDWARE_LOCAL
+//	#include "_hardware.h"
+//#endif
 
 /*
 OWIE: Overflow interrupt enable

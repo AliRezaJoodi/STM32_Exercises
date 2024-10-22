@@ -1,4 +1,8 @@
-#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
+
+#ifndef _HARDWARE_INCLUDED
+#define _HARDWARE_INCLUDED
+
+	//#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
 	#define DISPLAY_LAG   2000 //Display Lag
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
@@ -38,3 +42,5 @@
 		
 	#define DIGIT3_GPIO		GPIOB
   #define DIGIT3_PIN    3
+		
+#endif		// _HARDWARE_INCLUDED

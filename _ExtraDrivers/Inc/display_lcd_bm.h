@@ -36,7 +36,6 @@ extern "C" {
 	#include "_hardware.h"
 #else
 	//#define LCD_HARDWARE
-
 	#define LCD_RS_GPIO  			GPIOA
 	#define LCD_RS_PIN  			0
 	#define LCD_RW_GPIO  			GPIOA		// Optional
