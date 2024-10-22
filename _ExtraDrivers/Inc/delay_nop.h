@@ -8,7 +8,12 @@
 extern "C" {
 #endif 
 
-#include <stm32f1xx.h>
+#if defined(STM32F1)
+	#include <stm32f1xx.h>
+//#elif defined(STM32F4)
+#else
+	#error "Error: STM32 type is not defined!"
+#endif
 
 ///#define _DELAY_LAG		5
 #define _REFRESH_LAG	250000

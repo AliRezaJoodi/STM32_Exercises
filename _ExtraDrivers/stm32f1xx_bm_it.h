@@ -2,6 +2,13 @@
 
 #include <stm32f1xx.h>
 
+#ifndef _STM32F1xx_BM_IT_INCLUDED
+#define _STM32F1xx_BM_IT_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <utility.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
@@ -9,13 +16,6 @@
 #include <stm32f1xx_bm_usart.h>
 #include <stm32f1xx_bm_exti.h>
 #include <stm32f1xx_bm_rtc.h>
-
-#ifndef _STM32F1xx_BM_IT_INCLUDED
-#define _STM32F1xx_BM_IT_INCLUDED
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #ifndef NVIC_PRIORITYGROUP_0
 	#define NVIC_PRIORITYGROUP_0	((uint32_t)0x00000007)		// 0 bit  for pre-emption priority, 4 bits for subpriority

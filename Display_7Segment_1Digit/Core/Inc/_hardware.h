@@ -1,4 +1,7 @@
-#define DISPLAY_7SEGMENT_1DIGIT_HARDWARE	
+#ifndef _HARDWARE_INCLUDED
+#define _HARDWARE_INCLUDED
+
+	//#define DISPLAY_7SEGMENT_1DIGIT_HARDWARE	
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   
@@ -28,3 +31,5 @@
 	
 	#define DIGIT0_GPIO   GPIOA
   #define DIGIT0_PIN		15
+	
+#endif		// _HARDWARE_INCLUDED

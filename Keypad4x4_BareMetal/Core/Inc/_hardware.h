@@ -1,4 +1,7 @@
-#define KEYPAD4X4_HARDWARE
+#ifndef _HARDWARE_INCLUDED
+#define _HARDWARE_INCLUDED
+
+	//#define KEYPAD4X4_HARDWARE
 	#define R1_GPIO			GPIOA
   #define R1_PIN			0
 	#define R2_GPIO			GPIOA
@@ -32,4 +35,6 @@
   #define N13					119
   #define N14					183
   #define N15					231
+	
+	#endif		// _HARDWARE_INCLUDED
 	

@@ -15,8 +15,7 @@ extern "C" {
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 	#include <stm32f1xx_bm_timer_systick.h>
-#elif defined(STM32F4)
-
+//#elif defined(STM32F4)
 #else
 	#error "Error: STM32 type is not defined!"
 #endif
