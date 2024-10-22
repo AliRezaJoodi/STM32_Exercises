@@ -34,6 +34,8 @@
  extern "C" {
 #endif 
 
+#include <core_cm3.h>
+
 /** @addtogroup STM32F10x_System_Includes
   * @{
   */

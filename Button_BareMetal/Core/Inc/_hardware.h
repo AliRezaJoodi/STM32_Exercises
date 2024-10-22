@@ -1,8 +1,11 @@
 
-#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
-	#define HCLK_VALUE		8000000
+#ifndef _HARDWARE_INCLUDED
+#define _HARDWARE_INCLUDED
+
+//#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
+//	#define HCLK_VALUE		8000000
 	
-#define BUTTON_HARDWARE
+//#define BUTTON_HARDWARE
 	#define BUTTON_PRESSED      0
   #define BUTTON_LAG1         30        //ms 
   #define BUTTON_LAG2         5000      //Button Lag
@@ -15,3 +18,5 @@
 	
 	#define BUTTON3_GPIO				GPIOA
   #define BUTTON3_PIN         2      
+
+#endif		// _HARDWARE_INCLUDED

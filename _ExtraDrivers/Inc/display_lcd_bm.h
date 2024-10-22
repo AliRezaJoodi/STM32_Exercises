@@ -20,35 +20,38 @@ Abbreviations:
 extern "C" {
 #endif
 
-#include <stm32f1xx.h>
+#if defined(STM32F1)
+	#include <stm32f1xx.h>
+	#include <stm32f1xx_bm_bus.h>
+	#include <stm32f1xx_bm_gpio.h>
+	#include <stm32f1xx_bm_timer_systick.h>
+	//#include <delay_nop.h>
+#elif defined(STM32F4)
 
-#include <utility.h>
-#include <stm32f1xx_bm_bus.h>
-#include <stm32f1xx_bm_gpio.h>
-#include <stm32f1xx_bm_timer_systick.h>
-///#include <delay_nop.h>
+#else
+	#error "Error: STM32 type is not defined!"
+#endif
 
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
-#endif
+#else
+	//#define LCD_HARDWARE
 
-#ifndef LCD_HARDWARE
-#define LCD_HARDWARE	
-	#define RS_GPIO  			GPIOA
-	#define RS_PIN  			0
-	#define RW_GPIO  			GPIOA		// Optional
-	#define RW_PIN  			1				// Optional
-	#define EN_GPIO  			GPIOA
-	#define EN_PIN  			2
+	#define LCD_RS_GPIO  			GPIOA
+	#define LCD_RS_PIN  			0
+	#define LCD_RW_GPIO  			GPIOA		// Optional
+	#define LCD_RW_PIN  			1				// Optional
+	#define LCD_EN_GPIO  			GPIOA
+	#define LCD_EN_PIN  			2
 
-	#define D4_GPIO  			GPIOA
-	#define D4_PIN  			4
-	#define D5_GPIO  			GPIOA
-	#define D5_PIN  			5
-	#define D6_GPIO  			GPIOA
-	#define D6_PIN  			6	
-	#define D7_GPIO  			GPIOA
-	#define D7_PIN  			7
+	#define LCD_D4_GPIO  			GPIOA
+	#define LCD_D4_PIN  			4
+	#define LCD_D5_GPIO  			GPIOA
+	#define LCD_D5_PIN  			5
+	#define LCD_D6_GPIO  			GPIOA
+	#define LCD_D6_PIN  			6	
+	#define LCD_D7_GPIO  			GPIOA
+	#define LCD_D7_PIN  			7
 #endif
 
 	
