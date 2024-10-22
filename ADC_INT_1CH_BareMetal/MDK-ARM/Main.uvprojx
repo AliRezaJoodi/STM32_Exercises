@@ -10,6 +10,7 @@
       <TargetName>Main</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
       <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
@@ -276,7 +277,7 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
+                <StartAddress>0x8000000</StartAddress>
                 <Size>0x10000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
@@ -338,9 +339,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
+              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,HCLK_VALUE=8000000,STM32F1,STM32F103xB,HARDWARE_LOCAL</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\CMSIS\Include</IncludePath>
+              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
