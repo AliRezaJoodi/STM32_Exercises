@@ -2,6 +2,13 @@
 
 #include <stm32f1xx_bm_timer_systick.h>
 
+#ifndef HCLK_VALUE
+  #error "Error: HCLK_VALUE is not defined!" 
+#endif
+
+#define SYSTICK_CLKSOURCE_HCLK_DIV8		0b0UL		// HCLK Frequency/8
+#define SYSTICK_CLKSOURCE_HCLK				0b1UL		// HCLK Frequency
+
 //**************************************************
 void SysTick_Delay_1us(uint32_t us){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);

@@ -10,19 +10,16 @@ extern "C" {
 
 #include <stm32f1xx.h>
 #include <utility.h>
-#include <stm32f1xx_bm_gpio.h>
+//#include <stm32f1xx_bm_gpio.h>
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
+//#ifdef HARDWARE_LOCAL
+//	#include "_hardware.h"
+//#endif
 
-#ifndef STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
-#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
-	#define HCLK_VALUE		8000000
-#endif
-
-#define SYSTICK_CLKSOURCE_HCLK_DIV8		0b0UL		// HCLK Frequency/8
-#define SYSTICK_CLKSOURCE_HCLK				0b1UL		// HCLK Frequency
+//#ifndef STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
+//#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
+//	#define HCLK_VALUE		8000000
+//#endif
 
 //**************************************************
 __STATIC_INLINE void SysTick_SetClockSource(uint32_t MODE){

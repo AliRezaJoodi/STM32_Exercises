@@ -6,26 +6,26 @@ static uint8_t _display_cursor_blinking=0b00001000;
 static uint8_t _interface_line=0b00100000;
 
 #define _LCD_DataPins_ConfigForOutputMode \
-	GPIO_ConfigPinForPushPullOutputMode(D7_GPIO, D7_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(D6_GPIO, D6_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(D5_GPIO, D5_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(D4_GPIO, D4_PIN);	
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D7_GPIO, LCD_D7_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D6_GPIO, LCD_D6_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D5_GPIO, LCD_D5_PIN);\
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D4_GPIO, LCD_D4_PIN);	
 
 #define _LCD_DataPins_ConfigForInputMode \
-	GPIO_ConfigPinForFloatingInputMode(D7_GPIO, D7_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(D6_GPIO, D6_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(D5_GPIO, D5_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(D4_GPIO, D4_PIN);
+	GPIO_ConfigPinForFloatingInputMode(LCD_D7_GPIO, LCD_D7_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(LCD_D6_GPIO, LCD_D6_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(LCD_D5_GPIO, LCD_D5_PIN);\
+	GPIO_ConfigPinForFloatingInputMode(LCD_D4_GPIO, LCD_D4_PIN);
 
 //#define _RS_IR		0
 //#define _RS_DR		1
 //#define _SetRegisterSelectorPin(MODE) \
-//	GPIO_WritePin(RS_GPIO,RS_PIN, MODE);
+//	GPIO_WritePin(LCD_RS_GPIO,LCD_RS_PIN, MODE);
 //	
 //#define _RW_WRITE		0
 //#define _RW_READ		1
 //#define _SetReadOrWritePin(MODE) \
-//	GPIO_WritePin(RW_GPIO,RW_PIN, MODE);
+//	GPIO_WritePin(LCD_RW_GPIO,LCD_RW_PIN, MODE);
 
 #define _IR_WRITE		0b00	// IR write as an internal operation (display clear, etc.)
 #define _BF_READ		0b01	// Read busy flag (DB7) and address counter (DB0 to DB7)
@@ -36,10 +36,10 @@ static uint8_t _interface_line=0b00100000;
 void _SetOperationMode(uint32_t mode){
 	mode=mode&0b11;
 	
-	GPIO_WritePin(RS_GPIO,RS_PIN, GetBit(mode,1));
+	GPIO_WritePin(LCD_RS_GPIO,LCD_RS_PIN, GetBit(mode,1));
 	
-	#ifdef RW_PIN
-		GPIO_WritePin(RW_GPIO,RW_PIN, GetBit(mode,0));
+	#ifdef LCD_RW_PIN
+		GPIO_WritePin(LCD_RW_GPIO,LCD_RW_PIN, GetBit(mode,0));
 	#endif
 }
 
@@ -51,15 +51,15 @@ void _4BitInterface_WaitForReady(void){
 	__NOP();	//Min: 40ns
 	
 	do{
-		GPIO_SetPin(EN_GPIO, EN_PIN); 
+		GPIO_SetPin(LCD_EN_GPIO, LCD_EN_PIN); 
 		__NOP(); __NOP();	// Min: 230ns
-		busy_flag = GPIO_GetPin(D7_GPIO,D7_PIN);
-		GPIO_ResetPin(EN_GPIO, EN_PIN); 
+		busy_flag = GPIO_GetPin(LCD_D7_GPIO,LCD_D7_PIN);
+		GPIO_ResetPin(LCD_EN_GPIO, LCD_EN_PIN); 
 		__NOP(); __NOP();	// Min: 230ns
 	
-		GPIO_SetPin(EN_GPIO, EN_PIN);
+		GPIO_SetPin(LCD_EN_GPIO, LCD_EN_PIN);
 		__NOP(); __NOP();	// Min: 230ns
-		GPIO_ResetPin(EN_GPIO, EN_PIN); 
+		GPIO_ResetPin(LCD_EN_GPIO, LCD_EN_PIN); 
 		__NOP(); __NOP();	// Min: 230ns
 	} while(busy_flag != 0);
 	__NOP(); // Min: 10ns
@@ -69,43 +69,43 @@ void _4BitInterface_WaitForReady(void){
 
 //********************************
 void _4BitInterface_Write4Bit(uint8_t data){		
-	GPIO_WritePin(D7_GPIO, D7_PIN, GetBit(data&0xF,3));
-	GPIO_WritePin(D6_GPIO, D6_PIN, GetBit(data&0xF,2));
-	GPIO_WritePin(D5_GPIO, D5_PIN, GetBit(data&0xF,1));
-	GPIO_WritePin(D4_GPIO, D4_PIN, GetBit(data&0xF,0));
+	GPIO_WritePin(LCD_D7_GPIO, LCD_D7_PIN, GetBit(data&0xF,3));
+	GPIO_WritePin(LCD_D6_GPIO, LCD_D6_PIN, GetBit(data&0xF,2));
+	GPIO_WritePin(LCD_D5_GPIO, LCD_D5_PIN, GetBit(data&0xF,1));
+	GPIO_WritePin(LCD_D4_GPIO, LCD_D4_PIN, GetBit(data&0xF,0));
 	
-	GPIO_SetPin(EN_GPIO, EN_PIN);
+	GPIO_SetPin(LCD_EN_GPIO, LCD_EN_PIN);
 	__NOP(); __NOP();	// Min: 230ns
-	GPIO_ResetPin(EN_GPIO, EN_PIN);
+	GPIO_ResetPin(LCD_EN_GPIO, LCD_EN_PIN);
 	__NOP(); __NOP();	// Min: 230ns
 }
 
 //********************************
 //void _4BitInterface_Write8Bit(unsigned char data){		
-//	GPIO_WritePin(D7_GPIO, D7_PIN, GetBit(data,7));
-//	GPIO_WritePin(D6_GPIO, D6_PIN, GetBit(data,6));
-//	GPIO_WritePin(D5_GPIO, D5_PIN, GetBit(data,5));
-//	GPIO_WritePin(D4_GPIO, D4_PIN, GetBit(data,4));
+//	GPIO_WritePin(LCD_D7_GPIO, LCD_D7_PIN, GetBit(data,7));
+//	GPIO_WritePin(LCD_D6_GPIO, LCD_D6_PIN, GetBit(data,6));
+//	GPIO_WritePin(LCD_D5_GPIO, LCD_D5_PIN, GetBit(data,5));
+//	GPIO_WritePin(LCD_D4_GPIO, LCD_D4_PIN, GetBit(data,4));
 //	
-//	GPIO_SetPin(EN_GPIO, EN_PIN);
+//	GPIO_SetPin(LCD_EN_GPIO, LCD_EN_PIN);
 //	__NOP(); __NOP();	// Min: 230ns
-//	GPIO_ResetPin(EN_GPIO, EN_PIN);
+//	GPIO_ResetPin(LCD_EN_GPIO, LCD_EN_PIN);
 //	__NOP(); __NOP();	// Min: 230ns
 //	
-//	GPIO_WritePin(D7_GPIO, D7_PIN, GetBit(data,3));
-//	GPIO_WritePin(D6_GPIO, D6_PIN, GetBit(data,2));
-//	GPIO_WritePin(D5_GPIO, D5_PIN, GetBit(data,1));
-//	GPIO_WritePin(D4_GPIO, D4_PIN, GetBit(data,0));
+//	GPIO_WritePin(LCD_D7_GPIO, LCD_D7_PIN, GetBit(data,3));
+//	GPIO_WritePin(LCD_D6_GPIO, LCD_D6_PIN, GetBit(data,2));
+//	GPIO_WritePin(LCD_D5_GPIO, LCD_D5_PIN, GetBit(data,1));
+//	GPIO_WritePin(LCD_D4_GPIO, LCD_D4_PIN, GetBit(data,0));
 //	
-//	GPIO_SetPin(EN_GPIO, EN_PIN); 
+//	GPIO_SetPin(LCD_EN_GPIO, LCD_EN_PIN); 
 //	__NOP(); __NOP();	// Min: 230ns
-//	GPIO_ResetPin(EN_GPIO, EN_PIN); 
+//	GPIO_ResetPin(LCD_EN_GPIO, LCD_EN_PIN); 
 //	__NOP(); __NOP();	// Min: 230ns
 //}
 
 //********************************
 void LCD_PutCommand(uint8_t data){
-	#ifdef RW_PIN
+	#ifdef LCD_RW_PIN
 		_4BitInterface_WaitForReady();
 	#else
 		SysTick_Delay_1ms(2);
@@ -235,7 +235,7 @@ void LCD_Display_Clear(void){
 
 //********************************
 void LCD_PutChar(char data){
-	#ifdef RW_PIN
+	#ifdef LCD_RW_PIN
 		_4BitInterface_WaitForReady();
 	#else
 		SysTick_Delay_1ms(2);
@@ -266,28 +266,28 @@ void LCD_PutStringFromFlash(const char *str){
 
 //********************************
 void LCD_Config(void){
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(RS_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(RS_GPIO, RS_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_RS_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_RS_GPIO, LCD_RS_PIN);
 	
-	#ifdef RW_PIN
-		BUS_GPIOx_EnableOrDisableWithAutoSearch(RW_GPIO);
-		GPIO_ConfigPinForPushPullOutputMode(RW_GPIO, RW_PIN);
+	#ifdef LCD_RW_PIN
+		BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_RW_GPIO);
+		GPIO_ConfigPinForPushPullOutputMode(LCD_RW_GPIO, LCD_RW_PIN);
 	#endif
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(EN_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(EN_GPIO, EN_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_EN_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_EN_GPIO, LCD_EN_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D4_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(D4_GPIO, D4_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D4_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D4_GPIO, LCD_D4_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D5_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(D5_GPIO, D5_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D5_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D5_GPIO, LCD_D5_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D6_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(D6_GPIO, D6_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D6_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D6_GPIO, LCD_D6_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D7_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(D7_GPIO, D7_PIN);
+	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D7_GPIO);
+	GPIO_ConfigPinForPushPullOutputMode(LCD_D7_GPIO, LCD_D7_PIN);
 
 	SysTick_Delay_1ms(50);
 	
