@@ -86,9 +86,9 @@ uint8_t i = 0;
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** ENABLE: Full SWJ (JTAG-DP + SW-DP): Reset State
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
-  LL_GPIO_AF_EnableRemap_SWJ();
+  LL_GPIO_AF_Remap_SWJ_NOJTAG();
 
   /* USER CODE BEGIN Init */
 
