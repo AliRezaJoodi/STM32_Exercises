@@ -2,10 +2,11 @@
 #ifndef _HARDWARE_INCLUDED
 #define _HARDWARE_INCLUDED
 
-	//#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
-	#define DISPLAY_LAG   2000 //Display Lag
-	#define SEGMENT_ON		0
-  #define DIGIT_ON      1
+	//#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE
+	#define MULTIPLEX_MODE	0		// 0:	Lef To Right, 1: Right To Lef	
+	#define DISPLAY_LAG   	2000 //Display Lag
+	#define SEGMENT_ON			0
+  #define DIGIT_ON      	1
   
 	#define A_GPIO				GPIOA
   #define A_PIN					0

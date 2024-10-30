@@ -22,9 +22,10 @@ extern "C" {
 #ifdef HARDWARE_LOCAL
 	#include "_hardware.h"
 #else
-	#define DISPLAY_LAG   500 //Display Lag
-	#define SEGMENT_ON		0
-  #define DIGIT_ON      1
+	#define MULTIPLEX_MODE	0		// 0: Lef To Right, 1: Right To Lef
+	#define DISPLAY_LAG   	2000 //Display Lag
+	#define SEGMENT_ON			0
+  #define DIGIT_ON      	1
   
 	#define A_GPIO				GPIOA
   #define A_PIN					0
@@ -68,8 +69,9 @@ void Display7Segment4Digit_SetOnOff(char status);
 void Display7Segment4Digit_SetValue_float(float value);
 void Display7Segment4Digit_SetValue_int(int value);
 void Display7Segment4Digit_Refresh(void);
-char _7Segment4Digit_RefreshLefToRight(void);
-	
+char Display7Segment4Digit_MultiplexLefToRight(void);
+char Display7Segment4Digit_MultiplexRightToLeft(void);
+
 #define Display7Segment4Digit_SetValue(value)		Display7Segment4Digit_SetValue_float(value)
 
 #ifdef __cplusplus

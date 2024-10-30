@@ -264,36 +264,7 @@ void Display7Segment4Digit_SetValue_int(int value){
 }
 
 //***************************************************
-char _7Segment4Digit_RefreshRightToLeft(void){
-	static unsigned char i=0; 
-	
-	_7Segment4Digit_TurnOffDigits;
-	_7Segment4Digit_DriveSegments(_display_data[i]);
-
-	switch(i){
-		case 0:
-			GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, DIGIT_ON);
-			++i;
-			break;
-		case 1:
-			GPIO_WritePin(DIGIT1_GPIO, DIGIT1_PIN, DIGIT_ON);
-			++i;
-			break;
-		case 2:
-			GPIO_WritePin(DIGIT2_GPIO, DIGIT2_PIN, DIGIT_ON);
-			++i;
-			break;
-		case 3:
-			GPIO_WritePin(DIGIT3_GPIO, DIGIT3_PIN, DIGIT_ON);
-			i=0;
-			break;
-	}
-	
-	return i;
-}
-
-//***************************************************
-char _7Segment4Digit_RefreshLefToRight(void){
+char Display7Segment4Digit_MultiplexLefToRight(void){
 	static unsigned char i=3; 
 	
 	_7Segment4Digit_TurnOffDigits;
@@ -321,6 +292,35 @@ char _7Segment4Digit_RefreshLefToRight(void){
 	return 3-i;
 }
 
+//***************************************************
+char Display7Segment4Digit_MultiplexRightToLeft(void){
+	static unsigned char i=0; 
+	
+	_7Segment4Digit_TurnOffDigits;
+	_7Segment4Digit_DriveSegments(_display_data[i]);
+
+	switch(i){
+		case 0:
+			GPIO_WritePin(DIGIT0_GPIO, DIGIT0_PIN, DIGIT_ON);
+			++i;
+			break;
+		case 1:
+			GPIO_WritePin(DIGIT1_GPIO, DIGIT1_PIN, DIGIT_ON);
+			++i;
+			break;
+		case 2:
+			GPIO_WritePin(DIGIT2_GPIO, DIGIT2_PIN, DIGIT_ON);
+			++i;
+			break;
+		case 3:
+			GPIO_WritePin(DIGIT3_GPIO, DIGIT3_PIN, DIGIT_ON);
+			i=0;
+			break;
+	}
+	
+	return i;
+}
+
 //********************************************
 void Display7Segment4Digit_Refresh(void){
 	static unsigned int i=0;
@@ -329,8 +329,13 @@ void Display7Segment4Digit_Refresh(void){
 		++i;
 		if(i>DISPLAY_LAG){
 			i=0;
-			_7Segment4Digit_RefreshLefToRight();
+			#if MULTIPLEX_MODE ==0
+				Display7Segment4Digit_MultiplexLefToRight();
+			#else
+				Display7Segment4Digit_MultiplexRightToLeft();
+			#endif
 		}
 	}
 }
+
 
