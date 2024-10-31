@@ -2,7 +2,12 @@
 // Bare Metal Programming
 
 /*
-	Abbreviations:
+It's about:
+	RCC_CFGR: Clock configuration register
+*/
+
+/*
+Abbreviations:
 	RCC_CR:	Clock control register
 	HSE: 		High-Speed External Clock Signal
 	HSI: 		High-Speed Internal Clock Signal
@@ -25,22 +30,50 @@ extern "C" {
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_pwr.h>
 
-__STATIC_INLINE void RCC_HSI_SetCalibTrimming(uint32_t value){
-	RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (value<<RCC_CR_HSITRIM_Pos);
+/*
+RCC_CR, Bits 7:3
+HSITRIM[4:0]:	Internal high-speed clock trimming
+							Set and cleared by software
+							The default value is 16.
+*/
+
+__STATIC_INLINE uint32_t _HSI_GetTrimming(void){
+	return ( Get5Bit(RCC->CR, RCC_CR_HSITRIM_Pos) );	
 }
 
+__STATIC_INLINE void RCC_HSI_SetTrimming(uint32_t value){
+	//RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (value<<RCC_CR_HSITRIM_Pos);
+	Write5Bit(RCC->CR, RCC_CR_HSITRIM_Pos, value);
+}
+
+
 /*	
+RCC_CR, Bit 1
 HSIRDY:	Internal high-speed clock ready flag
 				Set by hardware to indicate that internal 8 MHz RC oscillator is stable.
 				After the HSION bit is cleared, HSIRDY goes low after 6 internal 8 MHz RC oscillator clock cycles.
 				0: internal 8 MHz RC oscillator not ready
 				1: internal 8 MHz RC oscillator ready 
+
+RCC_CR, Bit 0
+HSION:	Internal high-speed clock enable
+				Set and cleared by software.
+				Set by hardware to force the internal 8 MHz RC oscillator ON when leaving Stop or Standby
+				mode or in case of failure of the external 3-25 MHz oscillator used directly or indirectly as system clock. 
+				This bit can not be cleared if the internal 8 MHz RC is used directly or
+				indirectly as system clock or is selected to become the system clock.
+				0: Internal 8 MHz RC oscillator OFF
+				1: Internal 8 MHz RC oscillator ON
 */
+
 __STATIC_INLINE uint32_t _HSI_GetReadyFlag(void){
 	return ( GetBit(RCC->CR, RCC_CR_HSIRDY_Pos) );	
 }
 
-//******************************************************************
+__STATIC_INLINE uint32_t _HSI_GetEnableStatus(void){
+		return ( GetBit(RCC->CR, RCC_CR_HSION_Pos) );
+}
+
 __STATIC_INLINE uint32_t RCC_HSI_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->CR, RCC_CR_HSION_Pos, status);
 	
@@ -50,6 +83,24 @@ __STATIC_INLINE uint32_t RCC_HSI_EnableOrDisable(uint32_t status){
 		return 0;
 	#endif
 }
+
+
+/*
+RCC_CR, Bit 17
+HSERDY: External high-speed clock ready flag
+				Set by hardware to indicate that the HSE oscillator is stable. 
+				This bit needs 6 cycles of the HSE oscillator clock to fall down after HSEON reset.
+				0: HSE oscillator not ready
+				1: HSE oscillator ready
+
+RCC_CR, Bit 16
+HSEON: 	HSE clock enable
+				Set and cleared by software.
+				Cleared by hardware to stop the HSE oscillator when entering Stop or Standby mode.
+				This bit cannot be reset if the HSE oscillator is used directly or indirectly as the system clock.
+				0: HSE oscillator OFF
+				1: HSE oscillator ON
+*/
 
 __STATIC_INLINE uint32_t _HSE_GetReadyFlag(void){
 		return ( GetBit(RCC->CR, RCC_CR_HSERDY_Pos) );
@@ -69,6 +120,7 @@ __STATIC_INLINE uint32_t RCC_HSE_EnableOrDisable(uint32_t status){
 	#endif
 }
 
+
 /* 	
 HSEBYP: External high-speed clock bypass
 				The HSEBYP bit can be written only if the HSE oscillator is disabled.
@@ -76,17 +128,18 @@ HSEBYP: External high-speed clock bypass
 				1: external 3-25 MHz oscillator bypassed with external clock
 */
 
+#define HSE_CLKSOURCE_XTAL      0b0
+#define HSE_CLKSOURCE_EXTCLK		0b1
+
 __STATIC_INLINE uint32_t RCC_HSE_GetClockSource(void){
   return ( GetBit(RCC->CR, RCC_CR_HSEBYP_Pos) );
 }
-
-#define HSE_CLKSOURCE_XTAL      0b0
-#define HSE_CLKSOURCE_EXTCLK		0b1
 
 __STATIC_INLINE void RCC_HSE_SetClockSource(uint32_t mode){
 	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, mode);
 	while(RCC_HSE_GetClockSource() != mode){};	
 }
+
 
 /*
 PLLRDY: PLL clock ready flag
@@ -94,9 +147,11 @@ PLLRDY: PLL clock ready flag
 				0: PLL unlocked
 				1: PLL locked
 */
+
 __STATIC_INLINE uint32_t _PLL_GetReadyFlag(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLRDY_Pos) );
 }
+
 
 /*
 PLLON: 	PLL enable
@@ -119,6 +174,7 @@ __STATIC_INLINE uint32_t RCC_PLL_EnableOrDisable(uint32_t status){
 		return 0;
 	#endif	
 }
+
 
 /* 	
 PLLSRC:		PLL entry clock source
@@ -155,6 +211,7 @@ __STATIC_INLINE void RCC_PLL_SetClockSource(uint32_t mode){
 	}
 }
 
+
 /*	
 PLLMUL:	PLL multiplication factor
 				These bits can be written only when PLL is disabled.
@@ -183,7 +240,17 @@ __STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint32_t mode){
 	while( Get4Bit(RCC->CFGR,RCC_CFGR_PLLMULL_Pos) != mode ){};
 }
 
+
 /*
+RCC_CFGR, Bits 3:2
+SWS:	System clock switch status
+			Set and cleared by hardware to indicate which clock source is used as system clock.
+			00: HSI oscillator used as system clock
+			01: HSE oscillator used as system clock
+			10: PLL used as system clock
+			11: not applicable
+
+RCC_CFGR, Bits 1:0
 SW:		System clock switch
 			Set and cleared by hardware to indicate which clock source is used as system clock.
 			00: HSI oscillator used as system clock
@@ -192,84 +259,199 @@ SW:		System clock switch
 			11: not applicable
 */
 
-#define SYSTEM_CLKSOURCE_HSI			0b00
-#define SYSTEM_CLKSOURCE_HSE    	0b01
-#define SYSTEM_CLKSOURCE_PLL    	0b10
-#define SYSTEM_CLKSOURCE_NONE			0b11
+#define SYSCLK_SOURCE_HSI			0b00
+#define SYSCLK_SOURCE_HSE    	0b01
+#define SYSCLK_SOURCE_PLL    	0b10
+#define SYSCLK_SOURCE_NONE		0b11
 
-__STATIC_INLINE uint32_t _SYSCLK_GetClockSource(void){
-		return ( Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos) );
+__STATIC_INLINE uint32_t _SeystemClock_GetSource(void){
+	return ( Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos) );
 }
 
-__STATIC_INLINE void RCC_SYSCLK_SetClockSource(uint32_t mode){
+__STATIC_INLINE uint32_t RCC_SeystemClock_SetSource(uint32_t mode){
 	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, mode);
-	while(_SYSCLK_GetClockSource() != mode){};	
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_SeystemClock_GetSource, mode) );
+	#else
+		return 0;
+	#endif
 }
 
-#define AHB_DIV1   		0b0000
-#define AHB_DIV2     	0b1000
-#define AHB_DIV4     	0b1001
-#define AHB_DIV8     	0b1010
-#define AHB_DIV16    	0b1011
-#define AHB_DIV64    	0b1100
-#define AHB_DIV128		0b1101
-#define AHB_DIV256   	0b1110
-#define AHB_DIV512		0b1111	
-
-// The AHB clock frequency must be at least 25 MHz when the Ethernet is used.
-__STATIC_INLINE void RCC_AHB_SetPrescaler(uint32_t value){
-		Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, value);
-}
 
 /*
+RCC_CFGR, Bits 7:4
+HPRE:	AHB prescaler
+			Set and cleared by software to control the division factor of the AHB clock.
+			Note: The AHB clock frequency must be at least 25 MHz when the Ethernet is used.
+			0xxx: SYSCLK not divided
+			1000: SYSCLK divided by 2
+			1001: SYSCLK divided by 4
+			1010: SYSCLK divided by 8
+			1011: SYSCLK divided by 16
+			1100: SYSCLK divided by 64
+			1101: SYSCLK divided by 128
+			1110: SYSCLK divided by 256
+			1111: SYSCLK divided by 512
+*/
+
+#define AHB_SYSCLK_DIV1   		0b0000
+#define AHB_SYSCLK_DIV2     	0b1000
+#define AHB_SYSCLK_DIV4     	0b1001
+#define AHB_SYSCLK_DIV8     	0b1010
+#define AHB_SYSCLK_DIV16    	0b1011
+#define AHB_SYSCLK_DIV64    	0b1100
+#define AHB_SYSCLK_DIV128			0b1101
+#define AHB_SYSCLK_DIV256   	0b1110
+#define AHB_SYSCLK_DIV512			0b1111	
+
+__STATIC_INLINE uint32_t _AHB_GetPrescaler(void){
+	return( Get4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos) );
+}
+
+__STATIC_INLINE uint32_t RCC_AHB_SetPrescaler(uint32_t mode){
+	Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_AHB_GetPrescaler, mode) );
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+RCC_CFGR, Bits 10:8
 PPRE1[2:0]: APB Low-speed prescaler (APB1)
 						Set and cleared by software to control the division factor of the APB Low speed clock (PCLK1).
+						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
 						0xx: HCLK not divided
 						100: HCLK divided by 2
 						101: HCLK divided by 4
 						110: HCLK divided by 8
 						111: HCLK divided by 16
-						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 36 MHz.
 */
 
-#define APB1_DIV1		0b000
-#define APB1_DIV2		0b100
-#define APB1_DIV4		0b101
-#define APB1_DIV8		0b110
-#define APB1_DIV16	0b111
+#define APB1_HCLK_DIV1		0b000
+#define APB1_HCLK_DIV2		0b100
+#define APB1_HCLK_DIV4		0b101
+#define APB1_HCLK_DIV8		0b110
+#define APB1_HCLK_DIV16		0b111
 
 __STATIC_INLINE uint32_t _APB1_GetPrescaler(void){
-		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
+	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
 }
 
-__STATIC_INLINE void RCC_APB1_SetPrescaler(uint32_t mode){
-		Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, mode);
+__STATIC_INLINE uint32_t RCC_APB1_SetPrescaler(uint32_t mode){
+	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_APB1_GetPrescaler, mode) );
+	#else
+		return 0;
+	#endif
 }
+
 
 /*
+RCC_CFGR, Bits 13:11
 PPRE2[2:0]: APB high-speed prescaler (APB2)
 						Set and cleared by software to control the division factor of the APB High speed clock (PCLK2).
+						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
 						0xx: HCLK not divided
 						100: HCLK divided by 2
 						101: HCLK divided by 4
 						110: HCLK divided by 8
 						111: HCLK divided by 16
-						Note: Software must configure these bits ensure that the frequency in this domain does not exceed 72 MHz.
 */
 
-#define APB2_DIV1		0b000
-#define APB2_DIV2		0b100
-#define APB2_DIV4		0b101
-#define APB2_DIV8		0b110
-#define APB2_DIV16	0b111
+#define APB2_HCLK_DIV1		0b000
+#define APB2_HCLK_DIV2		0b100
+#define APB2_HCLK_DIV4		0b101
+#define APB2_HCLK_DIV8		0b110
+#define APB2_HCLK_DIV16		0b111
 
 __STATIC_INLINE uint32_t _APB2_GetPrescaler(void){
-		return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
+	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
 }
 
-__STATIC_INLINE void RCC_APB2_SetPrescaler(uint32_t mode){
+__STATIC_INLINE uint32_t RCC_APB2_SetPrescaler(uint32_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_APB2_GetPrescaler, mode) );
+	#else
+		return 0;
+	#endif
 }
+
+
+/*
+RCC_CFGR, Bits 15:14
+ADCPRE:	ADC prescaler
+				2 Bits, Read/Write by software
+				Select the frequency of the clock to the ADCs.
+				00: PCLK2 divided by 2
+				01: PCLK2 divided by 4
+				10: PCLK2 divided by 6
+				11: PCLK2 divided by 8
+*/
+
+#define ADC_PCLK2_DIV2		0b00
+#define ADC_PCLK2_DIV4		0b01
+#define ADC_PCLK2_DIV6		0b10
+#define ADC_PCLK2_DIV8		0b11
+
+__STATIC_INLINE uint32_t _ADC_GetPrescaler(void){
+	return( Get2Bit(RCC->CFGR, RCC_CFGR_ADCPRE_Pos) );
+}
+
+__STATIC_INLINE uint32_t RCC_ADC_SetPrescaler(uint32_t mode){
+	Write2Bit(RCC->CFGR, RCC_CFGR_ADCPRE_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_ADC_GetPrescaler, mode) );
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+RCC_CFGR, Bits 26:24
+MCO:	Microcontroller clock output
+			Set and cleared by software.
+			0xx: No clock
+			100: System clock (SYSCLK) selected
+			101: HSI clock selected
+			110: HSE clock selected
+			111: PLL clock divided by 2 selected
+
+			Note: This clock output may have some truncated cycles at startup or during MCO clock source switching.
+			Note: When the System Clock is selected to output to the MCO pin,
+			make sure that this clock does not exceed 50 MHz (the maximum IO speed).
+*/
+
+#define MCO_SOURCE_NONE					0b000
+#define MCO_SOURCE_SYSCLK				0b100
+#define MCO_SOURCE_HSI					0b101
+#define MCO_SOURCE_HSE					0b110
+#define MCO_SOURCE_PLLCLK_DIV2	0b111
+
+__STATIC_INLINE uint32_t _MCO_GetSource(void){
+	return( Get3Bit(RCC->CFGR, RCC_CFGR_MCO_Pos) );
+}
+
+__STATIC_INLINE uint32_t RCC_MCO_SetSource(uint32_t mode){
+	Write3Bit(RCC->CFGR, RCC_CFGR_MCO_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_MCO_GetSource, mode) );
+	#else
+		return 0;
+	#endif
+}
+
 
 /*	
 BDRST: 	Backup domain software reset
@@ -293,6 +475,7 @@ __STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
 	#endif
 }
 
+
 /*
 LSERDY: External low-speed oscillator ready
 				1 Bit, Read by software, Write by hardware
@@ -305,6 +488,7 @@ LSERDY: External low-speed oscillator ready
 __STATIC_INLINE uint32_t _LSE_GetReadyFlag(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSERDY_Pos) );
 }
+
 
 /*
 LSEON: 	External low-speed oscillator enable
@@ -326,7 +510,8 @@ __STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
 		return 0;
 	#endif	
 }
-	
+
+
 /*	
 LSEBYP: External low-speed oscillator bypass
 				1 Bit, Read/Write by software
@@ -353,6 +538,7 @@ __STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
 	#endif
 }
 
+
 /*
 LSIRDY: Internal low-speed oscillator ready
 				1 Bit, Read by software, Write by hardware
@@ -365,6 +551,7 @@ LSIRDY: Internal low-speed oscillator ready
 __STATIC_INLINE uint32_t _LSI_GetReadyFlag(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSIRDY_Pos) );
 }
+
 
 /*
 LSION: 	Internal low-speed oscillator enable
@@ -386,6 +573,7 @@ __STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
 		return 0;
 	#endif	
 }
+
 
 /*	
 RTCSEL[1:0]: 	RTC clock source selection
@@ -416,6 +604,7 @@ __STATIC_INLINE uint32_t RCC_RTC_SetClockSource(uint32_t mode){
 		return 0;
 	#endif		
 }
+
 
 /*	
 RTCEN: 	RTC clock enable

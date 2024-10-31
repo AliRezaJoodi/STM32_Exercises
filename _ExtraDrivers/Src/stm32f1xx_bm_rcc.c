@@ -7,12 +7,13 @@ void RCC_SystemClock_ConfigDefault1(void){
 	FLASH_SetLatency(LATENCY0);
 	
 	RCC_HSI_EnableOrDisable(0);
-	RCC_HSI_SetCalibTrimming(16);
+	RCC_HSI_SetTrimming(16);
 	
-	RCC_AHB_SetPrescaler(AHB_DIV1);
-	RCC_APB1_SetPrescaler(APB1_DIV1);
-	RCC_APB2_SetPrescaler(APB2_DIV1);
-	RCC_SYSCLK_SetClockSource(SYSTEM_CLKSOURCE_HSI);
+	RCC_AHB_SetPrescaler(AHB_SYSCLK_DIV1);
+	RCC_APB1_SetPrescaler(APB1_HCLK_DIV1);
+	RCC_APB2_SetPrescaler(APB2_HCLK_DIV1);
+	RCC_SeystemClock_SetSource(SYSCLK_SOURCE_HSI);
+	RCC_ADC_SetPrescaler(ADC_PCLK2_DIV2);
 	
 	RCC_HSI_EnableOrDisable(1);
 }
@@ -30,10 +31,11 @@ void RCC_SystemClock_ConfigDefault2(void){
 	RCC_PLL_SetMultiplicationFactor(PLL_MUL_9);
 	RCC_PLL_EnableOrDisable(1);
 	
-	RCC_AHB_SetPrescaler(AHB_DIV1);
-	RCC_APB1_SetPrescaler(APB1_DIV2);
-	RCC_APB2_SetPrescaler(APB2_DIV1);
-	RCC_SYSCLK_SetClockSource(SYSTEM_CLKSOURCE_PLL);
+	RCC_AHB_SetPrescaler(AHB_SYSCLK_DIV1);
+	RCC_APB1_SetPrescaler(APB1_HCLK_DIV2);
+	RCC_APB2_SetPrescaler(APB2_HCLK_DIV1);
+	RCC_SeystemClock_SetSource(SYSCLK_SOURCE_PLL);
+	RCC_ADC_SetPrescaler(ADC_PCLK2_DIV2);
 }
 
 //****************************************************
