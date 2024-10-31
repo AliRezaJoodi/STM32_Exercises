@@ -18,11 +18,12 @@ extern "C" {
 #define Write2Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b11UL<<(FROM)))) | (((VALUE)&0b11UL) << (FROM));
 #define Write3Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b111UL<<(FROM)))) | (((VALUE)&0b111UL) << (FROM));
 #define Write4Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b1111UL<<(FROM)))) | (((VALUE)&0b1111UL) << (FROM));
+#define Write5Bit(ADDRESS, FROM, VALUE)			ADDRESS = ((ADDRESS) & (~(0b11111UL<<(FROM)))) | (((VALUE)&0b11111UL) << (FROM));
 #define GetBit(ADDRESS, BIT)           			(((ADDRESS) >> (BIT)) & 0b1UL) 
 #define Get2Bit(ADDRESS, FROM)           		(((ADDRESS) >> (FROM)) & 0b11UL)
 #define Get3Bit(ADDRESS, FROM)           		(((ADDRESS) >> (FROM)) & 0b111UL)
 #define Get4Bit(ADDRESS, FROM)           		(((ADDRESS) >> (FROM)) & 0b1111UL)
-
+#define Get5Bit(ADDRESS, FROM)           		(((ADDRESS) >> (FROM)) & 0b11111UL)
 
 #ifdef __cplusplus
 }

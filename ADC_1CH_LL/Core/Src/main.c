@@ -305,8 +305,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-static void MX_ADC1_Init2(void)
-{
+static void MX_ADC1_Init2(void){
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_ADC1);
     LL_ADC_SetDataAlignment(ADC1, LL_ADC_DATA_ALIGN_RIGHT);
     LL_ADC_SetSequencersScanMode(ADC1, LL_ADC_SEQ_SCAN_DISABLE);

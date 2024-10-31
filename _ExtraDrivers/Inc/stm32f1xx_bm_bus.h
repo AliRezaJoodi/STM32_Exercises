@@ -2,11 +2,11 @@
 // Bare Metal Programming
 
 /*
-	It's about:
-		RCC_APB1RSTR: APB1 peripheral reset register
-		RCC_APB1ENR: 	APB1 peripheral clock enable register
-		RCC_APB2RSTR: APB2 peripheral reset register 
-		RCC_APB2ENR: 	APB2 peripheral clock enable register
+It's about:
+	RCC_APB1RSTR: APB1 peripheral reset register
+	RCC_APB1ENR: 	APB1 peripheral clock enable register
+	RCC_APB2RSTR: APB2 peripheral reset register 
+	RCC_APB2ENR: 	APB2 peripheral clock enable register
 */
 
 #ifndef _STM32F1xx_BM_BUS_INCLUDED
