@@ -200,7 +200,8 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles ADC1 and ADC2 global interrupts.
   */
-void ADC1_2_IRQHandler(void){
+void ADC1_2_IRQHandler(void)
+{
   /* USER CODE BEGIN ADC1_2_IRQn 0 */
     /* ADC Interrupt reads the voltage value and put the converted data in ADC_Value  */
    if (LL_ADC_IsActiveFlag_EOS(ADC1)){
