@@ -1,7 +1,11 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
 /*
-	Abbreviations:
+It's about:
+*/
+
+/*
+Abbreviations:
 */
 
 #ifndef _TEST_INCLUDED

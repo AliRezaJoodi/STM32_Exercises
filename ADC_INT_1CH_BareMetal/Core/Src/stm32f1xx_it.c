@@ -23,6 +23,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stm32f1xx_bm_adc.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,7 +43,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-	extern volatile uint16_t ADC_Value;
+//extern volatile uint16_t ADC_Value;
+volatile uint16_t ADC_Value;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -200,13 +202,15 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles ADC1 and ADC2 global interrupts.
   */
-void ADC1_2_IRQHandler(void)
-{
+void ADC1_2_IRQHandler(void){
   /* USER CODE BEGIN ADC1_2_IRQn 0 */
     /* ADC Interrupt reads the voltage value and put the converted data in ADC_Value  */
-   if (LL_ADC_IsActiveFlag_EOS(ADC1)){
-			LL_ADC_ClearFlag_EOS(ADC1);
-			ADC_Value = LL_ADC_REG_ReadConversionData12(ADC1); 
+   //if (LL_ADC_IsActiveFlag_EOS(ADC1)){
+	if(ADC_EndOfConversion_GetFlag(ADC1)==1){
+			//LL_ADC_ClearFlag_EOS(ADC1);
+		ADC_EndOfConversion_ClearFlag(ADC1);
+			//ADC_Value = LL_ADC_REG_ReadConversionData12(ADC1); 
+		ADC_Value = ADC_RegularData_GetConversionResult(ADC1); 
 	 }
   /* USER CODE END ADC1_2_IRQn 0 */
 
