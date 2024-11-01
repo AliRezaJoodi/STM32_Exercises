@@ -24,6 +24,17 @@
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
 
+#include <stm32f1xx.h>
+#include <utility.h>
+#include <stm32f1xx_bm_system.h>
+#include <stm32f1xx_bm_rcc.h>
+#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_gpio.h>
+#include <stm32f1xx_bm_timer_systick.h>
+#include <stm32f1xx_bm_usart.h>
+#include <stm32f1xx_bm_exti.h>
+
+#include <stm32f1xx_bm_adc.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +54,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile uint16_t ADC_Value;			//Define variable ADC_Value 
+//volatile uint16_t ADC_Value;			//Define variable ADC_Value 
+extern uint16_t ADC_Value;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,8 +76,7 @@ static void MX_USART1_UART_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void){
   /* USER CODE BEGIN 1 */
 
 float Voltage;				//variable for representing voltage

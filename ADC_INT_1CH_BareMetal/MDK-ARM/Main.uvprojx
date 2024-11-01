@@ -339,9 +339,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB</Define>
+              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB,STM32F1,HARDWARE_LOCAL,HCLK_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc;C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include;C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -411,44 +411,44 @@
           <GroupName>Drivers/STM32F1xx_HAL_Driver</GroupName>
           <Files>
             <File>
-              <FileName>stm32f1xx_ll_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_adc.c</FilePath>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_adc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f1xx_ll_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c</FilePath>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_dma.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_exti.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c</FilePath>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_pwr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c</FilePath>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_rcc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>C:/Users/Home/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c</FilePath>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -459,6 +459,51 @@
               <FileName>system_stm32f1xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/system_stm32f1xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/ExtraDrivers</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f1xx_bm_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_bus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_bus.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_timer_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_timer_systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_bm_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\_ExtraDrivers\Src\stm32f1xx_bm_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -481,5 +526,14 @@
     </components>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>Main</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>
