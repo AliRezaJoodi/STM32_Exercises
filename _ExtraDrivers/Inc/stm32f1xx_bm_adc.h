@@ -5,6 +5,8 @@ It's about:
 	ADC_SR:		ADC status register
 	ADC_JDRx:	ADC injected data register x
 	ADC_DR:		ADC regular data register
+	ADC_CR1:	ADC control register 1
+	ADC_CR2:	ADC control register 2
 */
 
 /*
@@ -21,6 +23,7 @@ extern "C" {
 
 #include <stm32f1xx.h>
 #include <utility.h>
+#include <timeout.h>
 
 /*
 ADC_SR, Bit 4
@@ -150,6 +153,127 @@ DATA[15:0]:	Regular data
 __STATIC_INLINE uint16_t ADC_RegularData_GetConversionResult(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->DR & 0xFFFFUL;
 	return data;
+}
+
+
+/*
+ADC_CR1, Bit 5
+EOCIE: Interrupt enable for EOC
+			This bit is set and cleared by software to enable/disable the End of Conversion interrupt.
+			0: EOC interrupt disabled
+			1: EOC interrupt enabled. An interrupt is generated when the EOC bit is set.
+*/
+
+__STATIC_INLINE uint32_t _EndOfConversionInterrupt_GetEnableStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR1, ADC_CR1_EOSIE_Pos) );
+}
+
+__STATIC_INLINE void ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+	WriteBit(ADCx->CR1, ADC_CR1_EOSIE_Pos, status);
+}
+
+
+/*
+ADC_CR2, Bit 22
+SWSTART: 	Start conversion of regular channels
+					This bit is set by software to start conversion and cleared by hardware as soon as conversion starts. 
+					It starts a conversion of a group of regular channels 
+					if SWSTART is selected as trigger event by the EXTSEL[2:0] bits.
+					0: Reset state
+					1: Starts conversion of regular channels
+*/
+
+__STATIC_INLINE uint32_t _StartConversionOfRegularChannels_GetStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos) );
+}
+
+__STATIC_INLINE void ADC_StartConversionOfRegularChannels_Start(ADC_TypeDef *ADCx){
+	SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
+	
+	while(_StartConversionOfRegularChannels_GetStatus(ADC1) != 0){}
+}
+
+
+/*
+ADC_CR2, Bit 21
+JSWSTART: Start conversion of injected channels
+					This bit is set by software and cleared by software or by hardware as soon as the conversion starts.
+					It starts a conversion of a group of injected channels (if JSWSTART is selected as trigger event by the JEXTSEL[2:0] bits.
+					0: Reset state
+					1: Starts conversion of injected channels
+*/
+
+__STATIC_INLINE uint32_t _StartConversionOfInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos) );
+}
+
+__STATIC_INLINE void ADC_StartConversionOfInjectedChannels_Start(ADC_TypeDef *ADCx){
+	SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
+	
+	while(_StartConversionOfInjectedChannels_GetStatus(ADC1) != 0){}
+}
+
+
+/*
+ADC_CR2, Bit 20
+EXTTRIG: 	External trigger conversion mode for regular channels
+					This bit is set and cleared by software to enable/disable the external trigger used to start
+					conversion of a regular channel group.
+					0: Conversion on external event disabled
+					1: Conversion on external event enabled
+*/
+
+__STATIC_INLINE uint32_t _ExternalTriggerConversionModeForRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos) );
+}
+
+__STATIC_INLINE void ADC_ExternalTriggerConversionModeForRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+	WriteBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos, status);
+}
+
+
+/*
+ADC_CR2, Bit 2
+Bit 2 CAL: 	A/D Calibration
+						This bit is set by software to start the calibration.
+						It is reset by hardware after calibration is complete.
+						0: Calibration completed
+						1: Enable calibration
+*/
+
+__STATIC_INLINE uint32_t _Calibration_GetCompleteStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_CAL_Pos) );
+}
+
+__STATIC_INLINE void ADC_StartCalibration(ADC_TypeDef *ADCx){
+	SetBit(ADCx->CR2, ADC_CR2_CAL_Pos);
+	
+	while(_Calibration_GetCompleteStatus(ADC1) != 0){}
+	__NOP();
+}
+
+
+/*
+ADC_CR2, Bit 0
+ADON: A/D converter ON / OFF
+			This bit is set and cleared by software.
+			If this bit holds a value of zero and a 1 is written to it then it wakes up the ADC from Power Down state.
+			Conversion starts when this bit holds a value of 1 and a 1 is written to it.
+			The application should allow a delay of tSTAB between power up and start of conversion.
+			0: Disable ADC conversion/calibration and go to power down mode.
+			1: Enable ADC and to start conversion.
+
+			Note: If any other bit in this register apart from ADON is changed at the same time,
+			then conversion is not triggered. 
+			This is to prevent triggering an erroneous conversion.
+*/
+
+__STATIC_INLINE uint32_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_ADON_Pos) );
+}
+
+__STATIC_INLINE void ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+	WriteBit(ADCx->CR2, ADC_CR2_ADON_Pos, status);	
 }
 
 
