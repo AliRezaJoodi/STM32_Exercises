@@ -119,12 +119,18 @@ uint8_t i = 0;
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   
-	LL_ADC_Enable(ADC1);						//Enable ADC1
-	LL_ADC_EnableIT_EOS(ADC1);					//Enable end of sequence interrupt for ADC1
-	LL_ADC_StartCalibration(ADC1); 				//Calibration start
-	while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
-		__NOP();
-	LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
+	//LL_ADC_Enable(ADC1);						//Enable ADC1
+	ADC_EnableOrDisable(ADC1, 1);
+	//LL_ADC_EnableIT_EOS(ADC1);					//Enable end of sequence interrupt for ADC1
+	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 1);
+	//LL_ADC_StartCalibration(ADC1); 				//Calibration start
+	ADC_StartCalibration(ADC1);
+	//while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
+	//while(_Calibration_GetCompleteStatus(ADC1) != 0)
+		//__NOP();
+	//LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
+	ADC_StartConversionOfRegularChannels_Start(ADC1);
+	ADC_ExternalTriggerConversionModeForRegularChannels_EnableOrDisable(ADC1, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
