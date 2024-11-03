@@ -130,12 +130,14 @@ uint8_t i = 0;
 		//__NOP();
 	//LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
 	ADC_StartConversionOfRegularChannels_Start(ADC1);
-	ADC_ExternalTriggerConversionModeForRegularChannels_EnableOrDisable(ADC1, 0);
+	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitData8(USART1, 'A');
+	LL_USART_TransmitData8(USART1, 13);
+	LL_USART_TransmitData8(USART1, 10);
+	
   while(1){
     /* USER CODE END WHILE */
 
@@ -207,7 +209,8 @@ static void MX_ADC1_Init(void)
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* Peripheral clock enable */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_ADC1);
+  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_ADC1);
+	BUS_ADC1_EnableOrDisable(1);
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
   /**ADC1 GPIO Configuration

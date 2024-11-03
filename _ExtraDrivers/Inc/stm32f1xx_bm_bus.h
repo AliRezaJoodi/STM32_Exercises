@@ -4,8 +4,8 @@
 /*
 It's about:
 	RCC_APB1RSTR: APB1 peripheral reset register
-	RCC_APB1ENR: 	APB1 peripheral clock enable register
 	RCC_APB2RSTR: APB2 peripheral reset register 
+	RCC_APB1ENR: 	APB1 peripheral clock enable register
 	RCC_APB2ENR: 	APB2 peripheral clock enable register
 */
 
@@ -105,6 +105,7 @@ __STATIC_INLINE uint32_t BUS_BKP_EnableOrDisable(uint32_t status){
 }
 
 /*
+RCC_APB2RSTR, Bit 0
 AFIORST: 	Alternate function I/O reset
 					1 Bit, Read/Write by software
 					0: No effect
@@ -434,6 +435,96 @@ __STATIC_INLINE uint32_t BUS_USART3_EnableOrDisable(uint32_t status){
 	
 	#ifdef TIMEOUT_INCLUDED
 		return ( Timeout_WaitUntil(_USART3_GetEnableStatus, status) );
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+RCC_APB2RSTR, Bit 10
+ADC2RST: 	ADC 2 interface reset
+					Set and cleared by software.
+					0: No effect
+					1: Reset ADC 2 interface
+*/
+
+__STATIC_INLINE uint32_t _ADC2_GetResetStatus(void){
+	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC2RST_Pos) );
+}
+
+__STATIC_INLINE uint32_t BUS_ADC2_ResetOrRelease(uint32_t status){
+	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC2RST_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_ADC2_GetResetStatus, status) );
+	#else
+		return 0;
+	#endif	
+}
+
+/*
+RCC_APB2ENR, Bit 10
+ADC2EN: ADC 2 interface clock enable
+				Set and cleared by software.
+				0: ADC 2 interface disabled
+				1: ADC 2 interface clock enabled
+*/
+
+__STATIC_INLINE uint32_t _ADC2_GetEnableStatus(void){
+	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_ADC2EN_Pos) );
+}
+
+__STATIC_INLINE uint32_t BUS_ADC2_EnableOrDisable(uint32_t status){
+	WriteBit(RCC->APB2ENR, RCC_APB2ENR_ADC2EN_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_ADC2_GetEnableStatus, status) );
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+RCC_APB2RSTR, Bit 9
+ADC1RST: 	ADC 1 interface reset
+					Set and cleared by software.
+					0: No effect
+					1: Reset ADC 1 interface
+*/
+
+__STATIC_INLINE uint32_t _ADC1_GetResetStatus(void){
+	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC1RST_Pos) );
+}
+
+__STATIC_INLINE uint32_t BUS_ADC1_ResetOrRelease(uint32_t status){
+	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC1RST_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_ADC1_GetResetStatus, status) );
+	#else
+		return 0;
+	#endif	
+}
+
+/*
+RCC_APB2ENR, Bit 9
+ADC1EN: ADC 1 interface clock enable
+				Set and cleared by software.
+				0: ADC 1 interface disabled
+				1: ADC 1 interface clock enabled
+*/
+
+__STATIC_INLINE uint32_t _ADC1_GetEnableStatus(void){
+	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_ADC1EN_Pos) );
+}
+
+__STATIC_INLINE uint32_t BUS_ADC1_EnableOrDisable(uint32_t status){
+	WriteBit(RCC->APB2ENR, RCC_APB2ENR_ADC1EN_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return ( Timeout_WaitUntil(_ADC1_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif

@@ -7,6 +7,7 @@ IRG List:
 	USART1_IRQn
 	USART2_IRQn
 	USART3_IRQn
+	ADC1_2_IRQn	
 	EXTI0_IRQn
 	EXTI1_IRQn
 	EXTI2_IRQn
@@ -32,6 +33,9 @@ void NVIC_Config(void){
 
 //	NVIC_SetPriority(USART3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
 //	NVIC_EnableIRQ(USART3_IRQn);
+
+//	NVIC_SetPriority(ADC1_2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+//	NVIC_EnableIRQ(ADC1_2_IRQn);
 	
 //	NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
 //	NVIC_EnableIRQ(EXTI0_IRQn);
@@ -79,6 +83,13 @@ void NVIC_Config(void){
 //		char chr = USART_ReceiveData_8Bits(USART3);
 //		USART_TransmitData_8Bits(USART3, chr);
 //	}
+//}
+
+//void ADC1_2_IRQHandler(void){
+//	if(ADC_EndOfConversion_GetFlag(ADC1)==1){
+//		ADC_EndOfConversion_ClearFlag(ADC1); 
+//		//adc_value = ADC_RegularData_GetConversionResult(ADC1); 
+//	 }
 //}
 
 ////*****************************************

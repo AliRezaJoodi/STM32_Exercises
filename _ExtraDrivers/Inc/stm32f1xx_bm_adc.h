@@ -24,6 +24,7 @@ extern "C" {
 #include <stm32f1xx.h>
 #include <utility.h>
 #include <timeout.h>
+#include <stm32f1xx_bm_bus.h>
 
 /*
 ADC_SR, Bit 4
@@ -168,8 +169,14 @@ __STATIC_INLINE uint32_t _EndOfConversionInterrupt_GetEnableStatus(ADC_TypeDef *
 	return ( GetBit(ADCx->CR1, ADC_CR1_EOSIE_Pos) );
 }
 
-__STATIC_INLINE void ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_EOSIE_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_EndOfConversionInterrupt_GetEnableStatus, ADCx, status);
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -187,10 +194,15 @@ __STATIC_INLINE uint32_t _StartConversionOfRegularChannels_GetStatus(ADC_TypeDef
 	return ( GetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos) );
 }
 
-__STATIC_INLINE void ADC_StartConversionOfRegularChannels_Start(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartConversionOfRegularChannels_Start(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
 	
-	while(_StartConversionOfRegularChannels_GetStatus(ADC1) != 0){}
+	//while(_StartConversionOfRegularChannels_GetStatus(ADC1) != 0){}
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_StartConversionOfRegularChannels_GetStatus, ADCx, 0);
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -207,10 +219,15 @@ __STATIC_INLINE uint32_t _StartConversionOfInjectedChannels_GetStatus(ADC_TypeDe
 	return ( GetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos) );
 }
 
-__STATIC_INLINE void ADC_StartConversionOfInjectedChannels_Start(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartConversionOfInjectedChannels_Start(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
 	
-	while(_StartConversionOfInjectedChannels_GetStatus(ADC1) != 0){}
+	//while(_StartConversionOfInjectedChannels_GetStatus(ADC1) != 0){}
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_StartConversionOfInjectedChannels_GetStatus, ADCx, 0);
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -223,12 +240,18 @@ EXTTRIG: 	External trigger conversion mode for regular channels
 					1: Conversion on external event enabled
 */
 
-__STATIC_INLINE uint32_t _ExternalTriggerConversionModeForRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _ExternalTriggerForRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos) );
 }
 
-__STATIC_INLINE void ADC_ExternalTriggerConversionModeForRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ExternalTriggerForRegularChannels_GetEnableStatus, ADCx, status);
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -245,11 +268,14 @@ __STATIC_INLINE uint32_t _Calibration_GetCompleteStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_CAL_Pos) );
 }
 
-__STATIC_INLINE void ADC_StartCalibration(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartCalibration(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_CAL_Pos);
-	
-	while(_Calibration_GetCompleteStatus(ADC1) != 0){}
-	__NOP();
+		
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_Calibration_GetCompleteStatus, ADCx, 0);
+	#else
+		return 0;
+	#endif
 }
 
 
@@ -272,8 +298,14 @@ __STATIC_INLINE uint32_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_ADON_Pos) );
 }
 
-__STATIC_INLINE void ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
-	WriteBit(ADCx->CR2, ADC_CR2_ADON_Pos, status);	
+__STATIC_INLINE uint8_t ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+	WriteBit(ADCx->CR2, ADC_CR2_ADON_Pos, status);
+
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(ADC_GetEnableStatus, ADCx, status);
+	#else
+		return 0;
+	#endif	
 }
 
 
