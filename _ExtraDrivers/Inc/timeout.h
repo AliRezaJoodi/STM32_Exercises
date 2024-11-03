@@ -17,18 +17,30 @@ extern "C" {
 	#define TIMEOUT_VALUE		1000000
 #endif
 
-__STATIC_INLINE uint32_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint32_t status) {
+__STATIC_INLINE uint8_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint32_t status) {
 	uint32_t timeout = TIMEOUT_VALUE;
 
   while (condition_func() != status){
-		#if TIMEOUT_VALUE != 0
+		//#if TIMEOUT_VALUE != 0
 			if (timeout-- == 0){
 				return 1;		// Unsuccessful
 			}
-		#endif
+		//#endif
   }
 	
   return 0;		// Successful
+}
+
+__STATIC_INLINE uint8_t Timeout_ADC_WaitUntil(uint32_t (*condition_func)(ADC_TypeDef *), ADC_TypeDef *ADCx, uint32_t status){
+	uint32_t timeout = TIMEOUT_VALUE;
+
+	while(condition_func(ADCx) != status){
+		if(timeout-- == 0){
+			return 1;  // Unsuccessful
+		}
+	}
+
+	return 0;  // Successful
 }
 
 #ifdef __cplusplus

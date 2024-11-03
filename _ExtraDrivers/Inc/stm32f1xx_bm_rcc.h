@@ -243,7 +243,7 @@ __STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint32_t mode){
 
 /*
 RCC_CFGR, Bits 3:2
-SWS:	System clock switch status
+SWS: 	System clock switch status
 			Set and cleared by hardware to indicate which clock source is used as system clock.
 			00: HSI oscillator used as system clock
 			01: HSE oscillator used as system clock
@@ -251,12 +251,15 @@ SWS:	System clock switch status
 			11: not applicable
 
 RCC_CFGR, Bits 1:0
-SW:		System clock switch
-			Set and cleared by hardware to indicate which clock source is used as system clock.
-			00: HSI oscillator used as system clock
-			01: HSE oscillator used as system clock
-			10: PLL used as system clock
-			11: not applicable
+SW: 	System clock switch
+			Set and cleared by software to select SYSCLK source.
+			Set by hardware to force HSI selection when leaving Stop and Standby mode or 
+			in case of failure of the HSE oscillator used directly or 
+			indirectly as system clock (if the Clock Security System is enabled).
+			00: HSI selected as system clock
+			01: HSE selected as system clock
+			10: PLL selected as system clock
+			11: not allowed
 */
 
 #define SYSCLK_SOURCE_HSI			0b00
