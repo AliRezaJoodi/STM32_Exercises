@@ -128,8 +128,8 @@ HSEBYP: External high-speed clock bypass
 				1: external 3-25 MHz oscillator bypassed with external clock
 */
 
-#define HSE_CLKSOURCE_XTAL      0b0
-#define HSE_CLKSOURCE_EXTCLK		0b1
+#define RCC_HSE_CLKSOURCE_XTAL      0b0
+#define RCC_HSE_CLKSOURCE_EXTCLK		0b1
 
 __STATIC_INLINE uint32_t RCC_HSE_GetClockSource(void){
   return ( GetBit(RCC->CR, RCC_CR_HSEBYP_Pos) );
@@ -187,22 +187,22 @@ PLLXTPRE: HSE divider for PLL entry
 					1: HSE clock divided by 2
 */
 
-#define PLL_CLKSOURCE_HSI_DIV2	0b00
-#define PLL_CLKSOURCE_HSE_DIV1  0b01
-#define PLL_CLKSOURCE_HSE_DIV2	0b10
+#define RCC_PLL_CLKSOURCE_HSI_DIV2	0b00
+#define RCC_PLL_CLKSOURCE_HSE_DIV1  0b01
+#define RCC_PLL_CLKSOURCE_HSE_DIV2	0b10
 
 __STATIC_INLINE void RCC_PLL_SetClockSource(uint32_t mode){
 	char e_status= _PLL_GetEnableStatus();
 
 	switch(mode){
-		case PLL_CLKSOURCE_HSI_DIV2:
+		case RCC_PLL_CLKSOURCE_HSI_DIV2:
 			ClearBit(RCC->CFGR, RCC_CFGR_PLLSRC_Pos);
 			break;
-		case PLL_CLKSOURCE_HSE_DIV1:
+		case RCC_PLL_CLKSOURCE_HSE_DIV1:
 			SetBit(RCC->CFGR, RCC_CFGR_PLLSRC_Pos);
 			ClearBit(RCC->CFGR, RCC_CFGR_PLLXTPRE_Pos);
 			break;
-		case PLL_CLKSOURCE_HSE_DIV2:
+		case RCC_PLL_CLKSOURCE_HSE_DIV2:
 			SetBit(RCC->CFGR, RCC_CFGR_PLLSRC_Pos);
 			SetBit(RCC->CFGR, RCC_CFGR_PLLXTPRE_Pos);
 			break;
@@ -218,22 +218,22 @@ PLLMUL:	PLL multiplication factor
 				Caution: The PLL output frequency must not exceed 72 MHz.
 */
 
-#define PLL_MUL_2			0b0000
-#define PLL_MUL_3			0b0001
-#define PLL_MUL_4			0b0010
-#define PLL_MUL_5			0b0011
-#define PLL_MUL_6			0b0100
-#define PLL_MUL_7			0b0101
-#define PLL_MUL_8			0b0110
-#define PLL_MUL_9			0b0111
-#define PLL_MUL_10		0b1000
-#define PLL_MUL_11		0b1001
-#define PLL_MUL_12		0b1010
-#define PLL_MUL_13		0b1011
-#define PLL_MUL_14		0b1100
-#define PLL_MUL_15		0b1101
-#define PLL_MUL_16		0b1110
-#define PLL_MUL_16_		0b1111
+#define RCC_PLL_MUL2			0b0000
+#define RCC_PLL_MUL3			0b0001
+#define RCC_PLL_MUL4			0b0010
+#define RCC_PLL_MUL5			0b0011
+#define RCC_PLL_MUL6			0b0100
+#define RCC_PLL_MUL7			0b0101
+#define RCC_PLL_MUL8			0b0110
+#define RCC_PLL_MUL9			0b0111
+#define RCC_PLL_MUL10		0b1000
+#define RCC_PLL_MUL11		0b1001
+#define RCC_PLL_MUL12		0b1010
+#define RCC_PLL_MUL13		0b1011
+#define RCC_PLL_MUL14		0b1100
+#define RCC_PLL_MUL15		0b1101
+#define RCC_PLL_MUL16		0b1110
+#define RCC_PLL_MUL16_		0b1111
 
 __STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint32_t mode){
 	Write4Bit(RCC->CFGR, RCC_CFGR_PLLMULL_Pos, mode);
@@ -262,10 +262,10 @@ SW: 	System clock switch
 			11: not allowed
 */
 
-#define SYSCLK_SOURCE_HSI			0b00
-#define SYSCLK_SOURCE_HSE    	0b01
-#define SYSCLK_SOURCE_PLL    	0b10
-#define SYSCLK_SOURCE_NONE		0b11
+#define RCC_SYSCLK_CLKSOURCE_HSI			0b00
+#define RCC_SYSCLK_CLKSOURCE_HSE    	0b01
+#define RCC_SYSCLK_CLKSOURCE_PLL    	0b10
+#define RCC_SYSCLK_CLKSOURCE_NONE		0b11
 
 __STATIC_INLINE uint32_t _SeystemClock_GetSource(void){
 	return ( Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos) );
@@ -298,15 +298,15 @@ HPRE:	AHB prescaler
 			1111: SYSCLK divided by 512
 */
 
-#define AHB_SYSCLK_DIV1   		0b0000
-#define AHB_SYSCLK_DIV2     	0b1000
-#define AHB_SYSCLK_DIV4     	0b1001
-#define AHB_SYSCLK_DIV8     	0b1010
-#define AHB_SYSCLK_DIV16    	0b1011
-#define AHB_SYSCLK_DIV64    	0b1100
-#define AHB_SYSCLK_DIV128			0b1101
-#define AHB_SYSCLK_DIV256   	0b1110
-#define AHB_SYSCLK_DIV512			0b1111	
+#define RCC_AHB_DIV1   		0b0000
+#define RCC_AHB_DIV2     	0b1000
+#define RCC_AHB_DIV4     	0b1001
+#define RCC_AHB_DIV8     	0b1010
+#define RCC_AHB_DIV16    	0b1011
+#define RCC_AHB_DIV64    	0b1100
+#define RCC_AHB_DIV128			0b1101
+#define RCC_AHB_DIV256   	0b1110
+#define RCC_AHB_DIV512			0b1111	
 
 __STATIC_INLINE uint32_t _AHB_GetPrescaler(void){
 	return( Get4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos) );
@@ -335,11 +335,11 @@ PPRE1[2:0]: APB Low-speed prescaler (APB1)
 						111: HCLK divided by 16
 */
 
-#define APB1_HCLK_DIV1		0b000
-#define APB1_HCLK_DIV2		0b100
-#define APB1_HCLK_DIV4		0b101
-#define APB1_HCLK_DIV8		0b110
-#define APB1_HCLK_DIV16		0b111
+#define RCC_APB1_DIV1		0b000
+#define RCC_APB1_DIV2		0b100
+#define RCC_APB1_DIV4		0b101
+#define RCC_APB1_DIV8		0b110
+#define RCC_APB1_DIV16		0b111
 
 __STATIC_INLINE uint32_t _APB1_GetPrescaler(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
@@ -368,11 +368,11 @@ PPRE2[2:0]: APB high-speed prescaler (APB2)
 						111: HCLK divided by 16
 */
 
-#define APB2_HCLK_DIV1		0b000
-#define APB2_HCLK_DIV2		0b100
-#define APB2_HCLK_DIV4		0b101
-#define APB2_HCLK_DIV8		0b110
-#define APB2_HCLK_DIV16		0b111
+#define RCC_APB2_DIV1		0b000
+#define RCC_APB2_DIV2		0b100
+#define RCC_APB2_DIV4		0b101
+#define RCC_APB2_DIV8		0b110
+#define RCC_APB2_DIV16		0b111
 
 __STATIC_INLINE uint32_t _APB2_GetPrescaler(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
@@ -400,10 +400,10 @@ ADCPRE:	ADC prescaler
 				11: PCLK2 divided by 8
 */
 
-#define ADC_PCLK2_DIV2		0b00
-#define ADC_PCLK2_DIV4		0b01
-#define ADC_PCLK2_DIV6		0b10
-#define ADC_PCLK2_DIV8		0b11
+#define RCC_ADC_DIV2		0b00
+#define RCC_ADC_DIV4		0b01
+#define RCC_ADC_DIV6		0b10
+#define RCC_ADC_DIV8		0b11
 
 __STATIC_INLINE uint32_t _ADC_GetPrescaler(void){
 	return( Get2Bit(RCC->CFGR, RCC_CFGR_ADCPRE_Pos) );
@@ -435,11 +435,11 @@ MCO:	Microcontroller clock output
 			make sure that this clock does not exceed 50 MHz (the maximum IO speed).
 */
 
-#define MCO_SOURCE_NONE					0b000
-#define MCO_SOURCE_SYSCLK				0b100
-#define MCO_SOURCE_HSI					0b101
-#define MCO_SOURCE_HSE					0b110
-#define MCO_SOURCE_PLLCLK_DIV2	0b111
+#define RCC_MCO_SOURCE_NONE					0b000
+#define RCC_MCO_SOURCE_SYSCLK				0b100
+#define RCC_MCO_SOURCE_HSI					0b101
+#define RCC_MCO_SOURCE_HSE					0b110
+#define RCC_MCO_SOURCE_PLLCLK_DIV2	0b111
 
 __STATIC_INLINE uint32_t _MCO_GetSource(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_MCO_Pos) );
@@ -524,8 +524,8 @@ LSEBYP: External low-speed oscillator bypass
 				1: LSE oscillator bypassed 
 */
 
-#define LSE_CLKSOURCE_XTAL			0b0
-#define LSE_CLKSOURCE_EXTCLK		0b1
+#define RCC_LSE_CLKSOURCE_XTAL			0b0
+#define RCC_LSE_CLKSOURCE_EXTCLK		0b1
 
 __STATIC_INLINE uint32_t _LSE_GetClockSource(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos) );
@@ -589,10 +589,10 @@ RTCSEL[1:0]: 	RTC clock source selection
 							11: HSE oscillator clock divided by 128 used as RTC clock
 */
 
-#define RTC_CLKSOURCE_NONE					0b00
-#define RTC_CLKSOURCE_LSE    				0b01
-#define RTC_CLKSOURCE_LSI    				0b10
-#define RTC_CLKSOURCE_HSE_DIV128		0b11
+#define RCC_RTC_CLKSOURCE_NONE					0b00
+#define RCC_RTC_CLKSOURCE_LSE    				0b01
+#define RCC_RTC_CLKSOURCE_LSI    				0b10
+#define RCC_RTC_CLKSOURCE_HSE_DIV128		0b11
 
 __STATIC_INLINE uint32_t _RTC_GetClockSource(void){
 		return ( Get2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos) );
