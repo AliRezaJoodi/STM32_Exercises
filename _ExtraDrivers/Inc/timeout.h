@@ -14,7 +14,7 @@ extern "C" {
 //#endif
 
 #ifndef TIMEOUT_VALUE
-	#define TIMEOUT_VALUE		1000000
+	#define TIMEOUT_VALUE		3000000
 #endif
 
 __STATIC_INLINE uint8_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint32_t status) {
