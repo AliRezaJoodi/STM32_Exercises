@@ -203,7 +203,7 @@ static void MX_ADC1_Init(void)
 //  ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT;
 //  ADC_InitStruct.SequencersScanMode = LL_ADC_SEQ_SCAN_DISABLE;
 //  LL_ADC_Init(ADC1, &ADC_InitStruct);
-	ADC_DataAlignment_LeftOrRight(ADC1, ADC_ALIGN_RIGHT);
+	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);
 	ADC_ScanMode_EnableOrDisable(ADC1, 0);
 	
 //  ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
@@ -218,7 +218,7 @@ static void MX_ADC1_Init(void)
 //  LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
 
 	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);
-	ADC_DiscontinuousModeInRegularChannels_SetCountChannels(ADC1, 1);
+	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);
 	ADC_DMA_EnableOrDisable(ADC1, 0);
 	ADC_ContinuousOrSingleConversionMode_SetMode(ADC1, ADC_CONT_CONTINUOUS);
@@ -230,7 +230,7 @@ static void MX_ADC1_Init(void)
 	
   //LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_1CYCLE_5);
 	//ADC_SamplingTimeForCh1_SetTime(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
-	ADC_SamplingTime_Ch3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
+	ADC_SamplingTimeInCh3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */

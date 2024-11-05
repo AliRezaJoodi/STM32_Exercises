@@ -265,17 +265,17 @@ DISCNUM[2:0]: Discontinuous mode channel count
 							111: 8 channels
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetCountChannels(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetChannelCount(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_SetCountChannels(ADC_TypeDef *ADCx, uint32_t count){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC_TypeDef *ADCx, uint32_t count){
 	if(count<1 || 8<count){return 1;}
 	
 	Write3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos, (count-1));
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_DiscontinuousModeInRegularChannels_GetCountChannels, ADCx, (count-1));
+		return Timeout_ADC_WaitUntil(_DiscontinuousModeInRegularChannels_GetChannelCount, ADCx, (count-1));
 	#else
 		return 0;
 	#endif
@@ -618,14 +618,14 @@ ALIGN: 	Data alignment
 				1: Left Alignment
 */
 
-#define ADC_ALIGN_RIGHT		0
-#define ADC_ALIGN_LEFT		1
+#define ADC_ALIGNMENT_RIGHT		0
+#define ADC_ALIGNMENT_LEFT		1
 
 __STATIC_INLINE uint32_t _DataAlignment_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_ALIGN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DataAlignment_LeftOrRight(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DataAlignment_SetLeftOrRight(ADC_TypeDef *ADCx, uint32_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_ALIGN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -998,15 +998,15 @@ SMPx[2:0]: 	Channel x Sample time selection
 #define ADC_SAMPLINGTIME_71CYCLE_5       	0b110U
 #define ADC_SAMPLINGTIME_239CYCLE_5     	0b111U
 
-__STATIC_INLINE uint32_t _SamplingTime_Ch3_GetCycle(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _SamplingTimeInCh3_GetCycle(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SamplingTime_Ch3_SetCycle(ADC_TypeDef *ADCx, uint32_t mode){	
+__STATIC_INLINE uint8_t ADC_SamplingTimeInCh3_SetCycle(ADC_TypeDef *ADCx, uint32_t mode){	
 	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_SamplingTime_Ch3_GetCycle, ADCx, mode);
+		return Timeout_ADC_WaitUntil(_SamplingTimeInCh3_GetCycle, ADCx, mode);
 	#else
 		return 0;
 	#endif
