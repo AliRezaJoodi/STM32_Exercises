@@ -1,11 +1,17 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+#include "main.h"
+
 #include <utility.h>
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_rcc.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
+
+#include <stm32f1xx_bm_timer_systick.h>
 #include <delay_nop.h>
+#define Delay_us(VALUE)		DelayNop_us(VALUE)
+#define Delay_ms(VALUE)		DelayNop_ms(VALUE)
 
 void LED_Config(void);
 void Buttons_Config(void);

@@ -1,8 +1,31 @@
 
-#ifndef _HARDWARE_INCLUDED
-#define _HARDWARE_INCLUDED
+#ifndef _MAIN_INCLUDED
+#define _MAIN_INCLUDED
 
-	//#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stm32f1xx.h>
+
+//*****************************************
+#ifndef TIMEOUT_VALUE
+	#define TIMEOUT_VALUE		1000000
+#endif
+
+//*****************************************
+#ifndef SYSTICK_HCLK_VALUE
+	#define SYSTICK_HCLK_VALUE		8000000
+#endif
+
+//*****************************************
+#ifndef DELAY_NOP_LAG
+	#define DELAY_NOP_LAG		250000
+#endif
+
+//*****************************************
+#ifndef DISPLAY_7SEGMENT_4DIGIT_HARDWARE
+#define DISPLAY_7SEGMENT_4DIGIT_HARDWARE 
 	#define MULTIPLEX_MODE	0		// 0:	Lef To Right, 1: Right To Lef	
 	#define DISPLAY_LAG   	2000 //Display Lag
 	#define SEGMENT_ON			0
@@ -43,5 +66,11 @@
 		
 	#define DIGIT3_GPIO		GPIOB
   #define DIGIT3_PIN    3
-		
-#endif		// _HARDWARE_INCLUDED
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif		//_MAIN_INCLUDED

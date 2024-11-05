@@ -28,7 +28,7 @@ uint8_t _Keypad4x4_GetInitialNumber(void){
 	GPIO_ConfigPinForPushPullOutputMode(C2_GPIO, C2_PIN);	GPIO_ResetPin(C2_GPIO,C2_PIN);
 	GPIO_ConfigPinForPushPullOutputMode(C3_GPIO, C3_PIN);	GPIO_ResetPin(C3_GPIO,C3_PIN);
 	GPIO_ConfigPinForPushPullOutputMode(C4_GPIO, C4_PIN);	GPIO_ResetPin(C4_GPIO,C4_PIN);
-	Delay_ms(1);
+	DelayNop_ms(1);
 	WriteBit(numer, 0, GPIO_GetPin(R1_GPIO,R1_PIN));
 	WriteBit(numer, 1, GPIO_GetPin(R2_GPIO,R2_PIN));
 	WriteBit(numer, 2, GPIO_GetPin(R3_GPIO,R3_PIN));
@@ -42,7 +42,7 @@ uint8_t _Keypad4x4_GetInitialNumber(void){
 	GPIO_ConfigPinForPullUpInputMode(C2_GPIO,C2_PIN);
 	GPIO_ConfigPinForPullUpInputMode(C3_GPIO,C3_PIN);
 	GPIO_ConfigPinForPullUpInputMode(C4_GPIO,C4_PIN);
-	Delay_ms(1);
+	DelayNop_ms(1);
 	WriteBit(numer, 4, GPIO_GetPin(C1_GPIO,C1_PIN));
 	WriteBit(numer, 5, GPIO_GetPin(C2_GPIO,C2_PIN));
 	WriteBit(numer, 6, GPIO_GetPin(C3_GPIO,C3_PIN));

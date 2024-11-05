@@ -8,21 +8,20 @@
 extern "C" {
 #endif
 
+#include "main.h"
 #include <utility.h>
 
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 	#include <stm32f1xx_bm_timer_systick.h>
 //#elif defined(STM32F4)
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#else
+#ifndef BUZZER_HARDWARE
+#define BUZZER_HARDWARE 
 	#define BUZZER_ACTIVE       1     
   #define BUZZER_PIN          1
   #define BUZZER_GPIO         GPIOA

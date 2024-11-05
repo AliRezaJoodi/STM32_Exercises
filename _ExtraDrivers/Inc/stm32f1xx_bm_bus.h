@@ -17,6 +17,7 @@ extern "C" {
 #endif
 
 #include <stm32f1xx.h>
+
 #include <utility.h>
 #include <timeout.h>
 

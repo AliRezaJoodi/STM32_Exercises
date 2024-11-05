@@ -8,20 +8,19 @@
 extern "C" {
 #endif
 
+#include "main.h"
 #include <utility.h>
 
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 //#elif defined(STM32F4)
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#else
+#ifndef DISPLAY_7SEGMENT_1DIGIT_HARDWARE
+#define DISPLAY_7SEGMENT_1DIGIT_HARDWARE 
 	#define SEGMENT_ON		0
   #define DIGIT_ON      1
   

@@ -20,15 +20,15 @@ It's about:
 extern "C" {
 #endif
 
+#include "main.h"
 #include <utility.h>
 
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <timeout.h>
 //#elif defined(STM32F4)
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
 /*
