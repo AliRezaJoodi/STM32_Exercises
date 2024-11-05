@@ -20,22 +20,24 @@ Abbreviations:
 extern "C" {
 #endif
 
+#include "main.h"
+#include <utility.h>
+
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 	#include <stm32f1xx_bm_timer_systick.h>
-	//#include <delay_nop.h>
-#elif defined(STM32F4)
-
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#else
+//#ifdef HARDWARE_LOCAL
+//	#include "_hardware.h"
+//#else
 	//#define LCD_HARDWARE
+//#if !defined (LCD_HARDWARE)
+#ifndef LCD_HARDWARE
+#define LCD_HARDWARE
 	#define LCD_RS_GPIO  			GPIOA
 	#define LCD_RS_PIN  			0
 	#define LCD_RW_GPIO  			GPIOA		// Optional

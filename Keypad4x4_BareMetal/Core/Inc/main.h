@@ -1,7 +1,31 @@
-#ifndef _HARDWARE_INCLUDED
-#define _HARDWARE_INCLUDED
 
-	//#define KEYPAD4X4_HARDWARE
+#ifndef _MAIN_INCLUDED
+#define _MAIN_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stm32f1xx.h>
+
+//*****************************************
+#ifndef TIMEOUT_VALUE
+	#define TIMEOUT_VALUE		1000000
+#endif
+
+//*****************************************
+#ifndef SYSTICK_HCLK_VALUE
+	#define SYSTICK_HCLK_VALUE		8000000
+#endif
+
+//*****************************************
+#ifndef DELAY_NOP_LAG
+	#define DELAY_NOP_LAG		250000
+#endif
+
+//*****************************************
+#ifndef KEYPAD4X4_HARDWARE
+#define KEYPAD4X4_HARDWARE 
 	#define R1_GPIO			GPIOA
   #define R1_PIN			0
 	#define R2_GPIO			GPIOA
@@ -35,6 +59,11 @@
   #define N13					119
   #define N14					183
   #define N15					231
-	
-	#endif		// _HARDWARE_INCLUDED
-	
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif		//_MAIN_INCLUDED

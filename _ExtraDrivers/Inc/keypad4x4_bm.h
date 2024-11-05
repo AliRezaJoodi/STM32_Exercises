@@ -8,21 +8,20 @@
 extern "C" {
 #endif
 
+#include "main.h"
 #include <utility.h>
 
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 	#include <delay_nop.h>
 //#elif defined(STM32F4)
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#else
+#ifndef KEYPAD4X4_HARDWARE
+#define KEYPAD4X4_HARDWARE
 	#define R1_GPIO			GPIOA
   #define R1_PIN			0
 	#define R2_GPIO			GPIOA

@@ -8,21 +8,20 @@
 extern "C" {
 #endif
 
+#include "main.h"
 #include <utility.h>
 
 #if defined(STM32F1)
-	#include <stm32f1xx.h>
 	#include <stm32f1xx_bm_bus.h>
 	#include <stm32f1xx_bm_gpio.h>
 	#include <stm32f1xx_bm_timer_systick.h>
 //#elif defined(STM32F4)
 #else
-	#error "Error: STM32 type is not defined!"
+	#error "Error: Undefined STM32 Type!"
 #endif
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#else
+#ifndef BUTTON_HARDWARE
+#define BUTTON_HARDWARE
 	#define BUTTON_PRESSED      0
   #define BUTTON_LAG1         30        //ms 
   #define BUTTON_LAG2         20000      //Button Lag
@@ -36,6 +35,7 @@ extern "C" {
 	#define BUTTON3_GPIO				GPIOA
   #define BUTTON3_PIN         2
 #endif
+
 
 void Button_Config(void);
 

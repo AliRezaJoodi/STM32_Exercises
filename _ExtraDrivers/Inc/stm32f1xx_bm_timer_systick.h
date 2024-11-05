@@ -8,18 +8,13 @@
 extern "C" {
 #endif
 
-#include <stm32f1xx.h>
+#include "main.h"
 #include <utility.h>
-//#include <stm32f1xx_bm_gpio.h>
 
-//#ifdef HARDWARE_LOCAL
-//	#include "_hardware.h"
-//#endif
+#ifndef SYSTICK_HCLK_VALUE
+	#define SYSTICK_HCLK_VALUE		8000000
+#endif
 
-//#ifndef STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
-//#define STM32F1XX_BM_TIMER_SYSTICK_HARDWARE
-//	#define HCLK_VALUE		8000000
-//#endif
 
 //**************************************************
 __STATIC_INLINE void SysTick_SetClockSource(uint32_t MODE){

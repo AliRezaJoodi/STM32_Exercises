@@ -7,14 +7,14 @@
 extern "C" {
 #endif
 
-#include <stm32f1xx.h>
+#include "main.h"
 
 //#ifdef HARDWARE_LOCAL
 //	#include "_hardware.h"
 //#endif
 
 #ifndef TIMEOUT_VALUE
-	#define TIMEOUT_VALUE		3000000
+	#define TIMEOUT_VALUE		1000000
 #endif
 
 __STATIC_INLINE uint8_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint32_t status) {
