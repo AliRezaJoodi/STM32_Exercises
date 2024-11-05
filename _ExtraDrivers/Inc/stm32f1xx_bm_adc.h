@@ -2,11 +2,16 @@
 
 /*
 It's about:
-	ADC_SR:		ADC status register
-	ADC_JDRx:	ADC injected data register x
-	ADC_DR:		ADC regular data register
-	ADC_CR1:	ADC control register 1
-	ADC_CR2:	ADC control register 2
+	ADC_SR:			ADC status register
+	ADC_JDRx:		ADC injected data register x
+	ADC_DR:			ADC regular data register
+	ADC_CR1:		ADC control register 1
+	ADC_CR2:		ADC control register 2
+	ADC_SQR1:		ADC regular sequence register 1
+	ADC_SQR2:		ADC regular sequence register 2
+	ADC_SQR3:		ADC regular sequence register 3
+	ADC_SMPR1: 	ADC sample time register 1
+	ADC_SMPR2: 	ADC sample time register 2
 */
 
 /*
@@ -35,11 +40,11 @@ STRT:	Regular channel Start flag
 			1: Regular channel conversion has started
 */
 
-__STATIC_INLINE uint32_t ADC_RegularChannelStartFlag_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t ADC_StartFlagInRegularChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_STRT_Pos) );
 }
 
-__STATIC_INLINE void ADC_RegularChannelStartFlag_ClearFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE void ADC_StartFlagInRegularChannels_ClearFlag(ADC_TypeDef *ADCx){
 	ClearBit(ADCx->SR, ADC_SR_STRT_Pos);
 }
 
@@ -53,11 +58,11 @@ JSTRT: 	Injected channel Start flag
 				1: Injected group conversion has started
 */
 
-__STATIC_INLINE uint32_t ADC_InjectedChannelStartFlag_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t ADC_StartFlagInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JSTRT_Pos) );
 }
 
-__STATIC_INLINE void ADC_InjectedChannelStartFlag_ClearFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE void ADC_StartFlagInInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
 	ClearBit(ADCx->SR, ADC_SR_JSTRT_Pos);
 }
 
@@ -71,11 +76,11 @@ JEOC:	Injected channel end of conversion
 			1: Conversion complete
 */
 
-__STATIC_INLINE uint32_t ADC_InjectedChannelEndOfConversion_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t ADC_EndOfConversionInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JEOS_Pos) );
 }
 
-__STATIC_INLINE void ADC_InjectedChannelEndOfConversion_ClearFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE void ADC_EndOfConversionInInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
 	ClearBit(ADCx->SR, ADC_SR_JEOS_Pos);
 }
 
@@ -124,7 +129,7 @@ JDATA[15:0]: Injected data
 							They contain the conversion result from injected channel x.
 */
 // Need to check
-__STATIC_INLINE uint16_t ADC_InjectedData_GetConversionResult(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint16_t ADC_InjectedData_ReadConversionResult(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->JDR1 & 0xFFFFUL;
 	return data;
 }
@@ -138,7 +143,7 @@ ADC2DATA[15:0]: ADC2 data
 								In ADC2 and ADC3: these bits are not used.					
 */
 
-__STATIC_INLINE uint16_t ADC_RegularDataInDualMode_GetConversionResult_ADC2Data(void){
+__STATIC_INLINE uint16_t ADC_RegularDataInDualMode_ReadConversionResult_ADC2Data(void){
 	uint16_t data = ((ADC1->DR) >> 16) & 0xFFFFUL;
 	return data;
 }
@@ -151,7 +156,7 @@ DATA[15:0]:	Regular data
 						They contain the conversion result from the regular channels.
 */
 
-__STATIC_INLINE uint16_t ADC_RegularData_GetConversionResult(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint16_t ADC_RegularData_ReadConversionResult(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->DR & 0xFFFFUL;
 	return data;
 }
@@ -260,17 +265,17 @@ DISCNUM[2:0]: Discontinuous mode channel count
 							111: 8 channels
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeOnRegularChannels_GetCountChannels(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetCountChannels(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeOnRegularChannels_SetCountChannels(ADC_TypeDef *ADCx, uint32_t count){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_SetCountChannels(ADC_TypeDef *ADCx, uint32_t count){
 	if(count<1 || 8<count){return 1;}
 	
 	Write3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos, (count-1));
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_DiscontinuousModeOnRegularChannels_GetCountChannels, ADCx, (count-1));
+		return Timeout_ADC_WaitUntil(_DiscontinuousModeInRegularChannels_GetCountChannels, ADCx, (count-1));
 	#else
 		return 0;
 	#endif
@@ -308,15 +313,15 @@ DISCEN: Discontinuous mode on regular channels
 				1: Discontinuous mode on regular channels enabled
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeOnRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_DISCEN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeOnRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_DISCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_DiscontinuousModeOnRegularChannels_GetEnableStatus, ADCx, status);
+		return Timeout_ADC_WaitUntil(_DiscontinuousModeInRegularChannels_GetEnableStatus, ADCx, status);
 	#else
 		return 0;
 	#endif
@@ -448,16 +453,15 @@ SWSTART: 	Start conversion of regular channels
 					1: Starts conversion of regular channels
 */
 
-__STATIC_INLINE uint32_t _StartConversionOfRegularChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _StartConversionInRegularChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_StartConversionOfRegularChannels_Start(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartConversionInRegularChannels(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
 	
-	//while(_StartConversionOfRegularChannels_GetStatus(ADC1) != 0){}
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_StartConversionOfRegularChannels_GetStatus, ADCx, 0);
+		return Timeout_ADC_WaitUntil(_StartConversionInRegularChannels_GetStatus, ADCx, 0);
 	#else
 		return 0;
 	#endif
@@ -473,16 +477,16 @@ JSWSTART: Start conversion of injected channels
 					1: Starts conversion of injected channels
 */
 
-__STATIC_INLINE uint32_t _StartConversionOfInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint32_t _StartConversionInInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_StartConversionOfInjectedChannels_Start(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartConversionInInjectedChannels(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
 	
-	//while(_StartConversionOfInjectedChannels_GetStatus(ADC1) != 0){}
+	//while(_StartConversionInInjectedChannels_GetStatus(ADC1) != 0){}
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_StartConversionOfInjectedChannels_GetStatus, ADCx, 0);
+		return Timeout_ADC_WaitUntil(_StartConversionInInjectedChannels_GetStatus, ADCx, 0);
 	#else
 		return 0;
 	#endif
@@ -745,6 +749,267 @@ __STATIC_INLINE uint8_t ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
 	#else
 		return 0;
 	#endif	
+}
+
+
+/*
+ADC_SQR1, Bits 23:20
+L[3:0]: Regular channel sequence length
+				These bits are written by software to define the total number of conversions in the regular channel conversion sequence.
+				0000: 1 conversion
+				0001: 2 conversions
+				.....
+				1111: 16 conversions
+*/
+
+__STATIC_INLINE uint32_t _SequenceLengthInRegularChannels_GetLength(ADC_TypeDef *ADCx){
+	return ( Get4Bit(ADCx->SQR1, ADC_SQR1_L_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SequenceLengthInRegularChannels_SetLength(ADC_TypeDef *ADCx, uint32_t total){
+	if(total>16){return 1;}
+		
+	Write4Bit(ADCx->SQR1, ADC_SQR1_L_Pos, total-1);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SequenceLengthInRegularChannels_GetLength, ADCx, total-1);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR1, Bits 19:15
+SQ16[4:0]: 16th conversion in regular sequence
+						These bits are written by software with the channel number (0..17) assigned as the 16th in the conversion sequence.
+*/
+
+#define ADC_SEQUENCE_CH0		0
+#define ADC_SEQUENCE_CH1		1
+#define ADC_SEQUENCE_CH2		2
+#define ADC_SEQUENCE_CH3		3
+#define ADC_SEQUENCE_CH4		4
+#define ADC_SEQUENCE_CH5		5
+#define ADC_SEQUENCE_CH6		6
+#define ADC_SEQUENCE_CH7		7
+#define ADC_SEQUENCE_CH8		8
+#define ADC_SEQUENCE_CH9		9
+#define ADC_SEQUENCE_CH10		10
+#define ADC_SEQUENCE_CH11		11
+#define ADC_SEQUENCE_CH12		12
+#define ADC_SEQUENCE_CH13		13
+#define ADC_SEQUENCE_CH14		14
+#define ADC_SEQUENCE_CH15		15
+#define ADC_SEQUENCE_CH16		16
+#define ADC_SEQUENCE_CH17		17
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_16thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_16thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+		
+	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_16thSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 29:25
+SQ6[4:0]: 6th conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_6thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_6thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_6thSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 24:20
+SQ5[4:0]: 5th conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_5thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_5thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_5thSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 19:15
+SQ4[4:0]: 4th conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_4thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_4thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_4thSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 14:10
+SQ3[4:0]: 3rd conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_3rdSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_3rdSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_3rdSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 9:5
+SQ2[4:0]: 2nd conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_2ndSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_2ndSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_2ndSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SQR3, Bits 4:0
+SQ1[4:0]: first conversion in regular sequence
+*/
+
+__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannels_1stSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannels_1stSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+	if(ch>17){return 1;}
+	
+	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos, ch);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannels_1stSequence_GetChannelNumber, ADCx, ch);
+	#else
+		return 0;
+	#endif
+}
+
+
+/*
+ADC_SMPR1, Bits 23:0
+SMPx[2:0]: 	Channel x Sample time selection
+						These bits are written by software to select the sample time individually for each channel.
+						During sample cycles channel selection bits must remain unchanged.
+						000: 1.5 cycles
+						001: 7.5 cycles
+						010: 13.5 cycles
+						011: 28.5 cycles
+						100: 41.5 cycles
+						101: 55.5 cycles
+						110: 71.5 cycles
+						111: 239.5 cycles
+
+						Note: ADC1 analog Channel16 and Channel 17 are internally connected to the temperature sensor and to VREFINT, respectively.
+						Note: ADC2 analog input Channel16 and Channel17 are internally connected to VSS.
+						Note: ADC3 analog inputs Channel14, Channel15, Channel16 and Channel17 are connected to VSS.
+*/
+
+/*
+ADC_SMPR2, Bits 29:0
+SMPx[2:0]: 	Channel x Sample time selection
+						These bits are written by software to select the sample time individually for each channel.
+						During sample cycles channel selection bits must remain unchanged.
+						000: 1.5 cycles
+						001: 7.5 cycles
+						010: 13.5 cycles
+						011: 28.5 cycles
+						100: 41.5 cycles
+						101: 55.5 cycles
+						110: 71.5 cycles
+						111: 239.5 cycles
+						
+						Note: ADC3 analog input Channel9 is connected to VSS.
+*/
+
+#define ADC_SAMPLINGTIME_1CYCLE_5       	0b000U
+#define ADC_SAMPLINGTIME_7CYCLE_5       	0b001U
+#define ADC_SAMPLINGTIME_13CYCLE_5       	0b010U
+#define ADC_SAMPLINGTIME_28CYCLE_5       	0b011U
+#define ADC_SAMPLINGTIME_41CYCLE_5       	0b100U
+#define ADC_SAMPLINGTIME_55CYCLE_5       	0b101U
+#define ADC_SAMPLINGTIME_71CYCLE_5       	0b110U
+#define ADC_SAMPLINGTIME_239CYCLE_5     	0b111U
+
+__STATIC_INLINE uint32_t _SamplingTime_Ch3_GetCycle(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_Ch3_SetCycle(ADC_TypeDef *ADCx, uint32_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_Ch3_GetCycle, ADCx, mode);
+	#else
+		return 0;
+	#endif
 }
 
 

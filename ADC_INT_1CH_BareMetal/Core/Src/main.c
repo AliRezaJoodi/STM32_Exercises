@@ -129,7 +129,7 @@ uint8_t i = 0;
 	//while(_Calibration_GetCompleteStatus(ADC1) != 0)
 		//__NOP();
 	//LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
-	ADC_StartConversionOfRegularChannels_Start(ADC1);
+	ADC_StartConversionInRegularChannels(ADC1);
 	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
   /* USER CODE END 2 */
 
@@ -202,9 +202,9 @@ static void MX_ADC1_Init(void)
 
   /* USER CODE END ADC1_Init 0 */
 
-  LL_ADC_InitTypeDef ADC_InitStruct = {0};
-  LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
-  LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
+//  LL_ADC_InitTypeDef ADC_InitStruct = {0};
+//  LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
+//  LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
 
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -248,14 +248,19 @@ static void MX_ADC1_Init(void)
 //  LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
 
 	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);
-	ADC_DiscontinuousModeOnRegularChannels_SetCountChannels(ADC1, 1);
-	ADC_DiscontinuousModeOnRegularChannels_EnableOrDisable(ADC1, 0);
+	ADC_DiscontinuousModeInRegularChannels_SetCountChannels(ADC1, 1);
+	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);
 	ADC_DMA_EnableOrDisable(ADC1, 0);
 	ADC_ContinuousOrSingleConversionMode_SetMode(ADC1, ADC_CONT_CONTINUOUS);
   /** Configure Regular Channel
   */
-  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);
-  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_1CYCLE_5);
+  //LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);
+	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
+	ADC_ConversionSequenceInRegularChannels_1stSequence_SetChannelNumber(ADC1, ADC_SEQUENCE_CH3);
+	
+  //LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_1CYCLE_5);
+	//ADC_SamplingTimeForCh1_SetTime(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
+	ADC_SamplingTime_Ch3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
