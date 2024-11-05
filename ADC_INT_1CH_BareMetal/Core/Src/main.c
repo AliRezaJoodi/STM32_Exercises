@@ -59,7 +59,6 @@ extern uint16_t ADC_Value;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART1_UART_Init(void);
@@ -107,8 +106,10 @@ uint8_t i = 0;
   /* USER CODE END Init */
 
   /* Configure the system clock */
-  SystemClock_Config();
-
+  //SystemClock_Config();
+	//LL_Init1msTick(8000000);
+  //LL_SetSystemCoreClock(8000000);
+	RCC_SystemClock_ConfigDefault1();
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -135,8 +136,8 @@ uint8_t i = 0;
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitData8(USART1, 13); LL_mDelay(1);
-	LL_USART_TransmitData8(USART1, 10); LL_mDelay(1);
+	LL_USART_TransmitData8(USART1, 13); SysTick_Delay_1ms(1);
+	LL_USART_TransmitData8(USART1, 10); SysTick_Delay_1ms(1);
 	
   while(1){
     /* USER CODE END WHILE */
@@ -152,43 +153,12 @@ uint8_t i = 0;
 		}
 		i = 0;
 		
-		LL_mDelay(500);
+		//LL_mDelay(500);
+		SysTick_Delay_1ms(500);
   }
   /* USER CODE END 3 */
 }
 
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0)
-  {
-  }
-  LL_RCC_HSI_SetCalibTrimming(16);
-  LL_RCC_HSI_Enable();
-
-   /* Wait till HSI is ready */
-  while(LL_RCC_HSI_IsReady() != 1)
-  {
-
-  }
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
-  {
-
-  }
-  LL_Init1msTick(8000000);
-  LL_SetSystemCoreClock(8000000);
-  LL_RCC_SetADCClockSource(LL_RCC_ADC_CLKSRC_PCLK2_DIV_2);
-}
 
 /**
   * @brief ADC1 Initialization Function
