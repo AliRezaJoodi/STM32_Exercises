@@ -8,7 +8,7 @@
 //**************************************************
 void SysTick_Delay_1us(uint32_t us){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
-	SysTick_SetLoadValue(SYSTICK_HCLK_VALUE/1000000);
+	SysTick_SetLoadValue(HCLK_VALUE/1000000);
 	SysTick_ResetCounter();
 	SysTick_EnableOrDisable(1);
 	
@@ -22,7 +22,7 @@ void SysTick_Delay_1us(uint32_t us){
 //**************************************************
 void SysTick_Delay_1ms(uint32_t ms){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
-	SysTick_SetLoadValue(SYSTICK_HCLK_VALUE/1000);
+	SysTick_SetLoadValue(HCLK_VALUE/1000);
 	SysTick_ResetCounter();
 	SysTick_EnableOrDisable(1);
 	
@@ -36,7 +36,7 @@ void SysTick_Delay_1ms(uint32_t ms){
 //**************************************************
 void SysTick_ConfigDefault1_1ms(void){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
-	SysTick_SetLoadValue(SYSTICK_HCLK_VALUE/1000);
+	SysTick_SetLoadValue(HCLK_VALUE/1000);
 	SysTick_ResetCounter();
 	SysTick_EnableOrDisable(1);
 	SysTick_INT_EnableOrDisable(0);	
@@ -45,7 +45,7 @@ void SysTick_ConfigDefault1_1ms(void){
 //**************************************************
 void SysTick_ConfigDefault2_INT(void){
 	SysTick_SetClockSource(SYSTICK_CLKSOURCE_HCLK);
-	SysTick_SetLoadValue(SYSTICK_HCLK_VALUE/2);		// 0.5s
+	SysTick_SetLoadValue(HCLK_VALUE/2);		// 0.5s
 	SysTick_ResetCounter();
 	SysTick_EnableOrDisable(1);
 	SysTick_INT_EnableOrDisable(1);	
