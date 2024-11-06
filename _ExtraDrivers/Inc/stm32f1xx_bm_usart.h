@@ -8,10 +8,20 @@
 extern "C" {
 #endif
 
-#include <stm32f1xx.h>
+#include "main.h"
 #include <utility.h>
 #include <stm32f1xx_bm_bus.h>
 #include <stm32f1xx_bm_gpio.h>
+
+#ifndef PCLK1_VALUE
+	#define PCLK1_VALUE			8000000		// Default1 Value
+	#error "Error: Enter PCLK1 VALUE !"
+#endif
+
+#ifndef PCLK2_VALUE
+	#define PCLK2_VALUE			8000000		// Default1 Value
+	#error "Error: Enter PCLK2 VALUE !"
+#endif
 
 #define _DIV_INTEGER_SAMPLING16(PERIPHCLK, BAUDRATE) \
 	( ((PERIPHCLK)*25) / (4*(BAUDRATE)) )

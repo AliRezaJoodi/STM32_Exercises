@@ -1,30 +1,8 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "stm32f1xx_ll_usart.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
+#include "main.h"
 #include "stdio.h"
 
-#include <stm32f1xx.h>
 #include <utility.h>
 #include <stm32f1xx_bm_system.h>
 #include <stm32f1xx_bm_rcc.h>
@@ -35,307 +13,64 @@
 #include <stm32f1xx_bm_exti.h>
 
 #include <stm32f1xx_bm_adc.h>
-/* USER CODE END Includes */
+#include <stm32f1xx_bm_it.h>
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
+extern uint16_t adc_value;
 
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-//volatile uint16_t ADC_Value;			//Define variable ADC_Value 
-extern uint16_t ADC_Value;
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
-static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_USART1_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void){
-  /* USER CODE BEGIN 1 */
-
-float Voltage;				//variable for representing voltage
-uint8_t str[21];			//string for representing message
-uint8_t i = 0;				
-
-
-
-
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-  */
-  LL_GPIO_AF_Remap_SWJ_NOJTAG();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
-  //SystemClock_Config();
-	//LL_Init1msTick(8000000);
-  //LL_SetSystemCoreClock(8000000);
+	char txt[20]="";
+	float voltage;
+			
+	BUS_PWR_EnableOrDisable(1);
+	BUS_AFIO_EnableOrDisable(1);
+	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	
 	RCC_SystemClock_ConfigDefault1();
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+	USART1_ConfigDefault2_TX();
   MX_ADC1_Init();
-  MX_USART1_UART_Init();
-  /* USER CODE BEGIN 2 */
-  
-	//LL_ADC_Enable(ADC1);						//Enable ADC1
+
+  NVIC_Config();
+	
 	ADC_EnableOrDisable(ADC1, 1);
-	//LL_ADC_EnableIT_EOS(ADC1);					//Enable end of sequence interrupt for ADC1
 	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 1);
-	//LL_ADC_StartCalibration(ADC1); 				//Calibration start
 	ADC_StartCalibration(ADC1);
-	//while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
-	//while(_Calibration_GetCompleteStatus(ADC1) != 0)
-		//__NOP();
-	//LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
+
 	ADC_StartConversionInRegularChannels(ADC1);
 	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
-  /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
 	LL_USART_TransmitData8(USART1, 13); SysTick_Delay_1ms(1);
 	LL_USART_TransmitData8(USART1, 10); SysTick_Delay_1ms(1);
 	
   while(1){
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-
-		/* representing the voltage in desired format */	
-		Voltage = (float)(ADC_Value * 3.3) / (4095);
-		sprintf((char*)str, "Voltage is: %0.2f\r\n", Voltage);
-		for(i=0; i<19; i++){
-			LL_USART_TransmitData8(USART1, str[i]);
-			while(!LL_USART_IsActiveFlag_TXE(USART1));
-		}
-		i = 0;
+		voltage = (float)(adc_value * 3300) / (4095);
+		sprintf(txt, "Voltage(mv): %.1f", voltage);
+		USART_PutString(USART1, txt);
 		
-		//LL_mDelay(500);
 		SysTick_Delay_1ms(500);
   }
-  /* USER CODE END 3 */
 }
 
-
-/**
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_ADC1_Init(void)
-{
-
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
-//  LL_ADC_InitTypeDef ADC_InitStruct = {0};
-//  LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
-//  LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* Peripheral clock enable */
-  //LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_ADC1);
+static void MX_ADC1_Init(void){
 	BUS_ADC1_EnableOrDisable(1);
 
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-  /**ADC1 GPIO Configuration
-  PA3   ------> ADC1_IN3
-  */
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* ADC1 interrupt Init */
-  NVIC_SetPriority(ADC1_2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(ADC1_2_IRQn);
-
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
-
-  /** Common config
-  */
-//  ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT;
-//  ADC_InitStruct.SequencersScanMode = LL_ADC_SEQ_SCAN_DISABLE;
-//  LL_ADC_Init(ADC1, &ADC_InitStruct);
+	BUS_GPIOA_EnableOrDisable(1);
+	GPIO_SetInputOrOutputMode(GPIOA, 3, IO_INPUT);
+	GPIO_InInputMode_SetInputType(GPIOA, 3, INPUT_ANALOG);
+	
 	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);
-	ADC_ScanMode_EnableOrDisable(ADC1, 0);
-	
-//  ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
-//  LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1), &ADC_CommonInitStruct);
+	ADC_ScanMode_EnableOrDisable(ADC1, 0);	
 	ADC_DualMode_SetMode(ADC1, ADC_INDEPENDENT);
-	
-//  ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
-//  ADC_REG_InitStruct.SequencerLength = LL_ADC_REG_SEQ_SCAN_DISABLE;
-//  ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-//  ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
-//  ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_NONE;
-//  LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
-
 	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);
+	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);
-	ADC_DMA_EnableOrDisable(ADC1, 0);
-	ADC_ContinuousOrSingleConversionMode_SetMode(ADC1, ADC_CONT_CONTINUOUS);
-  /** Configure Regular Channel
-  */
-  //LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);
-	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
-	ADC_ConversionSequenceInRegularChannels_1stSequence_SetChannelNumber(ADC1, ADC_SEQUENCE_CH3);
 	
-  //LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_1CYCLE_5);
-	//ADC_SamplingTimeForCh1_SetTime(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
+	ADC_DMA_EnableOrDisable(ADC1, 0);
+	ADC_ContinuousOrSingleConversionMode_SetMode(ADC1, ADC_CONTINUOUS);
+
+	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
+	ADC_ConversionSequenceInRegularChannelsFor1stSequence_SetChannelNumber(ADC1, ADC_SEQUENCE_CH3);
 	ADC_SamplingTimeInCh3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
-  /* USER CODE BEGIN ADC1_Init 2 */
-
-  /* USER CODE END ADC1_Init 2 */
-
 }
-
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  LL_USART_InitTypeDef USART_InitStruct = {0};
-
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* Peripheral clock enable */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-  /**USART1 GPIO Configuration
-  PA9   ------> USART1_TX
-  PA10   ------> USART1_RX
-  */
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_10;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
-  USART_InitStruct.BaudRate = 9600;
-  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
-  USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
-  USART_InitStruct.Parity = LL_USART_PARITY_NONE;
-  USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
-  USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
-  USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
-  LL_USART_Init(USART1, &USART_InitStruct);
-  LL_USART_ConfigAsyncMode(USART1);
-  LL_USART_Enable(USART1);
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
-
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
-}
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-
-  /* USER CODE END Error_Handler_Debug */
-}
-
-#ifdef  USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
-#endif /* USE_FULL_ASSERT */

@@ -11,8 +11,9 @@ extern "C" {
 #include "main.h"
 #include <utility.h>
 
-#ifndef SYSTICK_HCLK_VALUE
-	#define SYSTICK_HCLK_VALUE		8000000
+#ifndef HCLK_VALUE
+	#define HCLK_VALUE		8000000		// Default1 Value
+	#error "Error: Enter HCLK VALUE !"
 #endif
 
 
