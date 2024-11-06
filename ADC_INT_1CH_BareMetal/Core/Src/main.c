@@ -1,4 +1,3 @@
-#include "stm32f1xx_ll_usart.h"
 
 #include "main.h"
 #include "stdio.h"
@@ -17,7 +16,7 @@
 
 extern uint16_t adc_value;
 
-static void MX_ADC1_Init(void);
+static void ADC1_ConfigDefault(void);
 
 int main(void){
 	char txt[20]="";
@@ -29,19 +28,12 @@ int main(void){
 	
 	RCC_SystemClock_ConfigDefault1();
 	USART1_ConfigDefault2_TX();
-  MX_ADC1_Init();
-
-  NVIC_Config();
+	USART_PutStringFromFlash(USART1, "ADC Test");
 	
-	ADC_EnableOrDisable(ADC1, 1);
-	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 1);
-	ADC_StartCalibration(ADC1);
-
+  ADC1_ConfigDefault();
 	ADC_StartConversionInRegularChannels(ADC1);
-	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
-
-	LL_USART_TransmitData8(USART1, 13); SysTick_Delay_1ms(1);
-	LL_USART_TransmitData8(USART1, 10); SysTick_Delay_1ms(1);
+	
+	NVIC_Config();
 	
   while(1){
 		voltage = (float)(adc_value * 3300) / (4095);
@@ -52,9 +44,10 @@ int main(void){
   }
 }
 
-static void MX_ADC1_Init(void){
+//************************************************************
+static void ADC1_ConfigDefault(void){
 	BUS_ADC1_EnableOrDisable(1);
-
+	
 	BUS_GPIOA_EnableOrDisable(1);
 	GPIO_SetInputOrOutputMode(GPIOA, 3, IO_INPUT);
 	GPIO_InInputMode_SetInputType(GPIOA, 3, INPUT_ANALOG);
@@ -62,15 +55,17 @@ static void MX_ADC1_Init(void){
 	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);
 	ADC_ScanMode_EnableOrDisable(ADC1, 0);	
 	ADC_DualMode_SetMode(ADC1, ADC_INDEPENDENT);
-	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);
-	
+	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);
-	
 	ADC_DMA_EnableOrDisable(ADC1, 0);
 	ADC_ContinuousOrSingleConversionMode_SetMode(ADC1, ADC_CONTINUOUS);
-
 	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
 	ADC_ConversionSequenceInRegularChannelsFor1stSequence_SetChannelNumber(ADC1, ADC_SEQUENCE_CH3);
 	ADC_SamplingTimeInCh3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
+	
+	ADC_EnableOrDisable(ADC1, 1);
+	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
+	ADC_StartCalibration(ADC1);
+	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 1);
 }
