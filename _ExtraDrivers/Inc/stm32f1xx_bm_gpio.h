@@ -46,7 +46,7 @@ SWJ_CFG[2:0]: Serial wire JTAG configuration
 #define SWJ_SWD								0b010		// JTAG-DP Disabled and SW-DP Enabled
 #define SWJ_DISABLED					0b100		// JTAG-DP Disabled and SW-DP Disabled
 
-__STATIC_INLINE void GPIO_SWJ_SetDebugInterfaces(uint8_t mode){
+__STATIC_INLINE void GPIO_SWJ_SetDebugMode(uint8_t mode){
 	Write3Bit(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_Pos, mode);
 }
 
@@ -66,16 +66,16 @@ MODEy[1:0]: Port x mode bits (y= 8 .. 15)
 						11: Output mode, max speed 50 MHz.
 */
 
-#define IO_INPUT          0b00
-#define IO_OUTPUT_10MHz   0b01
-#define IO_OUTPUT_2MHz    0b10
-#define IO_OUTPUT_50MHz		0b11
+#define GPIO_INPUT          0b00
+#define GPIO_OUTPUT_10MHz   0b01
+#define GPIO_OUTPUT_2MHz    0b10
+#define GPIO_OUTPUT_50MHz		0b11
 
-#ifndef IO_OUTPUT
-	#define IO_OUTPUT   			IO_OUTPUT_2MHz
+#ifndef GPIO_OUTPUT
+	#define GPIO_OUTPUT   			GPIO_OUTPUT_2MHz
 #endif
 
-__STATIC_INLINE void GPIO_SetInputOrOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+__STATIC_INLINE void GPIO_OutputOrInputMode_SetMode(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
 	if(pin<=7){
 		Write2Bit(GPIOx->CRL, pin*4, mode);
 	}
@@ -112,14 +112,12 @@ ODRy: Port output data (y= 0 .. 15)
 			Note: For atomic bit set/reset, the ODR bits can be individually set and cleared by writing to the GPIOx_BSRR register (x = A .. G).
 */
 
-#define INPUT_ANALOG		0b00
-#define INPUT_FLOATING	0b01
-#define INPUT_PULL			0b10
+#define GPIO_INPUT_ANALOG			0b00
+#define GPIO_INPUT_FLOATING		0b01
+#define GPIO_INPUT_PULLDOWN		(0b10 | 0b000)
+#define GPIO_INPUT_PULLUP			(0b10 | 0b100)
 
-#define INPUT2_PULLDOWN	(0b10 | 0b000)
-#define INPUT2_PULLUP		(0b10 | 0b100)
-
-__STATIC_INLINE void GPIO_InInputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+__STATIC_INLINE void GPIO_InputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
 	if(pin<=7){
 		Write2Bit(GPIOx->CRL, (pin*4)+2, mode);
 	}
@@ -127,7 +125,7 @@ __STATIC_INLINE void GPIO_InInputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t 
 		Write2Bit(GPIOx->CRH, ((pin-8)*4)+2, mode);
 	}
 	
-	if(mode==INPUT2_PULLUP){
+	if(mode==GPIO_INPUT_PULLUP){
 		SetBit(GPIOx->ODR, pin);
 	}
 	else{
@@ -135,11 +133,11 @@ __STATIC_INLINE void GPIO_InInputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t 
 	}
 }
 
-#define OUTPUT_GP_PUSHPULL  	0b00		// General purpose output push-pull
-#define OUTPUT_GP_OPENDRAIN 	0b01		// General purpose output Open-drain
-#define OUTPUT_AF_PUSHPULL		0b10		// Alternate function output Push-pull
-#define OUTPUT_AF_OPENDRAIN		0b11		// Alternate function output Open-drain
-__STATIC_INLINE void GPIO_InOutputMode_SetOutputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+#define GPIO_OUTPUT_GP_PUSHPULL  	0b00		// General purpose output push-pull
+#define GPIO_OUTPUT_GP_OPENDRAIN 	0b01		// General purpose output Open-drain
+#define GPIO_OUTPUT_AF_PUSHPULL		0b10		// Alternate function output Push-pull
+#define GPIO_OUTPUT_AF_OPENDRAIN		0b11		// Alternate function output Open-drain
+__STATIC_INLINE void GPIO_OutputMode_SetOutputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
 	if(pin<=7){
 		Write2Bit(GPIOx->CRL, (pin*4)+2, mode);
 	}
@@ -148,27 +146,27 @@ __STATIC_INLINE void GPIO_InOutputMode_SetOutputType(GPIO_TypeDef *GPIOx, uint8_
 	}
 }
 
-#define OUTPUT_GP		0b0		// General Purpose
-#define OUTPUT_AF		0b1		// Alternate Function
-__STATIC_INLINE void GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
-	if(pin<=7){
-		WriteBit(GPIOx->CRL, (pin*4)+3, mode);
-	}
-	else{
-		WriteBit(GPIOx->CRH, ((pin-8)*4)+3, mode);
-	}	
-}
+//#define OUTPUT_GP		0b0		// General Purpose
+//#define OUTPUT_AF		0b1		// Alternate Function
+//__STATIC_INLINE void GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+//	if(pin<=7){
+//		WriteBit(GPIOx->CRL, (pin*4)+3, mode);
+//	}
+//	else{
+//		WriteBit(GPIOx->CRH, ((pin-8)*4)+3, mode);
+//	}	
+//}
 
-#define OUTPUT_PUSHPULL		0b0		// Push-Pull
-#define OUTPUT_OPENDRAIN	0b1		// Open-Drain
-__STATIC_INLINE void GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
-	if(pin<=7){
-		WriteBit(GPIOx->CRL, (pin*4)+2, mode);
-	}
-	else{
-		WriteBit(GPIOx->CRH, ((pin-8)*4)+2, mode);
-	}
-}
+//#define OUTPUT_PUSHPULL		0b0		// Push-Pull
+//#define OUTPUT_OPENDRAIN	0b1		// Open-Drain
+//__STATIC_INLINE void GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+//	if(pin<=7){
+//		WriteBit(GPIOx->CRL, (pin*4)+2, mode);
+//	}
+//	else{
+//		WriteBit(GPIOx->CRH, ((pin-8)*4)+2, mode);
+//	}
+//}
 
 
 /*
@@ -178,37 +176,38 @@ ODRy: Port output data (y= 0 .. 15)
 			Note: For atomic bit set/reset, the ODR bits can be individually set and cleared by writing to the GPIOx_BSRR register (x = A .. G).
 */
 
-#define PULL_PULLDOWN		0b0		// Input with pull-down
-#define PULL_PULLUP			0b1		// Input with pull-up
-__STATIC_INLINE void GPIO_InInputModeWithPull_SetPullUpOrPullDown(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
-	WriteBit(GPIOx->ODR, pin, mode);
-}
+//#define PULL_PULLDOWN		0b0		// Input with pull-down
+//#define PULL_PULLUP			0b1		// Input with pull-up
+//__STATIC_INLINE void GPIO_InInputModeWithPull_SetPullUpOrPullDown(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
+//	WriteBit(GPIOx->ODR, pin, mode);
+//}
 
-#define GetOutputValueFromPin(GPIOx, pin) \
-	GetBit(GPIOx->ODR, pin)
+__STATIC_INLINE uint8_t GPIO_OutputMode_GetPin(GPIO_TypeDef *GPIOx, uint8_t pin){
+	return ( GetBit(GPIOx->ODR, pin) );
+}
 
 __STATIC_INLINE void GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	ToggleBit(GPIOx->ODR, pin);
 }
 
 __STATIC_INLINE void GPIO_WritePin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t status){
-		WriteBit(GPIOx->ODR, pin, status);
+	WriteBit(GPIOx->ODR, pin, status);
 }
 
 __STATIC_INLINE void GPIO_Write2Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
-		Write2Bit(GPIOx->ODR, pin, value);
+	Write2Bit(GPIOx->ODR, pin, value);
 }
 
 __STATIC_INLINE void GPIO_Write3Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
-		Write3Bit(GPIOx->ODR, pin, value);
+	Write3Bit(GPIOx->ODR, pin, value);
 }
 
 __STATIC_INLINE void GPIO_Write4Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
-		Write4Bit(GPIOx->ODR, pin, value);
+	Write4Bit(GPIOx->ODR, pin, value);
 }
 
-__STATIC_INLINE void GPIO_WritePort(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
-		GPIOx->ODR = value;
+__STATIC_INLINE void GPIO_WritePort(GPIO_TypeDef *GPIOx, uint8_t value){
+	GPIOx->ODR = (value & 0xFFFF);
 }
 
 
@@ -265,6 +264,7 @@ __STATIC_INLINE void GPIO_ResetPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	SetBit_NoLastStatus(GPIOx->BRR, pin);
 }
 
+
 /*
 GPIOx_LCKR, Bit 16
 LCKK[16]: Lock key
@@ -283,6 +283,25 @@ LCKK[16]: Lock key
 					Any error in the lock sequence will abort the lock.
 */
 
+__STATIC_INLINE uint8_t GPIO_LockKey_GetActiveStatus(GPIO_TypeDef *GPIOx){
+	return (GetBit(GPIOx->LCKR, GPIO_LCKR_LCKK_Pos));
+}
+
+__STATIC_INLINE uint8_t GPIO_LockKey_Active(GPIO_TypeDef *GPIOx){
+	if(GPIO_LockKey_GetActiveStatus(GPIOx) == 0){
+		SetBit(GPIOx->LCKR, GPIO_LCKR_LCKK_Pos);
+		ClearBit(GPIOx->LCKR, GPIO_LCKR_LCKK_Pos);
+		SetBit(GPIOx->LCKR, GPIO_LCKR_LCKK_Pos);
+		if(GPIO_LockKey_GetActiveStatus(GPIOx) != 0){return 1;}
+		if(GPIO_LockKey_GetActiveStatus(GPIOx) != 1){return 1;}
+		return 0;
+	}
+	else{
+		return 1;
+	}
+}
+
+
 /*
 GPIOx_LCKR, Bits 15:0
 LCKy:	Port x Lock bit y (y= 0 .. 15)
@@ -291,40 +310,27 @@ LCKy:	Port x Lock bit y (y= 0 .. 15)
 			1: Port configuration locked.
 */
 
-__STATIC_INLINE void GPIO_ActiveLockRegister(GPIO_TypeDef *GPIOx){
-	SetBit(GPIOx->LCKR,16);
+__STATIC_INLINE uint8_t GPIO_LockPin_GetLockStatus(GPIO_TypeDef *GPIOx, uint8_t pin){
+	return (GetBit(GPIOx->LCKR, pin));
 }
 
-__STATIC_INLINE void GPIO_DeActivateLockRegister(GPIO_TypeDef *GPIOx){
-	ClearBit(GPIOx->LCKR, 16);
-}
-
-__STATIC_INLINE uint32_t GPIO_GetFromLCKK(GPIO_TypeDef *GPIOx){
-	return (GetBit(GPIOx->LCKR, 16));
-}
-
-__STATIC_INLINE void GPIO_LockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
-		SetBit(GPIOx->LCKR, pin);
-}
-
-__STATIC_INLINE void GPIO_UnLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
-	ClearBit(GPIOx->LCKR, pin);
-}
-
-__STATIC_INLINE void GPIO_WaitTillLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
-		while(!GetBit(GPIOx->LCKR, pin)){};
-}
-
-__STATIC_INLINE void GPIO_WaitTillUnLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
-		while(GetBit(GPIOx->LCKR, pin)){};
+__STATIC_INLINE uint8_t GPIO_LockPin_LockOrUnlock(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t status){
+	if(GPIO_LockKey_GetActiveStatus(GPIOx) == 0){
+		WriteBit(GPIOx->LCKR, pin, status);
+		return 0;
+	}
+	else{
+		return 1;
+	}
 }
 
 
-void GPIO_ConfigPinForPushPullOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
-void GPIO_ConfigPinForOpenDrainOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
-void GPIO_ConfigPinForPullUpInputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
-void GPIO_ConfigPinForPullDownInputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
-void GPIO_ConfigPinForFloatingInputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
+void GPIO_OutputWithPushPullMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+void GPIO_OutputWithOpenDrainMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+void GPIO_InputWithFloatingMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+void GPIO_InputWithPullUpMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+void GPIO_InputWithPullDownMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+
 		
 #ifdef __cplusplus
 }

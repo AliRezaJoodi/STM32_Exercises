@@ -404,10 +404,10 @@ void USART_PutString(USART_TypeDef *USARTx, char *str);
 void USART_PutStringFromFlash(USART_TypeDef *USARTx, const char *str);
 void USART_ClearString(char *str);
 
-void USART1_ConfigDefault1_TX_RXINT(void);
-void USART1_ConfigDefault2_TX(void);
-void USART2_ConfigDefault1_TX_RXINT(void);
-void USART3_ConfigDefault1_TX_RXINT(void);
+void USART1_ConfigDefault1(void);
+void USART1_ConfigDefault2(void);
+void USART2_ConfigDefault1(void);
+void USART3_ConfigDefault1(void);
 		
 #ifdef __cplusplus
 }
