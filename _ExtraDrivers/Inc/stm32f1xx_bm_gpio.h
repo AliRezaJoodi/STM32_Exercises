@@ -70,7 +70,11 @@ MODEy[1:0]: Port x mode bits (y= 8 .. 15)
 #define IO_OUTPUT_10MHz   0b01
 #define IO_OUTPUT_2MHz    0b10
 #define IO_OUTPUT_50MHz		0b11
-#define IO_OUTPUT   			IO_OUTPUT_2MHz
+
+#ifndef IO_OUTPUT
+	#define IO_OUTPUT   			IO_OUTPUT_2MHz
+#endif
+
 __STATIC_INLINE void GPIO_SetInputOrOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
 	if(pin<=7){
 		Write2Bit(GPIOx->CRL, pin*4, mode);
@@ -101,18 +105,34 @@ CNFy[1:0]: 	Port x configuration bits (y= 8 .. 15)
 						01: General purpose output Open-drain
 						10: Alternate function output Push-pull
 						11: Alternate function output Open-drain
+						
+GPIOx_ODR, Bits 15:0
+ODRy: Port output data (y= 0 .. 15)
+			These bits can be read and written by software and can be accessed in Word mode only.
+			Note: For atomic bit set/reset, the ODR bits can be individually set and cleared by writing to the GPIOx_BSRR register (x = A .. G).
 */
 
 #define INPUT_ANALOG		0b00
 #define INPUT_FLOATING	0b01
 #define INPUT_PULL			0b10
+
+#define INPUT2_PULLDOWN	(0b10 | 0b000)
+#define INPUT2_PULLUP		(0b10 | 0b100)
+
 __STATIC_INLINE void GPIO_InInputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
 	if(pin<=7){
 		Write2Bit(GPIOx->CRL, (pin*4)+2, mode);
 	}
 	else{
 		Write2Bit(GPIOx->CRH, ((pin-8)*4)+2, mode);
-	}	
+	}
+	
+	if(mode==INPUT2_PULLUP){
+		SetBit(GPIOx->ODR, pin);
+	}
+	else{
+		ClearBit(GPIOx->ODR, pin);
+	}
 }
 
 #define OUTPUT_GP_PUSHPULL  	0b00		// General purpose output push-pull
