@@ -6,6 +6,11 @@ It's about:
 	AFIO_MAPR:	AF remap and debug I/O configuration register
 	GPIOx_CRL: 	Port configuration register low
 	GPIOx_CRH:	Port configuration register high
+	GPIOx_IDR:	Port input data register
+	GPIOx_ODR: 	Port output data register
+	GPIOx_BSRR:	Port bit set/reset register
+	GPIOx_BRR:	Port bit reset register
+	GPIOx_LCKR: Port configuration lock register
 */
 
 
@@ -161,15 +166,19 @@ __STATIC_INLINE void GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint8_t pin){
 __STATIC_INLINE void GPIO_WritePin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t status){
 		WriteBit(GPIOx->ODR, pin, status);
 }
+
 __STATIC_INLINE void GPIO_Write2Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
 		Write2Bit(GPIOx->ODR, pin, value);
 }
+
 __STATIC_INLINE void GPIO_Write3Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
 		Write3Bit(GPIOx->ODR, pin, value);
 }
+
 __STATIC_INLINE void GPIO_Write4Pin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
 		Write4Bit(GPIOx->ODR, pin, value);
 }
+
 __STATIC_INLINE void GPIO_WritePort(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t value){
 		GPIOx->ODR = value;
 }
@@ -185,26 +194,23 @@ IDRy:	Port input data (y= 0 .. 15)
 __STATIC_INLINE uint8_t GPIO_GetPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	return (GetBit(GPIOx->IDR, pin));
 }
+
 __STATIC_INLINE uint8_t GPIO_Get2Pin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	return (Get2Bit(GPIOx->IDR, pin));
 }
+
 __STATIC_INLINE uint8_t GPIO_Get3Pin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	return (Get3Bit(GPIOx->IDR, pin));
 }
+
 __STATIC_INLINE uint8_t GPIO_Get4Pin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	return (Get4Bit(GPIOx->IDR, pin));
 }
+
 __STATIC_INLINE uint16_t GPIO_GetPort(GPIO_TypeDef *GPIOx){
 	return (uint16_t)((GPIOx->IDR) & 0xFFFF);
 }
 
-
-/*
-#define GPIO_SetPinWithBSRR(GPIOx, PIN) \
-	SetBit_NoLastStatus(GPIOx->BSRR, PIN); //Fast
-#define GPIO_SetPinWithODR(GPIOx, PIN) \
-	SetBit(GPIOx->ODR, PIN);
-*/
 
 /*
 GPIOx_BSRR, Bits 15:0
@@ -218,14 +224,6 @@ __STATIC_INLINE void GPIO_SetPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	SetBit_NoLastStatus(GPIOx->BSRR, pin);
 }
 
-/*
-#define GPIO_ResetPinWithBRR(GPIOx, PIN) \
-	SetBit_NoLastStatus(GPIOx->BRR, PIN); //Fast
-#define GPIO_ResetPinWithODR(GPIOx, PIN) \
-	ClearBit(GPIOx->ODR, PIN);
-#define GPIO_ResetPinWithBSRR(GPIOx, PIN) \
-	SetBit_NoLastStatus(GPIOx->BSRR,(PIN)+16);
-*/
 
 /*
 GPIOx_BRR, Bits 15:0
@@ -239,51 +237,59 @@ __STATIC_INLINE void GPIO_ResetPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	SetBit_NoLastStatus(GPIOx->BRR, pin);
 }
 
+/*
+GPIOx_LCKR, Bit 16
+LCKK[16]: Lock key
+					This bit can be read anytime. It can only be modified using the Lock Key Writing Sequence.
+					0: Port configuration lock key not active
+					1: Port configuration lock key active. GPIOx_LCKR register is locked until the next reset.
+					
+					LOCK key writing sequence:
+					Write 1
+					Write 0
+					Write 1
+					Read 0
+					Read 1 (this read is optional but confirms that the lock is active)
+					
+					Note: During the LOCK Key Writing sequence, the value of LCK[15:0] must not change.
+					Any error in the lock sequence will abort the lock.
+*/
 
-// Check Again LockBit
+/*
+GPIOx_LCKR, Bits 15:0
+LCKy:	Port x Lock bit y (y= 0 .. 15)
+			These bits are read write but can only be written when the LCKK bit is 0.
+			0: Port configuration not locked.
+			1: Port configuration locked.
+*/
+
 __STATIC_INLINE void GPIO_ActiveLockRegister(GPIO_TypeDef *GPIOx){
 	SetBit(GPIOx->LCKR,16);
 }
-/*#define GPIO_ActiveLockRegister(GPIOx) \
-	SetBit(GPIOx->LCKR,16);*/
+
 __STATIC_INLINE void GPIO_DeActivateLockRegister(GPIO_TypeDef *GPIOx){
 	ClearBit(GPIOx->LCKR, 16);
 }
-/*#define GPIO_DeActivateLockRegister(GPIOx) \
-	ClearBit(GPIOx->LCKR, 16);*/
+
 __STATIC_INLINE uint32_t GPIO_GetFromLCKK(GPIO_TypeDef *GPIOx){
 	return (GetBit(GPIOx->LCKR, 16));
 }
-/*#define GPIO_GetFromLCKK(GPIOx) \
-	GetBit(GPIOx->LCKR, 16)*/
 
 __STATIC_INLINE void GPIO_LockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 		SetBit(GPIOx->LCKR, pin);
 }
-/*#define GPIO_LockPin(GPIOx, PIN) \
-	SetBit(GPIOx->LCKR, PIN);*/
+
 __STATIC_INLINE void GPIO_UnLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 	ClearBit(GPIOx->LCKR, pin);
 }
-/*#define GPIO_UnLockPin(GPIOx, PIN) \
-	ClearBit(GPIOx->LCKR, PIN);*/
-//	Use when LCKK bit is 1
-/*__STATIC_INLINE uint32_t GPIO_GetLockStatusFromPin(GPIO_TypeDef *GPIOx, uint32_t PIN){
-		return (GetBit(GPIOx->LCKR, PIN));
-}*/
-/*#define GPIO_GetLockStatusFromPin(GPIOx, PIN) \
-	GetBit(GPIOx->LCKR, PIN)		//	Use when LCKK bit is 1
-*/
+
 __STATIC_INLINE void GPIO_WaitTillLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 		while(!GetBit(GPIOx->LCKR, pin)){};
 }
-/*#define GPIO_WaitTillLockPin(GPIOx, PIN) \
-	while(!GPIO_GetLockStatusFromPin(GPIOx, PIN)){}*/
+
 __STATIC_INLINE void GPIO_WaitTillUnLockPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 		while(GetBit(GPIOx->LCKR, pin)){};
 }
-/*#define GPIO_WaitTillUnLockPin(GPIOx, PIN) \
-	while(GPIO_GetLockStatusFromPin(GPIOx, PIN)){}*/
 
 
 void GPIO_ConfigPinForPushPullOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin);
