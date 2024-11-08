@@ -72,8 +72,12 @@ MODEy[1:0]: Port x mode bits (y= 8 .. 15)
 #define IO_OUTPUT_50MHz		0b11
 #define IO_OUTPUT   			IO_OUTPUT_2MHz
 __STATIC_INLINE void GPIO_SetInputOrOutputMode(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
-	if(pin<=7){Write2Bit(GPIOx->CRL, pin*4, mode);}
-		else{Write2Bit(GPIOx->CRH, (pin-8)*4, mode);}	
+	if(pin<=7){
+		Write2Bit(GPIOx->CRL, pin*4, mode);
+	}
+	else{
+		Write2Bit(GPIOx->CRH, (pin-8)*4, mode);
+	}	
 }
 
 
@@ -103,8 +107,12 @@ CNFy[1:0]: 	Port x configuration bits (y= 8 .. 15)
 #define INPUT_FLOATING	0b01
 #define INPUT_PULL			0b10
 __STATIC_INLINE void GPIO_InInputMode_SetInputType(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t mode){
-	if(pin<=7){Write2Bit(GPIOx->CRL, (pin*4)+2, mode);}
-		else{Write2Bit(GPIOx->CRH, ((pin-8)*4)+2, mode);}	
+	if(pin<=7){
+		Write2Bit(GPIOx->CRL, (pin*4)+2, mode);
+	}
+	else{
+		Write2Bit(GPIOx->CRH, ((pin-8)*4)+2, mode);
+	}	
 }
 
 #define OUTPUT_GP_PUSHPULL  	0b00		// General purpose output push-pull
