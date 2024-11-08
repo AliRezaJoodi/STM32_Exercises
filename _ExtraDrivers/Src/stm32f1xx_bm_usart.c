@@ -49,18 +49,24 @@ void USART_PutStringFromFlash(USART_TypeDef *USARTx, const char *str){
 	while(!USART_TX_GeCompleteFlag(USARTx)){};
 }
 
+
+/*
+USART1
+	TX Pin:	PA9
+	RX Pin: PA10
+	RX INT:	Enable
+	Baud Rate: 9600
+*/
 //****************************************************
-//PA9 -> USART1_TX
-//PA10 -> USART1_RX
-void USART1_ConfigDefault1_TX_RXINT(void){
-	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA,9, IO_OUTPUT_50MHz);
-	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOA,9, OUTPUT_AF);
-	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOA,9, OUTPUT_PUSHPULL);
-	GPIO_SetInputOrOutputMode(GPIOA,10, IO_INPUT);
-	GPIO_InInputMode_SetInputType(GPIOA,10, INPUT_FLOATING);
-	
+void USART1_ConfigDefault1(void){
 	BUS_USART1_EnableOrDisable(1);
+	
+	BUS_GPIOA_EnableOrDisable(1);	
+	GPIO_OutputOrInputMode_SetMode(GPIOA,9, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOA,9, GPIO_OUTPUT_AF_PUSHPULL);
+	GPIO_OutputOrInputMode_SetMode(GPIOA,10, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOA,10, GPIO_INPUT_FLOATING);
+	
 	USART_SetBaudRate(USART1, PCLK2_VALUE, 9600);
 	USART_SetMode(USART1, MODE_ASYNCRON);
 	USART_SetDataBits(USART1, DATABITS_8BITS);
@@ -76,15 +82,20 @@ void USART1_ConfigDefault1_TX_RXINT(void){
 	USART_EnableOrDisable(USART1, 1);
 }
 
+
+/*
+USART1
+	TX Pin:	PA9
+	Baud Rate: 9600
+*/
 //****************************************************
-//PA9 -> USART1_TX
-void USART1_ConfigDefault2_TX(void){
-	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA,9, IO_OUTPUT_50MHz);
-	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOA,9, OUTPUT_AF);
-	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOA,9, OUTPUT_PUSHPULL);
-	
+void USART1_ConfigDefault2(void){
 	BUS_USART1_EnableOrDisable(1);
+	
+	BUS_GPIOA_EnableOrDisable(1);
+	GPIO_OutputOrInputMode_SetMode(GPIOA,9, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOA,9, GPIO_OUTPUT_AF_PUSHPULL);
+	
 	USART_SetBaudRate(USART1, PCLK2_VALUE, 9600);
 	USART_SetMode(USART1, MODE_ASYNCRON);
 	USART_SetDataBits(USART1, DATABITS_8BITS);
@@ -100,18 +111,24 @@ void USART1_ConfigDefault2_TX(void){
 	USART_EnableOrDisable(USART1, 1);
 }
 
+
+/*
+USART2
+	TX Pin:	PA2
+	RX Pin: PA3
+	RX INT:	Enable
+	Baud Rate: 9600
+*/
 //****************************************************
-//PA2 -> USART2_TX
-//PA3 -> USART2_RX
-void USART2_ConfigDefault1_TX_RXINT(void){
-	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA,2, IO_OUTPUT_50MHz);
-	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOA,2, OUTPUT_AF);
-	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOA,2, OUTPUT_PUSHPULL);
-	GPIO_SetInputOrOutputMode(GPIOA,3, IO_INPUT);
-	GPIO_InInputMode_SetInputType(GPIOA,3, INPUT_FLOATING);
-	
+void USART2_ConfigDefault1(void){
 	BUS_USART2_EnableOrDisable(1);
+	
+	BUS_GPIOA_EnableOrDisable(1);
+	GPIO_OutputOrInputMode_SetMode(GPIOA,2, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOA,2, GPIO_OUTPUT_AF_PUSHPULL);
+	GPIO_OutputOrInputMode_SetMode(GPIOA,3, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOA,3, GPIO_INPUT_FLOATING);
+	
 	USART_SetBaudRate(USART2, PCLK1_VALUE, 9600);
 	USART_SetMode(USART2, MODE_ASYNCRON);
 	USART_SetDataBits(USART2, DATABITS_8BITS);
@@ -127,18 +144,24 @@ void USART2_ConfigDefault1_TX_RXINT(void){
 	USART_EnableOrDisable(USART2, 1);
 }
 
+
+/*
+USART3
+	TX Pin:	PB10
+	RX Pin: PB11
+	RX INT:	Enable
+	Baud Rate: 9600
+*/
 //****************************************************
-//PB10 -> USART3_TX
-//PB11 -> USART3_RX
-void USART3_ConfigDefault1_TX_RXINT(void){
-	BUS_GPIOB_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOB,10, IO_OUTPUT_50MHz);
-	GPIO_InOutputMode_SetGeneralPurposeOrAlternateFunction(GPIOB,10, OUTPUT_AF);
-	GPIO_InOutputMode_SetPushPullOrOpenDrain(GPIOB,10, OUTPUT_PUSHPULL);
-	GPIO_SetInputOrOutputMode(GPIOB,11, IO_INPUT);
-	GPIO_InInputMode_SetInputType(GPIOB,11, INPUT_FLOATING);
-	
+void USART3_ConfigDefault1(void){
 	BUS_USART3_EnableOrDisable(1);
+	
+	BUS_GPIOB_EnableOrDisable(1);
+	GPIO_OutputOrInputMode_SetMode(GPIOB,10, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOB,10, GPIO_OUTPUT_AF_PUSHPULL);
+	GPIO_OutputOrInputMode_SetMode(GPIOB,11, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOB,11, GPIO_INPUT_FLOATING);
+	
 	USART_SetBaudRate(USART3, PCLK1_VALUE, 9600);
 	USART_SetMode(USART3, MODE_ASYNCRON);
 	USART_SetDataBits(USART3, DATABITS_8BITS);

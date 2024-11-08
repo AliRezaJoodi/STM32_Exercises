@@ -24,10 +24,10 @@ int main(void){
 			
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	GPIO_SWJ_SetDebugMode(SWJ_SWD);
 	
 	RCC_SystemClock_ConfigDefault1();
-	USART1_ConfigDefault2_TX();
+	USART1_ConfigDefault2();
 	USART_PutStringFromFlash(USART1, "ADC Test");
 	
   ADC1_ConfigDefault();
@@ -49,8 +49,8 @@ static void ADC1_ConfigDefault(void){
 	BUS_ADC1_EnableOrDisable(1);
 	
 	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_SetInputOrOutputMode(GPIOA, 3, IO_INPUT);
-	GPIO_InInputMode_SetInputType(GPIOA, 3, INPUT_ANALOG);
+	GPIO_OutputOrInputMode_SetMode(GPIOA, 3, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOA, 3, GPIO_INPUT_ANALOG);
 	
 	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);
 	ADC_ScanMode_EnableOrDisable(ADC1, 0);	
