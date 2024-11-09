@@ -31,11 +31,7 @@ extern "C" {
 	#error "Error: Undefined STM32 Type!"
 #endif
 
-//#ifdef HARDWARE_LOCAL
-//	#include "_hardware.h"
-//#else
-	//#define LCD_HARDWARE
-//#if !defined (LCD_HARDWARE)
+
 #ifndef LCD_HARDWARE
 #define LCD_HARDWARE
 	#define LCD_RS_GPIO  			GPIOA

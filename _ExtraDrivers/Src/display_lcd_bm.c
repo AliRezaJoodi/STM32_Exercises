@@ -6,16 +6,16 @@ static uint8_t _display_cursor_blinking=0b00001000;
 static uint8_t _interface_line=0b00100000;
 
 #define _LCD_DataPins_ConfigForOutputMode \
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D7_GPIO, LCD_D7_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D6_GPIO, LCD_D6_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D5_GPIO, LCD_D5_PIN);\
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D4_GPIO, LCD_D4_PIN);	
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D7_GPIO, LCD_D7_PIN);\
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D6_GPIO, LCD_D6_PIN);\
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D5_GPIO, LCD_D5_PIN);\
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D4_GPIO, LCD_D4_PIN);	
 
 #define _LCD_DataPins_ConfigForInputMode \
-	GPIO_ConfigPinForFloatingInputMode(LCD_D7_GPIO, LCD_D7_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(LCD_D6_GPIO, LCD_D6_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(LCD_D5_GPIO, LCD_D5_PIN);\
-	GPIO_ConfigPinForFloatingInputMode(LCD_D4_GPIO, LCD_D4_PIN);
+	GPIO_InputWithFloatingMode_ConfigPin(LCD_D7_GPIO, LCD_D7_PIN);\
+	GPIO_InputWithFloatingMode_ConfigPin(LCD_D6_GPIO, LCD_D6_PIN);\
+	GPIO_InputWithFloatingMode_ConfigPin(LCD_D5_GPIO, LCD_D5_PIN);\
+	GPIO_InputWithFloatingMode_ConfigPin(LCD_D4_GPIO, LCD_D4_PIN);
 
 //#define _RS_IR		0
 //#define _RS_DR		1
@@ -267,27 +267,27 @@ void LCD_PutStringFromFlash(const char *str){
 //********************************
 void LCD_Config(void){
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_RS_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_RS_GPIO, LCD_RS_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_RS_GPIO, LCD_RS_PIN);
 	
 	#ifdef LCD_RW_PIN
 		BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_RW_GPIO);
-		GPIO_ConfigPinForPushPullOutputMode(LCD_RW_GPIO, LCD_RW_PIN);
+		GPIO_OutputWithPushPullMode_ConfigPin(LCD_RW_GPIO, LCD_RW_PIN);
 	#endif
 	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_EN_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_EN_GPIO, LCD_EN_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_EN_GPIO, LCD_EN_PIN);
 	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D4_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D4_GPIO, LCD_D4_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D4_GPIO, LCD_D4_PIN);
 	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D5_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D5_GPIO, LCD_D5_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D5_GPIO, LCD_D5_PIN);
 	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D6_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D6_GPIO, LCD_D6_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D6_GPIO, LCD_D6_PIN);
 	
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(LCD_D7_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(LCD_D7_GPIO, LCD_D7_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(LCD_D7_GPIO, LCD_D7_PIN);
 
 	SysTick_Delay_1ms(50);
 	

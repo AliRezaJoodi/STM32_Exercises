@@ -23,7 +23,7 @@ void BcdDisplay_Config(void);
 int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	GPIO_SWJ_SetDebugMode(SWJ_SWD);
   RCC_SystemClock_ConfigDefault1();
 
 	Button_Config();
@@ -42,10 +42,10 @@ int main(void){
 void BcdDisplay_Config(void){
 	BUS_GPIOA_EnableOrDisable(1);
 	
-	GPIO_ConfigPinForPushPullOutputMode(GPIOA,3);
-	GPIO_ConfigPinForPushPullOutputMode(GPIOA,4);
-	GPIO_ConfigPinForPushPullOutputMode(GPIOA,5);
-	GPIO_ConfigPinForPushPullOutputMode(GPIOA,6);
+	GPIO_OutputWithPushPullMode_ConfigPin(GPIOA,3);
+	GPIO_OutputWithPushPullMode_ConfigPin(GPIOA,4);
+	GPIO_OutputWithPushPullMode_ConfigPin(GPIOA,5);
+	GPIO_OutputWithPushPullMode_ConfigPin(GPIOA,6);
 }
 
 

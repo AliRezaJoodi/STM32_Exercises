@@ -16,7 +16,7 @@ void OutputPin_Config(void);
 int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	GPIO_SWJ_SetDebugMode(SWJ_SWD);
 	RCC_SystemClock_ConfigDefault1();
   EXTI_ConfigDefault1();
 	NVIC_Config();
@@ -31,7 +31,7 @@ int main(void){
 //*************************************************
 void OutputPin_Config(void){
 	BUS_GPIOC_EnableOrDisable(1);
-	GPIO_ConfigPinForPushPullOutputMode(GPIOC,13);
+	GPIO_OutputWithPushPullMode_ConfigPin(GPIOC,13);
 	GPIO_ResetPin(GPIOC,13);
 }
 

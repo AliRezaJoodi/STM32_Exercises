@@ -327,10 +327,10 @@ __STATIC_INLINE uint8_t GPIO_LockPin_LockOrUnlock(GPIO_TypeDef *GPIOx, uint8_t p
 
 void GPIO_OutputWithPushPullMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 void GPIO_OutputWithOpenDrainMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
-void GPIO_InputWithFloatingMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
+
 void GPIO_InputWithPullUpMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 void GPIO_InputWithPullDownMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
-
+void GPIO_InputWithFloatingMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 		
 #ifdef __cplusplus
 }

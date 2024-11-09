@@ -15,10 +15,10 @@
 int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	GPIO_SWJ_SetDebugMode(SWJ_SWD);
   RCC_SystemClock_ConfigDefault1();
 		
-  USART1_ConfigDefault2_TX();
+  USART1_ConfigDefault2();
 	
 	uint32_t data[3]={0x10,0x43,0x63};	
 	char txt[20];

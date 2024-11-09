@@ -7,7 +7,7 @@ void Button_Config(void){
 	#ifdef BUTTON1_PIN
 		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON1_GPIO);
 		#if BUTTON_PRESSED == 0
-			GPIO_ConfigPinForPullUpInputMode(BUTTON1_GPIO,BUTTON1_PIN);   
+			GPIO_InputWithPullUpMode_ConfigPin(BUTTON1_GPIO,BUTTON1_PIN);   
 		#else
 			GPIO_ConfigPinForPullDownInputMode(BUTTON1_GPIO,BUTTON1_PIN);
 		#endif
@@ -16,7 +16,7 @@ void Button_Config(void){
 	#ifdef BUTTON2_PIN
 		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON2_GPIO);
 		#if BUTTON_PRESSED == 0
-			GPIO_ConfigPinForPullUpInputMode(BUTTON2_GPIO,BUTTON2_PIN);   
+			GPIO_InputWithPullUpMode_ConfigPin(BUTTON2_GPIO,BUTTON2_PIN);   
 		#else
 			GPIO_ConfigPinForPullDownInputMode(BUTTON2_GPIO,BUTTON2_PIN);
 		#endif
@@ -25,7 +25,7 @@ void Button_Config(void){
 	#ifdef BUTTON3_PIN
 		BUS_GPIOx_EnableOrDisableWithAutoSearch(BUTTON3_GPIO);
 		#if BUTTON_PRESSED == 0
-			GPIO_ConfigPinForPullUpInputMode(BUTTON3_GPIO,BUTTON3_PIN);  
+			GPIO_InputWithPullUpMode_ConfigPin(BUTTON3_GPIO,BUTTON3_PIN);  
 		#else
 			GPIO_ConfigPinForPullDownInputMode(BUTTON3_GPIO,BUTTON3_PIN);		
 		#endif
