@@ -5,7 +5,7 @@
 //********************************************************
 void Buzzer_Config(void){
 	BUS_GPIOx_EnableOrDisableWithAutoSearch(BUZZER_GPIO);
-	GPIO_ConfigPinForPushPullOutputMode(BUZZER_GPIO,BUZZER_PIN);
+	GPIO_OutputWithPushPullMode_ConfigPin(BUZZER_GPIO,BUZZER_PIN);
 	GPIO_WritePin(BUZZER_GPIO,BUZZER_PIN,!BUZZER_ACTIVE);
 }
 

@@ -18,9 +18,9 @@ volatile char usart3_task=0;
 int main(void){
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
-	GPIO_SWJ_SetDebugInterfaces(SWJ_SWD);
+	GPIO_SWJ_SetDebugMode(SWJ_SWD);
   RCC_SystemClock_ConfigDefault1();	
-  USART3_ConfigDefault1_TX_RXINT();
+  USART3_ConfigDefault1();
 	NVIC_Config();
 
 	USART_PutChar(USART3,'A');
