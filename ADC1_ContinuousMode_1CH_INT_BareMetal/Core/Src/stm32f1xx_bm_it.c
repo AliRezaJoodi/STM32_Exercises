@@ -16,6 +16,6 @@ volatile uint16_t adc_value;
 void ADC1_2_IRQHandler(void){
 	if(ADC_EndOfConversion_GetFlag(ADC1)==1){
 		ADC_EndOfConversion_ClearFlag(ADC1); 
-		adc_value = ADC_RegularData_ReadConversionResult(ADC1); 
+		adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADC1); 
 	}
 }

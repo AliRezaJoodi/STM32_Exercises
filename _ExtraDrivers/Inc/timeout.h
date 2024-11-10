@@ -17,7 +17,7 @@ extern "C" {
 	#define TIMEOUT_VALUE		1000000
 #endif
 
-__STATIC_INLINE uint8_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint32_t status) {
+__STATIC_INLINE uint8_t Timeout_WaitUntil(uint8_t (*condition_func)(void), uint8_t status) {
 	uint32_t timeout = TIMEOUT_VALUE;
 
   while (condition_func() != status){

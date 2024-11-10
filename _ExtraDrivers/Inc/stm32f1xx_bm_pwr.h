@@ -27,11 +27,11 @@ DBP:	Disable backup domain write protection
 			Note: If the HSE divided by 128 is used as the RTC clock, this bit must remain set to 1. 
 */
 
-__STATIC_INLINE uint32_t _BackupDomain_GetAccessStatus(void){
+__STATIC_INLINE uint8_t _BackupDomain_GetAccessStatus(void){
 		return ( GetBit(PWR->CR, PWR_CR_DBP_Pos) );
 }
 
-__STATIC_INLINE uint32_t PWR_BackupDomain_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t PWR_BackupDomain_EnableOrDisable(uint8_t status){
 	WriteBit(PWR->CR, PWR_CR_DBP_Pos, status);
 
 	#ifdef TIMEOUT_INCLUDED

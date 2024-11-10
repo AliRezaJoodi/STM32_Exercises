@@ -20,7 +20,7 @@ static void ADC1_ConfigDefault(void);
 
 int main(void){
 	char txt[20]="";
-	float voltage;
+	float mv;
 			
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
@@ -36,8 +36,8 @@ int main(void){
 	NVIC_Config();
 	
   while(1){
-		voltage = (float)(adc_value * 3300) / (4095);
-		sprintf(txt, "Voltage(mv): %.1f", voltage);
+		mv = (float)(adc_value * ADC_GAIN);
+		sprintf(txt, "Voltage(mv): %.1f", mv);
 		USART_PutString(USART1, txt);
 		
 		SysTick_Delay_1ms(500);
@@ -46,7 +46,7 @@ int main(void){
 
 //************************************************************
 static void ADC1_ConfigDefault(void){
-	GPIO_ADC_ConfigChannel(ADC_IN3);
+	GPIO_ADC_ConfigCh(ADC_IN3);
 	
 	BUS_ADC1_EnableOrDisable(1);
 	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);

@@ -37,11 +37,11 @@ HSITRIM[4:0]:	Internal high-speed clock trimming
 							The default value is 16.
 */
 
-__STATIC_INLINE uint32_t _HSI_GetTrimming(void){
+__STATIC_INLINE uint8_t _HSI_GetTrimming(void){
 	return ( Get5Bit(RCC->CR, RCC_CR_HSITRIM_Pos) );	
 }
 
-__STATIC_INLINE void RCC_HSI_SetTrimming(uint32_t value){
+__STATIC_INLINE void RCC_HSI_SetTrimming(uint8_t value){
 	//RCC->CR= (RCC->CR & ~RCC_CR_HSITRIM) | (value<<RCC_CR_HSITRIM_Pos);
 	Write5Bit(RCC->CR, RCC_CR_HSITRIM_Pos, value);
 }
@@ -66,15 +66,15 @@ HSION:	Internal high-speed clock enable
 				1: Internal 8 MHz RC oscillator ON
 */
 
-__STATIC_INLINE uint32_t _HSI_GetReadyFlag(void){
+__STATIC_INLINE uint8_t _HSI_GetReadyFlag(void){
 	return ( GetBit(RCC->CR, RCC_CR_HSIRDY_Pos) );	
 }
 
-__STATIC_INLINE uint32_t _HSI_GetEnableStatus(void){
+__STATIC_INLINE uint8_t _HSI_GetEnableStatus(void){
 		return ( GetBit(RCC->CR, RCC_CR_HSION_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_HSI_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_HSI_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->CR, RCC_CR_HSION_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -102,15 +102,15 @@ HSEON: 	HSE clock enable
 				1: HSE oscillator ON
 */
 
-__STATIC_INLINE uint32_t _HSE_GetReadyFlag(void){
+__STATIC_INLINE uint8_t _HSE_GetReadyFlag(void){
 		return ( GetBit(RCC->CR, RCC_CR_HSERDY_Pos) );
 }
 
-__STATIC_INLINE uint32_t _HSE_GetEnableStatus(void){
+__STATIC_INLINE uint8_t _HSE_GetEnableStatus(void){
 		return ( GetBit(RCC->CR, RCC_CR_HSEON_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_HSE_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_HSE_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->CR, RCC_CR_HSEON_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -131,11 +131,11 @@ HSEBYP: External high-speed clock bypass
 #define RCC_HSE_CLKSOURCE_XTAL      0b0
 #define RCC_HSE_CLKSOURCE_EXTCLK		0b1
 
-__STATIC_INLINE uint32_t RCC_HSE_GetClockSource(void){
+__STATIC_INLINE uint8_t RCC_HSE_GetClockSource(void){
   return ( GetBit(RCC->CR, RCC_CR_HSEBYP_Pos) );
 }
 
-__STATIC_INLINE void RCC_HSE_SetClockSource(uint32_t mode){
+__STATIC_INLINE void RCC_HSE_SetClockSource(uint8_t mode){
 	WriteBit(RCC->CR, RCC_CR_HSEBYP_Pos, mode);
 	while(RCC_HSE_GetClockSource() != mode){};	
 }
@@ -148,7 +148,7 @@ PLLRDY: PLL clock ready flag
 				1: PLL locked
 */
 
-__STATIC_INLINE uint32_t _PLL_GetReadyFlag(void){
+__STATIC_INLINE uint8_t _PLL_GetReadyFlag(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLRDY_Pos) );
 }
 
@@ -161,11 +161,11 @@ PLLON: 	PLL enable
 				0: PLL OFF
 				1: PLL ON
 */
-__STATIC_INLINE uint32_t _PLL_GetEnableStatus(void){
+__STATIC_INLINE uint8_t _PLL_GetEnableStatus(void){
   return ( GetBit(RCC->CR, RCC_CR_PLLON_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_PLL_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_PLL_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->CR, RCC_CR_PLLON_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -191,7 +191,7 @@ PLLXTPRE: HSE divider for PLL entry
 #define RCC_PLL_CLKSOURCE_HSE_DIV1  0b01
 #define RCC_PLL_CLKSOURCE_HSE_DIV2	0b10
 
-__STATIC_INLINE void RCC_PLL_SetClockSource(uint32_t mode){
+__STATIC_INLINE void RCC_PLL_SetClockSource(uint8_t mode){
 	char e_status= _PLL_GetEnableStatus();
 
 	switch(mode){
@@ -235,7 +235,7 @@ PLLMUL:	PLL multiplication factor
 #define RCC_PLL_MUL16		0b1110
 #define RCC_PLL_MUL16_		0b1111
 
-__STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint32_t mode){
+__STATIC_INLINE void RCC_PLL_SetMultiplicationFactor(uint8_t mode){
 	Write4Bit(RCC->CFGR, RCC_CFGR_PLLMULL_Pos, mode);
 	while( Get4Bit(RCC->CFGR,RCC_CFGR_PLLMULL_Pos) != mode ){};
 }
@@ -267,11 +267,11 @@ SW: 	System clock switch
 #define RCC_SYSCLK_CLKSOURCE_PLL    	0b10
 #define RCC_SYSCLK_CLKSOURCE_NONE		0b11
 
-__STATIC_INLINE uint32_t _SeystemClock_GetSource(void){
+__STATIC_INLINE uint8_t _SeystemClock_GetSource(void){
 	return ( Get2Bit(RCC->CFGR, RCC_CFGR_SWS_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_SeystemClock_SetSource(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_SeystemClock_SetSource(uint8_t mode){
 	Write2Bit(RCC->CFGR, RCC_CFGR_SW_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -308,11 +308,11 @@ HPRE:	AHB prescaler
 #define RCC_AHB_DIV256   	0b1110
 #define RCC_AHB_DIV512			0b1111	
 
-__STATIC_INLINE uint32_t _AHB_GetPrescaler(void){
+__STATIC_INLINE uint8_t _AHB_GetPrescaler(void){
 	return( Get4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_AHB_SetPrescaler(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_AHB_SetPrescaler(uint8_t mode){
 	Write4Bit(RCC->CFGR, RCC_CFGR_HPRE_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -341,11 +341,11 @@ PPRE1[2:0]: APB Low-speed prescaler (APB1)
 #define RCC_APB1_DIV8		0b110
 #define RCC_APB1_DIV16		0b111
 
-__STATIC_INLINE uint32_t _APB1_GetPrescaler(void){
+__STATIC_INLINE uint8_t _APB1_GetPrescaler(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_APB1_SetPrescaler(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_APB1_SetPrescaler(uint8_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE1_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -374,11 +374,11 @@ PPRE2[2:0]: APB high-speed prescaler (APB2)
 #define RCC_APB2_DIV8		0b110
 #define RCC_APB2_DIV16		0b111
 
-__STATIC_INLINE uint32_t _APB2_GetPrescaler(void){
+__STATIC_INLINE uint8_t _APB2_GetPrescaler(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_APB2_SetPrescaler(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_APB2_SetPrescaler(uint8_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_PPRE2_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -405,11 +405,11 @@ ADCPRE:	ADC prescaler
 #define RCC_ADC_DIV6		0b10
 #define RCC_ADC_DIV8		0b11
 
-__STATIC_INLINE uint32_t _ADC_GetPrescaler(void){
+__STATIC_INLINE uint8_t _ADC_GetPrescaler(void){
 	return( Get2Bit(RCC->CFGR, RCC_CFGR_ADCPRE_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_ADC_SetPrescaler(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_ADC_SetPrescaler(uint8_t mode){
 	Write2Bit(RCC->CFGR, RCC_CFGR_ADCPRE_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -441,11 +441,11 @@ MCO:	Microcontroller clock output
 #define RCC_MCO_SOURCE_HSE					0b110
 #define RCC_MCO_SOURCE_PLLCLK_DIV2	0b111
 
-__STATIC_INLINE uint32_t _MCO_GetSource(void){
+__STATIC_INLINE uint8_t _MCO_GetSource(void){
 	return( Get3Bit(RCC->CFGR, RCC_CFGR_MCO_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_MCO_SetSource(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_MCO_SetSource(uint8_t mode){
 	Write3Bit(RCC->CFGR, RCC_CFGR_MCO_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -464,11 +464,11 @@ BDRST: 	Backup domain software reset
 				1: Resets the entire Backup domain. 
 */
 
-__STATIC_INLINE uint32_t _BackupDomain_GetResetStatus(void){
+__STATIC_INLINE uint8_t _BackupDomain_GetResetStatus(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_BDRST_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_BackupDomain_ResetOrRelease(uint32_t status){
+__STATIC_INLINE uint8_t RCC_BackupDomain_ResetOrRelease(uint8_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_BDRST_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -488,7 +488,7 @@ LSERDY: External low-speed oscillator ready
 				1: External 32 kHz oscillator ready
 */
 
-__STATIC_INLINE uint32_t _LSE_GetReadyFlag(void){
+__STATIC_INLINE uint8_t _LSE_GetReadyFlag(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSERDY_Pos) );
 }
 
@@ -500,11 +500,11 @@ LSEON: 	External low-speed oscillator enable
 				1: External 32 kHz oscillator ON
 */
 
-__STATIC_INLINE uint32_t _LSE_GetEnableStatus(void){
+__STATIC_INLINE uint8_t _LSE_GetEnableStatus(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEON_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_LSE_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_LSE_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEON_Pos, status);	
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -527,11 +527,11 @@ LSEBYP: External low-speed oscillator bypass
 #define RCC_LSE_CLKSOURCE_XTAL			0b0
 #define RCC_LSE_CLKSOURCE_EXTCLK		0b1
 
-__STATIC_INLINE uint32_t _LSE_GetClockSource(void){
+__STATIC_INLINE uint8_t _LSE_GetClockSource(void){
 		return ( GetBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_LSE_SetClockSource(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_LSE_SetClockSource(uint8_t mode){
 	WriteBit(RCC->BDCR, RCC_BDCR_LSEBYP_Pos, mode);
 
 	#ifdef TIMEOUT_INCLUDED
@@ -551,7 +551,7 @@ LSIRDY: Internal low-speed oscillator ready
 				1: Internal RC 40 kHz oscillator ready
 */
 
-__STATIC_INLINE uint32_t _LSI_GetReadyFlag(void){
+__STATIC_INLINE uint8_t _LSI_GetReadyFlag(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSIRDY_Pos) );
 }
 
@@ -563,11 +563,11 @@ LSION: 	Internal low-speed oscillator enable
 				1: Internal RC 40 kHz oscillator ON
 */
 
-__STATIC_INLINE uint32_t _LSI_GetEnableStatus(void){
+__STATIC_INLINE uint8_t _LSI_GetEnableStatus(void){
 		return ( GetBit(RCC->CSR, RCC_CSR_LSION_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_LSI_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_LSI_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->CSR, RCC_CSR_LSION_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -594,11 +594,11 @@ RTCSEL[1:0]: 	RTC clock source selection
 #define RCC_RTC_CLKSOURCE_LSI    				0b10
 #define RCC_RTC_CLKSOURCE_HSE_DIV128		0b11
 
-__STATIC_INLINE uint32_t _RTC_GetClockSource(void){
+__STATIC_INLINE uint8_t _RTC_GetClockSource(void){
 		return ( Get2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_RTC_SetClockSource(uint32_t mode){
+__STATIC_INLINE uint8_t RCC_RTC_SetClockSource(uint8_t mode){
 	Write2Bit(RCC->BDCR, RCC_BDCR_RTCSEL_Pos, mode);
 
 	#ifdef TIMEOUT_INCLUDED
@@ -616,11 +616,11 @@ RTCEN: 	RTC clock enable
 				1: RTC clock enabled 
 */
 
-__STATIC_INLINE uint32_t _RTC_GeEnableStatus(void){
+__STATIC_INLINE uint8_t _RTC_GeEnableStatus(void){
 	return ( GetBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t RCC_RTC_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t RCC_RTC_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->BDCR, RCC_BDCR_RTCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
