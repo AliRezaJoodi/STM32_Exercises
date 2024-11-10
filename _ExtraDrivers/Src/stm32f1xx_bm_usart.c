@@ -59,13 +59,10 @@ USART1
 */
 //****************************************************
 void USART1_ConfigDefault1(void){
+	GPIO_USART1_ConfigTxPin();
+	GPIO_USART1_ConfigRxPin();
+
 	BUS_USART1_EnableOrDisable(1);
-	
-	BUS_GPIOA_EnableOrDisable(1);	
-	GPIO_OutputOrInputMode_SetMode(GPIOA,9, GPIO_OUTPUT_50MHz);
-	GPIO_OutputMode_SetOutputType(GPIOA,9, GPIO_OUTPUT_AF_PUSHPULL);
-	GPIO_OutputOrInputMode_SetMode(GPIOA,10, GPIO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,10, GPIO_INPUT_FLOATING);
 	
 	USART_SetBaudRate(USART1, PCLK2_VALUE, 9600);
 	USART_SetMode(USART1, MODE_ASYNCRON);
@@ -90,11 +87,9 @@ USART1
 */
 //****************************************************
 void USART1_ConfigDefault2(void){
-	BUS_USART1_EnableOrDisable(1);
+	GPIO_USART1_ConfigTxPin();
 	
-	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_OutputOrInputMode_SetMode(GPIOA,9, GPIO_OUTPUT_50MHz);
-	GPIO_OutputMode_SetOutputType(GPIOA,9, GPIO_OUTPUT_AF_PUSHPULL);
+	BUS_USART1_EnableOrDisable(1);
 	
 	USART_SetBaudRate(USART1, PCLK2_VALUE, 9600);
 	USART_SetMode(USART1, MODE_ASYNCRON);

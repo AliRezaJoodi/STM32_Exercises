@@ -23,7 +23,7 @@ extern "C" {
 
 #include <stm32f1xx.h>	
 #include <utility.h>
-
+#include <stm32f1xx_bm_bus.h>
 
 /*
 AFIO_MAPR, Bits 26:24
@@ -331,7 +331,18 @@ void GPIO_OutputWithOpenDrainMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 void GPIO_InputWithPullUpMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 void GPIO_InputWithPullDownMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
 void GPIO_InputWithFloatingMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin);
-		
+
+void GPIO_ADC_ConfigChannel(uint8_t ch);
+
+void GPIO_USART1_ConfigTxPin(void);
+void GPIO_USART1_ConfigRxPin(void);
+
+void GPIO_USART2_ConfigTxPin(void);		// Pending
+void GPIO_USART2_ConfigRxPin(void);		// Pending
+
+void GPIO_USART3_ConfigTxPin(void);		// Pending
+void GPIO_USART3_ConfigRxPin(void);		// Pending
+
 #ifdef __cplusplus
 }
 #endif

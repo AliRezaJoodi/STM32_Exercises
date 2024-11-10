@@ -32,6 +32,27 @@ extern "C" {
 #include <timeout.h>
 #include <stm32f1xx_bm_bus.h>
 
+
+#define ADC_IN0			0
+#define ADC_IN1			1
+#define ADC_IN2			2
+#define ADC_IN3			3
+#define ADC_IN4			4
+#define ADC_IN5			5
+#define ADC_IN6			6
+#define ADC_IN7			7
+#define ADC_IN8			8
+#define ADC_IN9			9
+#define ADC_IN10		10
+#define ADC_IN11		11
+#define ADC_IN12		12
+#define ADC_IN13		13
+#define ADC_IN14		14
+#define ADC_IN15		15
+#define ADC_IN16		16
+#define ADC_IN17		17
+
+
 /*
 ADC_SR, Bit 4
 STRT:	Regular channel Start flag
@@ -41,7 +62,7 @@ STRT:	Regular channel Start flag
 			1: Regular channel conversion has started
 */
 
-__STATIC_INLINE uint32_t ADC_StartFlagInRegularChannels_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartFlagInRegularChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_STRT_Pos) );
 }
 
@@ -59,7 +80,7 @@ JSTRT: 	Injected channel Start flag
 				1: Injected group conversion has started
 */
 
-__STATIC_INLINE uint32_t ADC_StartFlagInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartFlagInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JSTRT_Pos) );
 }
 
@@ -77,7 +98,7 @@ JEOC:	Injected channel end of conversion
 			1: Conversion complete
 */
 
-__STATIC_INLINE uint32_t ADC_EndOfConversionInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_EndOfConversionInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JEOS_Pos) );
 }
 
@@ -95,7 +116,7 @@ EOC:	End of conversion
 			1: Conversion complete
 */
 
-__STATIC_INLINE uint32_t ADC_EndOfConversion_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_EndOfConversion_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_EOS_Pos) );
 }
 
@@ -114,7 +135,7 @@ AWD:	Analog watchdog flag
 			1: Analog watchdog event occurred
 */
 
-__STATIC_INLINE uint32_t ADC_AnalogWatchdogFlag_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_AnalogWatchdogFlag_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_AWD_Pos) );
 }
 
@@ -171,11 +192,11 @@ AWDEN: 	Analog watchdog enable on regular channels
 				1: Analog watchdog enabled on regular channels
 */
 
-__STATIC_INLINE uint32_t _AnalogWatchdogOnRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _AnalogWatchdogOnRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_AWDEN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_AnalogWatchdogOnRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_AnalogWatchdogOnRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_AWDEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -194,11 +215,11 @@ JAWDEN: Analog watchdog enable on injected channels
 				1: Analog watchdog enabled on injected channels
 */
 
-__STATIC_INLINE uint32_t _AnalogWatchdogOnInjectedChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _AnalogWatchdogOnInjectedChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_JAWDEN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_AnalogWatchdogOnInjectedChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_AnalogWatchdogOnInjectedChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_JAWDEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -240,11 +261,11 @@ DUALMOD[3:0]: Dual mode selection
 #define ADC_DUAL_MODE8				0b1000
 #define ADC_DUAL_MODE9				0b1001
 
-__STATIC_INLINE uint32_t _DualMode_GetMode(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DualMode_GetMode(ADC_TypeDef *ADCx){
 	return ( Get4Bit(ADCx->CR1, ADC_CR1_DUALMOD_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DualMode_SetMode(ADC_TypeDef *ADCx, uint32_t mode){
+__STATIC_INLINE uint8_t ADC_DualMode_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
 	Write4Bit(ADCx->CR1, ADC_CR1_DUALMOD_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -266,11 +287,11 @@ DISCNUM[2:0]: Discontinuous mode channel count
 							111: 8 channels
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetChannelCount(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DiscontinuousModeInRegularChannels_GetChannelCount(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC_TypeDef *ADCx, uint32_t count){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC_TypeDef *ADCx, uint8_t count){
 	if(count<1 || 8<count){return 1;}
 	
 	Write3Bit(ADCx->CR1, ADC_CR1_DISCNUM_Pos, (count-1));
@@ -291,11 +312,11 @@ JDISCEN: 	Discontinuous mode on injected channels
 					1: Discontinuous mode on injected channels enabled
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeOnInjectedChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DiscontinuousModeOnInjectedChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_JDISCEN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeOnInjectedChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeOnInjectedChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_JDISCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -314,11 +335,11 @@ DISCEN: Discontinuous mode on regular channels
 				1: Discontinuous mode on regular channels enabled
 */
 
-__STATIC_INLINE uint32_t _DiscontinuousModeInRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DiscontinuousModeInRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_DISCEN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_DISCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -359,11 +380,11 @@ SCAN: Scan mode
 			channel if the corresponding EOCIE or JEOCIE bit is set
 */
 
-__STATIC_INLINE uint32_t _ScanMode_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ScanMode_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_SCAN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ScanMode_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_ScanMode_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_SCAN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -400,11 +421,11 @@ EOCIE: Interrupt enable for EOC
 			1: EOC interrupt enabled. An interrupt is generated when the EOC bit is set.
 */
 
-__STATIC_INLINE uint32_t _EndOfConversionInterrupt_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _EndOfConversionInterrupt_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_EOSIE_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_EOSIE_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -454,7 +475,7 @@ SWSTART: 	Start conversion of regular channels
 					1: Starts conversion of regular channels
 */
 
-__STATIC_INLINE uint32_t _StartConversionInRegularChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _StartConversionInRegularChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos) );
 }
 
@@ -478,7 +499,7 @@ JSWSTART: Start conversion of injected channels
 					1: Starts conversion of injected channels
 */
 
-__STATIC_INLINE uint32_t _StartConversionInInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _StartConversionInInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos) );
 }
 
@@ -503,11 +524,11 @@ EXTTRIG: 	External trigger conversion mode for regular channels
 					1: Conversion on external event enabled
 */
 
-__STATIC_INLINE uint32_t _ExternalTriggerForRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ExternalTriggerForRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_EXTTRIG_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -561,11 +582,11 @@ EXTSEL[2:0]: 	External event select for regular group
 #define ADC3_EXTSEL_TIM5_CH3		0b110
 #define ADC3_EXTSEL_SOFTWARE		0b111 
 
-__STATIC_INLINE uint32_t _ExternalEventForRegularGroup_GetMode(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ExternalEventForRegularGroup_GetMode(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->CR2, ADC_CR2_EXTSEL_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ExternalEventForRegularGroup_SetMode(ADC_TypeDef *ADCx, uint32_t mode){
+__STATIC_INLINE uint8_t ADC_ExternalEventForRegularGroup_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
 	Write3Bit(ADCx->CR2, ADC_CR2_EXTSEL_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -622,11 +643,11 @@ ALIGN: 	Data alignment
 #define ADC_ALIGNMENT_RIGHT		0
 #define ADC_ALIGNMENT_LEFT		1
 
-__STATIC_INLINE uint32_t _DataAlignment_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DataAlignment_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_ALIGN_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DataAlignment_SetLeftOrRight(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DataAlignment_SetLeftOrRight(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_ALIGN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
@@ -647,11 +668,11 @@ DMA: 	Direct memory access mode
 			Note: Only ADC1 and ADC3 can generate a DMA request.
 */
 
-__STATIC_INLINE uint32_t _DMA_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _DMA_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_DMA_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_DMA_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_DMA_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_DMA_Pos, status);
 		
 	#ifdef TIMEOUT_INCLUDED
@@ -682,7 +703,7 @@ CAL: 	A/D Calibration
 			1: Enable calibration
 */
 
-__STATIC_INLINE uint32_t _Calibration_GetCompleteStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _Calibration_GetCompleteStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_CAL_Pos) );
 }
 
@@ -708,11 +729,11 @@ CONT: Continuous conversion
 #define ADC_SINGLE				0b0
 #define ADC_CONTINUOUS		0b1
 
-__STATIC_INLINE uint32_t _ContinuousOrSingleConversionMode_GetMode(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ContinuousOrSingleConversionMode_GetMode(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_CONT_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ContinuousOrSingleConversionMode_SetMode(ADC_TypeDef *ADCx, uint32_t mode){
+__STATIC_INLINE uint8_t ADC_ContinuousOrSingleConversionMode_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
 	WriteBit(ADCx->CR2, ADC_CR2_CONT_Pos, mode);
 
 	#ifdef TIMEOUT_INCLUDED
@@ -738,11 +759,11 @@ ADON: A/D converter ON / OFF
 			This is to prevent triggering an erroneous conversion.
 */
 
-__STATIC_INLINE uint32_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_ADON_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR2, ADC_CR2_ADON_Pos, status);
 
 	#ifdef TIMEOUT_INCLUDED
@@ -763,11 +784,11 @@ L[3:0]: Regular channel sequence length
 				1111: 16 conversions
 */
 
-__STATIC_INLINE uint32_t _SequenceLengthInRegularChannels_GetLength(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceLengthInRegularChannels_GetLength(ADC_TypeDef *ADCx){
 	return ( Get4Bit(ADCx->SQR1, ADC_SQR1_L_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SequenceLengthInRegularChannels_SetLength(ADC_TypeDef *ADCx, uint32_t total){
+__STATIC_INLINE uint8_t ADC_SequenceLengthInRegularChannels_SetLength(ADC_TypeDef *ADCx, uint8_t total){
 	if(total>16){return 1;}
 		
 	Write4Bit(ADCx->SQR1, ADC_SQR1_L_Pos, total-1);
@@ -786,30 +807,11 @@ SQ16[4:0]: 16th conversion in regular sequence
 						These bits are written by software with the channel number (0..17) assigned as the 16th in the conversion sequence.
 */
 
-#define ADC_SEQUENCE_CH0		0
-#define ADC_SEQUENCE_CH1		1
-#define ADC_SEQUENCE_CH2		2
-#define ADC_SEQUENCE_CH3		3
-#define ADC_SEQUENCE_CH4		4
-#define ADC_SEQUENCE_CH5		5
-#define ADC_SEQUENCE_CH6		6
-#define ADC_SEQUENCE_CH7		7
-#define ADC_SEQUENCE_CH8		8
-#define ADC_SEQUENCE_CH9		9
-#define ADC_SEQUENCE_CH10		10
-#define ADC_SEQUENCE_CH11		11
-#define ADC_SEQUENCE_CH12		12
-#define ADC_SEQUENCE_CH13		13
-#define ADC_SEQUENCE_CH14		14
-#define ADC_SEQUENCE_CH15		15
-#define ADC_SEQUENCE_CH16		16
-#define ADC_SEQUENCE_CH17		17
-
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor16thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor16thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor16thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor16thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 		
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos, ch);
@@ -828,11 +830,11 @@ SQ15[4:0]: 15th conversion in regular sequence
 
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor15thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor15thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ15_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor15thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor15thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ15_Pos, ch);
@@ -850,11 +852,11 @@ ADC_SQR1, Bits 9:5
 SQ14[4:0]: 1fourth conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor14thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor14thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ14_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor14thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor14thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ14_Pos, ch);
@@ -872,11 +874,11 @@ ADC_SQR1, Bits 4:0
 SQ13[4:0]: 13th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor13thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor13thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ13_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor13thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor13thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ13_Pos, ch);
@@ -895,11 +897,11 @@ SQ12[4:0]: 12th conversion in regular sequence
 						These bits are written by software with the channel number (0..17) assigned as the 12th in the sequence to be converted.
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor12thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor12thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ12_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor12thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor12thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ12_Pos, ch);
@@ -917,11 +919,11 @@ ADC_SQR2, Bits 24:20
 SQ11[4:0]: 11th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor11thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor11thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ11_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor11thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor11thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ11_Pos, ch);
@@ -939,11 +941,11 @@ ADC_SQR2, Bits 19:15
 SQ10[4:0]: 10th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor10thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor10thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ10_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor10thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor10thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ10_Pos, ch);
@@ -960,11 +962,11 @@ __STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor10thSequence_S
 ADC_SQR2, Bits 14:10 SQ9[4:0]: 9th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor9thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor9thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ9_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor9thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor9thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ9_Pos, ch);
@@ -982,11 +984,11 @@ ADC_SQR2, Bits 9:5
 SQ8[4:0]: 8th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor8thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor8thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor8thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor8thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos, ch);
@@ -1004,11 +1006,11 @@ ADC_SQR2, Bits 4:0
 SQ7[4:0]: 7th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor7thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor7thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ7_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor7thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor7thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ7_Pos, ch);
@@ -1026,11 +1028,11 @@ ADC_SQR3, Bits 29:25
 SQ6[4:0]: 6th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor6thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor6thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor6thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor6thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos, ch);
@@ -1048,11 +1050,11 @@ ADC_SQR3, Bits 24:20
 SQ5[4:0]: 5th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor5thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor5thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor5thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor5thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos, ch);
@@ -1070,11 +1072,11 @@ ADC_SQR3, Bits 19:15
 SQ4[4:0]: 4th conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor4thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor4thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor4thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor4thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos, ch);
@@ -1092,11 +1094,11 @@ ADC_SQR3, Bits 14:10
 SQ3[4:0]: 3rd conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor3rdSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor3rdSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor3rdSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor3rdSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos, ch);
@@ -1114,11 +1116,11 @@ ADC_SQR3, Bits 9:5
 SQ2[4:0]: 2nd conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor2ndSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor2ndSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor2ndSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor2ndSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos, ch);
@@ -1136,11 +1138,11 @@ ADC_SQR3, Bits 4:0
 SQ1[4:0]: first conversion in regular sequence
 */
 
-__STATIC_INLINE uint32_t _ConversionSequenceInRegularChannelsFor1stSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor1stSequence_GetChannelNumber(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor1stSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint32_t ch){
+__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor1stSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return 1;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos, ch);
@@ -1198,11 +1200,11 @@ SMPx[2:0]: 	Channel x Sample time selection
 #define ADC_SAMPLINGTIME_71CYCLE_5       	0b110U
 #define ADC_SAMPLINGTIME_239CYCLE_5     	0b111U
 
-__STATIC_INLINE uint32_t _SamplingTimeInCh3_GetCycle(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SamplingTimeInCh3_GetCycle(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SamplingTimeInCh3_SetCycle(ADC_TypeDef *ADCx, uint32_t mode){	
+__STATIC_INLINE uint8_t ADC_SamplingTimeInCh3_SetCycle(ADC_TypeDef *ADCx, uint8_t mode){	
 	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
