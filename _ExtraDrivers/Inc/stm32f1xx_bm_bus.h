@@ -28,18 +28,9 @@ PWRRST:	Power interface reset
 				1: Reset power interface
 */
 
-__STATIC_INLINE uint32_t _PWR_GetResetStatus(void){
-	return ( GetBit(RCC->APB1RSTR, RCC_APB1RSTR_PWRRST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_PWR_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB1RSTR, RCC_APB1RSTR_PWRRST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_PWR_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif
+__STATIC_INLINE uint32_t BUS_PWR_Reset(void){
+	SetBit(RCC->APB1RSTR, RCC_APB1RSTR_PWRRST_Pos);
+	return 0;
 }
 
 /*
@@ -49,7 +40,7 @@ PWREN:	Power interface clock enable
 				1: Power interface clock enable
 */
 
-__STATIC_INLINE uint32_t _PWR_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_PWR_GetEnableStatus(void){
 	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_PWREN_Pos) );
 }
 
@@ -57,11 +48,12 @@ __STATIC_INLINE uint32_t BUS_PWR_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->APB1ENR, RCC_APB1ENR_PWREN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_PWR_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_PWR_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
 }
+
 
 /*
 BKPRST:	Backup interface reset
@@ -70,19 +62,12 @@ BKPRST:	Backup interface reset
 				1: Reset power interface
 */
 
-__STATIC_INLINE uint32_t _BKP_GetResetStatus(void){
-	return ( GetBit(RCC->APB1RSTR, RCC_APB1RSTR_BKPRST_Pos) );
+__STATIC_INLINE uint32_t BUS_BKP_Reset(void){
+	SetBit(RCC->APB1RSTR, RCC_APB1RSTR_BKPRST_Pos);
+	
+	return 0;
 }
 
-__STATIC_INLINE uint32_t BUS_BKP_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB1RSTR, RCC_APB1RSTR_BKPRST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_BKP_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif
-}
 
 /*
 BKPEN:	Backup interface clock enable
@@ -91,7 +76,7 @@ BKPEN:	Backup interface clock enable
 				1: Power interface clock enable
 */
 
-__STATIC_INLINE uint32_t _BKP_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_BKP_GetEnableStatus(void){
 	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_BKPEN_Pos) );
 }
 
@@ -99,11 +84,12 @@ __STATIC_INLINE uint32_t BUS_BKP_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->APB1ENR, RCC_APB1ENR_BKPEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_BKP_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_BKP_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif	
 }
+
 
 /*
 RCC_APB2RSTR, Bit 0
@@ -113,19 +99,11 @@ AFIORST: 	Alternate function I/O reset
 					1: Reset Alternate Function
 */
 
-__STATIC_INLINE uint32_t _AFIO_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_AFIORST_Pos) );
+__STATIC_INLINE uint32_t BUS_AFIO_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_AFIORST_Pos);
+	return 0;	
 }
 
-__STATIC_INLINE uint32_t BUS_AFIO_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_AFIORST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_AFIO_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif		
-}
 
 /*
 AFIOEN: Alternate function IO clock enable
@@ -134,7 +112,7 @@ AFIOEN: Alternate function IO clock enable
 				1: Alternate Function IO clock enabled
 */
 
-__STATIC_INLINE uint32_t _AFIO_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_AFIO_GetEnableStatus(void){
 		return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_AFIOEN_Pos) );
 }
 
@@ -142,49 +120,41 @@ __STATIC_INLINE uint32_t BUS_AFIO_EnableOrDisable(uint32_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_AFIOEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_AFIO_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_AFIO_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif	
 }
 
 /*
+RCC_APB2RSTR, Bit 2
 IOPARST: 	I/O port A reset
 					1 Bit, Read/Write by software
 					0: No effect
 					1: Reset I/O port A
 */
 
-__STATIC_INLINE uint32_t _GPIOA_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPARST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_GPIOA_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPARST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOA_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+__STATIC_INLINE void BUS_GPIOA_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPARST_Pos);
 }
 
 /*
-IOPAEN: I/O port A clock enable
-				1 Bit, Read/Write by software
-				0: I/O port A clock disabled
-				1: I/O port A clock enabled
+RCC_APB2ENR, Bit 2
+IOPAEN: IO port A clock enable
+				Set and cleared by software.
+				0: IO port A clock disabled
+				1: IO port A clock enabled
 */
 
-__STATIC_INLINE uint32_t _GPIOA_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_GPIOA_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_IOPAEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_GPIOA_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_GPIOA_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPAEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOA_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_GPIOA_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif	
@@ -197,19 +167,12 @@ IOPBRST: 	I/O port B reset
 					1: Reset I/O port B
 */
 
-__STATIC_INLINE uint32_t _GPIOB_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPBRST_Pos) );
+__STATIC_INLINE uint8_t BUS_GPIOB_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPBRST_Pos);
+	
+	return 0;
 }
 
-__STATIC_INLINE uint32_t BUS_GPIOB_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPBRST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOB_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
-}
 
 /*
 IOPBEN: I/O port B clock enable
@@ -217,15 +180,15 @@ IOPBEN: I/O port B clock enable
 				0: I/O port B clock disabled
 				1: I/O port B clock enabled
 */
-__STATIC_INLINE uint32_t _GPIOB_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_GPIOB_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_IOPBEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_GPIOB_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_GPIOB_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPBEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOB_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_GPIOB_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
@@ -238,18 +201,10 @@ IOPCRST: 	I/O port C reset
 					1: Reset I/O port C
 */
 
-__STATIC_INLINE uint32_t _GPIOC_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPCRST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_GPIOC_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPCRST_Pos, status);
+__STATIC_INLINE uint8_t BUS_GPIOC_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPCRST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOC_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;	
 }
 
 /*
@@ -259,15 +214,15 @@ IOPCEN: I/O port C clock enable
 				1: I/O port C clock enabled
 */
 
-__STATIC_INLINE uint32_t _GPIOC_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_GPIOC_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_IOPCEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_GPIOC_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_GPIOC_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOC_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_GPIOC_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif	
@@ -280,18 +235,10 @@ IOPDRST: 	I/O port D reset
 					1: Reset I/O port D
 */
 
-__STATIC_INLINE uint32_t _GPIOD_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPDRST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_GPIOD_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPDRST_Pos, status);
+__STATIC_INLINE uint8_t BUS_GPIOD_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_IOPDRST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOD_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;
 }
 
 /*
@@ -301,15 +248,15 @@ IOPDEN: I/O port D clock enable
 				1: I/O port D clock enabled
 */
 
-__STATIC_INLINE uint32_t _GPIOD_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_GPIOD_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_IOPDEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_GPIOD_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_GPIOD_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_IOPDEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_GPIOD_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_GPIOD_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif	
@@ -322,18 +269,10 @@ USART1RST:	USART1 reset
 						1: Reset USART1
 */
 
-__STATIC_INLINE uint32_t _USART1_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_USART1_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos, status);
+__STATIC_INLINE uint8_t BUS_USART1_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_USART1RST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART1_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;
 }
 
 /*
@@ -343,15 +282,15 @@ USART1EN: USART1 clock enable
 					1: USART1 clock enabled
 */
 
-__STATIC_INLINE uint32_t _USART1_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_USART1_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_USART1EN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_USART1_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_USART1_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_USART1EN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART1_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_USART1_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
@@ -364,19 +303,12 @@ USART2RST: 	USART 2 reset
 						1: Reset USART 2
 */
 
-__STATIC_INLINE uint32_t _USART2_GetResetStatus(void){
-	return ( GetBit(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos) );
+__STATIC_INLINE uint8_t BUS_USART2_Reset(void){
+	SetBit(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos);
+	
+	return 0;
 }
 
-__STATIC_INLINE uint32_t BUS_USART2_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB1RSTR, RCC_APB1RSTR_USART2RST_Pos, status);
-	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART2_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
-}
 
 /*
 USART2EN: USART2 clock enable
@@ -385,15 +317,15 @@ USART2EN: USART2 clock enable
 					1: USART2 clock enabled
 */
 
-__STATIC_INLINE uint32_t _USART2_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_USART2_GetEnableStatus(void){
 	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_USART2_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_USART2_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB1ENR, RCC_APB1ENR_USART2EN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART2_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_USART2_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif		
@@ -406,18 +338,10 @@ USART3RST: 	USART 3 reset
 						1: Reset USART 3
 */
 
-__STATIC_INLINE uint32_t _USART3_GetResetStatus(void){
-	return ( GetBit(RCC->APB1RSTR, RCC_APB1RSTR_USART3RST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_USART3_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB1RSTR, RCC_APB1RSTR_USART3RST_Pos, status);
+__STATIC_INLINE uint8_t BUS_USART3_Reset(void){
+	SetBit(RCC->APB1RSTR, RCC_APB1RSTR_USART3RST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART3_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;
 }
 
 /*
@@ -427,15 +351,15 @@ USART3EN: USART3 clock enable
 					1: USART3 clock enabled
 */
 
-__STATIC_INLINE uint32_t _USART3_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_USART3_GetEnableStatus(void){
 	return ( GetBit(RCC->APB1ENR, RCC_APB1ENR_USART3EN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_USART3_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_USART3_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB1ENR, RCC_APB1ENR_USART3EN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_USART3_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_USART3_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
@@ -450,18 +374,14 @@ ADC2RST: 	ADC 2 interface reset
 					1: Reset ADC 2 interface
 */
 
-__STATIC_INLINE uint32_t _ADC2_GetResetStatus(void){
+__STATIC_INLINE uint32_t BUS_ADC2_GetResetStatus(void){
 	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC2RST_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_ADC2_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC2RST_Pos, status);
+__STATIC_INLINE uint8_t BUS_ADC2_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC2RST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_ADC2_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;
 }
 
 /*
@@ -472,15 +392,15 @@ ADC2EN: ADC 2 interface clock enable
 				1: ADC 2 interface clock enabled
 */
 
-__STATIC_INLINE uint32_t _ADC2_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_ADC2_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_ADC2EN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_ADC2_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_ADC2_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_ADC2EN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_ADC2_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_ADC2_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
@@ -495,18 +415,10 @@ ADC1RST: 	ADC 1 interface reset
 					1: Reset ADC 1 interface
 */
 
-__STATIC_INLINE uint32_t _ADC1_GetResetStatus(void){
-	return ( GetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC1RST_Pos) );
-}
-
-__STATIC_INLINE uint32_t BUS_ADC1_ResetOrRelease(uint32_t status){
-	WriteBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC1RST_Pos, status);
+__STATIC_INLINE uint8_t BUS_ADC1_Reset(void){
+	SetBit(RCC->APB2RSTR, RCC_APB2RSTR_ADC1RST_Pos);
 	
-	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_ADC1_GetResetStatus, status) );
-	#else
-		return 0;
-	#endif	
+	return 0;
 }
 
 /*
@@ -517,15 +429,15 @@ ADC1EN: ADC 1 interface clock enable
 				1: ADC 1 interface clock enabled
 */
 
-__STATIC_INLINE uint32_t _ADC1_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_ADC1_GetEnableStatus(void){
 	return ( GetBit(RCC->APB2ENR, RCC_APB2ENR_ADC1EN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_ADC1_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_ADC1_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->APB2ENR, RCC_APB2ENR_ADC1EN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_ADC1_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_ADC1_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif
@@ -538,15 +450,15 @@ CRCEN: 	CRC clock enable
 				1: CRC clock enabled
 */
 
-__STATIC_INLINE uint32_t _CRC_GetEnableStatus(void){
+__STATIC_INLINE uint32_t BUS_CRC_GetEnableStatus(void){
 	return ( GetBit(RCC->AHBENR, RCC_AHBENR_CRCEN_Pos) );
 }
 
-__STATIC_INLINE uint32_t BUS_CRC_EnableOrDisable(uint32_t status){
+__STATIC_INLINE uint8_t BUS_CRC_EnableOrDisable(uint8_t status){
 	WriteBit(RCC->AHBENR, RCC_AHBENR_CRCEN_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return ( Timeout_WaitUntil(_CRC_GetEnableStatus, status) );
+		return ( Timeout_WaitUntil(BUS_CRC_GetEnableStatus, status) );
 	#else
 		return 0;
 	#endif

@@ -31,7 +31,7 @@ __STATIC_INLINE uint8_t Timeout_WaitUntil(uint32_t (*condition_func)(void), uint
   return 0;		// Successful
 }
 
-__STATIC_INLINE uint8_t Timeout_ADC_WaitUntil(uint32_t (*condition_func)(ADC_TypeDef *), ADC_TypeDef *ADCx, uint32_t status){
+__STATIC_INLINE uint8_t Timeout_ADC_WaitUntil(uint8_t (*condition_func)(ADC_TypeDef *), ADC_TypeDef *ADCx, uint8_t status){
 	uint32_t timeout = TIMEOUT_VALUE;
 
 	while(condition_func(ADCx) != status){
