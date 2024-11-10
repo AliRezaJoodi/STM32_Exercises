@@ -116,13 +116,10 @@ USART2
 */
 //****************************************************
 void USART2_ConfigDefault1(void){
-	BUS_USART2_EnableOrDisable(1);
+	GPIO_USART2_ConfigTxPin();
+	GPIO_USART2_ConfigRxPin();
 	
-	BUS_GPIOA_EnableOrDisable(1);
-	GPIO_OutputOrInputMode_SetMode(GPIOA,2, GPIO_OUTPUT_50MHz);
-	GPIO_OutputMode_SetOutputType(GPIOA,2, GPIO_OUTPUT_AF_PUSHPULL);
-	GPIO_OutputOrInputMode_SetMode(GPIOA,3, GPIO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOA,3, GPIO_INPUT_FLOATING);
+	BUS_USART2_EnableOrDisable(1);
 	
 	USART_SetBaudRate(USART2, PCLK1_VALUE, 9600);
 	USART_SetMode(USART2, MODE_ASYNCRON);
@@ -149,13 +146,10 @@ USART3
 */
 //****************************************************
 void USART3_ConfigDefault1(void){
-	BUS_USART3_EnableOrDisable(1);
+	GPIO_USART3_ConfigTxPin();
+	GPIO_USART3_ConfigRxPin();
 	
-	BUS_GPIOB_EnableOrDisable(1);
-	GPIO_OutputOrInputMode_SetMode(GPIOB,10, GPIO_OUTPUT_50MHz);
-	GPIO_OutputMode_SetOutputType(GPIOB,10, GPIO_OUTPUT_AF_PUSHPULL);
-	GPIO_OutputOrInputMode_SetMode(GPIOB,11, GPIO_INPUT);
-	GPIO_InputMode_SetInputType(GPIOB,11, GPIO_INPUT_FLOATING);
+	BUS_USART3_EnableOrDisable(1);
 	
 	USART_SetBaudRate(USART3, PCLK1_VALUE, 9600);
 	USART_SetMode(USART3, MODE_ASYNCRON);

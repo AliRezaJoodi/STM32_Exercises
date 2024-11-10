@@ -33,7 +33,7 @@ void GPIO_InputWithFloatingMode_ConfigPin(GPIO_TypeDef *GPIOx, uint8_t pin){
 }
 
 //******************************************************************************
-void GPIO_ADC_ConfigChannel(uint8_t ch){
+void GPIO_ADC_ConfigCh(uint8_t ch){
 	switch(ch){
 		case 0:
 			if(BUS_GPIOA_GetEnableStatus() == 0){BUS_GPIOA_EnableOrDisable(1);}
@@ -132,4 +132,32 @@ void GPIO_USART1_ConfigRxPin(void){
 	if(BUS_GPIOA_GetEnableStatus() == 0){BUS_GPIOA_EnableOrDisable(1);}
 	GPIO_OutputOrInputMode_SetMode(GPIOA,10, GPIO_INPUT);
 	GPIO_InputMode_SetInputType(GPIOA,10, GPIO_INPUT_FLOATING);	
+}
+
+//******************************************************************************
+void GPIO_USART2_ConfigTxPin(void){
+	if(BUS_GPIOA_GetEnableStatus() == 0){BUS_GPIOA_EnableOrDisable(1);}
+	GPIO_OutputOrInputMode_SetMode(GPIOA,2, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOA,2, GPIO_OUTPUT_AF_PUSHPULL);
+}
+
+//******************************************************************************
+void GPIO_USART2_ConfigRxPin(void){
+	if(BUS_GPIOA_GetEnableStatus() == 0){BUS_GPIOA_EnableOrDisable(1);}
+	GPIO_OutputOrInputMode_SetMode(GPIOA,3, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOA,3, GPIO_INPUT_FLOATING);
+}
+
+//******************************************************************************
+void GPIO_USART3_ConfigTxPin(void){
+	if(BUS_GPIOB_GetEnableStatus() == 0){BUS_GPIOB_EnableOrDisable(1);}
+	GPIO_OutputOrInputMode_SetMode(GPIOB,10, GPIO_OUTPUT_50MHz);
+	GPIO_OutputMode_SetOutputType(GPIOB,10, GPIO_OUTPUT_AF_PUSHPULL);
+}
+
+//******************************************************************************
+void GPIO_USART3_ConfigRxPin(void){
+	if(BUS_GPIOB_GetEnableStatus() == 0){BUS_GPIOB_EnableOrDisable(1);}
+	GPIO_OutputOrInputMode_SetMode(GPIOB,11, GPIO_INPUT);
+	GPIO_InputMode_SetInputType(GPIOB,11, GPIO_INPUT_FLOATING);
 }

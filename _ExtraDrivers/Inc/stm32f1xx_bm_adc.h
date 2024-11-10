@@ -30,8 +30,11 @@ extern "C" {
 #include <stm32f1xx.h>
 #include <utility.h>
 #include <timeout.h>
-#include <stm32f1xx_bm_bus.h>
+//#include <stm32f1xx_bm_bus.h>
 
+#ifndef ADC_GAIN
+	#define ADC_GAIN		0.80586080    // 3300mv / 2^10 = 3300/4095
+#endif
 
 #define ADC_IN0			0
 #define ADC_IN1			1
@@ -151,7 +154,7 @@ JDATA[15:0]: Injected data
 							They contain the conversion result from injected channel x.
 */
 // Need to check
-__STATIC_INLINE uint16_t ADC_InjectedData_ReadConversionResult(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint16_t ADC_ConversionResultInInjectedChannels_ReadData(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->JDR1 & 0xFFFFUL;
 	return data;
 }
@@ -165,7 +168,7 @@ ADC2DATA[15:0]: ADC2 data
 								In ADC2 and ADC3: these bits are not used.					
 */
 
-__STATIC_INLINE uint16_t ADC_RegularDataInDualMode_ReadConversionResult_ADC2Data(void){
+__STATIC_INLINE uint16_t ADC_ConversionResultInRegularChannelsWithDualMode_ReadData(void){
 	uint16_t data = ((ADC1->DR) >> 16) & 0xFFFFUL;
 	return data;
 }
@@ -178,7 +181,7 @@ DATA[15:0]:	Regular data
 						They contain the conversion result from the regular channels.
 */
 
-__STATIC_INLINE uint16_t ADC_RegularData_ReadConversionResult(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint16_t ADC_ConversionResultInRegularChannels_ReadData(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->DR & 0xFFFFUL;
 	return data;
 }
