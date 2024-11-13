@@ -55,41 +55,41 @@ display1.decimal_=0;
 
 //***************************************************
 void Display7Segment4Digit_Config(void){
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(A_GPIO);
+	BUS_GPIOx_EnableOrDisable(A_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(A_GPIO, A_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(B_GPIO);
+	BUS_GPIOx_EnableOrDisable(B_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(B_GPIO, B_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(C_GPIO);
+	BUS_GPIOx_EnableOrDisable(C_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(C_GPIO, C_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(D_GPIO);
+	BUS_GPIOx_EnableOrDisable(D_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(D_GPIO, D_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(E_GPIO);
+	BUS_GPIOx_EnableOrDisable(E_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(E_GPIO, E_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(F_GPIO);
+	BUS_GPIOx_EnableOrDisable(F_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(F_GPIO, F_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(G_GPIO);
+	BUS_GPIOx_EnableOrDisable(G_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(G_GPIO, G_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(DP_GPIO);
+	BUS_GPIOx_EnableOrDisable(DP_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(DP_GPIO, DP_PIN);
 
 
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT0_GPIO);
+	BUS_GPIOx_EnableOrDisable(DIGIT0_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(DIGIT0_GPIO, DIGIT0_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT1_GPIO);
+	BUS_GPIOx_EnableOrDisable(DIGIT1_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(DIGIT1_GPIO, DIGIT1_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT2_GPIO);
+	BUS_GPIOx_EnableOrDisable(DIGIT2_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(DIGIT2_GPIO, DIGIT2_PIN);
 	
-	BUS_GPIOx_EnableOrDisableWithAutoSearch(DIGIT3_GPIO);
+	BUS_GPIOx_EnableOrDisable(DIGIT3_GPIO, 1);
 	GPIO_OutputWithPushPullMode_ConfigPin(DIGIT3_GPIO, DIGIT3_PIN);
 	
 	_7Segment4Digit_TurnOffDigits;
