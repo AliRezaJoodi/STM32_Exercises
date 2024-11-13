@@ -2,7 +2,7 @@
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC1:		Single Mode, 1ch   
+ADC1:		Single Mode, 3ch   
 
 ### Folder and Files Description
 It has included:
