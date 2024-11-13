@@ -32,6 +32,9 @@ extern "C" {
 #include <timeout.h>
 #include <stm32f1xx_bm_bus.h>
 
+#define ADC_SUCCESS		0
+#define ADC_ERROR			1
+
 #ifndef ADC_GAIN
 	#define ADC_GAIN		0.80586080    // 3300mv / 2^10 = 3300/4095
 #endif
@@ -739,7 +742,7 @@ __STATIC_INLINE uint8_t _ContinuousOrSingleConversionMode_GetMode(ADC_TypeDef *A
 	return ( GetBit(ADCx->CR2, ADC_CR2_CONT_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ContinuousOrSingleConversionMode_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
+__STATIC_INLINE uint8_t ADC_ContinuousOrSingleMode_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
 	WriteBit(ADCx->CR2, ADC_CR2_CONT_Pos, mode);
 
 	#ifdef TIMEOUT_INCLUDED
@@ -810,351 +813,306 @@ __STATIC_INLINE uint8_t ADC_SequenceLengthInRegularChannels_SetLength(ADC_TypeDe
 /*
 ADC_SQR1, Bits 19:15
 SQ16[4:0]: 16th conversion in regular sequence
-						These bits are written by software with the channel number (0..17) assigned as the 16th in the conversion sequence.
+
+ADC_SQR1, Bits 14:10
+SQ15[4:0]: 15th conversion in regular sequence
+
+ADC_SQR1, Bits 9:5
+SQ14[4:0]: 14th conversion in regular sequence
+
+ADC_SQR1, Bits 4:0
+SQ13[4:0]: 13th conversion in regular sequence
+
+ADC_SQR2, Bits 29:25
+SQ12[4:0]: 12th conversion in regular sequence
+
+ADC_SQR2, Bits 24:20 
+SQ11[4:0]: 11th conversion in regular sequence
+
+ADC_SQR2, Bits 19:15
+SQ10[4:0]: 10th conversion in regular sequence
+
+ADC_SQR2, Bits 14:10 
+SQ9[4:0]: 9th conversion in regular sequence
+
+ADC_SQR2, Bits 9:5
+SQ8[4:0]: 8th conversion in regular sequence
+
+ADC_SQR2, Bits 4:0
+SQ7[4:0]: 7th conversion in regular sequence
+
+ADC_SQR3, Bits 29:25
+SQ6[4:0]: 6th conversion in regular sequence
+
+ADC_SQR3, Bits 24:20
+SQ5[4:0]: 5th conversion in regular sequence
+
+ADC_SQR3, Bits 19:15
+SQ4[4:0]: 4th conversion in regular sequence
+
+ADC_SQR3, Bits 14:10
+SQ3[4:0]: 3rd conversion in regular sequence
+
+ADC_SQR3, Bits 9:5
+SQ2[4:0]: 2nd conversion in regular sequence
+
+ADC_SQR3, Bits 4:0
+SQ1[4:0]: first conversion in regular sequence
+
+Note; These bits are written by software with the channel number (0..17) assigned as the 16th in the conversion sequence.
 */
 
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor16thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get16thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor16thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set16thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 		
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ16_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor16thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get16thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR1, Bits 14:10
-SQ15[4:0]: 15th conversion in regular sequence
-
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor15thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get15thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ15_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor15thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set15thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ15_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor15thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get15thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR1, Bits 9:5
-SQ14[4:0]: 1fourth conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor14thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get14thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ14_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor14thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set14thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ14_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor14thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get14thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR1, Bits 4:0
-SQ13[4:0]: 13th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor13thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get13thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR1, ADC_SQR1_SQ13_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor13thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set13thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR1, ADC_SQR1_SQ13_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor13thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get13thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 29:25
-SQ12[4:0]: 12th conversion in regular sequence
-						These bits are written by software with the channel number (0..17) assigned as the 12th in the sequence to be converted.
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor12thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get12thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ12_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor12thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set12thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ12_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor12thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get12thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 24:20 
-SQ11[4:0]: 11th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor11thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get11thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ11_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor11thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set11thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ11_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor11thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get11thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 19:15
-SQ10[4:0]: 10th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor10thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get10thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ10_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor10thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set10thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ10_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor10thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get10thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 14:10 SQ9[4:0]: 9th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor9thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get9thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ9_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor9thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set9thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ9_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor9thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get9thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 9:5
-SQ8[4:0]: 8th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor8thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Ge8thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor8thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set8thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor8thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Ge8thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR2, Bits 4:0
-SQ7[4:0]: 7th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor7thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get7thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ7_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor7thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set7thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ7_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor7thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get7thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 29:25
-SQ6[4:0]: 6th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor6thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get6thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor6thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set6thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ6_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor6thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get6thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 24:20
-SQ5[4:0]: 5th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor5thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get5thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor5thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set5thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ5_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor5thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get5thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 19:15
-SQ4[4:0]: 4th conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor4thSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get4thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor4thSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set4thSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ4_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor4thSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get4thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 14:10
-SQ3[4:0]: 3rd conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor3rdSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get3rdSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor3rdSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set3rdSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ3_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor3rdSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get3rdSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 9:5
-SQ2[4:0]: 2nd conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor2ndSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get2ndSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor2ndSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Se2ndSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor2ndSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get2ndSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
 }
 
-
-/*
-ADC_SQR3, Bits 4:0
-SQ1[4:0]: first conversion in regular sequence
-*/
-
-__STATIC_INLINE uint8_t _ConversionSequenceInRegularChannelsFor1stSequence_GetChannelNumber(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get1stSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ConversionSequenceInRegularChannelsFor1stSequence_SetChannelNumber(ADC_TypeDef *ADCx, uint8_t ch){
-	if(ch>17){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set1stSequence(ADC_TypeDef *ADCx, uint8_t ch){
+	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ1_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ConversionSequenceInRegularChannelsFor1stSequence_GetChannelNumber, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get1stSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
@@ -1166,25 +1124,18 @@ ADC_SMPR1, Bits 23:0
 SMPx[2:0]: 	Channel x Sample time selection
 						These bits are written by software to select the sample time individually for each channel.
 						During sample cycles channel selection bits must remain unchanged.
-						000: 1.5 cycles
-						001: 7.5 cycles
-						010: 13.5 cycles
-						011: 28.5 cycles
-						100: 41.5 cycles
-						101: 55.5 cycles
-						110: 71.5 cycles
-						111: 239.5 cycles
 
 						Note: ADC1 analog Channel16 and Channel 17 are internally connected to the temperature sensor and to VREFINT, respectively.
 						Note: ADC2 analog input Channel16 and Channel17 are internally connected to VSS.
 						Note: ADC3 analog inputs Channel14, Channel15, Channel16 and Channel17 are connected to VSS.
-*/
 
-/*
 ADC_SMPR2, Bits 29:0
 SMPx[2:0]: 	Channel x Sample time selection
 						These bits are written by software to select the sample time individually for each channel.
 						During sample cycles channel selection bits must remain unchanged.
+						Note: ADC3 analog input Channel9 is connected to VSS.
+
+
 						000: 1.5 cycles
 						001: 7.5 cycles
 						010: 13.5 cycles
@@ -1192,9 +1143,7 @@ SMPx[2:0]: 	Channel x Sample time selection
 						100: 41.5 cycles
 						101: 55.5 cycles
 						110: 71.5 cycles
-						111: 239.5 cycles
-						
-						Note: ADC3 analog input Channel9 is connected to VSS.
+						111: 239.5 cycles			
 */
 
 #define ADC_SAMPLINGTIME_1CYCLE_5       	0b000U
@@ -1206,25 +1155,283 @@ SMPx[2:0]: 	Channel x Sample time selection
 #define ADC_SAMPLINGTIME_71CYCLE_5       	0b110U
 #define ADC_SAMPLINGTIME_239CYCLE_5     	0b111U
 
-__STATIC_INLINE uint8_t _SamplingTimeInCh3_GetCycle(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh17(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP17_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh17(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP17_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh17, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh16(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP16_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh16(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP16_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh16, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh15(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP15_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh15(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP15_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh15, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh14(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP14_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh14(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP14_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh14, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh13(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP13_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh13(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP13_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh13, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh12(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP12_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh12(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP12_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh12, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh11(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP11_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh11(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP11_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh11, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh10(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR1, ADC_SMPR1_SMP10_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh10(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR1, ADC_SMPR1_SMP10_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh10, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh9(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP9_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh9(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP9_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh9, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh8(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP8_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh8(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP8_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh8, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh7(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP7_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh7(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP7_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh7, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh6(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP6_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh6(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP6_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh6, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh5(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP5_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh5(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP5_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh5, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh4(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP4_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh4(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP4_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh4, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh3(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SamplingTimeInCh3_SetCycle(ADC_TypeDef *ADCx, uint8_t mode){	
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh3(ADC_TypeDef *ADCx, uint8_t mode){	
 	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP3_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_SamplingTimeInCh3_GetCycle, ADCx, mode);
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh3, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh2(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP2_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh2(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP2_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh2, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh1(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP1_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh1(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP1_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh1, ADCx, mode);
+	#else
+		return 0;
+	#endif
+}
+
+__STATIC_INLINE uint8_t _SamplingTime_GetCycleFromCh0(ADC_TypeDef *ADCx){
+	return ( Get3Bit(ADCx->SMPR2, ADC_SMPR2_SMP0_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_SamplingTime_SetCycleForCh0(ADC_TypeDef *ADCx, uint8_t mode){	
+	Write3Bit(ADCx->SMPR2, ADC_SMPR2_SMP0_Pos, mode);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_SamplingTime_GetCycleFromCh0, ADCx, mode);
 	#else
 		return 0;
 	#endif
 }
 
 
-//Single Mode
 //******************************************************************************
-void ADC_ConfigDefault1(ADC_TypeDef *ADCx);
-float ADC_SingleConversionMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
+#define ADC_RANK1			1
+#define ADC_RANK2			2
+#define ADC_RANK3			3
+#define ADC_RANK4			4
+#define ADC_RANK5			5
+#define ADC_RANK6			6
+#define ADC_RANK7			7
+#define ADC_RANK8			8
+#define ADC_RANK9			9
+#define ADC_RANK10		10
+#define ADC_RANK11		11
+#define ADC_RANK12		12
+#define ADC_RANK13		13
+#define ADC_RANK14		14
+#define ADC_RANK15		15
+#define ADC_RANK16		16
+
+uint8_t ADC_SequenceInRegularChannels_SetSequence(ADC_TypeDef *ADCx, uint8_t rank, uint8_t ch);
+
+uint8_t ADC_SamplingTime_SetCycle(ADC_TypeDef *ADCx, uint8_t ch, uint8_t cycle);
+
+///void ADC_ConfigDefault1(ADC_TypeDef *ADCx);		//Single Mode
+float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
 
 #ifdef __cplusplus
 }
