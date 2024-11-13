@@ -2,8 +2,7 @@
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Interrupt Method, 1ch  
-ADC_INT:	Enable  
+ADC1:		Single Mode, 1ch   
 
 ### Folder and Files Description
 It has included:
