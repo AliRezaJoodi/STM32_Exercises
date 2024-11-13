@@ -18,6 +18,7 @@ int main(void){
 	char txt[20]="";
 	float in1=0;
 	float in2=0;
+	float in3=0;
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
@@ -29,16 +30,21 @@ int main(void){
 	
   ADC_ConfigDefault1(ADC1);
 	GPIO_ADC_ConfigCh(ADC_IN3);
+	GPIO_ADC_ConfigCh(ADC_IN8);
 	GPIO_ADC_ConfigCh(ADC_IN9);
 	
   while(1){
 		in1=ADC_SingleConversionMode_Read(ADC1, ADC_IN3);
-		in2=ADC_SingleConversionMode_Read(ADC1, ADC_IN9);
+		in2=ADC_SingleConversionMode_Read(ADC1, ADC_IN8);
+		in3=ADC_SingleConversionMode_Read(ADC1, ADC_IN9);
 		
 		sprintf(txt, "Input1(mv): %.1f", in1);
 		USART_PutString(USART1, txt);
 		sprintf(txt, "Input2(mv): %.1f", in2);
 		USART_PutString(USART1, txt);
+		sprintf(txt, "Input3(mv): %.1f", in3);
+		USART_PutString(USART1, txt);
+		USART_PutStringFromFlash(USART1, "");
 		
 		SysTick_Delay_1ms(500);
   }
