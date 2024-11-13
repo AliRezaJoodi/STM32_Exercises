@@ -62,7 +62,6 @@ static void ADC1_ConfigDefault(void){
 	ADC_SamplingTimeInCh3_SetCycle(ADC1, ADC_SAMPLINGTIME_239CYCLE_5);
 	
 	ADC_EnableOrDisable(ADC1, 1);
-	ADC_ExternalTriggerForRegularChannels_EnableOrDisable(ADC1, 0);
 	ADC_StartCalibration(ADC1);
 	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 1);
 }

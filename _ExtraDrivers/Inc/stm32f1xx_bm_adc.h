@@ -483,10 +483,12 @@ __STATIC_INLINE uint8_t _StartConversionInRegularChannels_GetStatus(ADC_TypeDef 
 }
 
 __STATIC_INLINE uint8_t ADC_StartConversionInRegularChannels(ADC_TypeDef *ADCx){
-	SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
-	
+	ADC_StartFlagInRegularChannels_ClearFlag(ADCx);
+	ADC1->CR2 |= (ADC_CR2_SWSTART | ADC_CR2_EXTTRIG);
+	//SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
+
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_StartConversionInRegularChannels_GetStatus, ADCx, 0);
+		return Timeout_ADC_WaitUntil(ADC_StartFlagInRegularChannels_GetFlag, ADCx, 1);
 	#else
 		return 0;
 	#endif
@@ -507,11 +509,12 @@ __STATIC_INLINE uint8_t _StartConversionInInjectedChannels_GetStatus(ADC_TypeDef
 }
 
 __STATIC_INLINE uint8_t ADC_StartConversionInInjectedChannels(ADC_TypeDef *ADCx){
-	SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
-	
-	//while(_StartConversionInInjectedChannels_GetStatus(ADC1) != 0){}
+	ADC_StartFlagInInjectedChannels_ClearFlag(ADCx);
+	ADC1->CR2 |= (ADC_CR2_JSWSTART | ADC_CR2_JEXTTRIG);
+	//SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
+
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_StartConversionInInjectedChannels_GetStatus, ADCx, 0);
+		return Timeout_ADC_WaitUntil(ADC_StartFlagInInjectedChannels_GetFlag, ADCx, 1);
 	#else
 		return 0;
 	#endif
