@@ -109,7 +109,6 @@ uint8_t i = 0;
   /* USER CODE BEGIN 2 */
   
 	LL_ADC_Enable(ADC1);						//Enable ADC1
-	//LL_ADC_EnableIT_EOS(ADC1);					//Enable end of sequence interrupt for ADC1
 	LL_ADC_DisableIT_EOS(ADC1);
 	LL_ADC_StartCalibration(ADC1); 				//Calibration start
 	while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
@@ -126,9 +125,9 @@ uint8_t i = 0;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    //LL_ADC_REG_StartConversionSWStart(ADC1);
-		//while (!LL_ADC_IsActiveFlag_EOS(ADC1));
-		//LL_ADC_ClearFlag_EOS(ADC1);
+    LL_ADC_REG_StartConversionSWStart(ADC1);
+		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+		LL_ADC_ClearFlag_EOS(ADC1);
 		/* representing the voltage in desired format */	
 		adc_value = LL_ADC_REG_ReadConversionData12(ADC1); //adc_value=4095;
 		voltage = (float)(adc_value * 3.3) / (4095);
@@ -220,7 +219,7 @@ static void MX_ADC1_Init(void)
   ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
   ADC_REG_InitStruct.SequencerLength = LL_ADC_REG_SEQ_SCAN_DISABLE;
   ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-  ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
+  ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_SINGLE;
   ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_NONE;
   LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
 
