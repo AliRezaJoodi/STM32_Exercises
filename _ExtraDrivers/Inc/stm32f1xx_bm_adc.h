@@ -30,7 +30,7 @@ extern "C" {
 #include <stm32f1xx.h>
 #include <utility.h>
 #include <timeout.h>
-//#include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_bus.h>
 
 #ifndef ADC_GAIN
 	#define ADC_GAIN		0.80586080    // 3300mv / 2^10 = 3300/4095
@@ -1220,6 +1220,11 @@ __STATIC_INLINE uint8_t ADC_SamplingTimeInCh3_SetCycle(ADC_TypeDef *ADCx, uint8_
 	#endif
 }
 
+
+//Single Mode
+//******************************************************************************
+void ADC_ConfigDefault1(ADC_TypeDef *ADCx);
+float ADC_SingleConversionMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
 
 #ifdef __cplusplus
 }

@@ -481,7 +481,8 @@ __STATIC_INLINE uint8_t BUS_ADC1_EnableOrDisable(uint8_t status){
 
 
 //********************************************************************
-void BUS_GPIOx_EnableOrDisableWithAutoSearch(GPIO_TypeDef *GPIOx);
+void BUS_GPIOx_EnableOrDisable(GPIO_TypeDef *GPIOx, uint8_t status);
+void BUS_ADCx_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status);
 
 
 #ifdef __cplusplus
