@@ -990,7 +990,7 @@ __STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set9thSequence(ADC_TypeDef
 	#endif
 }
 
-__STATIC_INLINE uint8_t _SequenceInRegularChannels_Ge8thSequence(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_Get8thSequence(ADC_TypeDef *ADCx){
 	return ( Get5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos) );
 }
 
@@ -1000,7 +1000,7 @@ __STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set8thSequence(ADC_TypeDef
 	Write5Bit(ADCx->SQR2, ADC_SQR2_SQ8_Pos, ch);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Ge8thSequence, ADCx, ch);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_Get8thSequence, ADCx, ch);
 	#else
 		return 0;
 	#endif
@@ -1090,7 +1090,7 @@ __STATIC_INLINE uint8_t _SequenceInRegularChannels_Get2ndSequence(ADC_TypeDef *A
 	return ( Get5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Se2ndSequence(ADC_TypeDef *ADCx, uint8_t ch){
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_Set2ndSequence(ADC_TypeDef *ADCx, uint8_t ch){
 	if(ch>17){return ADC_ERROR;}
 	
 	Write5Bit(ADCx->SQR3, ADC_SQR3_SQ2_Pos, ch);

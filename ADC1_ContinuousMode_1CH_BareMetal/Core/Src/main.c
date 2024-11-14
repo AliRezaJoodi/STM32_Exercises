@@ -47,9 +47,10 @@ int main(void){
 
 //************************************************************
 static void ADC1_ConfigDefault(void){
-	GPIO_ADC_ConfigCh(ADC_IN3);
-	
 	BUS_ADC1_EnableOrDisable(1);
+
+	GPIO_ADC_ConfigCh(ADC_IN3);
+	ADC_SamplingTime_SetCycle(ADC1, ADC_IN3, ADC_SAMPLINGTIME_239CYCLE_5);
 	
 	ADC_DataAlignment_SetLeftOrRight(ADC1, ADC_ALIGNMENT_RIGHT);
 	ADC_DualMode_SetMode(ADC1, ADC_INDEPENDENT);
@@ -57,7 +58,7 @@ static void ADC1_ConfigDefault(void){
 	ADC_ContinuousOrSingleMode_SetMode(ADC1, ADC_CONTINUOUS);
 	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
-	ADC_SamplingTime_SetCycle(ADC1, ADC_IN3, ADC_SAMPLINGTIME_239CYCLE_5);
+	
 	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);

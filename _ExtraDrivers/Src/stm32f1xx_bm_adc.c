@@ -11,7 +11,7 @@ uint8_t ADC_SequenceInRegularChannels_SetSequence(ADC_TypeDef *ADCx, uint8_t ran
 			error = ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
 			break;
 		case ADC_RANK2:
-			error = ADC_SequenceInRegularChannels_Se2ndSequence(ADCx, ch);
+			error = ADC_SequenceInRegularChannels_Set2ndSequence(ADCx, ch);
 			break;
 		case ADC_RANK3:
 			error = ADC_SequenceInRegularChannels_Set3rdSequence(ADCx, ch);
