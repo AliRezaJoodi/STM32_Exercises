@@ -132,13 +132,20 @@ float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 	ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
 	
 	ADC_StartConversionInRegularChannels(ADCx);
-	if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADCx, 1) == TIMEOUT_SUCCESS){
+	if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADCx, 1) == ADC_SUCCESS){
 		ADC_EndOfConversion_ClearFlag(ADCx); 
 		adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADCx);
 		adc_mv = (float)(adc_value * ADC_GAIN);
 	}
 	
 	return adc_mv;
+}
+
+//************************************************************
+float ADC_ConvertVoltageToInternalTemp(float mv){	
+	float temp = ( (mv - ADC_V25) / ADC_AVG_SLOPE ) + 25.0;
+	
+	return temp;
 }
 
 
