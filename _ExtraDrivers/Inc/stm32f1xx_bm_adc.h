@@ -31,9 +31,18 @@ extern "C" {
 #include <utility.h>
 #include <timeout.h>
 #include <stm32f1xx_bm_bus.h>
+#include <stm32f1xx_bm_timer_systick.h>
 
 #define ADC_SUCCESS		0
 #define ADC_ERROR			1
+
+/*
+Power-up time
+tSTAB:	1uS
+*/
+#ifndef ADC_TSTAB
+	#define ADC_TSTAB		1
+#endif
 
 #ifndef ADC_GAIN
 	#define ADC_GAIN		0.80586080    // 3300mv / 2^10 = 3300/4095
@@ -106,11 +115,11 @@ JSTRT: 	Injected channel Start flag
 				1: Injected group conversion has started
 */
 
-__STATIC_INLINE uint8_t ADC_StartFlagInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_StartFlagForInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JSTRT_Pos) );
 }
 
-__STATIC_INLINE void ADC_StartFlagInInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE void ADC_StartFlagForInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
 	ClearBit(ADCx->SR, ADC_SR_JSTRT_Pos);
 }
 
@@ -124,11 +133,11 @@ JEOC:	Injected channel end of conversion
 			1: Conversion complete
 */
 
-__STATIC_INLINE uint8_t ADC_EndOfConversionInInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_EndOfConversionForInjectedChannels_GetFlag(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->SR, ADC_SR_JEOS_Pos) );
 }
 
-__STATIC_INLINE void ADC_EndOfConversionInInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
+__STATIC_INLINE void ADC_EndOfConversionForInjectedChannels_ClearFlag(ADC_TypeDef *ADCx){
 	ClearBit(ADCx->SR, ADC_SR_JEOS_Pos);
 }
 
@@ -177,7 +186,7 @@ JDATA[15:0]: Injected data
 							They contain the conversion result from injected channel x.
 */
 // Need to check
-__STATIC_INLINE uint16_t ADC_ConversionResultInInjectedChannels_ReadData(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint16_t ADC_ConversionResultForInjectedChannels_ReadData(ADC_TypeDef *ADCx){
 	uint16_t data = ADCx->JDR1 & 0xFFFFUL;
 	return data;
 }
@@ -447,15 +456,15 @@ EOCIE: Interrupt enable for EOC
 			1: EOC interrupt enabled. An interrupt is generated when the EOC bit is set.
 */
 
-__STATIC_INLINE uint8_t _EndOfConversionInterrupt_GetEnableStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _InterruptInRegularChannels_GetEnableStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR1, ADC_CR1_EOSIE_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_EndOfConversionInterrupt_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
+__STATIC_INLINE uint8_t ADC_InterruptInRegularChannels_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
 	WriteBit(ADCx->CR1, ADC_CR1_EOSIE_Pos, status);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_EndOfConversionInterrupt_GetEnableStatus, ADCx, status);
+		return Timeout_ADC_WaitUntil(_InterruptInRegularChannels_GetEnableStatus, ADCx, status);
 	#else
 		return 0;
 	#endif
@@ -515,11 +524,11 @@ SWSTART: 	Start conversion of regular channels
 					1: Starts conversion of regular channels
 */
 
-__STATIC_INLINE uint8_t _StartConversionInRegularChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SoftwareStartInRegularChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_StartConversionInRegularChannels(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_SoftwareStartInRegularChannels_Start(ADC_TypeDef *ADCx){
 	ADC_StartFlagInRegularChannels_ClearFlag(ADCx);
 	ADC1->CR2 |= (ADC_CR2_SWSTART | ADC_CR2_EXTTRIG);
 	//SetBit(ADCx->CR2, ADC_CR2_SWSTART_Pos);
@@ -541,17 +550,17 @@ JSWSTART: Start conversion of injected channels
 					1: Starts conversion of injected channels
 */
 
-__STATIC_INLINE uint8_t _StartConversionInInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _StartConversionForInjectedChannels_GetStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos) );
 }
 
 __STATIC_INLINE uint8_t ADC_StartConversionInInjectedChannels(ADC_TypeDef *ADCx){
-	ADC_StartFlagInInjectedChannels_ClearFlag(ADCx);
+	ADC_StartFlagForInjectedChannels_ClearFlag(ADCx);
 	ADC1->CR2 |= (ADC_CR2_JSWSTART | ADC_CR2_JEXTTRIG);
 	//SetBit(ADCx->CR2, ADC_CR2_JSWSTART_Pos);
 
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(ADC_StartFlagInInjectedChannels_GetFlag, ADCx, 1);
+		return Timeout_ADC_WaitUntil(ADC_StartFlagForInjectedChannels_GetFlag, ADCx, 1);
 	#else
 		return 0;
 	#endif
@@ -750,7 +759,7 @@ __STATIC_INLINE uint8_t _Calibration_GetCompleteStatus(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_CAL_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_StartCalibration(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t ADC_Calibration_Start(ADC_TypeDef *ADCx){
 	SetBit(ADCx->CR2, ADC_CR2_CAL_Pos);
 		
 	#ifdef TIMEOUT_INCLUDED
@@ -772,7 +781,7 @@ CONT: Continuous conversion
 #define ADC_SINGLE				0b0
 #define ADC_CONTINUOUS		0b1
 
-__STATIC_INLINE uint8_t _ContinuousOrSingleConversionMode_GetMode(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ContinuousOrSingleMode_GetMode(ADC_TypeDef *ADCx){
 	return ( GetBit(ADCx->CR2, ADC_CR2_CONT_Pos) );
 }
 
@@ -780,7 +789,7 @@ __STATIC_INLINE uint8_t ADC_ContinuousOrSingleMode_SetMode(ADC_TypeDef *ADCx, ui
 	WriteBit(ADCx->CR2, ADC_CR2_CONT_Pos, mode);
 
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ContinuousOrSingleConversionMode_GetMode, ADCx, mode);
+		return Timeout_ADC_WaitUntil(_ContinuousOrSingleMode_GetMode, ADCx, mode);
 	#else
 		return 0;
 	#endif	
@@ -797,9 +806,12 @@ ADON: A/D converter ON / OFF
 			0: Disable ADC conversion/calibration and go to power down mode.
 			1: Enable ADC and to start conversion.
 
-			Note: If any other bit in this register apart from ADON is changed at the same time,
-			then conversion is not triggered. 
+			Note: If any other bit in this register apart from ADON is changed at the same time, then conversion is not triggered. 
 			This is to prevent triggering an erroneous conversion.
+
+Note: When the ADON bit is set for the first time, it wakes up the ADC from Power Down mode.
+Note: Conversion starts when ADON bit is set for a second time by software after ADC power-up time (tSTAB).
+Note: tSTAB is 1uS
 */
 
 __STATIC_INLINE uint8_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
@@ -807,8 +819,16 @@ __STATIC_INLINE uint8_t ADC_GetEnableStatus(ADC_TypeDef *ADCx){
 }
 
 __STATIC_INLINE uint8_t ADC_EnableOrDisable(ADC_TypeDef *ADCx, uint8_t status){
-	WriteBit(ADCx->CR2, ADC_CR2_ADON_Pos, status);
-
+	switch (status){
+		case 1:
+			SetBit(ADCx->CR2, ADC_CR2_ADON_Pos);
+			SysTick_Delay_1us(2);
+			SetBit(ADCx->CR2, ADC_CR2_ADON_Pos);
+			break;
+		default:
+			ClearBit(ADCx->CR2, ADC_CR2_ADON_Pos);
+	}
+	
 	#ifdef TIMEOUT_INCLUDED
 		return Timeout_ADC_WaitUntil(ADC_GetEnableStatus, ADCx, status);
 	#else
@@ -827,17 +847,17 @@ L[3:0]: Regular channel sequence length
 				1111: 16 conversions
 */
 
-__STATIC_INLINE uint8_t _SequenceLengthInRegularChannels_GetLength(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _SequenceInRegularChannels_GetLength(ADC_TypeDef *ADCx){
 	return ( Get4Bit(ADCx->SQR1, ADC_SQR1_L_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_SequenceLengthInRegularChannels_SetLength(ADC_TypeDef *ADCx, uint8_t total){
-	if(total>16){return 1;}
+__STATIC_INLINE uint8_t ADC_SequenceInRegularChannels_SetLength(ADC_TypeDef *ADCx, uint8_t length){
+	if(length>16){return 1;}
 		
-	Write4Bit(ADCx->SQR1, ADC_SQR1_L_Pos, total-1);
+	Write4Bit(ADCx->SQR1, ADC_SQR1_L_Pos, length-1);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_SequenceLengthInRegularChannels_GetLength, ADCx, total-1);
+		return Timeout_ADC_WaitUntil(_SequenceInRegularChannels_GetLength, ADCx, length-1);
 	#else
 		return 0;
 	#endif

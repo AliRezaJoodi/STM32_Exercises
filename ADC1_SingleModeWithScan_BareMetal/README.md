@@ -1,4 +1,4 @@
-## ADC with BareMetal
+## ADC1, Single Mode with Scan, 3CH, Bare Metal Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
@@ -8,8 +8,6 @@ ADC1:		Single Mode with Scan, 3ch
 It has included:
 - `Core` (User Code with C Language)
 - `MDK-ARM` (IDE File for Keil uVision5)
-- `Simulate` (Simulator File)
-- `Main.ioc` (Code Generator with STM32CubeMX)
 
 ### Simulate: v1.0
 ![](Simulate/v1.0.png)

@@ -131,7 +131,7 @@ float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 	
 	ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
 	
-	ADC_StartConversionInRegularChannels(ADCx);
+	ADC_SoftwareStartInRegularChannels_Start(ADCx);
 	if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADCx, 1) == ADC_SUCCESS){
 		ADC_EndOfConversion_ClearFlag(ADCx); 
 		adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADCx);

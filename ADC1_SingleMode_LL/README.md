@@ -1,9 +1,8 @@
-## ADC with LL(Low Layer) Drivers
+## ADC1, Single Mode, 1CH, LL Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Polling Method, 1ch  		
-ADC_INT:	Disable  
+ADC1:		Single Mode, 1CH 
 
 ### Folder and Files Description
 It has included:

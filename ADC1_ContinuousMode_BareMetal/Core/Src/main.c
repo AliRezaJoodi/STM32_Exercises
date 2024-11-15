@@ -29,7 +29,7 @@ int main(void){
 	USART_PutStringFromFlash(USART1, "ADC Test");
 	
   ADC1_ConfigDefault();
-	ADC_StartConversionInRegularChannels(ADC1);
+	ADC_SoftwareStartInRegularChannels_Start(ADC1);
 	
   while(1){
 		if(ADC_EndOfConversion_GetFlag(ADC1) == 1){
@@ -58,7 +58,7 @@ static void ADC1_ConfigDefault(void){
 	ADC_ScanMode_EnableOrDisable(ADC1, 0);	
 	ADC_ContinuousOrSingleMode_SetMode(ADC1, ADC_CONTINUOUS);
 	
-	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
+	ADC_SequenceInRegularChannels_SetLength(ADC1, 1);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
 	ADC_ExternalEventInRegularChannels_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
@@ -67,6 +67,6 @@ static void ADC1_ConfigDefault(void){
 	ADC_DMA_EnableOrDisable(ADC1, 0);
 	
 	ADC_EnableOrDisable(ADC1, 1);
-	ADC_StartCalibration(ADC1);
-	ADC_EndOfConversionInterrupt_EnableOrDisable(ADC1, 0);
+	ADC_Calibration_Start(ADC1);
+	ADC_InterruptInRegularChannels_EnableOrDisable(ADC1, 0);
 }

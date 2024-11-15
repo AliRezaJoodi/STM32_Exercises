@@ -1,9 +1,8 @@
-## ADC with LL(Low Layer) Drivers
+## ADC1, Continuous Mode, 1CH, Interrupt Mode, LL Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Interrupt Method, 1ch  
-ADC_INT:	Enable  
+ADC1:		ADC1, Continuous Mode, 1CH, Interrupt Mode  
 
 ### Folder and Files Description
 It has included:

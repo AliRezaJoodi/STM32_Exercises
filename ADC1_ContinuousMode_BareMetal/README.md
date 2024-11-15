@@ -1,9 +1,8 @@
-## ADC with BareMetal
+## ADC1, Continuous Mode, 1CH, Bare Metal Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Interrupt Method, 1ch  
-ADC_INT:	Enable  
+ADC:		Continuous Mode, 1CH  
 
 ### Folder and Files Description
 It has included:
