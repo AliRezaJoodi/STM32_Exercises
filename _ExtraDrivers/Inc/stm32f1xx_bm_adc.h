@@ -39,6 +39,23 @@ extern "C" {
 	#define ADC_GAIN		0.80586080    // 3300mv / 2^10 = 3300/4095
 #endif
 
+/*
+V25 = VSENSE value for 25° C and	
+unit: mv
+*/	
+#ifndef ADC_V25
+	#define ADC_V25        1430
+#endif
+
+/*
+Avg_Slope = Average Slope for curve between Temperature and VSENSE.
+unit: mv
+*/
+#ifndef ADC_AVG_SLOPE
+	#define ADC_AVG_SLOPE  4.3
+#endif
+
+
 #define ADC_IN0			0
 #define ADC_IN1			1
 #define ADC_IN2			2
@@ -57,6 +74,9 @@ extern "C" {
 #define ADC_IN15		15
 #define ADC_IN16		16
 #define ADC_IN17		17
+
+#define ADC_TEMPSENSOR		ADC_IN16
+#define ADC_VREFINT				ADC_IN17
 
 
 /*
@@ -471,6 +491,20 @@ TSVREFE: Temperature sensor and VREFINT enable
 					1: Temperature sensor and VREFINT channel enabled
 */
 
+__STATIC_INLINE uint8_t _InternalChannels_GetStatus(ADC_TypeDef *ADCx){
+	return ( GetBit(ADCx->CR2, ADC_CR2_TSVREFE_Pos) );
+}
+
+__STATIC_INLINE uint8_t ADC_InternalChannels_EnableOrDisable(uint8_t status){
+	WriteBit(ADC1->CR2, ADC_CR2_TSVREFE_Pos, status);
+	
+	#ifdef TIMEOUT_INCLUDED
+		return Timeout_ADC_WaitUntil(_InternalChannels_GetStatus, ADC1, status);
+	#else
+		return 0;
+	#endif
+}
+
 
 /*
 ADC_CR2, Bit 22
@@ -591,15 +625,15 @@ EXTSEL[2:0]: 	External event select for regular group
 #define ADC3_EXTSEL_TIM5_CH3		0b110
 #define ADC3_EXTSEL_SOFTWARE		0b111 
 
-__STATIC_INLINE uint8_t _ExternalEventForRegularGroup_GetMode(ADC_TypeDef *ADCx){
+__STATIC_INLINE uint8_t _ExternalEventInRegularChannels_GetMode(ADC_TypeDef *ADCx){
 	return ( Get3Bit(ADCx->CR2, ADC_CR2_EXTSEL_Pos) );
 }
 
-__STATIC_INLINE uint8_t ADC_ExternalEventForRegularGroup_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
+__STATIC_INLINE uint8_t ADC_ExternalEventInRegularChannels_SetMode(ADC_TypeDef *ADCx, uint8_t mode){
 	Write3Bit(ADCx->CR2, ADC_CR2_EXTSEL_Pos, mode);
 	
 	#ifdef TIMEOUT_INCLUDED
-		return Timeout_ADC_WaitUntil(_ExternalEventForRegularGroup_GetMode, ADCx, mode);
+		return Timeout_ADC_WaitUntil(_ExternalEventInRegularChannels_GetMode, ADCx, mode);
 	#else
 		return 0;
 	#endif
@@ -1126,6 +1160,7 @@ SMPx[2:0]: 	Channel x Sample time selection
 						During sample cycles channel selection bits must remain unchanged.
 
 						Note: ADC1 analog Channel16 and Channel 17 are internally connected to the temperature sensor and to VREFINT, respectively.
+						Note: The recommended sampling time for the temperature sensor is 17.1 µs.
 						Note: ADC2 analog input Channel16 and Channel17 are internally connected to VSS.
 						Note: ADC3 analog inputs Channel14, Channel15, Channel16 and Channel17 are connected to VSS.
 
@@ -1432,6 +1467,7 @@ uint8_t ADC_SamplingTime_SetCycle(ADC_TypeDef *ADCx, uint8_t ch, uint8_t cycle);
 
 ///void ADC_ConfigDefault1(ADC_TypeDef *ADCx);		//Single Mode
 float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
+float ADC_ConvertVoltageToInternalTemp(float mv);
 
 #ifdef __cplusplus
 }

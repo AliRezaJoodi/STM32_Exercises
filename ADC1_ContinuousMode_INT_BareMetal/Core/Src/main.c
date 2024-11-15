@@ -58,7 +58,7 @@ static void ADC1_ConfigDefault(void){
 	ADC_SequenceLengthInRegularChannels_SetLength(ADC1, 1);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
 		
-	ADC_ExternalEventForRegularGroup_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);	
+	ADC_ExternalEventInRegularChannels_SetMode(ADC1, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADC1, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADC1, 0);
 	ADC_DMA_EnableOrDisable(ADC1, 0);

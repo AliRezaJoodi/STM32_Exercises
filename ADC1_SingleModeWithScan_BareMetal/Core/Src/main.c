@@ -43,7 +43,7 @@ int main(void){
 	sprintf(txt, "1st Sequence: %d", _SequenceInRegularChannels_Get1stSequence(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "2nd Sequence: %d", _SequenceInRegularChannels_Get2ndSequence(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "3rd Sequence: %d", _SequenceInRegularChannels_Get3rdSequence(ADC1)); USART_PutString(USART1, txt);
-	sprintf(txt, "EXTSEL: %d", _ExternalEventForRegularGroup_GetMode(ADC1)); USART_PutString(USART1, txt);
+	sprintf(txt, "EXTSEL: %d", _ExternalEventInRegularChannels_GetMode(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "EXTTRIG: %d", _ExternalTriggerForRegularChannels_GetEnableStatus(ADC1)); USART_PutString(USART1, txt);
 	USART_PutStringFromFlash(USART1, "");
 	
@@ -128,15 +128,12 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx){
 	ADC_DualMode_SetMode(ADCx, ADC_INDEPENDENT);
 	ADC_ContinuousOrSingleMode_SetMode(ADCx, ADC_SINGLE);	
 	ADC_ScanMode_EnableOrDisable(ADCx, 1);
-	ADC_SequenceLengthInRegularChannels_SetLength(ADCx, 3);	
-//	ADC_SequenceInRegularChannels_Set1stSequence(ADC1, ADC_IN3);
-//	ADC_SequenceInRegularChannels_Set2ndSequence(ADC1, ADC_IN8);
-//	ADC_SequenceInRegularChannels_Set3rdSequence(ADC1, ADC_IN9);	
+	ADC_SequenceLengthInRegularChannels_SetLength(ADCx, 3);		
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK2, ADC_IN8);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK3, ADC_IN9);
 	
-	ADC_ExternalEventForRegularGroup_SetMode(ADCx, ADC_EXTSEL_SOFTWARE);	
+	ADC_ExternalEventInRegularChannels_SetMode(ADCx, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADCx, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADCx, 0);
 	ADC_DMA_EnableOrDisable(ADCx, 0);
