@@ -32,38 +32,42 @@ int main(void){
 	
 	RCC_SystemClock_ConfigDefault1();
 	USART1_ConfigDefault2();
-	USART_PutStringFromFlash(USART1, "ADC Test");
+	USART_PutStringFromFlash(USART1, "ADC1");
 
   ADC_ConfigDefault(ADC1);
-	//ADC_StartConversionInRegularChannels(ADC1);
+	//ADC_SoftwareStartInRegularChannels_Start(ADC1);
 	
-	sprintf(txt, "Conversion: %d", _ContinuousOrSingleConversionMode_GetMode(ADC1)); USART_PutString(USART1, txt);
+	sprintf(txt, "Conversion: %d", _ContinuousOrSingleMode_GetMode(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "Scan: %d", _ScanMode_GetEnableStatus(ADC1)); USART_PutString(USART1, txt);
-	sprintf(txt, "Length: %d", _SequenceLengthInRegularChannels_GetLength(ADC1)+1); USART_PutString(USART1, txt);
+	sprintf(txt, "Length: %d", _SequenceInRegularChannels_GetLength(ADC1)+1); USART_PutString(USART1, txt);
 	sprintf(txt, "1st Sequence: %d", _SequenceInRegularChannels_Get1stSequence(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "2nd Sequence: %d", _SequenceInRegularChannels_Get2ndSequence(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "3rd Sequence: %d", _SequenceInRegularChannels_Get3rdSequence(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "EXTSEL: %d", _ExternalEventInRegularChannels_GetMode(ADC1)); USART_PutString(USART1, txt);
 	sprintf(txt, "EXTTRIG: %d", _ExternalTriggerForRegularChannels_GetEnableStatus(ADC1)); USART_PutString(USART1, txt);
+	sprintf(txt, "ADON: %d", ADC_GetEnableStatus(ADC1)); USART_PutString(USART1, txt);
 	USART_PutStringFromFlash(USART1, "");
 	
   while(1){
-		ADC_StartConversionInRegularChannels(ADC1);
+		ADC_SoftwareStartInRegularChannels_Start(ADC1);
 		
 		while(ADC_EndOfConversion_GetFlag(ADC1) != 1);
 		ADC_EndOfConversion_ClearFlag(ADC1); 
 		adc_value1 = ADC_ConversionResultInRegularChannels_ReadData(ADC1);
 		//SysTick_Delay_1ms(3);
-
+		USART_PutStringFromFlash(USART1, "R1");
+		
 		while(ADC_EndOfConversion_GetFlag(ADC1) != 1);
 		ADC_EndOfConversion_ClearFlag(ADC1); 
 		adc_value2 = ADC_ConversionResultInRegularChannels_ReadData(ADC1);
 		//SysTick_Delay_1ms(3);
+		USART_PutStringFromFlash(USART1, "R2");
 		
 		while(ADC_EndOfConversion_GetFlag(ADC1) != 1);
 		ADC_EndOfConversion_ClearFlag(ADC1); 
 		adc_value3 = ADC_ConversionResultInRegularChannels_ReadData(ADC1);
 		//SysTick_Delay_1ms(3);
+		USART_PutStringFromFlash(USART1, "R3");
 		
 		adc_in1 = (float)(adc_value1 * ADC_GAIN);
 		adc_in2 = (float)(adc_value2 * ADC_GAIN);
@@ -128,7 +132,10 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx){
 	ADC_DualMode_SetMode(ADCx, ADC_INDEPENDENT);
 	ADC_ContinuousOrSingleMode_SetMode(ADCx, ADC_SINGLE);	
 	ADC_ScanMode_EnableOrDisable(ADCx, 1);
-	ADC_SequenceLengthInRegularChannels_SetLength(ADCx, 3);		
+
+	ADC_DMA_EnableOrDisable(ADCx, 0);
+	
+	ADC_SequenceInRegularChannels_SetLength(ADCx, 3);		
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK2, ADC_IN8);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK3, ADC_IN9);
@@ -136,11 +143,10 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx){
 	ADC_ExternalEventInRegularChannels_SetMode(ADCx, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADCx, 1);
 	ADC_DiscontinuousModeInRegularChannels_EnableOrDisable(ADCx, 0);
-	ADC_DMA_EnableOrDisable(ADCx, 0);
 		
 	ADC_EnableOrDisable(ADCx, 1);
-	ADC_StartCalibration(ADCx);
-	ADC_EndOfConversionInterrupt_EnableOrDisable(ADCx, 0);
+	ADC_Calibration_Start(ADCx);
+	ADC_InterruptInRegularChannels_EnableOrDisable(ADCx, 0);
 }
 
 

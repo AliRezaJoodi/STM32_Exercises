@@ -1,4 +1,4 @@
-## ADC with BareMetal
+## ADC1, Continuous Mode, 1CH, Interrupt Mode, Bare Metal Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  

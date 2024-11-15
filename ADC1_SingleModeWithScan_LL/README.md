@@ -1,15 +1,13 @@
-## ADC with LL(Low Layer) Drivers
+## ADC1, Single Mode with Scan, 3CH, LL Drivers
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  
-ADC:		Polling Method, 1ch  		
-ADC_INT:	Disable  
+ADC1:		Single Mode with Scan, 3ch 
 
 ### Folder and Files Description
 It has included:
 - `Core` (User Code with C Language)
 - `MDK-ARM` (IDE File for Keil uVision5)
-- `Simulate` (Simulator File)
 - `Main.ioc` (Code Generator with STM32CubeMX)
 
 ### Simulate: v1.0

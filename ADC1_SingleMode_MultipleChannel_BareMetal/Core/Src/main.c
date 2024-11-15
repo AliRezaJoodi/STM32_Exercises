@@ -78,7 +78,7 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx){
 	ADC_ScanMode_EnableOrDisable(ADCx, 0);	
 	ADC_ContinuousOrSingleMode_SetMode(ADCx, ADC_SINGLE);
 	
-	ADC_SequenceLengthInRegularChannels_SetLength(ADCx, 1);
+	ADC_SequenceInRegularChannels_SetLength(ADCx, 1);
 	ADC_SequenceInRegularChannels_SetSequence(ADC1, ADC_RANK1, ADC_IN3);
 	ADC_ExternalEventInRegularChannels_SetMode(ADCx, ADC_EXTSEL_SOFTWARE);	
 	ADC_DiscontinuousModeInRegularChannels_SetChannelCount(ADCx, 1);
@@ -87,8 +87,8 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx){
 	ADC_DMA_EnableOrDisable(ADCx, 0);
 
 	ADC_EnableOrDisable(ADCx, 1);
-	ADC_StartCalibration(ADCx);
-	ADC_EndOfConversionInterrupt_EnableOrDisable(ADCx, 0);
+	ADC_Calibration_Start(ADCx);
+	ADC_InterruptInRegularChannels_EnableOrDisable(ADCx, 0);
 }
 
 
