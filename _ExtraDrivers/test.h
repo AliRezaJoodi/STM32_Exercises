@@ -18,10 +18,6 @@ extern "C" {
 #include <stm32f1xx.h>
 #include <utility.h>
 
-#ifdef HARDWARE_LOCAL
-	#include "_hardware.h"
-#endif
-
 #ifndef TEST_HARDWARE
 #define TEST_HARDWARE
 #endif
