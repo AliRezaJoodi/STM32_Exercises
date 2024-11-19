@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-
+#include "stm32f1xx_ll_usart_put.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,7 +112,11 @@ float adc_in3=0;
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   
-	LL_ADC_Enable(ADC1);						//Enable ADC1
+	LL_ADC_Enable(ADC1);
+	LL_mDelay(1);
+	LL_ADC_Enable(ADC1);
+	while (!LL_ADC_IsEnabled(ADC1));
+	
 	LL_ADC_DisableIT_EOS(ADC1);
 	LL_ADC_StartCalibration(ADC1); 				//Calibration start
 	while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
@@ -130,38 +134,47 @@ float adc_in3=0;
 
     /* USER CODE BEGIN 3 */
     LL_ADC_REG_StartConversionSWStart(ADC1);
-		
+		USART_PutStringFromFlash(USART1, "LL_ADC_REG_StartConversionSWStart");
+//		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+//		adc_value1 = LL_ADC_REG_ReadConversionData12(ADC1);
+//		adc_value2 = LL_ADC_REG_ReadConversionData12(ADC1);
+//		adc_value3 = LL_ADC_REG_ReadConversionData12(ADC1);
+//		LL_ADC_ClearFlag_EOS(ADC1);
+	
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
-		LL_ADC_ClearFlag_EOS(ADC1);
 		adc_value1 = LL_ADC_REG_ReadConversionData12(ADC1); 
+		LL_ADC_ClearFlag_EOS(ADC1);
+		USART_PutStringFromFlash(USART1, "R1");
 		
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
-		LL_ADC_ClearFlag_EOS(ADC1);
 		adc_value2 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);
+		USART_PutStringFromFlash(USART1, "R2");
 		
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
-		LL_ADC_ClearFlag_EOS(ADC1);
 		adc_value3 = LL_ADC_REG_ReadConversionData12(ADC1); 
+		LL_ADC_ClearFlag_EOS(ADC1);
+		USART_PutStringFromFlash(USART1, "R3");
 		
 		adc_in1 = (float)(adc_value1 * 3.3) / (4095);
 		adc_in2 = (float)(adc_value2 * 3.3) / (4095);
 		adc_in3 = (float)(adc_value3 * 3.3) / (4095);
 		
-		sprintf((char*)str, "In1: %0.2f\r\n", adc_in1);
+		sprintf((char*)str, "CH3: %0.3f\r\n", adc_in1);
 		for(i=0; i<19; i++){
 			LL_USART_TransmitData8(USART1, str[i]);
 			while(!LL_USART_IsActiveFlag_TXE(USART1));
 		}
 		i = 0;
 
-		sprintf((char*)str, "In2: %0.2f\r\n", adc_in2);
+		sprintf((char*)str, "CH8: %0.3f\r\n", adc_in2);
 		for(i=0; i<19; i++){
 			LL_USART_TransmitData8(USART1, str[i]);
 			while(!LL_USART_IsActiveFlag_TXE(USART1));
 		}
 		i = 0;
 
-		sprintf((char*)str, "In3: %0.2f\r\n", adc_in3);
+		sprintf((char*)str, "CH9: %0.3f\r\n", adc_in3);
 		for(i=0; i<19; i++){
 			LL_USART_TransmitData8(USART1, str[i]);
 			while(!LL_USART_IsActiveFlag_TXE(USART1));
@@ -267,13 +280,13 @@ static void MX_ADC1_Init(void)
 
   /** Configure Regular Channel
   */
-  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_2, LL_ADC_CHANNEL_3);
-  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_239CYCLES_5);
+  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_2, LL_ADC_CHANNEL_8);
+  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_8, LL_ADC_SAMPLINGTIME_239CYCLES_5);
 
   /** Configure Regular Channel
   */
-  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_3, LL_ADC_CHANNEL_3);
-  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_239CYCLES_5);
+  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_3, LL_ADC_CHANNEL_9);
+  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_9, LL_ADC_SAMPLINGTIME_239CYCLES_5);
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */

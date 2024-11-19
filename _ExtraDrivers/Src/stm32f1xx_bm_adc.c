@@ -1,5 +1,52 @@
 // GitHub Account: GitHub.com/AliRezaJoodi
 
+/*
+Single conversion mode:
+	In Single conversion mode the ADC does one conversion.
+	This mode is started either by setting the ADON bit in the ADC_CR2 register (for a regular channel only)
+	or by external trigger (for a regular or injected channel), while the CONT bit is 0.
+	
+	Once the conversion of the selected channel is complete:
+	_If a regular channel was converted:
+		__The converted data is stored in the 16-bit ADC_DR register
+		__The EOC (End Of Conversion) flag is set
+		__and an interrupt is generated if the EOCIE is set.
+	_If an injected channel was converted:
+		__The converted data is stored in the 16-bit ADC_DRJ1 register
+		__The JEOC (End Of Conversion Injected) flag is set
+		__and an interrupt is generated if the JEOCIE bit is set.
+	
+	The ADC is then stopped.
+*/
+
+/*
+Continuous conversion mode:
+	In continuous conversion mode ADC starts another conversion as soon as it finishes one.
+	This mode is started either by external trigger or by setting the ADON bit in the ADC_CR2 register, while the CONT bit is 1.
+	
+	After each conversion:
+	_If a regular channel was converted:
+		__The converted data is stored in the 16-bit ADC_DR register
+		__The EOC (End Of Conversion) flag is set
+		__An interrupt is generated if the EOCIE is set.
+	_If an injected channel was converted:
+		__The converted data is stored in the 16-bit ADC_DRJ1 register
+		__The JEOC (End Of Conversion Injected) flag is set
+		__An interrupt is generated if the JEOCIE bit is set.
+*/
+
+/*
+Scan mode:
+	This mode is used to scan a group of analog channels.
+	Scan mode can be selected by setting the SCAN bit in the ADC_CR1 register.
+	Once this bit is set, ADC scans all the channels selected in the ADC_SQRx registers (for regular channels) or in the ADC_JSQR (for injected channels).
+	A single conversion is performed for each channel of the group.
+	After each end of conversion the next channel of the group is converted automatically.
+	If the CONT bit is set, conversion does not stop at the last selected group channel but continues again from the first selected group channel.
+	When using scan mode, DMA bit must be set and the direct memory access controller is used to transfer the converted data of regular group channels to SRAM after each update of the ADC_DR register.
+	The injected channel converted data is always stored in the ADC_JDRx registers.
+*/
+
 #include <stm32f1xx_bm_adc.h>
 
 //************************************************************
