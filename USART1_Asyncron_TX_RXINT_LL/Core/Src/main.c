@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include <stm32f1xx_ll_usart_put.h>
+#include <stm32f1xx_ll_usart_extra.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@
 //uint8_t i2=0;
 uint8_t j=0;
 volatile uint8_t task_usart1=0;
-char txt[16]= "";
+char txt[25]= "";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,19 +107,19 @@ int main(void)
 	LL_USART_EnableIT_RXNE(USART1);
 	LL_mDelay(500);
 	
-	USART_PutStringFromFlash(USART1, "Test USART1");
+	LL_USART_PutStringFromFlash(USART1, "Test USART1");
 
 	const char txt2[]= "Test2";
-	USART_PutStringFromFlash(USART1, txt2);
+	LL_USART_PutStringFromFlash(USART1, txt2);
 	
 	char txt[20]= "Test3";
-	USART_PutString(USART1, txt);
+	LL_USART_PutString(USART1, txt);
 	
 	uint8_t number=17;
 	sprintf(txt, "Number(DEC)=%3d", number);
-	USART_PutString(USART1, txt);
+	LL_USART_PutString(USART1, txt);
 	sprintf(txt, "Number(Hex)=0x%X", number);
-	USART_PutString(USART1, txt);
+	LL_USART_PutString(USART1, txt);
 	
 	/*
 	while(i2<6){
@@ -137,9 +137,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		if(task_usart1==1){
 			task_usart1=0;
-			USART_PutChar(USART1, '\r');		// 0x0D
-			USART_PutChar(USART1, '\n');		// 0x0A
-			USART_PutString(USART1, txt);
+			LL_USART_PutChar(USART1, '\r');		// 0x0D
+			LL_USART_PutChar(USART1, '\n');		// 0x0A
+			LL_USART_PutString(USART1, txt);
 			for(j=0;j<16;++j){txt[j]=0;};
 			//while(txt[j] != 0){txt[j]=0;}
 		}

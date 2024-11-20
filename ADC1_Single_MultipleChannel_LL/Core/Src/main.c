@@ -23,7 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-
+#include <stm32f1xx_ll_usart_extra.h>
+#include <stm32f1xx_ll_adc_extra.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +44,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t adc_value;			//Define variable adc_value 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,15 +67,23 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	uint16_t adc_value1;
+	float adc_volt1;
 
-float voltage;				//variable for representing voltage
-uint8_t str[21];			//string for representing message
-uint8_t i = 0;				
+	uint16_t adc_value2;
+	float adc_volt2;
+		
+	uint16_t adc_value3;
+	float adc_volt3;
 
-
-
-
-
+	uint16_t adc_value4;
+	float adc_volt4;
+	float adc_temp;
+	
+	uint16_t adc_value5;
+	float adc_vref;
+	
+	char txt[25]= "";
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -109,36 +117,76 @@ uint8_t i = 0;
   /* USER CODE BEGIN 2 */
   
 	LL_ADC_Enable(ADC1);						//Enable ADC1
+	LL_mDelay(1);
 	LL_ADC_DisableIT_EOS(ADC1);
 	LL_ADC_StartCalibration(ADC1); 				//Calibration start
 	while(LL_ADC_IsCalibrationOnGoing(ADC1))	//Wait till the calibration is finished
 		__NOP();
-	LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
+	//LL_ADC_REG_StartConversionSWStart(ADC1);	//Start the conversion
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitData8(USART1, 13); LL_mDelay(1); 
-	LL_USART_TransmitData8(USART1, 10); LL_mDelay(1);
+	LL_USART_PutStringFromFlash(USART1, "Test"); 
 	
   while(1){
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */		
+    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);		
     LL_ADC_REG_StartConversionSWStart(ADC1);
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
-		LL_ADC_ClearFlag_EOS(ADC1);
-		/* representing the voltage in desired format */	
-		adc_value = LL_ADC_REG_ReadConversionData12(ADC1); //adc_value=4095;
-		voltage = (float)(adc_value * 3.3) / (4095);
-		sprintf((char*)str, "voltage is: %0.2f\r\n", voltage);
-		for(i=0; i<19; i++){
-			LL_USART_TransmitData8(USART1, str[i]);
-			while(!LL_USART_IsActiveFlag_TXE(USART1));
-		}
-		i = 0;
+		adc_value1 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);	
+
+    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_8);		
+    LL_ADC_REG_StartConversionSWStart(ADC1);
+		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+		adc_value2 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);	
+
+    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_9);		
+    LL_ADC_REG_StartConversionSWStart(ADC1);
+		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+		adc_value3 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);	
 		
-		LL_mDelay(1000);
+		LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_TEMPSENSOR);		
+    LL_ADC_REG_StartConversionSWStart(ADC1);
+		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+		adc_value4 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);	
+
+		LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_VREFINT);		
+    LL_ADC_REG_StartConversionSWStart(ADC1);
+		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+		adc_value5 = LL_ADC_REG_ReadConversionData12(ADC1);
+		LL_ADC_ClearFlag_EOS(ADC1);	
+		
+		adc_volt1= LL_ADC_ConvertValueToMiliVolt(adc_value1);
+		sprintf(txt, "IN3(mv): %.1f", adc_volt1);
+		LL_USART_PutString(USART1, txt); 
+		
+		adc_volt2= LL_ADC_ConvertValueToMiliVolt(adc_value2);
+		sprintf(txt, "IN8(mv): %.1f", adc_volt2);
+		LL_USART_PutString(USART1, txt);
+		
+		adc_volt3= LL_ADC_ConvertValueToMiliVolt(adc_value3);
+		sprintf(txt, "IN9(mv): %.1f", adc_volt3);
+		LL_USART_PutString(USART1, txt);
+			
+		adc_volt4= LL_ADC_ConvertValueToMiliVolt(adc_value4);
+		adc_temp=LL_ADC_ConvertMiliVoltToInternalTemp(adc_volt4);
+		sprintf(txt, "Temp(^C): %.1f", adc_temp);
+		LL_USART_PutString(USART1, txt);
+
+		adc_vref= LL_ADC_ConvertValueToMiliVolt(adc_value5);
+		sprintf(txt, "Vref(mv): %.1f", adc_vref);
+		LL_USART_PutString(USART1, txt);
+		
+		LL_USART_PutStringFromFlash(USART1, ""); 
+		
+		LL_mDelay(800);
   }
   /* USER CODE END 3 */
 }
@@ -206,7 +254,10 @@ static void MX_ADC1_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USER CODE BEGIN ADC1_Init 1 */
-
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
+	
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct); // ADC_IN8 (PB0), ADC_IN9 (PB1)
   /* USER CODE END ADC1_Init 1 */
 
   /** Common config
@@ -228,7 +279,12 @@ static void MX_ADC1_Init(void)
   LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);
   LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_1CYCLE_5);
   /* USER CODE BEGIN ADC1_Init 2 */
-
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_8, LL_ADC_SAMPLINGTIME_71CYCLES_5);
+  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_9, LL_ADC_SAMPLINGTIME_71CYCLES_5);
+	
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_TEMPSENSOR, LL_ADC_SAMPLINGTIME_71CYCLES_5);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_VREFINT, LL_ADC_SAMPLINGTIME_71CYCLES_5);
+	LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_TEMPSENSOR);
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -304,19 +360,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-static void MX_ADC1_Init2(void){
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_ADC1);
-    LL_ADC_SetDataAlignment(ADC1, LL_ADC_DATA_ALIGN_RIGHT);
-    LL_ADC_SetSequencersScanMode(ADC1, LL_ADC_SEQ_SCAN_DISABLE);
-    LL_ADC_REG_SetTriggerSource(ADC1, LL_ADC_REG_TRIG_SOFTWARE);
-    LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
-    LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_3, LL_ADC_SAMPLINGTIME_28CYCLES_5);
-    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_3);
-
-    // Enable ADC
-    LL_ADC_Enable(ADC1);
-    LL_mDelay(1);  // Delay for ADC stabilization
-}
 /* USER CODE END 4 */
 
 /**
