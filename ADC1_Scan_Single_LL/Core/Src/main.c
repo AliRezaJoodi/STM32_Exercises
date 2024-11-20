@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "stm32f1xx_ll_usart_put.h"
+#include "stm32f1xx_ll_usart_extra.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -134,7 +134,7 @@ float adc_in3=0;
 
     /* USER CODE BEGIN 3 */
     LL_ADC_REG_StartConversionSWStart(ADC1);
-		USART_PutStringFromFlash(USART1, "LL_ADC_REG_StartConversionSWStart");
+		LL_USART_PutStringFromFlash(USART1, "LL_ADC_REG_StartConversionSWStart");
 //		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
 //		adc_value1 = LL_ADC_REG_ReadConversionData12(ADC1);
 //		adc_value2 = LL_ADC_REG_ReadConversionData12(ADC1);
@@ -144,17 +144,17 @@ float adc_in3=0;
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
 		adc_value1 = LL_ADC_REG_ReadConversionData12(ADC1); 
 		LL_ADC_ClearFlag_EOS(ADC1);
-		USART_PutStringFromFlash(USART1, "R1");
+		LL_USART_PutStringFromFlash(USART1, "R1");
 		
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
 		adc_value2 = LL_ADC_REG_ReadConversionData12(ADC1);
 		LL_ADC_ClearFlag_EOS(ADC1);
-		USART_PutStringFromFlash(USART1, "R2");
+		LL_USART_PutStringFromFlash(USART1, "R2");
 		
 		while (!LL_ADC_IsActiveFlag_EOS(ADC1));
 		adc_value3 = LL_ADC_REG_ReadConversionData12(ADC1); 
 		LL_ADC_ClearFlag_EOS(ADC1);
-		USART_PutStringFromFlash(USART1, "R3");
+		LL_USART_PutStringFromFlash(USART1, "R3");
 		
 		adc_in1 = (float)(adc_value1 * 3.3) / (4095);
 		adc_in2 = (float)(adc_value2 * 3.3) / (4095);

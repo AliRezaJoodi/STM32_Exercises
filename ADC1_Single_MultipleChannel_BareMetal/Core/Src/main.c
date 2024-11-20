@@ -34,26 +34,27 @@ int main(void){
 	
   while(1){
 		adc_mv[0]=ADC_SingleMode_Read(ADC1, ADC_IN3);
-		adc_mv[1]=ADC_SingleMode_Read(ADC1, ADC_IN8);
-		adc_mv[2]=ADC_SingleMode_Read(ADC1, ADC_IN9);
-		
-		adc_mv[3]=ADC_SingleMode_Read(ADC1, ADC_TEMPSENSOR);
-		adc_temp=ADC_ConvertVoltageToInternalTemp(adc_mv[3]);
-
-		adc_vref=ADC_SingleMode_Read(ADC1, ADC_VREFINT);
-		
 		sprintf(txt, "IN3(mv): %.1f", adc_mv[0]);
 		USART_PutString(USART1, txt);
+		
+		adc_mv[1]=ADC_SingleMode_Read(ADC1, ADC_IN8);
 		sprintf(txt, "IN8(mv): %.1f", adc_mv[1]);
 		USART_PutString(USART1, txt);
+		
+		adc_mv[2]=ADC_SingleMode_Read(ADC1, ADC_IN9);
 		sprintf(txt, "IN9(mv): %.1f", adc_mv[2]);
 		USART_PutString(USART1, txt);
+		
+		adc_mv[3]=ADC_SingleMode_Read(ADC1, ADC_TEMPSENSOR);
+		adc_temp=ADC_ConvertMiliVoltToInternalTemp(adc_mv[3]);
 		sprintf(txt, "Temp(^C): %.3f", adc_temp);
 		USART_PutString(USART1, txt);
+		
+		adc_vref=ADC_SingleMode_Read(ADC1, ADC_VREFINT);
 		sprintf(txt, "Vref(mv): %.1f", adc_vref);
 		USART_PutString(USART1, txt);
-		USART_PutStringFromFlash(USART1, "");
 		
+		USART_PutStringFromFlash(USART1, "");
 		SysTick_Delay_1ms(500);
   }
 }
