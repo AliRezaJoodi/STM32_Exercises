@@ -189,7 +189,14 @@ float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 }
 
 //************************************************************
-float ADC_ConvertVoltageToInternalTemp(float mv){	
+float ADC_ConvertValueToMiliVolt(uint16_t value){	
+	float adc_mv=0;
+	adc_mv = (float)(value * ADC_GAIN);
+	return adc_mv;
+}
+
+//************************************************************
+float ADC_ConvertMiliVoltToInternalTemp(float mv){	
 	float temp = ( (mv - ADC_V25) / ADC_AVG_SLOPE ) + 25.0;
 	
 	return temp;
