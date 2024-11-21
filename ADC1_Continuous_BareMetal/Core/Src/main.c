@@ -36,8 +36,8 @@ int main(void){
 			ADC_EndOfConversion_ClearFlag(ADC1); 
 			adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADC1); 
 		}
-			
-		mv = (float)(adc_value * ADC_GAIN);
+		
+		mv = ADC_ConvertValueToMiliVolt(adc_value);	
 		sprintf(txt, "Voltage(mv): %.1f", mv);
 		USART_PutString(USART1, txt);
 		

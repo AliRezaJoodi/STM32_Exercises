@@ -172,9 +172,8 @@ return error;
 }
 
 //************************************************************
-float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
+uint16_t ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 	uint16_t adc_value=0;
-	float adc_mv=0;
 	
 	ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
 	
@@ -182,17 +181,23 @@ float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 	if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADCx, 1) == ADC_SUCCESS){
 		ADC_EndOfConversion_ClearFlag(ADCx); 
 		adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADCx);
-		adc_mv = (float)(adc_value * ADC_GAIN);
 	}
 	
-	return adc_mv;
+	return adc_value;
+}
+
+//************************************************************
+float ADC_ConvertValueToVolt(uint16_t value){	
+	float volt=0;
+	volt = (float)(value * ADC_GAIN) * 0.001;
+	return volt;
 }
 
 //************************************************************
 float ADC_ConvertValueToMiliVolt(uint16_t value){	
-	float adc_mv=0;
-	adc_mv = (float)(value * ADC_GAIN);
-	return adc_mv;
+	float mv=0;
+	mv = (float)(value * ADC_GAIN);
+	return mv;
 }
 
 //************************************************************
