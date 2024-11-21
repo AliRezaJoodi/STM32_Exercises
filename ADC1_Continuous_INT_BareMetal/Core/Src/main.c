@@ -36,8 +36,8 @@ int main(void){
 	NVIC_Config();
 	
   while(1){
-		mv = (float)(adc_value * ADC_GAIN);
-		sprintf(txt, "Voltage(mv): %.1f", mv);
+		mv = ADC_ConvertValueToMiliVolt(adc_value);
+		sprintf(txt, "Input(mv): %.1f", mv);
 		USART_PutString(USART1, txt);
 		
 		SysTick_Delay_1ms(500);

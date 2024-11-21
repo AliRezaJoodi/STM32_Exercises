@@ -1486,7 +1486,8 @@ uint8_t ADC_SequenceInRegularChannels_SetSequence(ADC_TypeDef *ADCx, uint8_t ran
 uint8_t ADC_SamplingTime_SetCycle(ADC_TypeDef *ADCx, uint8_t ch, uint8_t cycle);
 
 ///void ADC_ConfigDefault1(ADC_TypeDef *ADCx);		//Single Mode
-float ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
+uint16_t ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch);
+float ADC_ConvertValueToVolt(uint16_t value);
 float ADC_ConvertValueToMiliVolt(uint16_t value);
 float ADC_ConvertMiliVoltToInternalTemp(float mv);
 

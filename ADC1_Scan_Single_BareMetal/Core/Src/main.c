@@ -18,13 +18,15 @@ void ADC_ConfigDefault(ADC_TypeDef *ADCx);
 
 int main(void){
 	char txt[20]="";
-	uint16_t adc_value=0;
+	
 	uint16_t adc_value1=0;
+	float adc_mv1=0;
+	
 	uint16_t adc_value2=0;
+	float adc_mv2=0;
+	
 	uint16_t adc_value3=0;
-	float adc_in1=0;
-	float adc_in2=0;
-	float adc_in3=0;
+	float adc_mv3=0;
 	
 	BUS_PWR_EnableOrDisable(1);
 	BUS_AFIO_EnableOrDisable(1);
@@ -69,26 +71,30 @@ int main(void){
 		//SysTick_Delay_1ms(3);
 		USART_PutStringFromFlash(USART1, "R3");
 		
-		adc_in1 = (float)(adc_value1 * ADC_GAIN);
-		adc_in2 = (float)(adc_value2 * ADC_GAIN);
-		adc_in3 = (float)(adc_value3 * ADC_GAIN);
+		adc_mv1 = ADC_ConvertValueToMiliVolt(adc_value1);
+		adc_mv2 = ADC_ConvertValueToMiliVolt(adc_value2);
+		adc_mv3 = ADC_ConvertValueToMiliVolt(adc_value3);
+		
+//		adc_mv1 = (float)(adc_value1 * ADC_GAIN);
+//		adc_mv2 = (float)(adc_value2 * ADC_GAIN);
+//		adc_in3 = (float)(adc_value3 * ADC_GAIN);
 		
 //		if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADC1, 1) == TIMEOUT_SUCCESS){
 //			ADC_EndOfConversion_ClearFlag(ADC1); 
 //			adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADC1);
-//			adc_in1 = (float)(adc_value * ADC_GAIN);
+//			adc_mv1 = (float)(adc_value * ADC_GAIN);
 //		}
 //		else{
-//			adc_in1=0;
+//			adc_mv1=0;
 //		}
 
 //		if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADC1, 1) == TIMEOUT_SUCCESS){
 //			ADC_EndOfConversion_ClearFlag(ADC1); 
 //			adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADC1);
-//			adc_in2 = (float)(adc_value * ADC_GAIN);
+//			adc_mv2 = (float)(adc_value * ADC_GAIN);
 //		}
 //		else{
-//			adc_in2=0;
+//			adc_mv2=0;
 //		}
 //		
 //		if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADC1, 1) == TIMEOUT_SUCCESS){
@@ -104,11 +110,11 @@ int main(void){
 //		in2=ADC_SingleMode_Read(ADC1, ADC_IN8);
 //		in3=ADC_SingleMode_Read(ADC1, ADC_IN9);
 		
-		sprintf(txt, "Input1(mv): %.1f", adc_in1);
+		sprintf(txt, "Input1(mv): %.1f", adc_mv1);
 		USART_PutString(USART1, txt);
-		sprintf(txt, "Input2(mv): %.1f", adc_in2);
+		sprintf(txt, "Input2(mv): %.1f", adc_mv2);
 		USART_PutString(USART1, txt);
-		sprintf(txt, "Input3(mv): %.1f", adc_in3);
+		sprintf(txt, "Input3(mv): %.1f", adc_mv3);
 		USART_PutString(USART1, txt);
 		USART_PutStringFromFlash(USART1, "");
 		
