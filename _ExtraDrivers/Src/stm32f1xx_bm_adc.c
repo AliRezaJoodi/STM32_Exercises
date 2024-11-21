@@ -50,57 +50,57 @@ Scan mode:
 #include <stm32f1xx_bm_adc.h>
 
 //************************************************************
-uint8_t ADC_SequenceInRegularChannels_SetSequence(ADC_TypeDef *ADCx, uint8_t rank, uint8_t ch){
+uint8_t ADC_SequenceForRegularChannels_SetSequence(ADC_TypeDef *ADCx, uint8_t rank, uint8_t ch){
 	uint8_t error=ADC_ERROR;
 	
 	switch (rank){
 		case ADC_RANK1:
-			error = ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set1stSequence(ADCx, ch);
 			break;
 		case ADC_RANK2:
-			error = ADC_SequenceInRegularChannels_Set2ndSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set2ndSequence(ADCx, ch);
 			break;
 		case ADC_RANK3:
-			error = ADC_SequenceInRegularChannels_Set3rdSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set3rdSequence(ADCx, ch);
 			break;
 		case ADC_RANK4:
-			error = ADC_SequenceInRegularChannels_Set4thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set4thSequence(ADCx, ch);
 			break;
 		case ADC_RANK5:
-			error = ADC_SequenceInRegularChannels_Set5thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set5thSequence(ADCx, ch);
 			break;
 		case ADC_RANK6:
-			error = ADC_SequenceInRegularChannels_Set6thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set6thSequence(ADCx, ch);
 			break;
 		case ADC_RANK7:
-			error = ADC_SequenceInRegularChannels_Set7thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set7thSequence(ADCx, ch);
 			break;
 		case ADC_RANK8:
-			error = ADC_SequenceInRegularChannels_Set8thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set8thSequence(ADCx, ch);
 			break;
 		case ADC_RANK9:
-			error = ADC_SequenceInRegularChannels_Set9thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set9thSequence(ADCx, ch);
 			break;
 		case ADC_RANK10:
-			error = ADC_SequenceInRegularChannels_Set10thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set10thSequence(ADCx, ch);
 			break;
 		case ADC_RANK11:
-			error = ADC_SequenceInRegularChannels_Set11thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set11thSequence(ADCx, ch);
 			break;
 		case ADC_RANK12:
-			error = ADC_SequenceInRegularChannels_Set12thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set12thSequence(ADCx, ch);
 			break;
 		case ADC_RANK13:
-			error = ADC_SequenceInRegularChannels_Set13thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set13thSequence(ADCx, ch);
 			break;
 		case ADC_RANK14:
-			error = ADC_SequenceInRegularChannels_Set14thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set14thSequence(ADCx, ch);
 			break;
 		case ADC_RANK15:
-			error = ADC_SequenceInRegularChannels_Set15thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set15thSequence(ADCx, ch);
 			break;
 		case ADC_RANK16:
-			error = ADC_SequenceInRegularChannels_Set16thSequence(ADCx, ch);
+			error = ADC_SequenceForRegularChannels_Set16thSequence(ADCx, ch);
 			break;
 	}
 	
@@ -175,12 +175,12 @@ return error;
 uint16_t ADC_SingleMode_Read(ADC_TypeDef *ADCx, uint8_t ch){
 	uint16_t adc_value=0;
 	
-	ADC_SequenceInRegularChannels_Set1stSequence(ADCx, ch);
+	ADC_SequenceForRegularChannels_Set1stSequence(ADCx, ch);
 	
-	ADC_SoftwareStartInRegularChannels_Start(ADCx);
+	ADC_SoftwareStartForRegularChannels_Start(ADCx);
 	if(Timeout_ADC_WaitUntil(ADC_EndOfConversion_GetFlag, ADCx, 1) == ADC_SUCCESS){
 		ADC_EndOfConversion_ClearFlag(ADCx); 
-		adc_value = ADC_ConversionResultInRegularChannels_ReadData(ADCx);
+		adc_value = ADC_ConversionResultForRegularChannels_ReadData(ADCx);
 	}
 	
 	return adc_value;
