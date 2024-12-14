@@ -1,4 +1,10 @@
-## USART with LL(Low Layer) Drivers, Receiver 5-Byte
+## USART with LL(Low Layer) Drivers, Receiver 2-Byte
+
+Data Format:
+Start Byte: 254
+Data1: 123 for LED
+Data2: 1 for On, 0 for Off
+Check Sume: (Data1+Data2)&0xFF
               
 MCU:     	STM32F103C8  
 System Clock:	8MHz with HSI RC  

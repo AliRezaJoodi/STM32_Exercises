@@ -3,15 +3,15 @@ Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form Form1 
    BackColor       =   &H00C0E0FF&
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Sender 5-Byte"
-   ClientHeight    =   4770
+   Caption         =   "Sender 2-Byte"
+   ClientHeight    =   4290
    ClientLeft      =   5100
    ClientTop       =   3675
    ClientWidth     =   3780
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4770
+   ScaleHeight     =   4290
    ScaleWidth      =   3780
    Begin VB.Frame Frame1 
       BackColor       =   &H00C0C0FF&
@@ -25,7 +25,7 @@ Begin VB.Form Form1
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3465
+      Height          =   2985
       Left            =   0
       TabIndex        =   5
       Top             =   1320
@@ -34,26 +34,9 @@ Begin VB.Form Form1
          Caption         =   "Send"
          Height          =   375
          Left            =   120
-         TabIndex        =   13
-         Top             =   3000
-         Width           =   3615
-      End
-      Begin VB.TextBox In4 
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   12
-            Charset         =   178
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   2520
          TabIndex        =   12
-         Text            =   "253"
-         Top             =   2160
-         Width           =   855
+         Top             =   2520
+         Width           =   3615
       End
       Begin VB.TextBox In3 
          BeginProperty Font 
@@ -120,27 +103,9 @@ Begin VB.Form Form1
          EndProperty
          Height          =   375
          Left            =   2520
-         TabIndex        =   18
+         TabIndex        =   16
          Top             =   1680
          Width           =   855
-      End
-      Begin VB.Label Label8 
-         BackColor       =   &H00C0C0FF&
-         Caption         =   "Stop Byte"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   178
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   240
-         TabIndex        =   17
-         Top             =   2160
-         Width           =   1500
       End
       Begin VB.Label Label7 
          BackColor       =   &H00C0C0FF&
@@ -156,7 +121,7 @@ Begin VB.Form Form1
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   1680
          Width           =   1500
       End
@@ -174,7 +139,7 @@ Begin VB.Form Form1
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   15
+         TabIndex        =   14
          Top             =   1200
          Width           =   1500
       End
@@ -192,7 +157,7 @@ Begin VB.Form Form1
          EndProperty
          Height          =   255
          Left            =   240
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   720
          Width           =   1500
       End
@@ -212,7 +177,7 @@ Begin VB.Form Form1
          Height          =   255
          Left            =   120
          TabIndex        =   8
-         Top             =   2640
+         Top             =   2160
          Width           =   2535
       End
       Begin VB.Label Label3 
@@ -340,10 +305,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'GitHub Account: GitHub.com/AliRezaJoodi
-
-Dim number As Integer
-Dim number_lsb As Byte
-Dim number_msb  As Byte
 Dim cs As Byte
 
 Private Sub Form_Load()
@@ -359,6 +320,7 @@ Private Sub Form_Load()
     
     Call Setting_Default
 End Sub
+
 Public Sub Setting_Default()
     Combo1.Enabled = True
     Button1.Enabled = True: Button2.Enabled = False
@@ -367,6 +329,7 @@ Public Sub Setting_Default()
     'Frame1.Enabled = False
     Command1.Enabled = False
 End Sub
+
 Public Sub Setting_Work()
     Combo1.Enabled = False
     Button1.Enabled = False: Button2.Enabled = True
@@ -375,31 +338,35 @@ Public Sub Setting_Work()
     'Frame1.Enabled = True
     Command1.Enabled = True
 End Sub
+
 Private Sub Button1_Click()
     Dim CPN As Byte
     CPN = Val(Combo1.Text): MSComm1.CommPort = CPN: MSComm1.PortOpen = True
       
     Call Setting_Work
 End Sub
+
 Private Sub Button2_Click()
     MSComm1.PortOpen = False
     
     Call Setting_Default
 End Sub
+
 Private Sub Command1_Click()
     Call CalculateCheckSum
     Call Sender
 End Sub
+
 Private Sub Sender()
     MSComm1.Output = Chr$(Val(In1.Text))
     MSComm1.Output = Chr$(Val(In2.Text))
     MSComm1.Output = Chr$(Val(In3.Text))
     MSComm1.Output = Chr$(cs)
-    MSComm1.Output = Chr$(Val(In4.Text))
 End Sub
+
 Private Sub CalculateCheckSum()
     Dim cs_int As Integer
-    cs_int = Val(In1.Text) + Val(In2.Text) + Val(In3.Text)
+    cs_int = Val(In2.Text) + Val(In3.Text)
     cs = cs_int Mod 256
     
     Label_CS.Caption = cs

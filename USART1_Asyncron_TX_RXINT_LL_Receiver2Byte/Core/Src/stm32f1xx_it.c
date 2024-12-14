@@ -42,7 +42,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -56,9 +55,9 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
 /* USER CODE BEGIN EV */
-
+extern uint8_t usart1_task;
+extern uint8_t usart1_data[2];
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -203,37 +202,31 @@ void SysTick_Handler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-	char c;
+	uint8_t buffer;
+	static uint8_t flag=0;
 	static uint8_t i=0;
-	//extern uint8_t j;
-	extern uint8_t task_usart1;
-	extern char txt[16];
+	static uint8_t cs=0;
 	
 	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
-		c=LL_USART_ReceiveData8(USART1);
-		LL_USART_TransmitData8(USART1,c);
-		//while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-	
-		if(32<=c && c<127){txt[i]=c; ++i;}
-			else if(c==13){i=0; task_usart1=1;}
-		//if(i>4){
-			//i=0;
-			//x=1;
-			
-			/*
-			LL_USART_TransmitData8(USART1, 13);
-			while(!LL_USART_IsActiveFlag_TXE(USART1));
-			
-			while(i<=4){
-				LL_USART_TransmitData8(USART1, Value_RX[i++]);
-				while(!LL_USART_IsActiveFlag_TXE(USART1)){};
+		buffer=LL_USART_ReceiveData8(USART1);
+		
+		if(flag==1){
+			if(i>=2){
+				cs=usart1_data[0]+usart1_data[1];
+				if(cs==buffer){usart1_task=1;}
+				flag=0;
 			}
-			
-			LL_USART_TransmitData8(USART1, 13);
-			while(!LL_USART_IsActiveFlag_TXE(USART1)){};
-			*/
-			//i=0;
-		//}
+			else{
+				usart1_data[i]=buffer;
+				i++;
+			}
+		}
+		else{
+			if(buffer==254){
+				flag=1;
+				i=0;
+			}
+		}
 		
 	}
   /* USER CODE END USART1_IRQn 0 */
