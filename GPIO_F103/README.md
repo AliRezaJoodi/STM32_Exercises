@@ -1,18 +1,20 @@
-## GPIO
+## GPIO, STM32F103
+Understand GPIO configuration on STM32F103. And compare abstraction layers.  
 
 ### Simulate
-v1.0  
+**Version:** v1.0   
 ![](Simulate/v1.0.png)  
 
 ### Features
 - **MCU:** STM32F103C8
-- **System Clock:** HSI RC, 8MHz
 
 ### Folders and Files
-- `HAL` (Exercise with HAL Drivers)
-- `LL` (Exercise with LL Drivers)
-- `Simulate` (Simulator File)
+- `HAL` (Exercises using STM32 HAL drivers)
+- `LL` (Exercise using LL Drivers)
+- `Simulate` (Simulation file)
 
-### More Information
- **Note**: [You can go here to download a single folder or file from GitHub.com](https://minhaskamal.github.io/DownGit/#/home)  
- My GitHub Account: [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi) 
+### Useful Links
+GitHub Profile:  
+[GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)   
+Download single folder or file from GitHub:  
+[https://minhaskamal.github.io/DownGit/#/home](https://minhaskamal.github.io/DownGit/#/home)  

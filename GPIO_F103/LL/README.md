@@ -1,11 +1,11 @@
-## Configure Input and Output with LL(Low Layer) Drivers
+## Exercise using LL(Low Layer) Drivers
 
-### Folder and Files
-It has included:
-- `Core` (User Code with C Language)
-- `MDK-ARM` (IDE File for Keil uVision5)
-- `Main.ioc` (Code Generator with STM32CubeMX)
+### Features
+- **Framework:** STM32Cube_FW_F1_V1.8.7
+- **System Clock:** HSI (Internal RC), 8 MHz 
+- **Debug Interface:** JTAG (4 Pins)
 
-### More Information
- **Note**: [You can go here to download a single folder or file from GitHub.com](https://minhaskamal.github.io/DownGit/#/home)  
- My GitHub Account: [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi) 
+### Folders and Files
+- `Core` (User code with C language)
+- `MDK-ARM` (IDE file for Keil uVision5)
+- `Main.ioc` (Code generator with STM32CubeMX)
