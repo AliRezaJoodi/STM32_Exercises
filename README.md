@@ -9,7 +9,7 @@ Please make sure the drivers are available at the following path:
 `C:\Users\Home\STM32Cube\Repository`
 
 ####  Cross Platform Libraries
-These exercises use my personal low-level libraries developed for bare-metal STM32 exercises.  
+These exercises use my personal libraries developed for bare-metal exercises.  
 They are available in the following repository:  
 [https://github.com/AliRezaJoodi/CrossPlatformLibraries](https://github.com/AliRezaJoodi/CrossPlatformLibraries)  
 Please download or clone that repository and place it in the root of drive C:   
