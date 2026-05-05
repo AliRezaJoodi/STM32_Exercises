@@ -31,3 +31,4 @@ Download single folder or file from GitHub:
 |:--------------------------------------|:--------:|:-:|:-:|
 |[GPIO_F103](GPIO_F103)			| 	   |Y  |Y  |
 |[GPIO_F401](GPIO_F401)			| 	   |   |Y  |
+|[GPIO_F407](GPIO_F407)			| 	   |   |Y  |
