@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F103xB,HSE_VALUE=8000000,HSI_VALUE=8000000,LSE_VALUE=32768,LSI_VALUE=40000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;..\..\_Drivers\CMSIS\Include;..\..\_Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc;..\..\_Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
+              <IncludePath>..\Core\Inc;..\..\_ExtraDrivers\Inc;C:\Users\Home\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.7\Drivers\CMSIS\Include;C:\Users\Home\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.7\Drivers\CMSIS\Device\ST\STM32F1xx\Include;C:\Users\Home\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.7\Drivers\STM32F1xx_HAL_Driver\Inc;C:\Users\Home\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.7\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
