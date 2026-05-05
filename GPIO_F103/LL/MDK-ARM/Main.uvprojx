@@ -703,9 +703,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/ExtraDrivers</GroupName>
-        </Group>
-        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
