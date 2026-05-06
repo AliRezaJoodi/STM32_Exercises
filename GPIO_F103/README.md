@@ -10,7 +10,7 @@ Understand GPIO configuration on STM32F103. And compare abstraction layers.
 
 ### Folders and Files
 - `HAL` (Exercises using HAL drivers)
-- `LL` (Exercise using LL Drivers)
+- `LL` (Exercise using LL drivers)
 - `Simulate` (Simulation file)
 
 ### Useful Links
