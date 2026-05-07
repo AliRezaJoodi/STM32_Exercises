@@ -21,41 +21,33 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-void Button1(void);
-void Button2(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -66,7 +58,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -86,39 +77,38 @@ int main(void)
   LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<0))>>0)){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_15);}
-			//else{LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_15);}
+		if(LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_0) == 0){
+				LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+		}
 		
-		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){LL_GPIO_SetOutputPin(GPIOA,LL_GPIO_PIN_3);}
-		//if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<2))>>2)==0){LL_GPIO_ResetOutputPin(GPIOA,LL_GPIO_PIN_3);}
-		Button1();
-		Button2();
+		if(LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_1) == 1){
+				LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
+		}
+				
+		uint32_t value = (LL_GPIO_ReadInputPort(GPIOA) >> 4UL) & 0x0FUL;
 		
-		uint32_t value=(GPIOA->IDR)>>4 & (0b1111U);
-    GPIOB->ODR= ((GPIOB->ODR) & ~(0b1111<<12)) | (value<<12);
+		uint32_t temp = LL_GPIO_ReadOutputPort(GPIOB);
+		temp = (temp & ~(0x0FUL << 12UL)) | (value << 12UL);
+		LL_GPIO_WriteOutputPort(GPIOB, temp);
   }
   /* USER CODE END 3 */
 }
@@ -133,7 +123,7 @@ void SystemClock_Config(void)
   while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_0)
   {
   }
-  LL_RCC_HSI_SetCalibTrimming(8);
+  LL_RCC_HSI_SetCalibTrimming(16);
   LL_RCC_HSI_Enable();
 
    /* Wait till HSI is ready */
@@ -213,62 +203,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-//**********************************************
-void Button1(void){
-		static char status=1;
-	
-    if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0) && status==1){
-				LL_mDelay(30);
-				if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0)){
-					status=0;
-					LL_GPIO_TogglePin(GPIOC,LL_GPIO_PIN_13);
-				}
-		}
-    else if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0) && status==0){
-			LL_mDelay(30);
-			if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_0)){
-				status=1;
-			}	
-		}		
-}
-
-//**********************************************
-void Button2(void){
-	static char status=0;
-
-		if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1) && status==0){
-				LL_mDelay(30);
-				if(LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1)){
-					status=1;
-					LL_GPIO_SetOutputPin(GPIOC,LL_GPIO_PIN_13);
-				}
-		}
-		else if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1) && status==1){
-			LL_mDelay(30);
-			if(!LL_GPIO_IsInputPinSet(GPIOA,LL_GPIO_PIN_1)){
-				status=0;
-			}	
-		}	
-}
-
-//**********************************************
-/*void Button2(void){
-	static char status=0;
-
-		if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1 && status==0){
-				LL_mDelay(30);
-				if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==1){
-					status=1;
-					LL_GPIO_SetOutputPin(GPIOC,LL_GPIO_PIN_13);
-				}
-		}
-		else if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==0 && status==1){
-			LL_mDelay(30);
-			if(((LL_GPIO_ReadInputPort(GPIOA) & (0b1U<<1))>>1)==0){
-				status=0;
-			}	
-		}	
-}*/
 /* USER CODE END 4 */
 
 /**
