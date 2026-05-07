@@ -33,6 +33,7 @@ JLinkLog.txt
 JLinkSettings.ini
 
 # STM32CubeMX
+Drivers
 .mxproject
 _Drivers
 
