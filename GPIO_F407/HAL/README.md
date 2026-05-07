@@ -1,14 +1,16 @@
-## Configure Output with HAL(Hardware Abstraction Layer) Drivers
-              
-MCU:     	STM32F407ZGT6  
-System Clock:	16MHz with HSI RC  
+## Exercises using HAL(Hardware Abstraction Layer) Drivers
 
-### Folder and Files Description
-It has included:
+### Features
+- **Framework:** STM32Cube_FW_F4_V1.28.3
+- **System Clock:** HSI (Internal RC), 16 MHz 
+- **Debug Interface:** JTAG (4 Pins)
+
+### Folder and Files
 - `Core` (User Code with C Language)
+- `Drivers` (STM32Cube Firmware Drivers – ignored in repository)
 - `MDK-ARM` (IDE File for Keil uVision5)
-- `LED.ioc` (Code Generator with STM32CubeMX)
+- `Main.ioc` (Code Generator with STM32CubeMX)
 
-
-My GitHub Account: [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)  
-**Note**: [You can go here to download a single folder or file from GitHub.com](https://minhaskamal.github.io/DownGit/#/home)
+Note:  
+The `Drivers` folders are not included in this repository to keep it lightweight.  
+Please refer to the main repository README for setup instructions. 
