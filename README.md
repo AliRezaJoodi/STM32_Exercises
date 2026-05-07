@@ -1,19 +1,48 @@
 ## STM32 Programming Exercises
-This repository contains my personal exercises for learning and practicing STM32 programming.
+Personal repository for STM32 exercise
 
-### Drivers
-#### STM32CubeMX Driver
-This repository does not include the STM32CubeMX driver package.  
-The projects use the default driver location configured by STM32CubeMX.  
-Please make sure the drivers are available at the following path:  
-`C:\Users\Home\STM32Cube\Repository`
+## Setup: STM32Cube Firmware Drivers
+To keep the repository lightweight, the `Drivers` folder is intentionally ignored in all exercises.  
+Each example has a project structure similar to this:   
+```
+GPIO_F103
+|-- HAL
+|-- LL
+    |-- Core
+    |-- Drivers  (ignored in repository)
+    |-- MDK-ARM
+    |-- main.ioc
+```
+Before building a project, you need to provide the missing `Drivers` folder manually.  
+You can do one of the following:  
+- Create a junction link to the official STM32Cube firmware `Drivers` folder.  
+- Or temporarily copy the `Drivers` folder from your STM32Cube package into the project path.  
 
-####  Cross Platform Libraries
-These exercises use my personal libraries developed for bare-metal exercises.  
+Either method will make the project build successfully.
+
+## Setup: Shared Library (CrossPlatformLibraries)
+The following diagram shows the typical folder structure used for bare-metal exercises.  
+```
+GPIO_F103
+|-- HAL
+|-- LL
+|-- BareMetal
+    |-- Core
+    |-- CrossPlatformLibraries  (ignored in repository)
+    |-- Drivers  (ignored in repository)
+    |-- MDK-ARM
+    |-- main.ioc
+```
+bare-metal exercises use my personal cross-platform libraries.  
 They are available in the following repository:  
 [https://github.com/AliRezaJoodi/CrossPlatformLibraries](https://github.com/AliRezaJoodi/CrossPlatformLibraries)  
-Please download or clone that repository and place it in the root of drive C:   
-`C:\CrossPlatformLibraries`  
+Please clone or download this repository.  
+To build the exercises, the `CrossPlatformLibraries` folder must be accessible next to the exercise project.  
+You can do one of the following:  
+- Create a junction link so that the `CrossPlatformLibraries` folder appears beside the exercise project.  
+- Or temporarily copy the `CrossPlatformLibraries` folder beside the exercise project.  
+
+Either method will allow the project to build correctly.  
 
 ### Useful Links
 GitHub Profile:  
