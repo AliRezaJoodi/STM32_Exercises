@@ -1,8 +1,7 @@
 ## GPIO, STM32F401
 Understand GPIO configuration on STM32F103. And compare abstraction layers.  
 
-### Simulate
-**Version:** v1.0   
+### Simulate  
 ![](Simulate/v1.0.png)  
 
 ### Features
