@@ -2,6 +2,7 @@
 Display_LCD16x2_LL
 Display_LCD16x2_HAL
 _Pending
+CrossPlatformLibraries
 
 # Operating System folders and files
 desktop.ini
