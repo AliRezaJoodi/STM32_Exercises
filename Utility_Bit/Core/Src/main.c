@@ -113,7 +113,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	
+
+// Note: LL_mDelay(500) doesn't work on Proteus 
 	SetBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
 	SetBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
 	ClearBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
