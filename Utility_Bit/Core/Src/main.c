@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bit_register32.h"
+#include "bit.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,6 +49,26 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static inline void Delay_us(uint32_t us){
+	while(us--){
+			/* 8 MHz -> 1 cycle = 125 ns
+				 8 cycles ˜ 1 us */
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+	}
+}
+
+static inline void Delay_ms(uint32_t ms){
+    while(ms--){
+        Delay_us(1000);
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,11 +113,22 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	//SetBit_Reg32(&GPIOB->ODR, 1);
-	Bit_Reg32_AtomicSet(&GPIOB->BSRR , 10);
 	
+	SetBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
+	SetBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
+	ClearBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
+	ClearBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
+	ToggleBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
+	ToggleBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
+	WriteBit_Reg32(&GPIOB->ODR, 5U, 0U); Delay_ms(1000);
+	BM_TOGGLE_BITMASK(GPIOB->ODR, 0x10U); Delay_ms(1000);
+//	GPIOB->ODR = __builtin_ctz(0x40U);
+		
   while (1){
     /* USER CODE END WHILE */
+		//BM_WRITE_FIELD(GPIOB->ODR, 0xF000U, BM_GET_FIELD(GPIOA->IDR, 0xF0U));
+		//WriteBit4_Reg32(&GPIOB->ODR, 12U, GetBit4_Reg32(&GPIOA->IDR, 4U));
+		WriteField_Reg32(&GPIOB->ODR, 0xF000U, GetField_Reg32(&GPIOA->IDR, 0xF0U));
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
