@@ -1,8 +1,8 @@
-## Bare-Metal Practice Using CMSIS
+## Bare-Metal Exercises Using CMSIS
 GPIO is implemented using direct register access through CMSIS definitions.
 
 ### Features
-- **GPIO Library:** CrossPlatformLibraries
+- **GPIO Library:** CrossPlatformLibraries that using CMSIS
 - **Default Framework:** STM32Cube_FW_F1_V1.8.7
 - **System Clock:** HSI (Internal RC), 8 MHz 
 - **Debug Interface:** JTAG (4 Pins)
