@@ -35,8 +35,8 @@ JLinkSettings.ini
 
 # STM32CubeMX
 Drivers
+_ExtraDrivers
 .mxproject
-_Drivers
 
 
 
