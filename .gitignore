@@ -3,6 +3,8 @@ Display_LCD16x2_LL
 Display_LCD16x2_HAL
 _Pending
 CrossPlatformLibraries
+_ExtraDrivers
+_Legacy
 
 # Operating System folders and files
 desktop.ini
@@ -35,8 +37,8 @@ JLinkSettings.ini
 
 # STM32CubeMX
 Drivers
-_ExtraDrivers
 .mxproject
+
 
 
 
