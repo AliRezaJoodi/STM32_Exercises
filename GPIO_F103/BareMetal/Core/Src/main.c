@@ -49,6 +49,26 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static inline void Delay_us(uint32_t us){
+	while(us--){
+			/* 8 MHz -> 1 cycle = 125 ns
+				 8 cycles ˜ 1 us */
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+			__NOP();
+	}
+}
+
+static inline void Delay_ms(uint32_t ms){
+    while(ms--){
+        Delay_us(1000);
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -87,7 +107,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+  //MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 	  /* GPIO Ports Clock Enable */
 		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
@@ -97,30 +117,57 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	GPIO_ConfigDirection(GPIOB, 0, GPIO_MODE_OUTPUT_2MHz);
-	GPIO_ConfigOutputType(GPIOB, 0, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_ConfigDirection(GPIOC, 13, GPIO_MODE_OUTPUT_2MHz);
+	GPIO_ConfigOutputType(GPIOC, 13, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_WritePin(GPIOC, 13, 1); 
 	
-	GPIO_ConfigDirection(GPIOB, 1, GPIO_MODE_INPUT);
-	GPIO_ConfigInputType(GPIOB, 1, GPIO_INPUT_PULL);
-	GPIO_ConfigPull(GPIOB, 1, GPIO_PULL_UP);
+	GPIO_ConfigDirection(GPIOA, 0, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 0, GPIO_INPUT_PULL);
+	GPIO_ConfigPull(GPIOA, 0, GPIO_PULL_UP);
+
+	GPIO_ConfigDirection(GPIOA, 1, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 1, GPIO_INPUT_PULL);
+	GPIO_ConfigPull(GPIOA, 1, GPIO_PULL_DOWN);
+
+	GPIO_ConfigDirection(GPIOA, 4, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 4, GPIO_INPUT_FLOATING);
+	GPIO_ConfigDirection(GPIOA, 5, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 5, GPIO_INPUT_FLOATING);
+	GPIO_ConfigDirection(GPIOA, 6, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 6, GPIO_INPUT_FLOATING);
+	GPIO_ConfigDirection(GPIOA, 7, GPIO_MODE_INPUT);
+	GPIO_ConfigInputType(GPIOA, 7, GPIO_INPUT_FLOATING);
+
+	GPIO_ConfigDirection(GPIOB, 12, GPIO_MODE_OUTPUT_2MHz);
+	GPIO_ConfigOutputType(GPIOB, 12, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_ResetPin(GPIOB, 12);
+	GPIO_ConfigDirection(GPIOB, 13, GPIO_MODE_OUTPUT_2MHz);
+	GPIO_ConfigOutputType(GPIOB, 13, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_ResetPin(GPIOB, 13); 	
+	GPIO_ConfigDirection(GPIOB, 14, GPIO_MODE_OUTPUT_2MHz);
+	GPIO_ConfigOutputType(GPIOB, 14, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_ResetPin(GPIOB, 14); 
+	GPIO_ConfigDirection(GPIOB, 15, GPIO_MODE_OUTPUT_2MHz);
+	GPIO_ConfigOutputType(GPIOB, 15, GPIO_OUTPUT_GP_PUSHPULL);
+	GPIO_ResetPin(GPIOB, 15); 
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//		if(LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_0) == 0){
-//				LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
-//		}
-//		
-//		if(LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_1) == 1){
-//				LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
-//		}
-//				
-//		uint32_t value = (LL_GPIO_ReadInputPort(GPIOA) >> 4UL) & 0x0FUL;
-//		
-//		uint32_t temp = LL_GPIO_ReadOutputPort(GPIOB);
-//		temp = (temp & ~(0x0FUL << 12UL)) | (value << 12UL);
-//		LL_GPIO_WriteOutputPort(GPIOB, temp);
+		if(GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0){
+			GPIO_ResetPin(GPIOC, GPIO_PIN_13);
+		}
+		
+		if(GPIO_ReadPin(GPIOA, GPIO_PIN_1) == 1){
+			GPIO_SetPin(GPIOC, GPIO_PIN_13);
+		}
+				
+		uint32_t value = GPIO_ReadPinField(GPIOA, 0xF0U);
+		//uint32_t value = GPIO_Read4Pin(GPIOA, 4U);
+				
+		GPIO_WritePinField(GPIOB, 0xF000U, value);
+		//GPIO_Write4Pin(GPIOB, GPIO_PIN_12, value);
   }
   /* USER CODE END 3 */
 }
