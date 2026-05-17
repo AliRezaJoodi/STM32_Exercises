@@ -117,6 +117,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//	GPIO_ConfigDirection(GPIOC, 13, GPIO_MODE_INPUT);
+//	GPIO_ConfigInputType(GPIOC, 13, GPIO_INPUT_FLOATING);
+//	
+//	GPIO_LockPinMask(GPIOC, (0x01U << 13U));
+
+//	GPIO_ConfigDirection(GPIOC, 13, GPIO_MODE_OUTPUT_2MHz);
+//	GPIO_ConfigOutputType(GPIOC, 13, GPIO_OUTPUT_GP_PUSHPULL);
+//	GPIO_WritePin(GPIOC, 13, 0);
+//	while (1){}
+	
 	GPIO_ConfigDirection(GPIOC, 13, GPIO_MODE_OUTPUT_2MHz);
 	GPIO_ConfigOutputType(GPIOC, 13, GPIO_OUTPUT_GP_PUSHPULL);
 	GPIO_WritePin(GPIOC, 13, 1); 

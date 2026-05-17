@@ -12,6 +12,6 @@
 - `Main.ioc` (Code Generator with STM32CubeMX)
 
 Note:  
-The `Drivers` folders are not included in this repository to keep it lightweight.  
+- The `Drivers` folders are not included in this repository to keep it lightweight.  
 Please refer to the main repository README for setup instructions. 
 

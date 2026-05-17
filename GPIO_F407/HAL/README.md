@@ -4,7 +4,7 @@
 - **Framework:** STM32Cube_FW_F4_V1.28.3
 - **System Clock:** HSI (Internal RC), 16 MHz 
 - **Debug Interface:** JTAG (4 Pins)
-
+    
 ### Folder and Files
 - `Core` (User Code with C Language)
 - `Drivers` (STM32Cube Firmware Drivers – ignored in repository)
@@ -12,5 +12,6 @@
 - `Main.ioc` (Code Generator with STM32CubeMX)
 
 Note:  
-The `Drivers` folders are not included in this repository to keep it lightweight.  
+- The `Drivers` folders are not included in this repository to keep it lightweight.  
 Please refer to the main repository README for setup instructions. 
+
