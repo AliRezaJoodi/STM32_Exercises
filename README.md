@@ -53,8 +53,9 @@ Download single folder or file from GitHub:
 ## Abbreviations
 - **F103**: STM32F103  
 - **F401**: STM32F401  
-- **F407**: STM32F407  
-
+- **F407**: STM32F407 
+ 
+<!--
 ### Table of Contents
 |Title					|Bare Metal|LL |HAL|
 |:--------------------------------------|:--------:|:-:|:-:|
@@ -63,3 +64,5 @@ Download single folder or file from GitHub:
 |[GPIO_F401](GPIO_F401)			| 	   |Y  |Y  |
 |[GPIO_F407](GPIO_F407)			| 	   |   |Y  |
 |[Utility_Bit](Utility_Bit)		|-	   |-  |-  |
+
+-->
