@@ -61,7 +61,7 @@ Download single folder or file from GitHub:
 |:--------------------------------------|:--------:|:-:|:-:|
 |[AFIO_F103](AFIO_F103)			|Y	   |Y  |   |
 |[GPIO_F103](GPIO_F103)			|Y	   |Y  |Y  |
-|[GPIO_F401](GPIO_F401)			| 	   |Y  |Y  |
+|[GPIO_F401](GPIO_F401)			|Y	   |Y  |Y  |
 |[GPIO_F407](GPIO_F407)			| 	   |   |Y  |
 |[Utility_Bit](Utility_Bit)		|-	   |-  |-  |
 
