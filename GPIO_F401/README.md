@@ -8,6 +8,7 @@ Understand GPIO configuration on STM32F401 and compare abstraction layers.
 - **MCU:** STM32F401RET6
 
 ### Folders and Files
+- `BareMetal` (Exercises using CMSIS)
 - `HAL` (Exercises using HAL drivers)
 - `LL` (Exercise using LL Drivers)
 - `Simulate` (Simulation file)
