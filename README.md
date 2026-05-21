@@ -44,6 +44,13 @@ You can do one of the following:
 
 Either method will allow the project to build correctly.  
 
+### Useful CMD codes
+- `cd /d D:\GitHub\STM32_Exercises\GPIO_F103\BareMetal`
+- `mklink /J Drivers D:\SDKs\STM32Cube_FW_F1_V1.8.7\Drivers`
+- `mklink /J Drivers D:\SDKs\STM32Cube_FW_F4_V1.28.3\Drivers`
+- `mklink /J CrossPlatformLibraries D:\GitHub\CrossPlatformLibraries`
+- `rmdir SDK`
+
 ### Useful Links
 GitHub Profile:  
 [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)   
@@ -59,10 +66,10 @@ Download single folder or file from GitHub:
 ### Table of Contents
 |Title					|Bare Metal|LL |HAL|
 |:--------------------------------------|:--------:|:-:|:-:|
-|[AFIO_F103](AFIO_F103)			|Y	   |Y  |   |
+|[AFIO_F103](AFIO_F103)			|Y	   |Y  |-  |
 |[GPIO_F103](GPIO_F103)			|Y	   |Y  |Y  |
 |[GPIO_F401](GPIO_F401)			|Y	   |Y  |Y  |
-|[GPIO_F407](GPIO_F407)			| 	   |   |Y  |
+|[GPIO_F407](GPIO_F407)			|-	   |-  |Y  |
 |[Utility_Bit](Utility_Bit)		|-	   |-  |-  |
 
 -->
