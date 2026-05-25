@@ -1,11 +1,12 @@
 ## Utility/Bit
+Test my library from CrossPlatformLibraries.  
 
 ### Simulate  
 ![](Simulate/v1.0.png)  
 
 ### Features
 - **MCU:** STM32F103C8
-- **Framework:** STM32Cube_FW_F1_V1.8.7
+- **Default Framework:** LL driver from STM32Cube_FW_F1_V1.8.7
 - **System Clock:** HSI (Internal RC), 8 MHz 
 - **Debug Interface:** JTAG (4 Pins)
 
