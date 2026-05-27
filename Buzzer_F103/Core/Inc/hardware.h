@@ -5,7 +5,7 @@
     #define TIMEBASE_REG32_U32
 
 #define BUZZER_HARDWARE
-    #define BUZZER_ACTIVE       1U
+    #define BUZZER_ACTIVE       0U
     #define BUZZER_COUNT1       75U
     #define BUZZER_COUNT2       200U
 

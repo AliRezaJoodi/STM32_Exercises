@@ -100,7 +100,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  Buzzer_Start(500);
+  Buzzer_Start(BUZZER_COUNT2);
 	
   while (1){
     /* USER CODE END WHILE */
