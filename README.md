@@ -68,6 +68,7 @@ Download single folder or file from GitHub:
 |:--------------------------------------|:--------:|:-:|:-:|
 |[AFIO_F103](AFIO_F103)			|Y	   |Y  |-  |
 |[Buzzer_F103](Buzzer_F103)		|Y	   |-  |-  |
+|[Buzzer_F401](Buzzer_F401)		|Y	   |-  |-  |
 |[GPIO_F103](GPIO_F103)			|Y	   |Y  |Y  |
 |[GPIO_F401](GPIO_F401)			|Y	   |Y  |Y  |
 |[GPIO_F407](GPIO_F407)			|-	   |-  |Y  |
