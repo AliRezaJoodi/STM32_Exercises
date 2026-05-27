@@ -143,7 +143,7 @@ int main(void)
   while (1){
     /* USER CODE BEGIN 3 */
 		if(GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 0){
-			GPIO_ResetPin(GPIOC, GPIO_PIN_13);
+			GPIO_ClearPin(GPIOC, GPIO_PIN_13);
 		}
 		
 		if(GPIO_ReadPin(GPIOA, GPIO_PIN_1) == 1){
