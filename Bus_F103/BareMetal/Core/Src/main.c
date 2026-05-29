@@ -94,14 +94,7 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-//	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_GPIOC);
-//	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
-
-//	LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_GPIOC);
-//	LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_GPIOC);	
-//	MX_GPIO_Init();
-	
+  /* USER CODE BEGIN WHILE */	
 	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_DISABLE);
 	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_ENABLE);
 	
