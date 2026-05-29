@@ -67,7 +67,7 @@ Download single folder or file from GitHub:
 |Title					|Bare Metal|LL |HAL|
 |:--------------------------------------|:--------:|:-:|:-:|
 |[AFIO_F103](AFIO_F103)			|Y	   |Y  |-  |
-|[Bus_F103](Bus_F103)			|-	   |Y  |Y  |
+|[Bus_F103](Bus_F103)			|Y	   |Y  |Y  |
 |[Buzzer_F103](Buzzer_F103)		|Y	   |-  |-  |
 |[Buzzer_F401](Buzzer_F401)		|Y	   |-  |-  |
 |[GPIO_F103](GPIO_F103)			|Y	   |Y  |Y  |
