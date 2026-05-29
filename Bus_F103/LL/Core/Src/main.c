@@ -104,6 +104,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_GPIOC);
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
+
+	LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_GPIOC);
+	LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_GPIOC);	
+	
+/* Resetting a GPIO peripheral clears its configuration registers and restores
+ * the default reset state. The GPIO must be configured again after reset
+ * before any input/output operation can work properly.
+ */
+	LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
+	LL_GPIO_SetPinSpeed(GPIOC, LL_GPIO_PIN_13, LL_GPIO_SPEED_FREQ_LOW);
+	LL_GPIO_SetPinOutputType(GPIOC, LL_GPIO_PIN_13, LL_GPIO_OUTPUT_PUSHPULL);
+	//MX_GPIO_Init();
 	
   while (1){
     /* USER CODE END WHILE */

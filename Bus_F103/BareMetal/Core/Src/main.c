@@ -21,40 +21,34 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "aj_bus.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -65,7 +59,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -102,8 +95,26 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_GPIOC);
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
+//	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_GPIOC);
+//	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
+
+//	LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_GPIOC);
+//	LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_GPIOC);	
+//	MX_GPIO_Init();
+	
+	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_DISABLE);
+	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_ENABLE);
+	
+	AJ_BUS_APB2_ConfigResetStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_ASSERT);
+	AJ_BUS_APB2_ConfigResetStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_RELEASE);
+
+/* Resetting a GPIO peripheral clears its configuration registers and restores
+ * the default reset state. The GPIO must be configured again after reset
+ * before any input/output operation can work properly.
+ */
+	LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
+	LL_GPIO_SetPinSpeed(GPIOC, LL_GPIO_PIN_13, LL_GPIO_SPEED_FREQ_LOW);
+	LL_GPIO_SetPinOutputType(GPIOC, LL_GPIO_PIN_13, LL_GPIO_OUTPUT_PUSHPULL);
 	
   while (1){
     /* USER CODE END WHILE */
