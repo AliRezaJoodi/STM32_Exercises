@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+//#include <stdbool.h>
 #include "aj_bus.h"
 /* USER CODE END Includes */
 
