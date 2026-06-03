@@ -99,16 +99,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t last = TimeBase_GetTicks();
+	timebase_t tick_last = TimeBase_GetTicks();
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		uint32_t now = TimeBase_GetTicks();
+		timebase_t tick_now = TimeBase_GetTicks();
 
-		if ( (uint32_t)(now - last) >= 500 ){
-				last = now;
+		if ( TimeBase_HasElapsed(tick_now, tick_last, 500) ){
+				tick_last = tick_now;
 				LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
 		}
   }

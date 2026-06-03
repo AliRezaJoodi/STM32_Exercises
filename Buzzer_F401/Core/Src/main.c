@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "hardware.h"
 #include "timebase.h"
 #include "buzzer.h"
 /* USER CODE END Includes */
@@ -104,13 +105,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	Buzzer_Start(500);
+	timebase_t tick_now = TimeBase_GetTicks();
+	Buzzer_Start(tick_now, 500);
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		Buzzer_Refresh();
+		tick_now = TimeBase_GetTicks();
+		Buzzer_Refresh(tick_now);
   }
   /* USER CODE END 3 */
 }
