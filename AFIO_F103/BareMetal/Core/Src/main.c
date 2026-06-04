@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "afio.h"
+#include "hardware.h"
+#include "aj_afio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,7 +79,7 @@ int main(void)
 //  LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
-	AFIO_ConfigSWJ(SWJ_SWD_JTAG);
+	AJ_AFIO_ConfigSWJ(AJ_SWJ_SWD_JTAG);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -94,7 +95,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AFIO_ConfigSWJ(SWJ_SWD_JTAG_NJTRST);
+	AJ_AFIO_ConfigSWJ(AJ_SWJ_SWD_JTAG_NJTRST);
 	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_4);
 	
   while (1){
