@@ -1,7 +1,7 @@
 #ifndef HARDWARE_INCLUDED
 #define HARDWARE_INCLUDED
 
-#define TIMEBASE_CONFIG
-    #define TIMEBASE_REG32_U32
+#define AJ_TIMEBASE_CONFIG
+    #define AJ_TIMEBASE_REG32_U32
 
 #endif

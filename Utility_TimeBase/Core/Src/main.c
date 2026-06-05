@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hardware.h"
-#include "timebase.h"
+#include "aj_timebase.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,15 +99,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	timebase_t tick_last = TimeBase_GetTicks();
+	aj_timebase_t tick_last = AJ_TimeBase_GetTicks();
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		timebase_t tick_now = TimeBase_GetTicks();
+		aj_timebase_t tick_now = AJ_TimeBase_GetTicks();
 
-		if ( TimeBase_HasElapsed(tick_now, tick_last, 500) ){
+		if ( AJ_TimeBase_HasElapsed(tick_now, tick_last, 500) ){
 				tick_last = tick_now;
 				LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
 		}

@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hardware.h"
-#include "timebase.h"
+#include "aj_timebase.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -209,7 +209,7 @@ void TIM2_IRQHandler(void)
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM2)){
 		LL_TIM_ClearFlag_UPDATE(TIM2);
 		
-		TimeBase_CountTicks();
+		AJ_TimeBase_CountTicks();
    }
   /* USER CODE END TIM2_IRQn 0 */
   /* USER CODE BEGIN TIM2_IRQn 1 */

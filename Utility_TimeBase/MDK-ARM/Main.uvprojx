@@ -887,9 +887,9 @@
           <GroupName>Drivers/CrossPlatformLibraries</GroupName>
           <Files>
             <File>
-              <FileName>timebase.c</FileName>
+              <FileName>aj_timebase.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\CrossPlatformLibraries\utils\timebase.c</FilePath>
+              <FilePath>..\..\..\CrossPlatformLibraries\utils\aj_timebase.c</FilePath>
             </File>
           </Files>
         </Group>
