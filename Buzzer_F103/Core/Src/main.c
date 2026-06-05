@@ -22,8 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hardware.h"
-#include "timebase.h"
-#include "buzzer.h"
+#include "aj_timebase.h"
+#include "aj_buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,15 +100,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	timebase_t tick_now = TimeBase_GetTicks();
-  Buzzer_Start(tick_now, BUZZER_COUNT2);
+	aj_timebase_t tick_now = AJ_TimeBase_GetTicks();
+  AJ_Buzzer_Start(tick_now, AJ_BUZZER_COUNT2);
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		tick_now = TimeBase_GetTicks();
-		Buzzer_Refresh(tick_now);
+		tick_now = AJ_TimeBase_GetTicks();
+		AJ_Buzzer_Refresh(tick_now);
   }
   /* USER CODE END 3 */
 }

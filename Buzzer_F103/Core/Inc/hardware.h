@@ -1,16 +1,19 @@
 #ifndef HARDWARE_INCLUDED
 #define HARDWARE_INCLUDED
 
-#define TIMEBASE_CONFIG
-    #define TIMEBASE_REG32_U32
+#define AJ_BIT_REG_CONFIG
+    #define AJ_BIT_REG_32BIT
+		
+#define AJ_TIMEBASE_CONFIG
+    #define AJ_TIMEBASE_REG32_U32
 
-#define BUZZER_HARDWARE
-    #define BUZZER_ACTIVE       0U
-    #define BUZZER_COUNT1       75U
-    #define BUZZER_COUNT2       200U
+#define AJ_BUZZER_HARDWARE
+    #define AJ_BUZZER_ACTIVE       0U
+    #define AJ_BUZZER_COUNT1       75U
+    #define AJ_BUZZER_COUNT2       200U
 
-    #define BUZZER_GPIO         GPIOC
-    #define BUZZER_PIN          13U
-    #define BUZZER_MASK         (1U << BUZZER_PIN)
+    #define AJ_BUZZER_GPIO         GPIOC
+    #define AJ_BUZZER_PIN          13U
+    #define AJ_BUZZER_MASK         (1U << AJ_BUZZER_PIN)
 
 #endif

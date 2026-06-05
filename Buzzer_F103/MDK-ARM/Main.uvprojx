@@ -887,14 +887,14 @@
           <GroupName>Drivers/CrossPlatformLibraries</GroupName>
           <Files>
             <File>
-              <FileName>timebase.c</FileName>
+              <FileName>aj_timebase.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\CrossPlatformLibraries\utils\timebase.c</FilePath>
+              <FilePath>..\..\..\CrossPlatformLibraries\utils\aj_timebase.c</FilePath>
             </File>
             <File>
-              <FileName>buzzer.c</FileName>
+              <FileName>aj_buzzer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\CrossPlatformLibraries\drivers\buzzer.c</FilePath>
+              <FilePath>..\..\..\CrossPlatformLibraries\drivers\aj_buzzer.c</FilePath>
             </File>
           </Files>
         </Group>
