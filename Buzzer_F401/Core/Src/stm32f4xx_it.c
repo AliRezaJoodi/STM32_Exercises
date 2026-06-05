@@ -22,7 +22,7 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "timebase.h"
+#include "aj_timebase.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -211,7 +211,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
 		
-		TimeBase_CountTicks();
+		AJ_TimeBase_CountTicks();
 
    }
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
