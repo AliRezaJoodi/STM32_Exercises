@@ -62,7 +62,6 @@ Download single folder or file from GitHub:
 - **F401**: STM32F401  
 - **F407**: STM32F407 
  
-<!--
 ### Table of Contents
 |Title					|Bare Metal|LL |HAL|
 |:--------------------------------------|:--------:|:-:|:-:|
@@ -75,4 +74,6 @@ Download single folder or file from GitHub:
 |[GPIO_F407](GPIO_F407)			|-	   |-  |Y  |
 |[Utility_Bit](Utility_Bit)		|-	   |-  |-  |
 |[Utility_TimeBase](Utility_TimeBase)	|-	   |-  |-  |
+
+<!--
 -->
