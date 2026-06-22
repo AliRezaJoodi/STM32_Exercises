@@ -13,7 +13,7 @@
     #define AJ_BUZZER_COUNT2       200U
 
     #define AJ_BUZZER_GPIO         GPIOC
-    #define AJ_BUZZER_PIN          13U
-    #define AJ_BUZZER_MASK         (1U << AJ_BUZZER_PIN)
+    #define AJ_BUZZER_POS          13U
+    #define AJ_BUZZER_MASK         (1U << AJ_BUZZER_POS)
 
 #endif
