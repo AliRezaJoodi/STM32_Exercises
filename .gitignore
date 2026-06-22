@@ -32,6 +32,9 @@ RTE
 *.scvd
 *.lst
 *.Bak
+*.__i
+*.BAT
+*._ac
 JLinkLog.txt
 JLinkSettings.ini
 
