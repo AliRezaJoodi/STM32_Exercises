@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "aj_bus.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,7 +65,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -88,37 +87,35 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_AHB1_GRP1_DisableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
-	LL_AHB1_GRP1_DisableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
-	LL_AHB1_GRP1_DisableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
+	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOA);
+	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOB);
+	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOC);
+
+	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOA);
+	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOB);
+	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOC);
 	
-	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
-	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
-	
-	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_0); 
-	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_0); 
-	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_0); 
+//	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_0); 
+//	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_0); 
+//	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_0); 
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_0); 
-//		LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_0); 
-//		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_0); 
-//		LL_mDelay(500);
+		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_0); 
+		LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_0); 
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_0); 
+		LL_mDelay(500);
   }
   /* USER CODE END 3 */
 }

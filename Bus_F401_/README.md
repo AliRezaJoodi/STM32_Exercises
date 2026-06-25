@@ -13,6 +13,8 @@ Understand Peripheral Clock/Reset configuration on STM32F401 and compare abstrac
 - `LL` (Exercise using LL Drivers)
 - `Simulate` (Simulation file)
 
+Note: The simulation doesn't work for this exercise.   
+
 ### Useful Links
 GitHub Profile:  
 [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)   
