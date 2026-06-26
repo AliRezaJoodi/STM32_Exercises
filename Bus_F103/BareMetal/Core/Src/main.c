@@ -96,18 +96,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AJ_BUS_APB2_DisableClock(AJ_BUS_APB2_GPIOC);
-	AJ_BUS_APB2_EnableClock(AJ_BUS_APB2_GPIOC);
+	AJ_Bus_APB2_DisableClock(AJ_BUS_APB2_CLOCK_GPIOC);
+	AJ_Bus_APB2_EnableClock(AJ_BUS_APB2_CLOCK_GPIOC);
 	
-	AJ_BUS_APB2_ForceReset(AJ_BUS_APB2_GPIOC);
-	AJ_BUS_APB2_ReleaseReset(AJ_BUS_APB2_GPIOC);
-	//AJ_BUS_APB2_ConfigResetStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_RELEASE);
-
-//	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_DISABLE);
-//	AJ_BUS_APB2_ConfigClockEnableStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_ENABLE);
-	
-//	AJ_BUS_APB2_ConfigResetStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_FORCE);
-//	AJ_BUS_APB2_ConfigResetStatus(AJ_BUS_APB2_GPIOC, AJ_BUS_RELEASE);
+	AJ_Bus_APB2_ForceReset(AJ_BUS_APB2_RESET_GPIOC);
+	AJ_Bus_APB2_ReleaseReset(AJ_BUS_APB2_RESET_GPIOC);
 
 /* Resetting a GPIO peripheral clears its configuration registers and restores
  * the default reset state. The GPIO must be configured again after reset
