@@ -68,13 +68,13 @@ Download single folder or file from GitHub:
 |[Peripheral, AFIO, STM32F103](AFIO_F103)|Y|Y|-|
 |[Peripheral, Bus, STM32F103](Bus_F103)|Y|Y|Y|
 |[Peripheral, Bus, STM32F401](Bus_F401)|Y|Y|Y|
-|[Buzzer_F103](Buzzer_F103)|Y|-|-|
-|[Buzzer_F401](Buzzer_F401)|Y|-|-|
 |[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
-|[Utility_Bit](Utility_Bit)|-|-|-|
-|[Utility_TimeBase](Utility_TimeBase)|-|-|-|
+|[Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
+|[Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
+|[Utility, Bit](Utility_Bit)|-|-|-|
+|[Utility, TimeBase](Utility_TimeBase)|-|-|-|
 
 <!--
 -->
