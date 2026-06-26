@@ -63,18 +63,18 @@ Download single folder or file from GitHub:
 - **F407**: STM32F407 
  
 ### Table of Contents
-|Title					|Bare Metal|LL |HAL|
-|:--------------------------------------|:--------:|:-:|:-:|
-|[AFIO_F103](AFIO_F103)			|Y	   |Y  |-  |
-|[Bus_F103](Bus_F103)			|Y	   |Y  |Y  |
-|[Bus_F401](Bus_F401)			|Y	   |Y  |Y  |
-|[Buzzer_F103](Buzzer_F103)		|Y	   |-  |-  |
-|[Buzzer_F401](Buzzer_F401)		|Y	   |-  |-  |
-|[GPIO_F103](GPIO_F103)			|Y	   |Y  |Y  |
-|[GPIO_F401](GPIO_F401)			|Y	   |Y  |Y  |
-|[GPIO_F407](GPIO_F407)			|-	   |-  |Y  |
-|[Utility_Bit](Utility_Bit)		|-	   |-  |-  |
-|[Utility_TimeBase](Utility_TimeBase)	|-	   |-  |-  |
+|Title|Bare Metal|LL |HAL|
+|:----|:--------:|:-:|:-:|
+|[Peripheral, AFIO, STM32F103](AFIO_F103)|Y|Y|-|
+|[Peripheral, Bus, STM32F103](Bus_F103)|Y|Y|Y|
+|[Peripheral, Bus, STM32F401](Bus_F401)|Y|Y|Y|
+|[Buzzer_F103](Buzzer_F103)|Y|-|-|
+|[Buzzer_F401](Buzzer_F401)|Y|-|-|
+|[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
+|[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
+|[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
+|[Utility_Bit](Utility_Bit)|-|-|-|
+|[Utility_TimeBase](Utility_TimeBase)|-|-|-|
 
 <!--
 -->
