@@ -1,9 +1,6 @@
 ## GPIO, STM32F407
 Understand GPIO configuration on STM32F407 and compare abstraction layers.  
 
-### Simulate  
-![](Simulate/v1.0.png)  
-
 ### Features
 - **MCU:** STM32F407ZGT6
 

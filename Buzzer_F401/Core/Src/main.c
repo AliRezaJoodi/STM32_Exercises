@@ -22,29 +22,25 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hardware.h"
-#include "aj_timebase.h"
+//#include "aj_timebase.h"
 #include "aj_buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 /* USER CODE BEGIN PV */
-
+volatile uint32_t system_tick = 0U;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -52,23 +48,19 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void){
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -105,15 +97,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	aj_timebase_t tick_now = AJ_TimeBase_GetTicks();
-	AJ_Buzzer_Start(tick_now, 500);
+	AJ_Buzzer_Start(system_tick, 500);
 	
   while (1){
     /* USER CODE END WHILE */
-
+		
     /* USER CODE BEGIN 3 */
-		tick_now = AJ_TimeBase_GetTicks();
-		AJ_Buzzer_Refresh(tick_now);
+		AJ_Buzzer_Refresh(system_tick);
   }
   /* USER CODE END 3 */
 }

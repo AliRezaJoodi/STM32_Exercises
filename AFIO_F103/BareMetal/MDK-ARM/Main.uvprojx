@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xB,USE_FULL_LL_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\CrossPlatformLibraries\utils;..\CrossPlatformLibraries\platforms\stm32f1\peripherals</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\CrossPlatformLibraries\utils;..\CrossPlatformLibraries\platforms\stm32f1\peripherals;..\CrossPlatformLibraries\platforms\common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

@@ -22,37 +22,31 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "aj_timebase.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern volatile uint32_t system_tick;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -202,13 +196,12 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles TIM2 global interrupt.
   */
-void TIM2_IRQHandler(void)
-{
+void TIM2_IRQHandler(void){
   /* USER CODE BEGIN TIM2_IRQn 0 */
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM2)){
 		LL_TIM_ClearFlag_UPDATE(TIM2);
 		
-		AJ_TimeBase_CountTicks();
+		system_tick++;
    }
   /* USER CODE END TIM2_IRQn 0 */
   /* USER CODE BEGIN TIM2_IRQn 1 */

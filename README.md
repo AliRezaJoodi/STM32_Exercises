@@ -51,17 +51,17 @@ Either method will allow the project to build correctly.
 - `mklink /J CrossPlatformLibraries D:\GitHub\CrossPlatformLibraries`
 - `rmdir SDK`
 
+## Abbreviations
+- **F103**: STM32F103  
+- **F401**: STM32F401  
+- **F407**: STM32F407 
+
 ### Useful Links
 GitHub Profile:  
 [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)   
 Download single folder or file from GitHub:  
 [https://minhaskamal.github.io/DownGit/#/home](https://minhaskamal.github.io/DownGit/#/home)  
 
-## Abbreviations
-- **F103**: STM32F103  
-- **F401**: STM32F401  
-- **F407**: STM32F407 
- 
 ### Table of Contents
 |Title|Bare Metal|LL |HAL|
 |:----|:--------:|:-:|:-:|
@@ -71,8 +71,8 @@ Download single folder or file from GitHub:
 |[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
-|[Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
-|[Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
+|[Driver, Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
+|[Driver, Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
 |[Utility, Bit](Utility_Bit)|-|-|-|
 |[Utility, TimeBase](Utility_TimeBase)|-|-|-|
 
