@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bit.h"
+#include "aj_bit_reg.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,21 +115,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 // Note: LL_mDelay(500) doesn't work on Proteus 
-	SetBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
-	SetBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
-	ClearBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
-	ClearBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
-	ToggleBitMask_Reg32(&GPIOB->ODR, 0x10U); Delay_ms(1000);
-	ToggleBit_Reg32(&GPIOB->ODR, 5U); Delay_ms(1000);
-	WriteBit_Reg32(&GPIOB->ODR, 5U, 0U); Delay_ms(1000);
-	BM_TOGGLE_BITMASK(GPIOB->ODR, 0x10U); Delay_ms(1000);
-//	GPIOB->ODR = __builtin_ctz(0x40U);
+
 		
   while (1){
     /* USER CODE END WHILE */
-		//BM_WRITE_FIELD(GPIOB->ODR, 0xF000U, BM_GET_FIELD(GPIOA->IDR, 0xF0U));
-		//WriteBit4_Reg32(&GPIOB->ODR, 12U, GetBit4_Reg32(&GPIOA->IDR, 4U));
-		WriteField_Reg32(&GPIOB->ODR, 0xF000U, GetField_Reg32(&GPIOA->IDR, 0xF0U));
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
