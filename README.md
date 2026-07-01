@@ -45,7 +45,7 @@ You can do one of the following:
 Either method will allow the project to build correctly.  
 
 ### Useful CMD codes
-- `cd /d D:\GitHub\STM32_Exercises\GPIO_F103\BareMetal`
+- `cd /d D:\GitHub\STM32_Exercises\USART1_TX_RX_INT_F103\LL`
 - `mklink /J Drivers D:\SDKs\STM32Cube_FW_F1_V1.8.7\Drivers`
 - `mklink /J Drivers D:\SDKs\STM32Cube_FW_F4_V1.28.3\Drivers`
 - `mklink /J CrossPlatformLibraries D:\GitHub\CrossPlatformLibraries`
@@ -71,6 +71,7 @@ Download single folder or file from GitHub:
 |[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
+|[Peripheral, USART1, TX, RX, INT, STM32F103](USART1_TX_RX_INT_F103)| | | |
 |[Driver, Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
 |[Driver, Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
 |[Utility, Bit](Utility_Bit)|-|-|-|
