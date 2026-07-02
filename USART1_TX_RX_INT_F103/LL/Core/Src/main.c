@@ -39,6 +39,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+volatile uint8_t usart1_rx_flag = 0;
+char txt[25] = "";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,19 +101,28 @@ int main(void)
 	const char txt2[]= "Test2";
 	LL_USART_PutString(USART1, txt2);
 	
-	char txt[20]= "Test3";
-	LL_USART_PutString(USART1, txt);
+	char txt3[20]= "Test3";
+	LL_USART_PutString(USART1, txt3);
 	
 	uint8_t number = 17;
-	sprintf(txt, "Number(DEC)=%3d", number);
-	LL_USART_PutString(USART1, txt);
-	sprintf(txt, "Number(Hex)=0x%X", number);
-	LL_USART_PutString(USART1, txt);
+	sprintf(txt3, "Number(DEC)=%3d", number);
+	LL_USART_PutString(USART1, txt3);
+	sprintf(txt3, "Number(Hex)=0x%X", number);
+	LL_USART_PutString(USART1, txt3);
 	
-  while (1){
+	LL_USART_EnableIT_RXNE(USART1);
+
+  while(1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		if(usart1_rx_flag == 1){
+			usart1_rx_flag = 0;
+			LL_USART_PutString(USART1, txt);
+			for(uint8_t j = 0; j < 25; ++j){
+				txt[j] = 0;
+			};
+		}
   }
   /* USER CODE END 3 */
 }

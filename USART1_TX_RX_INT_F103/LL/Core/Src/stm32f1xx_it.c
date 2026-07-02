@@ -201,16 +201,33 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles USART1 global interrupt.
   */
-void USART1_IRQHandler(void)
-{
+void USART1_IRQHandler(void){
   /* USER CODE BEGIN USART1_IRQn 0 */
-
+	char buffer;
+	static uint8_t i = 0;
+	extern uint8_t usart1_rx_flag;
+	extern char txt[25];
+	
+	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
+		buffer = LL_USART_ReceiveData8(USART1);
+		
+		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+		LL_USART_TransmitData8(USART1, buffer);
+	
+		if(32 <= buffer && buffer < 127){
+			txt[i] = buffer;
+			++i;
+		}
+		else if(buffer == 13){
+			i = 0;
+			usart1_rx_flag = 1;
+		}
+	}
   /* USER CODE END USART1_IRQn 0 */
+	
   /* USER CODE BEGIN USART1_IRQn 1 */
-
   /* USER CODE END USART1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
-
 /* USER CODE END 1 */
