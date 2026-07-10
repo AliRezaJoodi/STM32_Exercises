@@ -831,11 +831,6 @@
           <GroupName>Drivers/CrossPlatformLibraries</GroupName>
           <Files>
             <File>
-              <FileName>aj_timebase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\CrossPlatformLibraries\utils\aj_timebase.c</FilePath>
-            </File>
-            <File>
               <FileName>aj_buzzer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\CrossPlatformLibraries\drivers\aj_buzzer.c</FilePath>
