@@ -96,19 +96,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	LL_USART_TransmitData8(USART1, 'A');
 	LL_USART_PutChar(USART1, 'B');
-	LL_USART_PutString(USART1, "Test1");
+	LL_USART_TransmitString(USART1, "Test1");
 	
 	const char txt2[]= "Test2";
-	LL_USART_PutString(USART1, txt2);
+	LL_USART_TransmitString(USART1, txt2);
 	
 	char txt3[20]= "Test3";
-	LL_USART_PutString(USART1, txt3);
+	LL_USART_TransmitString(USART1, txt3);
 	
 	uint8_t number = 17;
 	sprintf(txt3, "Number(DEC)=%3d", number);
-	LL_USART_PutString(USART1, txt3);
+	LL_USART_TransmitString(USART1, txt3);
 	sprintf(txt3, "Number(Hex)=0x%X", number);
-	LL_USART_PutString(USART1, txt3);
+	LL_USART_TransmitString(USART1, txt3);
+
+	const char my_msg[] = "Hello Alireza, this is IT mode!";
+	LL_USART_TransmitString_IT(USART1, my_msg);
+	//LL_USART_PutString(USART1, "OK");
 	
 	LL_USART_EnableIT_RXNE(USART1);
 
@@ -118,7 +122,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		if(usart1_rx_flag == 1){
 			usart1_rx_flag = 0;
-			LL_USART_PutString(USART1, txt);
+			LL_USART_TransmitString(USART1, txt);
 			for(uint8_t j = 0; j < 25; ++j){
 				txt[j] = 0;
 			};

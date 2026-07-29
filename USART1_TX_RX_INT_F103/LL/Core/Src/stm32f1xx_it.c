@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "ll_usart_extra.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -207,6 +208,8 @@ void USART1_IRQHandler(void){
 	static uint8_t i = 0;
 	extern uint8_t usart1_rx_flag;
 	extern char txt[25];
+	
+	LL_USART_Transmit_IRQHandler(USART1);
 	
 	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
 		buffer = LL_USART_ReceiveData8(USART1);
