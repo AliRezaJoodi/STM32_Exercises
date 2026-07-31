@@ -95,22 +95,22 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	LL_USART_TransmitData8(USART1, 'A');
-	LL_USART_PutChar(USART1, 'B');
-	LL_USART_TransmitString(USART1, "Test1");
+	LL_USART_TransmitChar(USART1, 'B');
+	LL_USART_TransmitString(USART1, "Test1\r");
 	
-	const char txt2[]= "Test2";
+	const char txt2[]= "Test2\r";
 	LL_USART_TransmitString(USART1, txt2);
 	
-	char txt3[20]= "Test3";
+	char txt3[20]= "Test3\r";
 	LL_USART_TransmitString(USART1, txt3);
 	
 	uint8_t number = 17;
-	sprintf(txt3, "Number(DEC)=%3d", number);
+	sprintf(txt3, "Number(DEC)=%3d\r", number);
 	LL_USART_TransmitString(USART1, txt3);
-	sprintf(txt3, "Number(Hex)=0x%X", number);
+	sprintf(txt3, "Number(Hex)=0x%X\r", number);
 	LL_USART_TransmitString(USART1, txt3);
 
-	const char my_msg[] = "Hello Alireza, this is IT mode!";
+	const char my_msg[] = "Hello Alireza, this is IT mode!\r";
 	LL_USART_TransmitString_IT(USART1, my_msg);
 	//LL_USART_PutString(USART1, "OK");
 	

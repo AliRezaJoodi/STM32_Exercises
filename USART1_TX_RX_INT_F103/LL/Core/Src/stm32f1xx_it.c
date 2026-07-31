@@ -209,19 +209,20 @@ void USART1_IRQHandler(void){
 	extern uint8_t usart1_rx_flag;
 	extern char txt[25];
 	
-	LL_USART_Transmit_IRQHandler(USART1);
+	LL_USART_Transmit_Handler(USART1);
 	
 	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
 		buffer = LL_USART_ReceiveData8(USART1);
 		
-		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-		LL_USART_TransmitData8(USART1, buffer);
+//		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
+//		LL_USART_TransmitData8(USART1, buffer);
 	
 		if(32 <= buffer && buffer < 127){
 			txt[i] = buffer;
 			++i;
 		}
-		else if(buffer == 13){
+		else if(buffer == '\r'){
+			txt[i] = '\0';
 			i = 0;
 			usart1_rx_flag = 1;
 		}
