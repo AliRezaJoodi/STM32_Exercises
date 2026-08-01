@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +43,9 @@
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+char rx_data[5] = {0};
+volatile uint8_t rx_done = 0;
+static const char msg_prompt[] = "Enter 4 characters:\r\n";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,16 +92,22 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_UART_Transmit(&huart1, (uint8_t*)msg_prompt, strlen(msg_prompt), HAL_MAX_DELAY);
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)rx_data, 4);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    if(rx_done == 1){
+      rx_done = 0;
+      HAL_UART_Transmit(&huart1, (uint8_t*)rx_data, 4, HAL_MAX_DELAY);
+      HAL_UART_Transmit(&huart1, (uint8_t*)"\r\n", 2, HAL_MAX_DELAY);
+      HAL_UART_Receive_IT(&huart1, (uint8_t*)rx_data, 4);
+    }
   }
   /* USER CODE END 3 */
 }
@@ -194,7 +202,12 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+  if(huart->Instance == USART1){
+    rx_data[4] = '\0';
+    rx_done = 1;
+  }
+}
 /* USER CODE END 4 */
 
 /**
