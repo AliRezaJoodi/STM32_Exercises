@@ -406,9 +406,14 @@
               <FilePath>../Core/Src/stm32f1xx_it.c</FilePath>
             </File>
             <File>
-              <FileName>ll_usart_extra.c</FileName>
+              <FileName>ll_usart_transmit_string.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\CrossPlatformLibraries\platforms\stm32f1\peripherals\ll_usart_extra.c</FilePath>
+              <FilePath>..\CrossPlatformLibraries\platforms\stm32f1\peripherals\ll_usart_transmit_string.c</FilePath>
+            </File>
+            <File>
+              <FileName>ll_usart_receive_string.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\CrossPlatformLibraries\platforms\stm32f1\peripherals\ll_usart_receive_string.c</FilePath>
             </File>
           </Files>
         </Group>

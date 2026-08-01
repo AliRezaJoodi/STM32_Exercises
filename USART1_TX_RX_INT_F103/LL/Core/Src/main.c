@@ -22,7 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "ll_usart_extra.h"
+#include "ll_usart_transmit_string.h"
+#include "ll_usart_receive_string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +42,7 @@
 /* USER CODE BEGIN PV */
 volatile uint8_t usart1_rx_flag = 0;
 char txt[25] = "";
+LL_USART_ReceiveString_TypeDef usart1_rx = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -114,19 +116,27 @@ int main(void)
 	LL_USART_TransmitString_IT(USART1, my_msg);
 	//LL_USART_PutString(USART1, "OK");
 	
-	LL_USART_EnableIT_RXNE(USART1);
-
+	//LL_USART_EnableIT_RXNE(USART1);
+	LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
+	
   while(1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if(usart1_rx_flag == 1){
-			usart1_rx_flag = 0;
+		if (LL_USART_IsReceivingStringDone(&usart1_rx)) {
 			LL_USART_TransmitString(USART1, txt);
-			for(uint8_t j = 0; j < 25; ++j){
-				txt[j] = 0;
-			};
+			LL_USART_TransmitString(USART1, "\r\n");
+			LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
+			//LL_USART_StopReceivingString_IT(&usart1_rx, USART1);
 		}
+//		if(usart1_rx_flag == 1){
+//			usart1_rx_flag = 0;
+//			LL_USART_TransmitString(USART1, txt);
+//			LL_USART_TransmitString(USART1, "\r\n");
+//			for(uint8_t j = 0; j < 25; ++j){
+//				txt[j] = 0;
+//			};
+//		}
   }
   /* USER CODE END 3 */
 }
