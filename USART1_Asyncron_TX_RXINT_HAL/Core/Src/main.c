@@ -102,14 +102,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  // Receive data via UART in polling mode
+		// Receive data via UART in polling mode
 //	  HAL_UART_Receive(&huart1, message, 4, 1000);  	// Receive 4 bytes of data via UART
 
 	  HAL_GPIO_TogglePin (GPIOC, GPIO_PIN_13);
 	  HAL_Delay (250);
 
-	  //HAL_UART_Transmit(&huart1, message, 4, 4); 		// Attempt to send the received data
-	  //HAL_UART_Transmit(&huart1, "\r\n", 2, 1);			// New Line
+	  HAL_UART_Transmit(&huart1, message, 4, 4); 		// Attempt to send the received data
+	  HAL_UART_Transmit(&huart1, "\r\n", 2, 1);			// New Line
   }
   /* USER CODE END 3 */
 }

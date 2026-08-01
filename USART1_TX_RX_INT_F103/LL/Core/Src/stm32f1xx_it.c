@@ -59,6 +59,7 @@
 /* External variables --------------------------------------------------------*/
 /* USER CODE BEGIN EV */
 extern LL_USART_ReceiveString_TypeDef usart1_rx;
+extern LL_USART_TransmitString_TypeDef usart1_tx;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -209,7 +210,7 @@ void USART1_IRQHandler(void){
 //	extern uint8_t usart1_rx_flag;
 //	extern char txt[25];
 	
-	LL_USART_TransmitString_IT_Handler(USART1);
+	LL_USART_TransmitString_IT_Handler(&usart1_tx, USART1);
 	LL_USART_ReceiveString_IT_Handler(&usart1_rx, USART1);
 	
 //	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
