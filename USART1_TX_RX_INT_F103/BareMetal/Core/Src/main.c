@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "aj_usart.h"
 #include "ll_usart_transmit_string.h"
 #include "ll_usart_receive_string.h"
 /* USER CODE END Includes */
