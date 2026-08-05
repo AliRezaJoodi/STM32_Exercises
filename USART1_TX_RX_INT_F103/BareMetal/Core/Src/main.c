@@ -94,6 +94,8 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+	AJ_USART_ConfigOperatingMode(USART1, AJ_USART_MODE_ASYNC);
+	AJ_USART_ConfigBaudRate_16x(USART1, 8000000, 9600);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,7 +116,7 @@ int main(void)
 	sprintf(txt3, "Number(Hex)=0x%X\r", number);
 	LL_USART_TransmitString(USART1, txt3);
 
-	const char my_msg[] = "Hello Alireza, this is IT mode!\r";
+	const char my_msg[] = "Hello, this is IT mode!\r";
 	LL_USART_TransmitString_IT(&usart1_tx, USART1, my_msg);
 	//LL_USART_PutString(USART1, "OK");
 	
