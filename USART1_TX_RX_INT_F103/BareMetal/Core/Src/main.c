@@ -93,14 +93,22 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+	
   /* USER CODE BEGIN 2 */
-	AJ_USART_ConfigOperatingMode(USART1, AJ_USART_MODE_ASYNC);
-	AJ_USART_ConfigBaudRate_16x(USART1, 8000000, 9600);
+	AJ_USART_CR1_DisableBit(USART1, AJ_USART_CR1_UE);
+	AJ_USART_ConfigOperatingMode_Async(USART1);
+	AJ_USART_SetWordLength(USART1, AJ_USART_CR1_WORDLENGTH_8B);
+	AJ_USART_SetParity(USART1, AJ_USART_CR1_PARITY_NONE);
+	AJ_USART_SetStopBitsLength(USART1, AJ_USART_CR2_STOPBITS_1);
+	AJ_USART_CR1_EnableBit(USART1, (AJ_USART_CR1_TE | AJ_USART_CR1_RE));
+	AJ_USART_CR3_DisableBit(USART1, (AJ_USART_CR3_RTSE | AJ_USART_CR3_CTSE));
+	AJ_USART_SetBaudRate_16x(USART1, 8000000U, 9600U);
+	AJ_USART_CR1_EnableBit(USART1, AJ_USART_CR1_UE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitData8(USART1, 'A');
+	AJ_USART_TransmitData_8Bit(USART1, 65);	// 'A'
 	LL_USART_TransmitChar(USART1, 'B');
 	LL_USART_TransmitString(USART1, "Test1\r");
 	
@@ -213,16 +221,16 @@ static void MX_USART1_UART_Init(void){
   /* USER CODE BEGIN USART1_Init 1 */
   /* USER CODE END USART1_Init 1 */
 	
-  USART_InitStruct.BaudRate = 9600;
-  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
-  USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
-  USART_InitStruct.Parity = LL_USART_PARITY_NONE;
-  USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
-  USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
-  USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
-  LL_USART_Init(USART1, &USART_InitStruct);
-  LL_USART_ConfigAsyncMode(USART1);
-  LL_USART_Enable(USART1);
+//  USART_InitStruct.BaudRate = 9600;
+//  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
+//  USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
+//  USART_InitStruct.Parity = LL_USART_PARITY_NONE;
+//  USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
+//  USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
+//  USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
+//  LL_USART_Init(USART1, &USART_InitStruct);
+//  LL_USART_ConfigAsyncMode(USART1);
+//  LL_USART_Enable(USART1);
 	
   /* USER CODE BEGIN USART1_Init 2 */
   /* USER CODE END USART1_Init 2 */
