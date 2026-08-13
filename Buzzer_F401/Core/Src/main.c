@@ -97,7 +97,7 @@ int main(void){
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AJ_Buzzer_Start(system_tick, 500);
+	AJ_Buzzer_Start(system_tick, AJ_BUZZER_COUNT2);
 	
   while (1){
     /* USER CODE END WHILE */
