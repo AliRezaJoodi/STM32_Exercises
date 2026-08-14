@@ -114,11 +114,10 @@ int main(void)
 	LL_USART_TransmitString(USART1, txt3);
 
 	const char my_msg[] = "Hello Alireza, this is IT mode!\r";
-	LL_USART_TransmitString_IT(&usart1_tx, USART1, my_msg);
+	LL_USART_TransmitString_IT(USART1, &usart1_tx, my_msg);
 	//LL_USART_PutString(USART1, "OK");
 	
-	//LL_USART_EnableIT_RXNE(USART1);
-	LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
+	LL_USART_ReceiveString_IT(USART1, &usart1_rx, txt, sizeof(txt));
 	
   while(1){
     /* USER CODE END WHILE */
@@ -127,8 +126,8 @@ int main(void)
 		if (LL_USART_IsReceivingStringDone(&usart1_rx)) {
 			LL_USART_TransmitString(USART1, txt);
 			LL_USART_TransmitString(USART1, "\r\n");
-			LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
-			//LL_USART_StopReceivingString_IT(&usart1_rx, USART1);
+			LL_USART_ReceiveString_IT(USART1, &usart1_rx, txt, sizeof(txt));
+			//LL_USART_StopReceivingString_IT(USART1, &usart1_rx);
 		}
 //		if(usart1_rx_flag == 1){
 //			usart1_rx_flag = 0;

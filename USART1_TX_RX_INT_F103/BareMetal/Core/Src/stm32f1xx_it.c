@@ -22,8 +22,8 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "ll_usart_transmit_string.h"
-#include "ll_usart_receive_string.h"
+#include "aj_usart_transmit_string.h"
+#include "aj_usart_receive_string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,8 +58,8 @@
 
 /* External variables --------------------------------------------------------*/
 /* USER CODE BEGIN EV */
-extern LL_USART_ReceiveString_TypeDef usart1_rx;
-extern LL_USART_TransmitString_TypeDef usart1_tx;
+extern aj_usart_rx_string_t usart1_rx;
+extern aj_usart_tx_string_t usart1_tx;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -205,30 +205,8 @@ void SysTick_Handler(void)
   */
 void USART1_IRQHandler(void){
   /* USER CODE BEGIN USART1_IRQn 0 */
-//	char buffer;
-//	static uint8_t i = 0;
-//	extern uint8_t usart1_rx_flag;
-//	extern char txt[25];
-	
-	LL_USART_TransmitString_IT_Handler(&usart1_tx, USART1);
-	LL_USART_ReceiveString_IT_Handler(&usart1_rx, USART1);
-	
-//	if(LL_USART_IsActiveFlag_RXNE(USART1) && LL_USART_IsEnabledIT_RXNE(USART1)){
-//		buffer = LL_USART_ReceiveData8(USART1);
-//		
-////		while(!LL_USART_IsActiveFlag_TXE(USART1)){}
-////		LL_USART_TransmitData8(USART1, buffer);
-//	
-//		if(32 <= buffer && buffer < 127){
-//			txt[i] = buffer;
-//			++i;
-//		}
-//		else if(buffer == '\r'){
-//			txt[i] = '\0';
-//			i = 0;
-//			usart1_rx_flag = 1;
-//		}
-//	}
+	AJ_USART_TransmitString_Interrupt_Handler(USART1, &usart1_tx);
+	AJ_USART_ReceiveString_Interrupt_Handler(USART1, &usart1_rx);
   /* USER CODE END USART1_IRQn 0 */
 	
   /* USER CODE BEGIN USART1_IRQn 1 */

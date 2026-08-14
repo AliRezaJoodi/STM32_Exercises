@@ -22,9 +22,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "hardware.h"
 #include "aj_usart.h"
-#include "ll_usart_transmit_string.h"
-#include "ll_usart_receive_string.h"
+#include "aj_usart_transmit_string.h"
+#include "aj_usart_receive_string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,8 +44,8 @@
 /* USER CODE BEGIN PV */
 volatile uint8_t usart1_rx_flag = 0;
 char txt[25] = "";
-LL_USART_ReceiveString_TypeDef usart1_rx = {0};
-LL_USART_TransmitString_TypeDef usart1_tx = {0};
+aj_usart_rx_string_t usart1_rx = {0};
+aj_usart_tx_string_t usart1_tx = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,42 +110,41 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	AJ_USART_TransmitData_8Bit(USART1, 65);	// 'A'
-	LL_USART_TransmitChar(USART1, 'B');
-	LL_USART_TransmitString(USART1, "Test1\r");
+	AJ_USART_TransmitChar(USART1, 'B');
+	AJ_USART_TransmitString(USART1, "Test1\r");
 	
 	const char txt2[]= "Test2\r";
-	LL_USART_TransmitString(USART1, txt2);
+	AJ_USART_TransmitString(USART1, txt2);
 	
 	char txt3[20]= "Test3\r";
-	LL_USART_TransmitString(USART1, txt3);
+	AJ_USART_TransmitString(USART1, txt3);
 	
 	uint8_t number = 17;
 	sprintf(txt3, "Number(DEC)=%3d\r", number);
-	LL_USART_TransmitString(USART1, txt3);
+	AJ_USART_TransmitString(USART1, txt3);
 	sprintf(txt3, "Number(Hex)=0x%X\r", number);
-	LL_USART_TransmitString(USART1, txt3);
+	AJ_USART_TransmitString(USART1, txt3);
 
 	const char my_msg[] = "Hello, this is IT mode!\r";
-	LL_USART_TransmitString_IT(&usart1_tx, USART1, my_msg);
-	//LL_USART_PutString(USART1, "OK");
+	AJ_USART_TransmitString_Interrupt(USART1, &usart1_tx, my_msg);
 	
-	//LL_USART_EnableIT_RXNE(USART1);
-	LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
+	//AJ_USART_CR1_EnableBit(USART1, AJ_USART_CR1_RXNEIE);
+	AJ_USART_ReceiveString_Interrupt(USART1, &usart1_rx, txt, sizeof(txt));
 	
   while(1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if (LL_USART_IsReceivingStringDone(&usart1_rx)) {
-			LL_USART_TransmitString(USART1, txt);
-			LL_USART_TransmitString(USART1, "\r\n");
-			LL_USART_ReceiveString_IT(&usart1_rx, USART1, txt, sizeof(txt));
-			//LL_USART_StopReceivingString_IT(&usart1_rx, USART1);
+		if (AJ_USART_IsReceivingStringDone(&usart1_rx)) {
+			AJ_USART_TransmitString(USART1, txt);
+			AJ_USART_TransmitString(USART1, "\r\n");
+			AJ_USART_ReceiveString_Interrupt(USART1, &usart1_rx, txt, sizeof(txt));
+			//AJ_USART_StopReceivingString_Interrupt(USART1, &usart1_rx);
 		}
 //		if(usart1_rx_flag == 1){
 //			usart1_rx_flag = 0;
-//			LL_USART_TransmitString(USART1, txt);
-//			LL_USART_TransmitString(USART1, "\r\n");
+//			AJ_USART_TransmitString(USART1, txt);
+//			AJ_USART_TransmitString(USART1, "\r\n");
 //			for(uint8_t j = 0; j < 25; ++j){
 //				txt[j] = 0;
 //			};
