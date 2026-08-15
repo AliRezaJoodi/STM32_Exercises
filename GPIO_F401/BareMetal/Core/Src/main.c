@@ -150,9 +150,6 @@ int main(void)
 		if(AJ_GPIO_ReadPin_Position(GPIOA, AJ_GPIO_PIN_1_POS) == 1){
 			AJ_GPIO_SetPin_Position(GPIOC, AJ_GPIO_PIN_13_POS);
 		}
-		
-		uint32_t value = AJ_GPIO_ReadField_Mask(GPIOA, 0xF0U);
-		AJ_GPIO_WriteField_Mask(GPIOB, 0xF000U, value);
   }
   /* USER CODE END 3 */
 }

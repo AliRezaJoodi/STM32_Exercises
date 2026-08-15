@@ -184,10 +184,8 @@ int main(void)
 			AJ_GPIO_SetPin_Position(GPIOC, AJ_GPIO_PIN_13_POS);
 		}
 				
-		uint32_t value = AJ_GPIO_ReadField_Mask(GPIOA, 0xF0U);
 		//uint32_t value = GPIO_Read4Pin(GPIOA, 4U);
 				
-		AJ_GPIO_WriteField_Mask(GPIOB, 0xF000U, value);
 		//GPIO_Write4Pin(GPIOB, GPIO_PIN_12, value);
   }
   /* USER CODE END 3 */
