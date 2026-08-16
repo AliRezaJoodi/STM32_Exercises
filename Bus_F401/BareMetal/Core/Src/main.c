@@ -96,13 +96,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOA);
-	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOB);
-	AJ_Bus_AHB1_DisableClock(AJ_BUS_AHB1_CLOCK_GPIOC);
+	AJ_Bus_DisableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOA);
+	AJ_Bus_DisableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOB);
+	AJ_Bus_DisableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOC);
 
-	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOA);
-	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOB);
-	AJ_Bus_AHB1_EnableClock(AJ_BUS_AHB1_CLOCK_GPIOC);
+	AJ_Bus_EnableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOA);
+	AJ_Bus_EnableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOB);
+	AJ_Bus_EnableClock_AHB1(AJ_BUS_CLOCK_AHB1_GPIOC);
 	
 //	LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_0); 
 //	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_0); 
