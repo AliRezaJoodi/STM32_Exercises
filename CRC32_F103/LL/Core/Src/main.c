@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include <stm32f1xx_ll_usart_put.h>
+//#include <stm32f1xx_ll_usart_put.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,6 +66,7 @@ uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
@@ -76,11 +77,11 @@ int main(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
   /* System interrupt init*/
-  //NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
+  /** NONJTRST: Full SWJ (JTAG-DP + SW-DP) but without NJTRST
   */
-  LL_GPIO_AF_Remap_SWJ_NOJTAG();
+  LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
 
@@ -109,15 +110,16 @@ int main(void)
 	
 	for(uint8_t i=0; i<3; i++){
 		sprintf(txt, "Data[%1d]=0x%2X", i, data[i]);
-		USART_PutString(USART1, txt);
+//		USART_PutString(USART1, txt);
 	}	
 	
-	crc32=LL_CRC_Calculate(data,3);
+	crc32 = LL_CRC_Calculate(data, 3);
 	sprintf(txt, "CRC32=0x%2X", crc32);
-	USART_PutString(USART1, txt);
+//	USART_PutString(USART1, txt);
 	
   while(1){
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -239,14 +241,15 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -278,8 +281,7 @@ void Error_Handler(void)
 
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
