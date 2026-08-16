@@ -13,6 +13,9 @@ Understand peripheral configuration on STM32F103 and compare abstraction layers.
 - `LL` (Exercise using LL drivers)
 - `Simulate` (Simulation file)
 
+Note:  
+The CRC value displayed in the Proteus simulator is NOT correct. It does not match the result of the real STM32F103 hardware.  
+
 ### Useful Links
 GitHub Profile:  
 [GitHub.com/AliRezaJoodi](https://github.com/AliRezaJoodi)   

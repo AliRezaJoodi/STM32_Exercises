@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-//#include <stm32f1xx_ll_usart_put.h>
+//#include "ll_usart_transmit_string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,23 +51,25 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_CRC_Init(void);
-/* USER CODE BEGIN PFP */
 
+/* USER CODE BEGIN PFP */
+static void LL_USART_TransmitString(USART_TypeDef *USARTx, const char *str);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length);
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void){
 
   /* USER CODE BEGIN 1 */
+	uint32_t data[3]={0x10,0x43,0x63};	
+	char txt[20];
+	uint32_t crc32 = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -91,35 +93,37 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_CRC_Init();
+	
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t data[3]={0x10,0x43,0x63};	
-	char txt[20];
-	uint32_t crc32=0;
+	LL_USART_TransmitString(USART1, "Reset CRC-32: \r");
+	LL_CRC_ResetCRCCalculationUnit(CRC);
+	crc32 = LL_CRC_ReadData32(CRC);
+	sprintf(txt, "CRC32 = 0x%2X\r \r", crc32);
+	LL_USART_TransmitString(USART1, txt);
 	
-	for(uint8_t i=0; i<3; i++){
-		sprintf(txt, "Data[%1d]=0x%2X", i, data[i]);
-//		USART_PutString(USART1, txt);
-	}	
 	
-	crc32 = LL_CRC_Calculate(data, 3);
-	sprintf(txt, "CRC32=0x%2X", crc32);
-//	USART_PutString(USART1, txt);
+	LL_USART_TransmitString(USART1, "Feed CRC-32: \r");
+	for(uint32_t i=0; i<3; i++){
+		LL_CRC_FeedData32(CRC, data[i]);
+		sprintf(txt, "Data[%1d] = 0x%2X\r", i, data[i]);
+		LL_USART_TransmitString(USART1, txt);
+	}
+	crc32 = LL_CRC_ReadData32(CRC);	
+	sprintf(txt, "CRC32 = 0x%2X\r", crc32);
+	LL_USART_TransmitString(USART1, txt);
 	
   while(1){
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -253,21 +257,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-//************************************************************
-uint32_t LL_CRC_Calculate(uint32_t* data, uint32_t length) {
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);		// Enable CRC clock
-  LL_CRC_ResetCRCCalculationUnit(CRC);		// Reset CRC calculation unit
-  __NOP(); __NOP(); __NOP();	// Necessary delay
-	
-	for(uint32_t i=0; i<length; i++){
-		LL_CRC_FeedData32(CRC, data[i]);		// Feed data to the CRC unit
-  }
-	
-  uint32_t crc = LL_CRC_ReadData32(CRC);	// Retrieve the final CRC value
-  return crc;
+void LL_USART_TransmitString(USART_TypeDef *USARTx, const char *str){
+  while(*str != 0){
+		while(LL_USART_IsActiveFlag_TXE(USARTx) != 1){}		// Transmit Data Register Empty 
+		LL_USART_TransmitData8(USARTx, *str);
+    str++;
+	}
 }
-
 /* USER CODE END 4 */
 
 /**
