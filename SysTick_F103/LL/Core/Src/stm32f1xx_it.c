@@ -180,18 +180,12 @@ void PendSV_Handler(void)
 /**
   * @brief This function handles System tick timer.
   */
-void SysTick_Handler(void)
-{
+void SysTick_Handler(void){
   /* USER CODE BEGIN SysTick_IRQn 0 */
   tick++;
-  if (tick >= 500U){
-    LL_GPIO_TogglePin(TICK_TOGGLE_PORT, TICK_TOGGLE_PIN);
-    tick = 0U;
-  }
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
   /* USER CODE END SysTick_IRQn 1 */
 }
 
