@@ -102,19 +102,19 @@ int main(void){
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	LL_USART_TransmitString(USART1, "Reset CRC-32: \r");
-	AJ_CRC32_Reset();
-	crc32 = AJ_CRC32_Read();
+	AJ_CRC32_ResetUnit();
+	crc32 = AJ_CRC32_ReadData();
 	sprintf(txt, "CRC32 = 0x%2X\r \r", crc32);
 	LL_USART_TransmitString(USART1, txt);
 	
 	
 	LL_USART_TransmitString(USART1, "Feed CRC-32: \r");
 	for(uint32_t i=0; i<3; i++){
-		AJ_CRC32_Feed(data[i]);
+		AJ_CRC32_FeedData(data[i]);
 		sprintf(txt, "Data[%1d] = 0x%2X\r", i, data[i]);
 		LL_USART_TransmitString(USART1, txt);
 	}
-	crc32 = AJ_CRC32_Read();	
+	crc32 = AJ_CRC32_ReadData();	
 	sprintf(txt, "CRC32 = 0x%2X\r", crc32);
 	LL_USART_TransmitString(USART1, txt);
 	
