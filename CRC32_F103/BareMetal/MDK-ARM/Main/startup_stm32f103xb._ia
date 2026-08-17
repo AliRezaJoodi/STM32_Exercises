@@ -1,0 +1,11 @@
+--cpu Cortex-M3 -g --diag_suppress=A1950W
+-I.\RTE\_Main
+-IC:\Users\Home\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include
+-IC:\Users\Home\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include
+--pd "__UVISION_VERSION SETA 539"
+--pd "_RTE_ SETA 1"
+--pd "STM32F10X_MD SETA 1"
+--pd "_RTE_ SETA 1"
+--list startup_stm32f103xb.lst
+--xref -o main\startup_stm32f103xb.o
+--depend main\startup_stm32f103xb.d "startup_stm32f103xb.s"
