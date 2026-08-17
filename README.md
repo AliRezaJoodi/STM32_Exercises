@@ -68,7 +68,7 @@ Download single folder or file from GitHub:
 |[Peripheral, AFIO, STM32F103](AFIO_F103)|Y|Y|-|
 |[Peripheral, Bus, STM32F103](Bus_F103)|Y|Y|Y|
 |[Peripheral, Bus, STM32F401](Bus_F401)|Y|Y|Y|
-|[Peripheral, CRC-32, STM32F103](CRC32_F103)| |Y| |
+|[Peripheral, CRC-32, STM32F103](CRC32_F103)|Y|Y| |
 |[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
