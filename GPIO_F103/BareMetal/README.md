@@ -1,5 +1,4 @@
 ## Bare-Metal Exercises Using CMSIS
-GPIO is implemented using direct register access through CMSIS definitions.
 
 ### Features
 - **GPIO Library:** CrossPlatformLibraries that using CMSIS

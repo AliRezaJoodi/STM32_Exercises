@@ -1,5 +1,5 @@
 ## GPIO, STM32F103
-Understand GPIO configuration on STM32F103 and compare abstraction layers.  
+Understand peripheral configuration and compare abstraction layers.    
 
 ### Simulate  
 ![](Simulate/v1.0.png)  

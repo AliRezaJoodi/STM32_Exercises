@@ -1,5 +1,5 @@
 ## CRC-32, STM32F103
-Understand peripheral configuration on STM32F103 and compare abstraction layers.  
+Understand peripheral configuration and compare abstraction layers.  
 
 ### Simulate  
 ![](Simulate/v1.0.png)  
