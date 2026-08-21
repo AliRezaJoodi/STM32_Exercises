@@ -36,6 +36,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+
 /* USER CODE BEGIN PV */
 volatile uint32_t tick = 0U;
 uint32_t tick_last = 0U;
@@ -93,19 +94,23 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	tick_last = tick;
+	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
+	LL_mDelay(100);
+	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	
+	tick_last = tick;
+	LL_SYSTICK_EnableIT();
+		
   while (1){
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-		
     if ((tick - tick_last) >= 500U){
       LL_GPIO_TogglePin(TICK_TOGGLE_PORT, TICK_TOGGLE_PIN);
       tick_last = tick;
     }
-    /* USER CODE END 3 */
-  }
   /* USER CODE END 3 */
+	}
 }
 
 /**
@@ -136,9 +141,7 @@ void SystemClock_Config(void)
   {
 
   }
-  /* Configure SysTick manually: 1 ms period with interrupt enabled */
-  /* Reload value = HCLK(8 MHz) / 1000 = 8000 */
-  SysTick_Config(8000UL);
+  LL_Init1msTick(8000000);
   LL_SetSystemCoreClock(8000000);
 }
 
