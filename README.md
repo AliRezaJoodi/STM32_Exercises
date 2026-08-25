@@ -45,7 +45,7 @@ You can do one of the following:
 Either method will allow the project to build correctly.  
 
 ### Useful CMD codes
-- `cd /d D:\GitHub\STM32_Exercises\USART_TX_RX_INTERRUPT_F103\LL`
+- `cd /d D:\GitHub\STM32_Exercises\Utility_TimeBase`
 - `mklink /J Drivers D:\SDKs\STM32Cube_FW_F1_V1.8.7\Drivers`
 - `mklink /J Drivers D:\SDKs\STM32Cube_FW_F4_V1.28.3\Drivers`
 - `mklink /J CrossPlatformLibraries D:\GitHub\CrossPlatformLibraries`

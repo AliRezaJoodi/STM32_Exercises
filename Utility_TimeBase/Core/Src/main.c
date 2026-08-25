@@ -99,16 +99,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	aj_timebase_t tick_last = AJ_TimeBase_GetTicks();
+	aj_timebase_t tick_last = AJ_TimeBase_GetTick();
 	
   while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		aj_timebase_t tick_now = AJ_TimeBase_GetTicks();
-
-		if ( AJ_TimeBase_HasElapsed(tick_now, tick_last, 500) ){
-				tick_last = tick_now;
+		if ( AJ_TimeBase_IsElapsed(tick_last, 500) ){
+				tick_last = AJ_TimeBase_GetTick();
 				LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
 		}
   }
