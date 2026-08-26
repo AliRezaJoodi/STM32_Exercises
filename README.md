@@ -65,6 +65,7 @@ Download single folder or file from GitHub:
 ### Table of Contents
 |Title|Bare Metal|LL |HAL|
 |:----|:--------:|:-:|:-:|
+|[Core Peripheral, SysTick, STM32F103](SysTick_F103)|Y|Y|-|
 |[Peripheral, AFIO, STM32F103](AFIO_F103)|Y|Y|-|
 |[Peripheral, Bus, STM32F103](Bus_F103)|Y|Y|Y|
 |[Peripheral, Bus, STM32F401](Bus_F401)|Y|Y|Y|
