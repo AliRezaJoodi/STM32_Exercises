@@ -772,6 +772,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Drivers/CrossPlatformLibraries</GroupName>
+          <Files>
+            <File>
+              <FileName>AJ_Delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../CrossPlatformLibraries/platforms/stm32f1/peripherals/AJ_Delay.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>

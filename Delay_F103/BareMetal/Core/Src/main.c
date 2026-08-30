@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "AJ_Delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,16 +46,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN PFP */
-void AJ_Delay_ms(uint32_t Delay){
-  volatile uint32_t tmp = SysTick->CTRL; 
-  ((void)tmp);
-
-  if (Delay < 0xFFFFFFFFU){Delay++;}
-
-  while (Delay){
-    if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U){Delay--;}
-  }
-}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
