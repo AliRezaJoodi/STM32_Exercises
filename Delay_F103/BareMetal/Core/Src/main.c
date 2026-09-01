@@ -94,14 +94,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1){
-    /* USER CODE END WHILE */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;     /* Enable trace and debug blocks */
+	DWT->CYCCNT = 0U;	    															/* Reset cycle counter */
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;	    					/* Enable cycle counter */
 
-    /* USER CODE BEGIN 3 */
+  while (1){
     LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
 		AJ_Delay_ms(500);
-  /* USER CODE END 3 */
-	}
+    //AJ_Delay_us(8000000, 500000);         // 500ms via DWT
+  }
+  /* USER CODE END WHILE */
 }
 
 /**
