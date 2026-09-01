@@ -76,7 +76,7 @@ Download single folder or file from GitHub:
 |[Peripheral, USART, TX, RX, INTERRUPT, STM32F103](USART_TX_RX_INTERRUPT_F103)|Y|Y|Y|
 |[Driver, Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
 |[Driver, Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
-|[Utility, Delay](Delay_F103)|Y|Y| |
+|[Utility, Delay](Delay_F103)|Y|Y|Y|
 |[Utility, Bit](Utility_Bit)|-|-|-|
 |[Utility, TimeBase](Utility_TimeBase)|-|-|-|
 
