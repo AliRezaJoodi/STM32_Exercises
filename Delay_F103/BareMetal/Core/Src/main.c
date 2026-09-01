@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "AJ_Delay.h"
+#include "aj_systick_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,14 +94,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;     /* Enable trace and debug blocks */
-	DWT->CYCCNT = 0U;	    															/* Reset cycle counter */
-  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;	    					/* Enable cycle counter */
-
   while (1){
     LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
-		AJ_Delay_ms(500);
-    //AJ_Delay_us(8000000, 500000);         // 500ms via DWT
+		//AJ_SysTick_Delay_ms(500);
+		AJ_SysTick_Delay_us(8000000, 500000);
   }
   /* USER CODE END WHILE */
 }

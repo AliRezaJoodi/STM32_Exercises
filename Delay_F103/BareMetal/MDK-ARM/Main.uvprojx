@@ -775,9 +775,9 @@
           <GroupName>Drivers/CrossPlatformLibraries</GroupName>
           <Files>
             <File>
-              <FileName>AJ_Delay.c</FileName>
+              <FileName>aj_systick_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../CrossPlatformLibraries/platforms/stm32f1/peripherals/AJ_Delay.c</FilePath>
+              <FilePath>../CrossPlatformLibraries/platforms/stm32f1/peripherals/aj_systick_delay.c</FilePath>
             </File>
           </Files>
         </Group>
