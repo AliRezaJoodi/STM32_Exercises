@@ -8,7 +8,7 @@
     
 ### Folder and Files
 - `Core` (User Code with C Language)
-- `CrossPlatformLibraries` (ignored in repository)
+- `CrossPlatformLibraries` (Personal library, ignored in repository)
 - `Drivers` (STM32Cube Drivers, ignored in repository)
 - `MDK-ARM` (IDE File for Keil uVision5)
 - `Main.ioc` (Code Generator with STM32CubeMX)
