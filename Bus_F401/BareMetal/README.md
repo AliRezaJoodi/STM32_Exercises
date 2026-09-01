@@ -1,7 +1,7 @@
 ## Bare-Metal Exercises Using CMSIS
 
 ### Features
-- **BUS Library:** CrossPlatformLibraries using CMSIS
+- **Example Base:** CrossPlatformLibraries using CMSIS
 - **Base Drivers:** LL Drivers from STM32Cube_FW_F4_V1.28.3
 - **System Clock:** HSI (Internal RC), 16 MHz 
 - **Debug Interface:** JTAG (4 Pins)
