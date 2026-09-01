@@ -1,13 +1,13 @@
 ## Exercises using HAL(Hardware Abstraction Layer) Drivers
 
 ### Features
-- **Framework:** STM32Cube_FW_F1_V1.8.7
+- **Drivers:** STM32Cube_FW_F1_V1.8.7
 - **System Clock:** HSI (Internal RC), 8 MHz 
 - **Debug Interface:** JTAG (4 Pins)
 
 ### Folder and Files
 - `Core` (User Code with C Language)
-- `Drivers` (STM32Cube Firmware Drivers – ignored in repository)
+- `Drivers` (STM32Cube Drivers, ignored in repository)
 - `MDK-ARM` (IDE File for Keil uVision5)
 - `Main.ioc` (Code Generator with STM32CubeMX)
 

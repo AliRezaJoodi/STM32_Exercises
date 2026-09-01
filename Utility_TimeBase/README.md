@@ -6,14 +6,14 @@ Test my library from CrossPlatformLibraries.
 
 ### Features
 - **MCU:** STM32F103C8
-- **Default Framework:** LL driver from STM32Cube_FW_F1_V1.8.7
+- **Default Drivers:** LL driver from STM32Cube_FW_F1_V1.8.7
 - **System Clock:** HSI (Internal RC), 8 MHz 
 - **Debug Interface:** JTAG (4 Pins)
 
 ### Folders and Files
 - `Core` (User Code with C Language)
 - `CrossPlatformLibraries` (ignored in repository)
-- `Drivers` (STM32Cube Firmware Drivers – ignored in repository)
+- `Drivers` (STM32Cube Drivers, ignored in repository)
 - `MDK-ARM` (IDE File for Keil uVision5)
 - `Main.ioc` (Code Generator with STM32CubeMX)
 - `Simulate` (Simulation file)
