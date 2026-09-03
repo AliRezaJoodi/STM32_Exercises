@@ -38,7 +38,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 /* USER CODE BEGIN PV */
 /* USER CODE END PV */
 
@@ -105,10 +104,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if ( AJ_TimeBase_IsElapsed(tick_last, 500) ){
-				tick_last = AJ_TimeBase_GetTick();
-				LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
-		}
+	if ( AJ_TimeBase_IsElapsed(tick_last, 500) ){
+		tick_last = AJ_TimeBase_GetTick();
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
+	}
   }
   /* USER CODE END 3 */
 }
