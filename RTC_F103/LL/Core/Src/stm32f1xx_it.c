@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -233,24 +234,6 @@ void RTC_IRQHandler(void)
 		printf("RTC_IRQHandler, ALR\r\n");
 	}
   /* USER CODE END RTC_IRQn 1 */
-}
-
-/**
-  * @brief This function handles Alarm interrupt.
-  */
-void RTC_Alarm_IRQHandler(void)
-{
-  /* USER CODE BEGIN TAMPER_IRQn 0 */
-	if(LL_RTC_IsActiveFlag_ALR(RTC) ==1){
-		LL_RTC_ClearFlag_ALR(RTC);
-		
-		rtc_alarm_task=1;
-		printf("RTC_Alarm_IRQHandler\r\n");
-	}
-  /* USER CODE END TAMPER_IRQn 0 */
-  /* USER CODE BEGIN TAMPER_IRQn 1 */
-
-  /* USER CODE END TAMPER_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
