@@ -41,7 +41,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern volatile uint8_t rtc_sec_flag;
+extern volatile uint8_t rtc_alarm_flag;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -206,7 +207,12 @@ void RTC_IRQHandler(void)
   /* USER CODE BEGIN RTC_IRQn 0 */
 	if(LL_RTC_IsActiveFlag_SEC(RTC) == 1){
 		LL_RTC_ClearFlag_SEC(RTC);
-		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
+		rtc_sec_flag = 1;
+	}
+	
+	if(LL_RTC_IsActiveFlag_ALR(RTC) == 1){
+		LL_RTC_ClearFlag_ALR(RTC);
+		rtc_alarm_flag = 1;
 	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */

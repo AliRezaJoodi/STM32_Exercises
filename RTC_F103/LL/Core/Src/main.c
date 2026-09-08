@@ -38,6 +38,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+volatile uint8_t rtc_sec_flag = 0;
+volatile uint8_t rtc_alarm_flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,8 +95,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	LL_RTC_EnterInitMode(RTC);
 	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
-	LL_RTC_ExitInitMode(RTC);
+	LL_RTC_TIME_Set(RTC, 0);
+	LL_RTC_ALARM_Set(RTC, 10);
 	LL_RTC_EnableIT_SEC(RTC);
+	LL_RTC_EnableIT_ALR(RTC);
+	LL_RTC_ExitInitMode(RTC);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -105,6 +110,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		if(rtc_sec_flag == 1){
+			rtc_sec_flag = 0;
+      LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
+    }
+				
+    if(rtc_alarm_flag == 1){
+			rtc_alarm_flag = 0;
+      LL_USART_TransmitString(USART1, "RTC ALARM !!!\r");
+    }
   }
   /* USER CODE END 3 */
 }
