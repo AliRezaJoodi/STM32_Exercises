@@ -93,7 +93,6 @@ int main(void)
   MX_GPIO_Init();
   MX_RTC_Init();
   MX_USART1_UART_Init();
-	
   /* USER CODE BEGIN 2 */
 	LL_RTC_EnterInitMode(RTC);
 	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
@@ -312,7 +311,7 @@ static void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+  LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
 
   /**/
   GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
