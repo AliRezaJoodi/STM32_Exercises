@@ -43,6 +43,7 @@
 /* USER CODE BEGIN PV */
 extern volatile uint8_t rtc_sec_flag;
 extern volatile uint8_t rtc_alarm_flag;
+extern volatile uint32_t systick_ms;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -184,7 +185,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+  systick_ms++;
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */

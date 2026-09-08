@@ -40,6 +40,7 @@
 /* USER CODE BEGIN PV */
 volatile uint8_t rtc_sec_flag = 0;
 volatile uint8_t rtc_alarm_flag = 0;
+volatile uint32_t systick_ms = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,6 +64,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  uint32_t led_on_tick = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,6 +102,8 @@ int main(void)
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_RTC_EnableIT_ALR(RTC);
 	LL_RTC_ExitInitMode(RTC);
+	
+	LL_SYSTICK_EnableIT();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,11 +116,28 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		if(rtc_sec_flag == 1){
 			rtc_sec_flag = 0;
-      LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
+      LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+      led_on_tick = systick_ms;
+    }
+    if(led_on_tick > 0){
+      if((int32_t)(systick_ms - led_on_tick) >= 100){
+        LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
+        led_on_tick = 0;
+      }
     }
 				
     if(rtc_alarm_flag == 1){
 			rtc_alarm_flag = 0;
+      uint32_t cnt1 = 0, cnt2 = 0;
+      do{
+        cnt1 = LL_RTC_TIME_Get(RTC);
+        cnt2 = LL_RTC_TIME_Get(RTC);
+      } while(cnt1 != cnt2);
+
+      LL_RTC_EnterInitMode(RTC);
+      LL_RTC_ALARM_Set(RTC, cnt2 + 10);
+      LL_RTC_ExitInitMode(RTC);
+
       LL_USART_TransmitString(USART1, "RTC ALARM !!!\r");
     }
   }
