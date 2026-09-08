@@ -45,7 +45,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_RTC_Init(void);
 static void MX_USART1_UART_Init(void);
-
 /* USER CODE BEGIN PFP */
 static void LL_USART_TransmitString(USART_TypeDef *USARTx, const char *str);
 /* USER CODE END PFP */
@@ -90,8 +89,12 @@ int main(void)
   MX_GPIO_Init();
   MX_RTC_Init();
   MX_USART1_UART_Init();
+	
   /* USER CODE BEGIN 2 */
+	LL_RTC_EnterInitMode(RTC);
 	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
+	LL_RTC_ExitInitMode(RTC);
+	LL_RTC_EnableIT_SEC(RTC);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -161,16 +164,18 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-static void MX_RTC_Init(void){
+static void MX_RTC_Init(void)
+{
+
   /* USER CODE BEGIN RTC_Init 0 */
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
   LL_RTC_TimeTypeDef RTC_TimeStruct = {0};
 
-	LL_PWR_EnableBkUpAccess();
-	/* Enable BKP CLK enable for backup registers */
-	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
+    LL_PWR_EnableBkUpAccess();
+    /* Enable BKP CLK enable for backup registers */
+    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
   /* Peripheral clock enable */
   LL_RCC_EnableRTC();
 
@@ -183,26 +188,20 @@ static void MX_RTC_Init(void){
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_InitStruct.AsynchPrescaler = 0x00007FFFU;
+  RTC_InitStruct.AsynchPrescaler = 0xFFFFFFFFU;
   LL_RTC_Init(RTC, &RTC_InitStruct);
-  LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
+  LL_RTC_SetAsynchPrescaler(RTC, 0xFFFFFFFFU);
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_TimeStruct.Hours = 23;
-  RTC_TimeStruct.Minutes = 59;
-  RTC_TimeStruct.Seconds = 50;
+  RTC_TimeStruct.Hours = 0;
+  RTC_TimeStruct.Minutes = 0;
+  RTC_TimeStruct.Seconds = 0;
   LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
-
-  /** Initialize RTC and set the Time and Date
-  */
 
   /** Enable the Alarm A
   */
   LL_RTC_EnableIT_ALR(RTC);
-  /** Enable the Second interrupt
-  */
-  LL_RTC_EnableIT_SEC(RTC);
   /* USER CODE BEGIN RTC_Init 2 */
   /* USER CODE END RTC_Init 2 */
 
@@ -270,7 +269,6 @@ static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
-
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
@@ -289,7 +287,6 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
-
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
