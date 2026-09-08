@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -22,12 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -36,13 +33,11 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t buffer=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -50,40 +45,13 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_RTC_Init(void);
 static void MX_USART1_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
+/* USER CODE BEGIN PFP */
+static void LL_USART_TransmitString(USART_TypeDef *USARTx, const char *str);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Function for transmitting 8bit data via USART */
-void write_uart(char data){
-	while(!LL_USART_IsActiveFlag_TXE(USART1));
-	LL_USART_TransmitData8(USART1, (uint8_t)data);
-}
-	
-/* Retargeting stdout_putchar as to use USART_TX for data output */	
-int stdout_putchar(int ch){
-	write_uart(ch);
-	return (ch);
-}
-
-struct time_t
-{
-  uint8_t sec;
-  uint8_t min;
-  uint8_t hour;
-};
-
-struct time_t Time;
-struct time_t Alarm;
-
-uint32_t TimeCounter = 0;
-
-
-void TIME_Update(void);
-void TIME_Config(uint8_t, uint8_t, uint8_t);
-void ALARM_Config(uint8_t, uint8_t, uint8_t);
 /* USER CODE END 0 */
 
 /**
@@ -94,7 +62,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -111,14 +78,12 @@ int main(void)
   LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -126,38 +91,17 @@ int main(void)
   MX_RTC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  /* configue date, time and alarm and also enabling alarm interrupt */
-	LL_RTC_DisableWriteProtection(RTC);
-	LL_RTC_EnterInitMode(RTC);
-	LL_RTC_EnableIT_ALR(RTC);
-	LL_RTC_ClearFlag_ALR(RTC);
-	LL_RTC_EnableIT_SEC(RTC);
-	LL_RTC_ClearFlag_SEC(RTC);
-	LL_RTC_ExitInitMode(RTC);
-	LL_RTC_EnableWriteProtection(RTC);	
-
-	NVIC_SetPriority(RTC_Alarm_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-	NVIC_EnableIRQ(RTC_Alarm_IRQn);
+	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	LL_USART_TransmitString(USART1, "RTC TEST \r");
 	
-	TIME_Config(23, 59, 55);
-	ALARM_Config(00, 00, 05);
-
-	//printf("GetRTCClockSource: %.2d\r\n", buffer);
-	
-  while(1){
+  while (1){
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		/* update and print date and time */
-		if(rtc_second_task ==1){
-			TIME_Update();
-			printf("Time: %.2d:%.2d:%.2d\r\n", Time.hour, Time.min, Time.sec);
-			rtc_second_task=0;
-		}
   }
   /* USER CODE END 3 */
 }
@@ -217,52 +161,49 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-static void MX_RTC_Init(void)
-{
-
+static void MX_RTC_Init(void){
   /* USER CODE BEGIN RTC_Init 0 */
-
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
   LL_RTC_TimeTypeDef RTC_TimeStruct = {0};
 
-    LL_PWR_EnableBkUpAccess();
-    /* Enable BKP CLK enable for backup registers */
-    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
+	LL_PWR_EnableBkUpAccess();
+	/* Enable BKP CLK enable for backup registers */
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_BKP);
   /* Peripheral clock enable */
   LL_RCC_EnableRTC();
 
   /* RTC interrupt Init */
-  NVIC_SetPriority(TAMPER_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(TAMPER_IRQn);
   NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(RTC_IRQn);
 
   /* USER CODE BEGIN RTC_Init 1 */
-
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_InitStruct.AsynchPrescaler = 0xFFFFFFFFU;
+  RTC_InitStruct.AsynchPrescaler = 0x00007FFFU;
   LL_RTC_Init(RTC, &RTC_InitStruct);
-  LL_RTC_SetAsynchPrescaler(RTC, 0xFFFFFFFFU);
+  LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_TimeStruct.Hours = 0;
-  RTC_TimeStruct.Minutes = 0;
-  RTC_TimeStruct.Seconds = 0;
+  RTC_TimeStruct.Hours = 23;
+  RTC_TimeStruct.Minutes = 59;
+  RTC_TimeStruct.Seconds = 50;
   LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
 
   /** Initialize RTC and set the Time and Date
   */
+
+  /** Enable the Alarm A
+  */
+  LL_RTC_EnableIT_ALR(RTC);
+  /** Enable the Second interrupt
+  */
+  LL_RTC_EnableIT_SEC(RTC);
   /* USER CODE BEGIN RTC_Init 2 */
-  /* set RTC clock prescaler to 32768 (8000-1 hex)*/
-  RTC_InitStruct.AsynchPrescaler = 0x00007FFFU;
-  LL_RTC_Init(RTC, &RTC_InitStruct);
-  LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
   /* USER CODE END RTC_Init 2 */
 
 }
@@ -327,7 +268,9 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
+
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
@@ -335,52 +278,28 @@ static void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
+  /**/
+  LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+
+  /**/
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /* USER CODE BEGIN MX_GPIO_Init_2 */
+
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-//*****************************************************************
-void TIME_Update(void)
-{
-  TimeCounter = LL_RTC_TIME_Get(RTC);
-  Time.hour = (TimeCounter/3600) % 24;
-  Time.min  = (TimeCounter % 3600) / 60;
-  Time.sec  = (TimeCounter % 3600) % 60;
-}
-
-//*****************************************************************
-void TIME_Config(uint8_t fHour, uint8_t fMin, uint8_t fSec){
-  Time.hour = fHour;
-  Time.min  = fMin;
-  Time.sec  = fSec;
-
-	LL_RTC_DisableWriteProtection(RTC);
-  LL_RTC_EnterInitMode(RTC);
-  
-	LL_RTC_TIME_Set(RTC,((Time.hour * 3600) +
-                       (Time.min * 60) +
-                        Time.sec));
-	
-	LL_RTC_ExitInitMode(RTC);
-	LL_RTC_EnableWriteProtection(RTC);
-}
-
-//*****************************************************************
-void ALARM_Config(uint8_t fHour, uint8_t fMin, uint8_t fSec){
-  Alarm.hour = fHour;
-  Alarm.min  = fMin;
-  Alarm.sec  = fSec;
-
-	LL_RTC_DisableWriteProtection(RTC);
-  LL_RTC_EnterInitMode(RTC);
-	
-  LL_RTC_ALARM_Set(RTC,((Alarm.hour * 3600) +
-                        (Alarm.min * 60) +
-                         Alarm.sec));
-	
-	LL_RTC_ExitInitMode(RTC);
-	LL_RTC_EnableWriteProtection(RTC);
+void LL_USART_TransmitString(USART_TypeDef *USARTx, const char *str){
+  while(*str != 0){
+		while(LL_USART_IsActiveFlag_TXE(USARTx) != 1){}		// Transmit Data Register Empty 
+		LL_USART_TransmitData8(USARTx, *str);
+    str++;
+	}
 }
 /* USER CODE END 4 */
 

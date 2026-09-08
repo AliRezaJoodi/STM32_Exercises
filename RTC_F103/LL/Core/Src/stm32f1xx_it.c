@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -42,8 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-	volatile uint8_t rtc_second_task = 0;
-	volatile uint8_t rtc_alarm_task = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +72,7 @@ void NMI_Handler(void)
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-  while (1)
+   while (1)
   {
   }
   /* USER CODE END NonMaskableInt_IRQn 1 */
@@ -201,38 +199,17 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles Tamper interrupt.
-  */
-void TAMPER_IRQHandler(void)
-{
-  /* USER CODE BEGIN TAMPER_IRQn 0 */
-
-  /* USER CODE END TAMPER_IRQn 0 */
-  /* USER CODE BEGIN TAMPER_IRQn 1 */
-
-  /* USER CODE END TAMPER_IRQn 1 */
-}
-
-/**
   * @brief This function handles RTC global interrupt.
   */
-void RTC_IRQHandler(void)
-{
+void RTC_IRQHandler(void){
   /* USER CODE BEGIN RTC_IRQn 0 */
-	if(LL_RTC_IsActiveFlag_SEC(RTC) ==1){
+	if(LL_RTC_IsActiveFlag_SEC(RTC) == 1){
 		LL_RTC_ClearFlag_SEC(RTC);
-		
-		rtc_second_task=1;
-		//printf("RTC_IRQHandler, SECF\r\n");
+		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
 	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-	if(LL_RTC_IsActiveFlag_ALR(RTC) ==1){
-		LL_RTC_ClearFlag_ALR(RTC);
-		
-		rtc_alarm_task=1;
-		printf("RTC_IRQHandler, ALR\r\n");
-	}
+
   /* USER CODE END RTC_IRQn 1 */
 }
 
