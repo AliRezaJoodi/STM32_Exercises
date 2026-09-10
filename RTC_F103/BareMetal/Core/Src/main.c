@@ -94,13 +94,15 @@ int main(void)
   MX_GPIO_Init();
   MX_RTC_Init();
   MX_USART1_UART_Init();
+	
   /* USER CODE BEGIN 2 */
 	LL_RTC_EnterInitMode(RTC);
-	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
-	LL_RTC_TIME_Set(RTC, 0);
-	LL_RTC_ALARM_Set(RTC, 10);
-	LL_RTC_EnableIT_SEC(RTC);
-	LL_RTC_EnableIT_ALR(RTC);
+	AJ_RTC_WritePrescaler(0x00007FFFU);
+	AJ_RTC_WriteCounter(0);
+	AJ_RTC_WriteAlarm(10);
+	AJ_RTC_ConfigSecondInterrupt(AJ_ENABLE);
+	AJ_RTC_ConfigAlarmInterrupt(AJ_ENABLE);
+	AJ_RTC_ConfigOverflowInterrupt(AJ_DISABLE);
 	LL_RTC_ExitInitMode(RTC);
 	
 	LL_SYSTICK_EnableIT();
@@ -128,14 +130,10 @@ int main(void)
 				
     if(rtc_alarm_flag == 1){
 			rtc_alarm_flag = 0;
-      uint32_t cnt1 = 0, cnt2 = 0;
-      do{
-        cnt1 = LL_RTC_TIME_Get(RTC);
-        cnt2 = LL_RTC_TIME_Get(RTC);
-      } while(cnt1 != cnt2);
+      uint32_t cnt = AJ_RTC_ReadCounter();
 
       LL_RTC_EnterInitMode(RTC);
-      LL_RTC_ALARM_Set(RTC, cnt2 + 10);
+      AJ_RTC_WriteAlarm(cnt + 10);
       LL_RTC_ExitInitMode(RTC);
 
       LL_USART_TransmitString(USART1, "RTC ALARM !!!\r");

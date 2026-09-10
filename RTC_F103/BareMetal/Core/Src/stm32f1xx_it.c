@@ -203,8 +203,7 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles RTC global interrupt.
   */
-void RTC_IRQHandler(void)
-{
+void RTC_IRQHandler(void){
   /* USER CODE BEGIN RTC_IRQn 0 */
 	if(LL_RTC_IsActiveFlag_SEC(RTC) == 1){
 		LL_RTC_ClearFlag_SEC(RTC);
