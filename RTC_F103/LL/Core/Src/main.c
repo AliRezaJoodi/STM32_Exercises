@@ -94,20 +94,27 @@ int main(void)
   MX_RTC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	LL_RTC_EnterInitMode(RTC);
-	LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
-	LL_RTC_TIME_Set(RTC, 0);
-	LL_RTC_ALARM_Set(RTC, 10);
-	LL_RTC_EnableIT_SEC(RTC);
-	LL_RTC_EnableIT_ALR(RTC);
-	LL_RTC_ExitInitMode(RTC);
-	
+	if (LL_RTC_EnterInitMode(RTC) == SUCCESS){
+		LL_RTC_SetAsynchPrescaler(RTC, 0x00007FFFU);
+		LL_RTC_TIME_Set(RTC, 0);
+		LL_RTC_ALARM_Set(RTC, 10);
+		
+		LL_RTC_ExitInitMode(RTC);
+		
+		LL_RTC_EnableIT_SEC(RTC);
+		LL_RTC_EnableIT_ALR(RTC);
+		
+		LL_USART_TransmitString(USART1, "RTC Config: OK\r");
+	}
+	else{
+		LL_USART_TransmitString(USART1, "RTC Config: ERROR \r");
+	}
+
 	LL_SYSTICK_EnableIT();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitString(USART1, "RTC TEST \r");
 	
   while (1){
     /* USER CODE END WHILE */
