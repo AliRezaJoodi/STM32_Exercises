@@ -95,22 +95,36 @@ int main(void)
   MX_RTC_Init();
   MX_USART1_UART_Init();
 	
-  /* USER CODE BEGIN 2 */
-	LL_RTC_EnterInitMode(RTC);
-	AJ_RTC_WritePrescaler(0x00007FFFU);
-	AJ_RTC_WriteCounter(0);
-	AJ_RTC_WriteAlarm(10);
-	AJ_RTC_ConfigSecondInterrupt(AJ_ENABLE);
-	AJ_RTC_ConfigAlarmInterrupt(AJ_ENABLE);
-	AJ_RTC_ConfigOverflowInterrupt(AJ_DISABLE);
-	LL_RTC_ExitInitMode(RTC);
+/* USER CODE BEGIN 2 */
+	if (AJ_RTC_Synchronize() == AJ_SUCCESS){
+		LL_USART_TransmitString(USART1, "RTC Sync: SUCCESS\r");
+	}
+	else{
+		LL_USART_TransmitString(USART1, "RTC Sync: ERROR\r");
+	}
+
+	if (AJ_RTC_EnterConfigMode() == AJ_SUCCESS){
+		AJ_RTC_WritePrescaler(0x00007FFFU);
+		AJ_RTC_WriteCounter(0);
+		AJ_RTC_WriteAlarm(10);
+		
+		AJ_RTC_ExitConfigMode();
+		
+		AJ_RTC_ConfigSecondInterrupt(AJ_ENABLE);
+		AJ_RTC_ConfigAlarmInterrupt(AJ_ENABLE);
+		AJ_RTC_ConfigOverflowInterrupt(AJ_DISABLE);
+		
+		LL_USART_TransmitString(USART1, "RTC Config: SUCCESS\r");
+	}
+	else{
+		LL_USART_TransmitString(USART1, "RTC Config: ERROR\r");
+	}
 	
 	LL_SYSTICK_EnableIT();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	LL_USART_TransmitString(USART1, "RTC TEST \r");
 	
   while (1){
     /* USER CODE END WHILE */
@@ -132,9 +146,9 @@ int main(void)
 			rtc_alarm_flag = 0;
       uint32_t cnt = AJ_RTC_ReadCounter();
 
-      LL_RTC_EnterInitMode(RTC);
+      AJ_RTC_EnterConfigMode();
       AJ_RTC_WriteAlarm(cnt + 10);
-      LL_RTC_ExitInitMode(RTC);
+      AJ_RTC_ExitConfigMode();
 
       LL_USART_TransmitString(USART1, "RTC ALARM !!!\r");
     }

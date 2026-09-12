@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "aj_rtc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -205,21 +206,20 @@ void SysTick_Handler(void)
   */
 void RTC_IRQHandler(void){
   /* USER CODE BEGIN RTC_IRQn 0 */
-	if(LL_RTC_IsActiveFlag_SEC(RTC) == 1){
-		LL_RTC_ClearFlag_SEC(RTC);
+	if(AJ_RTC_IsFlagActive(AJ_RTC_FLAG_R_SECF) == 1){
+		AJ_RTC_ClearFlag(AJ_RTC_FLAG_W0_SECF);
 		rtc_sec_flag = 1;
 	}
-	
-	if(LL_RTC_IsActiveFlag_ALR(RTC) == 1){
-		LL_RTC_ClearFlag_ALR(RTC);
+
+	if(AJ_RTC_IsFlagActive(AJ_RTC_FLAG_R_ALRF) == 1){
+		AJ_RTC_ClearFlag(AJ_RTC_FLAG_W0_ALRF);
 		rtc_alarm_flag = 1;
 	}
   /* USER CODE END RTC_IRQn 0 */
-  /* USER CODE BEGIN RTC_IRQn 1 */
 
+  /* USER CODE BEGIN RTC_IRQn 1 */
   /* USER CODE END RTC_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
-
 /* USER CODE END 1 */
