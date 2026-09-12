@@ -73,7 +73,7 @@ Download single folder or file from GitHub:
 |[Peripheral, GPIO, STM32F103](GPIO_F103)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F401](GPIO_F401)|Y|Y|Y|
 |[Peripheral, GPIO, STM32F407](GPIO_F407)|-|-|Y|
-|[Peripheral, RTC, STM32F103](RTC_F103)| |Y|Y|
+|[Peripheral, RTC, STM32F103](RTC_F103)|Y|Y|Y|
 |[Peripheral, USART, TX, RX, INTERRUPT, STM32F103](USART_TX_RX_INTERRUPT_F103)|Y|Y|Y|
 |[Driver, Buzzer, STM32F103](Buzzer_F103)|Y|-|-|
 |[Driver, Buzzer, STM32F401](Buzzer_F401)|Y|-|-|
