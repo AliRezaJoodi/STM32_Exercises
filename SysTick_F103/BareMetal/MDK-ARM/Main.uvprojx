@@ -405,11 +405,6 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_it.c</FilePath>
             </File>
-            <File>
-              <FileName>aj_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\CrossPlatformLibraries\platforms\stm32f1\peripherals\aj_systick.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -773,6 +768,16 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/CrossPlatformLibraries</GroupName>
+          <Files>
+            <File>
+              <FileName>aj_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CrossPlatformLibraries\platforms\stm32f1\peripherals\aj_systick.c</FilePath>
             </File>
           </Files>
         </Group>
