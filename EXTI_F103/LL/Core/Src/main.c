@@ -77,9 +77,9 @@ int main(void)
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
+  /** NONJTRST: Full SWJ (JTAG-DP + SW-DP) but without NJTRST
   */
-  LL_GPIO_AF_Remap_SWJ_NOJTAG();
+  LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
 
@@ -155,6 +155,7 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
