@@ -17,10 +17,8 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -63,6 +61,7 @@
   */
 void HAL_MspInit(void)
 {
+
   /* USER CODE BEGIN MspInit 0 */
 
   /* USER CODE END MspInit 0 */
@@ -72,9 +71,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
+  /** NONJTRST: Full SWJ (JTAG-DP + SW-DP) but without NJTRST
   */
-  __HAL_AFIO_REMAP_SWJ_NOJTAG();
+  __HAL_AFIO_REMAP_SWJ_NONJTRST();
 
   /* USER CODE BEGIN MspInit 1 */
 
