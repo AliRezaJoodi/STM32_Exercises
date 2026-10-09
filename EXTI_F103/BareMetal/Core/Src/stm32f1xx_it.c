@@ -198,7 +198,7 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void){
   /* USER CODE BEGIN EXTI0_IRQn 0 */
   /* USER CODE END EXTI0_IRQn 0 */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_0) != RESET){
+  if (AJ_EXTI_IsFlagActive(AJ_EXTI_LINE_0)){
     AJ_EXTI_ClearFlag(AJ_EXTI_LINE_0);
     /* USER CODE BEGIN LL_EXTI_LINE_0 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
@@ -214,7 +214,7 @@ void EXTI0_IRQHandler(void){
 void EXTI9_5_IRQHandler(void){
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
   /* USER CODE END EXTI9_5_IRQn 0 */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6) != RESET){
+  if (AJ_EXTI_IsFlagActive(AJ_EXTI_LINE_6)){
     AJ_EXTI_ClearFlag(AJ_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
@@ -230,7 +230,7 @@ void EXTI9_5_IRQHandler(void){
 void EXTI15_10_IRQHandler(void){
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
   /* USER CODE END EXTI15_10_IRQn 0 */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET){
+  if (AJ_EXTI_IsFlagActive(AJ_EXTI_LINE_11)){
     AJ_EXTI_ClearFlag(AJ_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
