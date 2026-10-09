@@ -99,6 +99,8 @@ int main(void){
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	AJ_EXTI_GenerateSoftwareInterrupt(AJ_EXTI_LINE_0);
+	
   while(1){
     /* USER CODE END WHILE */
 
