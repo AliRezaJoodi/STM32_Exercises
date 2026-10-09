@@ -20,44 +20,38 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_it.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "aj_exti.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
 /* USER CODE BEGIN EV */
-
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -205,7 +199,7 @@ void EXTI0_IRQHandler(void){
   /* USER CODE BEGIN EXTI0_IRQn 0 */
   /* USER CODE END EXTI0_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_0) != RESET){
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_0);
+    AJ_EXTI_ClearFlag(AJ_EXTI_LINE_0);
     /* USER CODE BEGIN LL_EXTI_LINE_0 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_0 */
@@ -221,7 +215,7 @@ void EXTI9_5_IRQHandler(void){
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
   /* USER CODE END EXTI9_5_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6) != RESET){
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
+    AJ_EXTI_ClearFlag(AJ_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_6 */
@@ -237,7 +231,7 @@ void EXTI15_10_IRQHandler(void){
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
   /* USER CODE END EXTI15_10_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET){
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
+    AJ_EXTI_ClearFlag(AJ_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
 		LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_13);
     /* USER CODE END LL_EXTI_LINE_11 */
