@@ -87,6 +87,14 @@ int main(void){
   MX_GPIO_Init();
 	
   /* USER CODE BEGIN 2 */
+  AJ_EXTI_DeInit();
+
+  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE_0);
+  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE_6);
+  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE_11);
+  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE_11);
+
+  AJ_EXTI_EnableInterrupt(AJ_EXTI_LINE_0 | AJ_EXTI_LINE_6 | AJ_EXTI_LINE_11);
   /* USER CODE END 2 */
 
   /* Infinite loop */
