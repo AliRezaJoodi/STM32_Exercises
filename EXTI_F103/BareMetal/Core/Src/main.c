@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "aj_afio.h"
 #include "aj_exti.h"
 /* USER CODE END Includes */
 
@@ -88,18 +89,23 @@ int main(void){
 	
   /* USER CODE BEGIN 2 */
   AJ_EXTI_DeInit();
+  AJ_AFIO_EXTI_DeInit();
+	
+  AJ_AFIO_EXTI_ConfigureSource(AJ_AFIO_EXTI_LINE0, AJ_AFIO_EXTI_PORTA);
+  AJ_AFIO_EXTI_ConfigureSource(AJ_AFIO_EXTI_LINE6, AJ_AFIO_EXTI_PORTA);
+  AJ_AFIO_EXTI_ConfigureSource(AJ_AFIO_EXTI_LINE11, AJ_AFIO_EXTI_PORTA);
 
-  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE_0);
-  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE_6);
-  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE_11);
-  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE_11);
+  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE0);
+  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE6);
+  AJ_EXTI_EnableRisingTrigger(AJ_EXTI_LINE11);
+  AJ_EXTI_EnableFallingTrigger(AJ_EXTI_LINE11);
 
-  AJ_EXTI_EnableInterrupt(AJ_EXTI_LINE_0 | AJ_EXTI_LINE_6 | AJ_EXTI_LINE_11);
+  AJ_EXTI_EnableInterrupt(AJ_EXTI_LINE0 | AJ_EXTI_LINE6 | AJ_EXTI_LINE11);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AJ_EXTI_GenerateSoftwareInterrupt(AJ_EXTI_LINE_0);
+	AJ_EXTI_GenerateSoftwareInterrupt(AJ_EXTI_LINE0);
 	
   while(1){
     /* USER CODE END WHILE */

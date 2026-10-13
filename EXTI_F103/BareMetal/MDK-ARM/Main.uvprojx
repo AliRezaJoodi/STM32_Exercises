@@ -455,6 +455,11 @@
               <FileType>1</FileType>
               <FilePath>../CrossPlatformLibraries/platforms/stm32f1/peripherals/aj_exti.c</FilePath>
             </File>
+            <File>
+              <FileName>aj_afio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CrossPlatformLibraries\platforms\stm32f1\peripherals\aj_afio.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
