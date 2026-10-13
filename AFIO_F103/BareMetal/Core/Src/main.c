@@ -79,7 +79,6 @@ int main(void)
 //  LL_GPIO_AF_Remap_SWJ_NONJTRST();
 
   /* USER CODE BEGIN Init */
-	AJ_AFIO_ConfigSWJ(AJ_SWJ_SWD_JTAG);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -90,12 +89,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+	
   /* USER CODE BEGIN 2 */
+	AJ_AFIO_SWJ_ConfigureMode(AJ_AFIO_SWJ_SWD_JTAG);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	AJ_AFIO_ConfigSWJ(AJ_SWJ_SWD_JTAG_NJTRST);
 	LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_4);
 	
   while (1){
