@@ -871,7 +871,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CrossPlatformLibraries/Platforms/STM32F1/Peripherals</GroupName>
+          <GroupName>CrossPlatformLibraries</GroupName>
           <Files>
             <File>
               <FileName>aj_rtc.c</FileName>

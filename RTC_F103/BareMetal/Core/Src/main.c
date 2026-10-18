@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "aj_pwr.h"
 #include "aj_rtc.h"
 /* USER CODE END Includes */
 
