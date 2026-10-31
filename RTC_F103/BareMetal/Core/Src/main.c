@@ -103,16 +103,16 @@ int main(void)
 		LL_USART_TransmitString(USART1, "RTC Sync: ERROR\r");
 	}
 
-	if (AJ_RTC_EnterConfigMode() == AJ_SUCCESS){
+	if (AJ_RTC_EnterConfigureMode() == AJ_SUCCESS){
 		AJ_RTC_WritePrescaler(0x00007FFFU);
 		AJ_RTC_WriteCounter(0);
 		AJ_RTC_WriteAlarm(10);
 		
-		AJ_RTC_ExitConfigMode();
+		AJ_RTC_ExitConfigureMode();
 		
-		AJ_RTC_ConfigSecondInterrupt(AJ_ENABLE);
-		AJ_RTC_ConfigAlarmInterrupt(AJ_ENABLE);
-		AJ_RTC_ConfigOverflowInterrupt(AJ_DISABLE);
+		AJ_RTC_ConfigureSecondInterrupt(AJ_ENABLE);
+		AJ_RTC_ConfigureAlarmInterrupt(AJ_ENABLE);
+		AJ_RTC_ConfigureOverflowInterrupt(AJ_DISABLE);
 		
 		LL_USART_TransmitString(USART1, "RTC Config: SUCCESS\r");
 	}
@@ -146,9 +146,9 @@ int main(void)
 			rtc_alarm_flag = 0;
       uint32_t cnt = AJ_RTC_ReadCounter();
 
-      AJ_RTC_EnterConfigMode();
+      AJ_RTC_EnterConfigureMode();
       AJ_RTC_WriteAlarm(cnt + 10);
-      AJ_RTC_ExitConfigMode();
+      AJ_RTC_ExitConfigureMode();
 
       LL_USART_TransmitString(USART1, "RTC ALARM !!!\r");
     }

@@ -101,7 +101,7 @@ int main(void)
 	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
 	
 	tick_last = tick;
-	AJ_SysTick_ConfigInterruptState(AJ_ENABLE);
+	AJ_SysTick_ConfigureInterruptState(AJ_ENABLE);
 
   while (1){
     /* USER CODE END WHILE */
