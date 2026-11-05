@@ -1,4 +1,4 @@
-﻿#ifndef HARDWARE_INCLUDED
+#ifndef HARDWARE_INCLUDED
 #define HARDWARE_INCLUDED
 
 #define AJ_TARGET_CONFIG
@@ -8,7 +8,7 @@
 
 
 #define AJ_BUZZER_CONFIG
-    #define AJ_BUZZER_ACTIVE       0U
+    #define AJ_BUZZER_ACTIVE       1U
     #define AJ_BUZZER_COUNT1       75U
     #define AJ_BUZZER_COUNT2       200U
 
