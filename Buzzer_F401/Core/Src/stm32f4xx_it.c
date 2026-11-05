@@ -20,8 +20,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_it.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "aj_buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +40,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-extern volatile uint32_t system_tick;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -205,7 +206,7 @@ void TIM1_UP_TIM10_IRQHandler(void){
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
 		
-		system_tick++;
+		AJ_Buzzer_Handler();
 
    }
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
