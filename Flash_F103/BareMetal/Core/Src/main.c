@@ -25,7 +25,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-//#include "aj_target.h"
+#include "aj_target.h"
 #include "aj_flash.h"
 /* USER CODE END PTD */
 
@@ -105,7 +105,8 @@ int main(void){
 
   /* USER CODE BEGIN SysInit */
 	AJ_Flash_ConfigureLatency(AJ_FLASH_LATENCY_0);	//  or
-	AJ_Flash_InitLatency(8000000);
+	AJ_Flash_InitLatency(8000000);									//  or
+	AJ_Flash_InitLatency(AJ_TARGET_CORE_CLOCK_HZ);	//Best
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
